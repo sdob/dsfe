@@ -1,0 +1,12 @@
+{
+  "esnext": true,
+  "node": true,
+  "globals": {
+    "after": false,
+    "afterEach": false,
+    "describe": false,
+    "expect": true,
+    "inject": true,
+    "it": false
+  }
+}
