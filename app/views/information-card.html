@@ -1,0 +1,25 @@
+<div class="information-card" ng-show="icvm.visible">
+    <a href ng-click="icvm.hide()">Hide</a>
+    <h1>
+        {{ icvm.site.name }}
+    </h1>
+    <p>
+    Boat entry: {{ icvm.site.boat_entry }}
+    </p>
+    <p>
+    Shore entry: {{ icvm.site.shore_entry }}
+    </p>
+    <p>
+    Depth: {{ icvm.site.depth }}
+    </p>
+    <p>
+    <div ng-repeat="dive in icvm.site.dives">
+        <div>
+            <p>{{ dive.diver }}</p>
+            <p>{{ dive.start_time }}</p>
+            <p>{{ dive.duration  }}</p>
+            <p>{{ dive.comment }}</p>
+        </div>
+    </div>
+    </p>
+</div>

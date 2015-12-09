@@ -1,0 +1,65 @@
+<div class="filter-menu">
+    <div>
+        <label class="filter-menu__boat-entry-checkbox">
+            <input type="checkbox"
+            ng-model="fmvm.preferences.boatEntry"
+            ng-change="fmvm.updatePreferences()"
+            />
+            <span>Boat</span>
+        </label>
+    </div>
+    <div>
+        <label class="filter-menu__shore-entry-checkbox">
+            <input type="checkbox"
+            ng-change="fmvm.updatePreferences()"
+            ng-model="fmvm.preferences.shoreEntry"
+            />
+            <span>Shore</span>
+        </label>
+    </div>
+    <div>
+        <div>
+            <label>
+            <input
+            name="filter-maximum-level"
+            ng-change="fmvm.updatePreferences()"
+            ng-model="fmvm.preferences.maximumLevel"
+            type="radio"
+            value="0"
+            />
+            Beginner
+            </label>
+        </div>
+        <div>
+            <label>
+            <input
+            name="filter-maximum-level"
+            ng-change="fmvm.updatePreferences()"
+            ng-model="fmvm.preferences.maximumLevel"
+            type="radio"
+            value="1"
+            />
+            Intermediate
+            </label>
+        </div>
+        <div>
+            <label>
+            <input
+            name="filter-maximum-level"
+            ng-change="fmvm.updatePreferences()"
+            ng-model="fmvm.preferences.maximumLevel"
+            type="radio"
+            value="2"
+            />
+            Advanced
+            </label>
+        </div>
+    </div>
+    <div>
+        <input
+        ng-change="fmvm.updatePreferences()"
+        ng-model="fmvm.preferences.maximumDepth"
+        type="range" />
+        {{ fmvm.preferences.maximumDepth }}
+    </div>
+</div>

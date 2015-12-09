@@ -1,0 +1,8 @@
+{
+  "browser": true,
+  "eqeqeq": true,
+  "esnext": true,
+  "globals": {
+    "angular": false
+  }
+}
