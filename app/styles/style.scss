@@ -1,3 +1,7 @@
+@import 'collapse';
+@import 'dive';
+@import 'responsive-svg';
+
 body {
   font-family: sans-serif;
   margin: 0;
@@ -8,6 +12,11 @@ body {
   width: 100%;
   top: 0;
   left: 0;
+}
+.clearfix:after {
+  content: '';
+  clear: both;
+  display: table;
 }
 .filter-menu {
   position: absolute;
@@ -23,7 +32,22 @@ body {
   right: 80px;
   top: 60px;
   max-height: calc(100% - 120px);
-  width: 250px;
+  width: 512px;
   background-color: #ffffff;
   overflow-y: auto;
+  & .mdl-card__title {
+    height: 176px;
+  }
+}
+.information-card-chart-container {
+  position: relative;
+  .bar rect {
+    fill: steelBlue;
+    shape-rendering: crispEdges;
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
 }

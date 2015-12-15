@@ -4,7 +4,10 @@
 <head>
 <title>divesit.es</title>
 <!-- bower:css -->
+<link rel="stylesheet" href="bower_components/material-design-lite/material.min.css" />
 <!-- endbower -->
+<!-- not picked up by wiredep for some reason -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body ng-app="divesites">
@@ -17,6 +20,11 @@
 <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="bower_components/material-design-lite/material.min.js"></script>
+<script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/moment/moment.js"></script>
 <!-- endbower -->
 <script src="scripts/app.js"></script>
 <script src="scripts/dsapi.service.js"></script>
@@ -29,5 +37,8 @@
 <script src="scripts/filter-preferences.service.js"></script>
 <script src="scripts/information-card.controller.js"></script>
 <script src="scripts/information-card.directive.js"></script>
+<script src="scripts/information-card-charts.service.js"></script>
+<script src="scripts/duration.filter.js"></script>
+<script src="scripts/truncate-depth.filter.js"></script>
 </body>
 </html>

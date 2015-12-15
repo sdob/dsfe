@@ -12,6 +12,8 @@ module.exports = (grunt) => {
 
     cfg,
 
+    babel: require('./config/babel'),
+
     clean: require('./config/clean'),
 
     compass: require('./config/compass'),

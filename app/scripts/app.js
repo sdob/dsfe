@@ -1,5 +1,8 @@
 (function () {'use strict';
- angular.module('divesites', ['LocalStorageModule', 'ngRoute', 'uiGmapgoogle-maps'])
+ angular.module('divesites', [
+   'LocalStorageModule', 'ngRoute', 'uiGmapgoogle-maps',
+   'ui.bootstrap',
+ ])
  .config(function ($routeProvider) {
    $routeProvider
    .when('/', {
