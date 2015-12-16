@@ -6,20 +6,29 @@
       let $rootScope;
       let $scope;
       let $controller;
+      let $q;
       let ctrl;
       let dsapi;
       let store = {};
       let filterPreferences;
       let mapSettings;
-      beforeEach(inject((_$controller_, _$rootScope_, _dsapi_, _filterPreferences_, _mapSettings_) => {
+      let uiGmapGoogleMapApi;
+
+      beforeEach(inject((_$controller_, _$rootScope_, _$q_, _dsapi_, _filterPreferences_, _mapSettings_, _uiGmapGoogleMapApi_) => {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
+        $q = _$q_;
         $scope = $rootScope.$new(); // Ugh
-        dsapi = _dsapi_;
+        // Mock dsapi
+        dsapi = {
+          retrieveDivesites: retrieveDivesitesSuccessfully,
+          retrieveDivesite: retrieveDivesiteSuccessfully,
+        };
         filterPreferences = _filterPreferences_;
         mapSettings = _mapSettings_;
+        uiGmapGoogleMapApi = _uiGmapGoogleMapApi_;
 
-        ctrl = $controller('MapController', { $rootScope, $scope, dsapi, filterPreferences, mapSettings });
+        ctrl = $controller('MapController', { $rootScope, $scope, dsapi, filterPreferences, mapSettings, uiGmapGoogleMapApi });
       }));
 
       it('should have unit tests', () => {
@@ -34,7 +43,7 @@
             },
             zoom: 8,
           });
-          ctrl = $controller('MapController', { $rootScope, $scope, dsapi, filterPreferences, mapSettings });
+          ctrl = $controller('MapController', { $rootScope, $scope, dsapi, filterPreferences, mapSettings, uiGmapGoogleMapApi });
         });
         it('should controller settings correctly', () => {
           expect(mapSettings.get).toHaveBeenCalled();
@@ -44,12 +53,19 @@
         });
       });
 
+      // Mock API
+      function retrieveDivesitesSuccessfully() {
+        return $q((resolve, reject) => {
+          resolve([{}]);
+        });
+      }
+
+      function retrieveDivesiteSuccessfully(id) {
+        return $q((resolve, reject) => {
+          resolve({});
+        });
+      }
     });
-
-
-    describe('localStorage', () => {
-    });
-
 
   });
 })();
