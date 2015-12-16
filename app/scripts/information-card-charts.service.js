@@ -4,12 +4,17 @@
     return {
       createHistogram,
     };
-    function createHistogram(name, values, ticks=20, width=512, height=200) {
+    function createHistogram(name, values, ticks=20, width=512, height=200, xMax=undefined) {
       const formatCount = d3.format('');
+
+      let _xMax = xMax;
+      if (xMax === undefined) {
+        _xMax = d3.max(values);
+      } 
 
       // x scale
       const x = d3.scale.linear()
-      .domain([0, d3.max(values)])
+      .domain([0, _xMax])
       .range([0, width]);
 
       // Histogram data
@@ -28,7 +33,6 @@
       .orient('bottom');
 
       const svgID = `information-card-${name}-histogram`;
-      console.log(svgID);
       const svg = d3.select($document[0].createElement('div'))
       .append('svg')
       .attr('id', svgID)
