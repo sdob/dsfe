@@ -35,8 +35,26 @@ body {
   width: 512px;
   background-color: #ffffff;
   overflow-y: auto;
-  & .mdl-card__title {
+  & .mdl-card__title.has-header-image,
+  & .mdl-card__menu.has-header-image {
+    color: #ffffff;
+    h2 {
+      z-index: 1; // in front of floor fade
+    }
+  }
+  & .mdl-card__title.has-header-image {
     height: 176px;
+    position: relative;
+    // Add a floor-fade effect to ensure that the site name is visible
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 30%);
+    }
   }
 }
 .information-card-chart-container {

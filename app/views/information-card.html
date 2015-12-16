@@ -1,11 +1,14 @@
 <div class="information-card mdl-card mdl-shadow--2dp" ng-show="icvm.visible">
     <div><!-- this empty container forces MDL to scroll on overflow -->
-        <div class="mdl-card__title">
+        <div class="mdl-card__title" ng-class="{'has-header-image': !!icvm.site.header_image_url}"
+            ng-style="{'background': 'url(\'' + icvm.site.header_image_url + '\') center / cover'}"
+            >
             <h2 class="mdl-card__title-text">
                 {{ icvm.site.name }}
             </h2>
         </div>
-        <div class="mdl-card__menu">
+        <div class="mdl-card__menu"
+            ng-class="{'has-header-image': !!icvm.site.header_image_url}">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
                 ng-click="icvm.hide()">
                 <i class="material-icons">close</i>
