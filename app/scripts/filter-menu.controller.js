@@ -11,8 +11,6 @@
     function activate() {
       console.debug('FilterMenuController.activate()');
       self.preferences = filterPreferences.preferences;
-      console.info('initializing with');
-      console.info(self.preferences);
       self.updatePreferences();
     }
 

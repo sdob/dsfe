@@ -1,0 +1,16 @@
+.profile {
+  .mdl-grid {
+    margin-left: 0;
+    padding-left: 0;
+  }
+  &__dive-list .mdl-card {
+    min-height: 0;
+  }
+  &__divesite-header {
+    height: 178px;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}

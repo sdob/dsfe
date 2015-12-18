@@ -1,11 +1,16 @@
 (function () {
   'use strict';
-  function MapController($rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+  function MapController($compile, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+
+      // Initialize mapMarkers as an empty array so that angular-google-maps
+      // doesn't throw a wobbly if it initializes before the divesites
+      // are retrieved
+      vm.mapMarkers = [];
 
       // Retrieve stored map settings
       vm.map = mapSettings.get();
@@ -64,7 +69,15 @@
     function markerClick(marker, event, model, args) {
       dsapi.retrieveDivesite(model.id)
       .then((response) => {
-        $rootScope.$broadcast('show-information-card', response.data);
+        console.info('retrieved Divesite');
+        //console.info(response.data);
+        // remove any existing information cards and add one to the DOM
+        $('information-card').remove();
+        const scope = $rootScope.$new();
+        scope.site = response.data;
+        //scope.icvm.site = response.data;
+        $('map').append($compile('<information-card></information-card>')(scope));
+        //$rootScope.$broadcast('show-information-card', response.data);
       });
     }
 
@@ -112,7 +125,7 @@
     }
   }
 
-  MapController.$inject = ['$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
+  MapController.$inject = ['$compile', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
   angular.module('divesites').controller('MapController', MapController);
 
 })();

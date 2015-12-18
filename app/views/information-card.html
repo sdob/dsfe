@@ -10,14 +10,22 @@
         <div class="mdl-card__menu"
             ng-class="{'has-header-image': !!icvm.site.header_image_url}">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                ng-click="icvm.hide()">
+                ng-click="icvm.dismiss()">
                 <i class="material-icons">close</i>
             </button>
         </div>
         <div class="mdl-card__supporting-text">
+            <div class=mdl-grid">
+                <div class="mdl-cell mdl-cell--2-col">
+                    {{ icvm.site.latitude }} N
+                </div>
+                <div class="mdl-cell mdl-cell--2-col">
+                    {{ icvm.site.longitude }} W
+                </div>
+            </div>
             <div class="mdl-collapse">
                 <a href class="mdl-collapse__button">
-                    Average maximum depth: {{ icvm.site.depth | truncateDepth }} m
+                    Average maximum depth: {{ icvm.site.depth | number:0 }} m
                     <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
                 </a>
                 <div class="mdl-collapse__content-wrapper">
@@ -33,7 +41,7 @@
             </div>
             <div class="mdl-collapse">
                 <a href class="mdl-collapse__button">
-                    Average dive duration: {{ icvm.site.averageDuration }} min.
+                    Average dive duration: {{ icvm.site.averageDuration | number:0 }} min.
                     <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
                 </a>
                 <div class="mdl-collapse__content-wrapper">
@@ -57,7 +65,7 @@
                     </div>
                     <div class="dive__details">
                         <div class="dive__diver">
-                            <a href="/users/{{dive.diver.profile.id}}/">{{ dive.diver.profile.name }}</a>
+                            <a href="#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
                         </div>
                         <div class="dive__start-time">
                             {{ dive.start_time | date:'d MMM yyyy' }}

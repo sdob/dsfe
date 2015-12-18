@@ -7,7 +7,6 @@
       controller: 'FilterMenuController',
       controllerAs: 'fmvm',
       link: (scope, elem, attrs, ctrl) => {
-        console.info('FilterMenu.link()');
         angular.element(elem).ready(() => {
           const prefs = ctrl.preferences;
           // Set the filter menu states before MDL

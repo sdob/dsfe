@@ -6,18 +6,27 @@
       templateUrl: 'views/information-card.html',
       controller: 'InformationCardController',
       controllerAs: 'icvm',
-      link: () => {
+      link: (scope, element, attrs, controller, transcludeFn) => {
+        console.log('InformationCard.link()');
+        function HandleClick ()  {
+          $(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');
+        }
+
         $(function () {
           $('.mdl-collapse__content').each(function () {
             const content = $(this);
-            console.info(content);
             content.css('margin-top', -content.height());
           });
-
-          $(document.body).on('click', '.mdl-collapse__button', function () {
-            $(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');
-          });
+          //$(document.body).on('click', '.mdl-collapse__button', HandleClick);
+          $(element).on('click', '.mdl-collapse__button', HandleClick);
         });
+
+        element.on('$destroy', () => {
+          console.debug('InformationCard.on($destroy)');
+          //$(document.body).off('click', '.mdl-collapse__button', HandleClick);
+          $(element).off('click', '.mdl-collapse__button', HandleClick);
+        });
+
       }
     };
   }

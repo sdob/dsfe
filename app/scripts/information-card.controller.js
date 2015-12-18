@@ -3,31 +3,22 @@
 
   function InformationCardController($scope, informationCardCharts) {
     const vm = this;
+    console.log('InformationCardController.scope');
+    console.log($scope);
     activate();
 
     function activate() {
-      vm.hide = hide;
-      vm.visible = false;
+      console.info('InformationCardController.activate()');
+      vm.dismiss = dismiss;
+      vm.site = $scope.site;
+      vm.visible = true;
       // Initially collapse depth histogram
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
-
-      // Listen for clicks on main map to display the card
-      $scope.$on('show-information-card', show);
-      $scope.$on('$destroy', show);
-    }
-
-
-    function hide() {
-      vm.visible = false;
-    }
-
-    function show(e, site) {
-      vm.visible = true;
-      vm.site = site;
-      // XXX: for dev purposes only
       vm.site.header_image_url = 'http://lorempixel.com/512/178/nature/' + (parseInt(Math.random() * 20) + 1);
+
+      // XXX: for dev purposes only, set header image
       const depths = vm.site.dives.map((d) => d.depth);
       const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
 
@@ -45,6 +36,11 @@
       const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
       $('#information-card-depth-histogram-container').append(dh);
       $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
+    }
+
+    function dismiss() {
+      //vm.visible = false;
+      $('information-card').remove();
     }
   }
 

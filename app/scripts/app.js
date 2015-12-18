@@ -7,6 +7,9 @@
    $routeProvider
    .when('/', {
      templateUrl: 'views/main.html',
+   })
+   .when('/users/:userId', {
+     templateUrl: 'views/profile.html',
    });
  });
 })();

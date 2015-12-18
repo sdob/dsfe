@@ -1,0 +1,49 @@
+<navigation-bar></navigation-bar>
+<div class="profile">
+    <div class="mdl-grid" ng-controller="ProfileController as pcvm">
+        <div class="mdl-cell mdl-cell--12-col">
+            <h1>{{ pcvm.user.name }}</h1>
+            <span>Member since {{ pcvm.user.date_joined | date }}</span>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col profile__dive-list">
+            <div class="mdl-grid">
+            <h2 class="mdl-cell mdl-cell--12-col">Dives logged</h2>
+            <div class="mdl-cell mdl-cell--12-col"
+                ng-if="!pcvm.user.dives"> None yet!</div>
+                <div
+                    class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp"
+                    ng-if="!!pcvm.user.dives"
+                    ng-repeat="dive in pcvm.user.dives | orderBy:'-'">
+                    <div class="mdl-card__title">
+                        <div class="mdl-card__title-text"> {{ dive.divesite.name }}</div>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        <div> {{ dive.start_time | date }} </div>
+                        <div> {{ dive.duration  | duration }} minutes </div>
+                        <div> {{ dive.depth | number:1 }} </div>
+                        <div ng-if="dive.comment"> {{ dive.comment }} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-grid">
+                <h2 class="mdl-cell mdl-cell--12-col">Divesites added</h2>
+                <div class="mdl-cell mdl-cell--12-col"
+                    ng-if="!pcvm.user.divesites">None yet!</div>
+                <div
+                    class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp"
+                    ng-if="!!pcvm.user.divesites"
+                    ng-repeat="divesite in pcvm.user.divesites | orderBy:'-'">
+                    <div class="mdl-card__title"
+                    ng-class="{'has-header-image': !!site.header_image_url}"
+                    ng-style="{'background': 'url(\'' + site.header_image_url + '\') center / cover'}"
+                    >
+                        <div class="mdl-card__title-text">{{ divesite.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
