@@ -23,9 +23,13 @@
     "angular-google-chart": "~0.1.0",
     "d3": "~3.5.11",
     "angular-bootstrap": "~0.14.3",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "d3.compose": "~0.15.12"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.8"
+  },
+  "resolutions": {
+    "d3": "~3.5.11"
   }
 }

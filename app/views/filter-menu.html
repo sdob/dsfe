@@ -1,5 +1,5 @@
 <div class="mdl-card mdl-shadow--2dp filter-menu">
-    <div>
+    <div class="mdl-cell mdl-cell--12-col">
         <label class="mdl-checkbox mdl-js-checkbox"
             for="filter-menu-boatEntry">
             <input class="mdl-checkbox__input"
@@ -9,6 +9,8 @@
             >
             <span>Boat</span>
         </label>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
         <label class="mdl-checkbox mdl-js-checkbox"
             for="filter-menu-shoreEntry">
             <input class="mdl-checkbox__input"
@@ -19,46 +21,48 @@
             <span>Shore</span>
         </label>
     </div>
-    <div>
-        <label class="mdl-radio mdl-js-radio"
-            for="filter-menu-maximumLevel-0">
-            <input name="filter-menu-maximumLevel"
-            type="radio" class="mdl-radio__button"
-            id="filter-menu-maximumLevel-0"
-            value="0"
-            ng-model="fmvm.preferences.maximumLevel"
-            ng-change="fmvm.updatePreferences()"
-            >
-            <span class="mdl-radio__label">Beginner</span>
-        </label>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div>
+            <label class="mdl-radio mdl-js-radio"
+                for="filter-menu-maximumLevel-0">
+                <input name="filter-menu-maximumLevel"
+                type="radio" class="mdl-radio__button"
+                id="filter-menu-maximumLevel-0"
+                value="0"
+                ng-model="fmvm.preferences.maximumLevel"
+                ng-change="fmvm.updatePreferences()"
+                >
+                <span class="mdl-radio__label">Beginner</span>
+            </label>
+        </div>
+        <div>
+            <label class="mdl-radio mdl-js-radio"
+                for="filter-menu-maximumLevel-1">
+                <input name="filter-menu-maximumLevel"
+                type="radio" class="mdl-radio__button"
+                id="filter-menu-maximumLevel-1"
+                value="1"
+                ng-model="fmvm.preferences.maximumLevel"
+                ng-change="fmvm.updatePreferences()"
+                >
+                <span class="mdl-radio__label">Intermediate</span>
+            </label>
+        </div>
+        <div>
+            <label class="mdl-radio mdl-js-radio"
+                for="filter-menu-maximumLevel-2">
+                <input name="filter-menu-maximumLevel"
+                type="radio" class="mdl-radio__button"
+                id="filter-menu-maximumLevel-2"
+                value="2"
+                ng-model="fmvm.preferences.maximumLevel"
+                ng-change="fmvm.updatePreferences()"
+                >
+                <span class="mdl-radio__label">Advanced</span>
+            </label>
+        </div>
     </div>
-    <div>
-        <label class="mdl-radio mdl-js-radio"
-            for="filter-menu-maximumLevel-1">
-            <input name="filter-menu-maximumLevel"
-            type="radio" class="mdl-radio__button"
-            id="filter-menu-maximumLevel-1"
-            value="1"
-            ng-model="fmvm.preferences.maximumLevel"
-            ng-change="fmvm.updatePreferences()"
-            >
-            <span class="mdl-radio__label">Intermediate</span>
-        </label>
-    </div>
-    <div>
-        <label class="mdl-radio mdl-js-radio"
-            for="filter-menu-maximumLevel-2">
-            <input name="filter-menu-maximumLevel"
-            type="radio" class="mdl-radio__button"
-            id="filter-menu-maximumLevel-2"
-            value="2"
-            ng-model="fmvm.preferences.maximumLevel"
-            ng-change="fmvm.updatePreferences()"
-            >
-            <span class="mdl-radio__label">Advanced</span>
-        </label>
-    </div>
-    <div>
+    <div class="mdl-cell mdl-cell--12-col">
         <input type="range"
         class="mdl-slider mdl-js-slider"
         min="0" max="100"

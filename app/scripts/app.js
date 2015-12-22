@@ -9,7 +9,10 @@
      templateUrl: 'views/main.html',
    })
    .when('/users/:userId', {
-     templateUrl: 'views/profile.html',
+     templateUrl: 'views/profile-view.html',
+   })
+   .when('/divesites/:divesiteId', {
+     templateUrl: 'views/divesite.html',
    });
  });
 })();

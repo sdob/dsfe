@@ -8,6 +8,7 @@
       controllerAs: 'mc',
       link: (scope, elem, attrs, ctrl) => {
         console.info('map.link()');
+        componentHandler.upgradeAllRegistered();
       },
     };
   }

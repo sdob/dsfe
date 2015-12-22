@@ -33,9 +33,13 @@
       d3.select('#information-card-depth-histogram').remove();
       d3.select('#information-card-duration-histogram').remove();
       // Build depth and duration histograms
-      const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
-      $('#information-card-depth-histogram-container').append(dh);
-      $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
+      if (depths) {
+        const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
+        $('#information-card-depth-histogram-container').append(dh);
+      }
+      if (durations) {
+        $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
+      }
     }
 
     function dismiss() {

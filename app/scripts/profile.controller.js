@@ -14,11 +14,30 @@
         //console.info(response.data);
         vm.user = response.data;
         // XXX: For dev only!
+      })
+      .then(() => {
         vm.user.divesites.forEach((site) => {
-          //site.header_image_url = 'http://lorempixel.com/512/178/nature/' + (parseInt(Math.random() * 15) + 1);
-          //console.info(site.header_image_url);
+          console.log(site);
+          site.header_image_url = 'http://res.cloudinary.com/divesites/image/upload/w_512,h_200,c_fill/sample.jpg';
         });
-        console.info(vm.user);
+      })
+      .then(() => dsapi.getUserRecentActivity(userId))
+      .then((response) => {
+        console.info('recent activity');
+        console.info(response.data);
+        vm.recentActivity = response.data.map((activity) => {
+          if (activity.divesite) {
+            console.log('created a divesite');
+            return activity;
+          }
+          if (activity.dive) {
+            console.log('logged a dive');
+            return activity;
+          }
+        });
+      })
+      .then(() => {
+        console.log(vm.recentActivity);
       });
     }
   }

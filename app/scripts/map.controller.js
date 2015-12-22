@@ -28,7 +28,7 @@
       $scope.$on('$destroy', listenForPreferenceChanges);
 
       // Retrieve divesites
-      dsapi.retrieveDivesites()
+      dsapi.getDivesites()
       .then((response) => {
         console.info(`MapController received ${response.data.length} objects`);
         vm.mapMarkers = response.data.map(transformSiteToMarker);
@@ -67,7 +67,7 @@
      * and bring up the information card
      */
     function markerClick(marker, event, model, args) {
-      dsapi.retrieveDivesite(model.id)
+      dsapi.getDivesite(model.id)
       .then((response) => {
         console.info('retrieved Divesite');
         //console.info(response.data);

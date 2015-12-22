@@ -21,8 +21,8 @@
         $scope = $rootScope.$new(); // Ugh
         // Mock dsapi
         dsapi = {
-          retrieveDivesites: retrieveDivesitesSuccessfully,
-          retrieveDivesite: retrieveDivesiteSuccessfully,
+          getDivesites: retrieveDivesitesSuccessfully,
+          getDivesite: retrieveDivesiteSuccessfully,
         };
         filterPreferences = _filterPreferences_;
         mapSettings = _mapSettings_;

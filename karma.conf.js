@@ -28,6 +28,8 @@ module.exports = function(config) {
       'bower_components/d3/d3.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/moment/moment.js',
+      'bower_components/d3.chart/d3.chart.js',
+      'bower_components/d3.compose/dist/d3.compose-all.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/**/*.js',
