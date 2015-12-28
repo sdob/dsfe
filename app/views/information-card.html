@@ -1,83 +1,94 @@
-<div class="information-card mdl-card mdl-shadow--2dp" ng-show="icvm.visible">
-    <div><!-- this empty container forces MDL to scroll on overflow -->
-        <div class="mdl-card__title" ng-class="{'has-header-image': !!icvm.site.header_image_url}"
-            ng-style="{'background': 'url(\'' + icvm.site.header_image_url + '\') center / cover'}"
-            >
-            <h2 class="mdl-card__title-text">
+<div class="information-card shadow-2dp" ng-show="icvm.visible">
+    <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.header_image_url}"
+        ng-style="{'background': 'url(\'' + icvm.site.header_image_url + '\') center / cover'}"
+        >
+        <div class="information-card__divesite-title">
+            <h2 class="information-card__divesite-name">
                 {{ icvm.site.name }}
             </h2>
+            <h3 class="information-card__divesite-owner">
+                Added by <a href="/#/users/{{icvm.site.owner.id}}/">{{ icvm.site.owner.name }}</a>
+            </h3>
         </div>
-        <div class="mdl-card__menu"
-            ng-class="{'has-header-image': !!icvm.site.header_image_url}">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"
-                ng-click="icvm.dismiss()">
-                <i class="material-icons">close</i>
-            </button>
-        </div>
-        <div class="mdl-card__supporting-text">
-            <div class=mdl-grid">
-                <div class="mdl-cell mdl-cell--2-col">
-                    {{ icvm.site.latitude }} N
-                </div>
-                <div class="mdl-cell mdl-cell--2-col">
-                    {{ icvm.site.longitude }} W
-                </div>
+    </div>
+    <div class="information-card__close-button">
+        <a href ng-click="icvm.dismiss()">
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </a>
+    </div>
+    <div class=""
+        ng-class="{'has-header-image': !!icvm.site.header_image_url}">
+    </div>
+    <div class="">
+        <div class="information-card__divesite-coordinates">
+            <div class="information-card__divesite-coordinate">
+                {{ icvm.site.latitude }} ° N
             </div>
-            <div class="mdl-collapse">
-                <a href class="mdl-collapse__button">
-                    Average maximum depth: {{ icvm.site.depth | number:0 }} m
-                    <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
-                </a>
-                <div class="mdl-collapse__content-wrapper">
-                    <div class="mdl-collapse__content mdl-animation--default">
-                        <div
-                            class="information-card-chart-container svg-container"
-                            id="information-card-depth-histogram-container"
-                            style="height: 200px"
-                            >
-                        </div>
+            <div class="information-card__divesite-coordinate">
+                {{ icvm.site.longitude }} ° E
+            </div>
+        </div>
+        <div class="">
+            Average maximum depth: {{ icvm.site.depth | number:0 }} m
+            <a href class=""
+                data-toggle="collapse"
+                data-target="#information-card__depth-collapse">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <div id="information-card__depth-collapse" class="collapse">
+                <div class="">
+                    <div
+                        class="information-card-chart-container"
+                        id="information-card-depth-histogram-container"
+                        style="height: 200px"
+                        >
                     </div>
                 </div>
             </div>
-            <div class="mdl-collapse">
-                <a href class="mdl-collapse__button">
-                    Average dive duration: {{ icvm.site.averageDuration | number:0 }} min.
-                    <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
-                </a>
-                <div class="mdl-collapse__content-wrapper">
-                    <div class="mdl-collapse__content mdl-animation--default">
-                        <div
-                            class="information-card-chart-container svg-container"
-                            id="information-card-duration-histogram-container"
-                            style="height: 200px;">
-                        </div>
+        </div>
+        <div class="">
+            Average dive duration: {{ icvm.site.duration }} min.
+            <a href class=""
+                data-toggle="collapse"
+                data-target="#information-card__duration-collapse">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <div class="collapse"
+                id="information-card__duration-collapse">
+                <div class="">
+                    <div
+                        class="information-card-chart-container"
+                        id="information-card-duration-histogram-container"
+                        style="height: 200px;">
                     </div>
                 </div>
             </div>
-            <div>
-                {{ icvm.site.description }}
-            </div>
-            <div>
-                <div class="clearfix dive" ng-repeat="dive in icvm.site.dives | orderBy:'-'">
-                    <div class="dive__diver-image">
+        </div>
+        <div>
+            {{ icvm.site.description }}
+        </div>
+        <div class="information-card__dive-list">
+            <div class="information-card__dive" ng-repeat="dive in icvm.site.dives | orderBy:'-'">
+                <div class="information-card__dive-header">
+                    <div class="information-card__dive-image">
                         <img ng-src="{{ dive.user.picture }}"
-                        height="54" width="54" />
+                        height="60" width="60" />
                     </div>
-                    <div class="dive__details">
-                        <div class="dive__diver">
+                    <div class="information-card__dive-details">
+                        <div class="">
                             <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
                         </div>
-                        <div class="dive__start-time">
+                        <div class="">
                             {{ dive.start_time | date:'d MMM yyyy' }}
                             at
                             {{ dive.start_time | date:'HH:mm' }}
                         </div>
-                        <span class="dive__depth">{{ dive.depth }} m</span>
-                        <span class="dive__duration">{{ dive.duration | duration }} minutes</span>
+                        <span class="">{{ dive.depth }} m</span>
+                        <span class="">{{ dive.duration | duration }} minutes</span>
                     </div>
-                    <div class="dive__comment" ng-show="!!dive.comment">
-                        {{ dive.comment }}
-                    </div>
+                </div>
+                <div class="information-card__dive-comment" ng-show="!!dive.comment">
+                    {{ dive.comment }}
                 </div>
             </div>
         </div>

@@ -4,8 +4,6 @@
     return {
       templateUrl: 'views/navigation-bar.html',
       link: () => {
-        componentHandler.upgradeAllRegistered();
-        componentHandler.upgradeDom();
       },
     };
   }

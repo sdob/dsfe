@@ -3,13 +3,10 @@
   function FilterMenuController($scope, filterPreferences) {
     const self = this;
     self.updatePreferences = updatePreferences;
-    //self.preferences = filterPreferences.preferences;
-    //self.preferences = filterPreferences.get();
 
     activate();
 
     function activate() {
-      console.debug('FilterMenuController.activate()');
       self.preferences = filterPreferences.preferences;
       self.updatePreferences();
     }

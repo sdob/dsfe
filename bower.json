@@ -19,12 +19,22 @@
     "angular-route": "~1.4.8",
     "angular-local-storage": "~0.2.3",
     "jquery": "~2.1.4",
-    "material-design-lite": "~1.0.6",
     "angular-google-chart": "~0.1.0",
     "d3": "~3.5.11",
     "angular-bootstrap": "~0.14.3",
     "moment": "~2.10.6",
-    "d3.compose": "~0.15.12"
+    "d3.compose": "~0.15.12",
+    "bootstrap": "~3.3.6",
+    "seiyria-bootstrap-slider": "~5.3.7"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    }
   },
   "devDependencies": {
     "angular-mocks": "~1.4.8"

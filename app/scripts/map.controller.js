@@ -30,10 +30,23 @@
       // Retrieve divesites
       dsapi.getDivesites()
       .then((response) => {
-        console.info(`MapController received ${response.data.length} objects`);
         vm.mapMarkers = response.data.map(transformSiteToMarker);
         updateMarkerVisibility(filterPreferences.preferences);
       });
+    }
+
+    function getMarkerScreenPosition(map, marker) {
+      const overlay = new google.maps.OverlayView();
+      overlay.draw = function () {};
+      overlay.setMap(map);
+      const proj = overlay.getProjection();
+      if (proj) {
+        console.log(proj);
+        const pos = marker.getPosition();
+        const p = proj.fromLatLngToContainerPixel(pos);
+        return p;
+      }
+      //console.log(map.fromLatLngToContainerPixel(marker.getPosition()));
     }
 
     /*
@@ -69,18 +82,15 @@
     function markerClick(marker, event, model, args) {
       dsapi.getDivesite(model.id)
       .then((response) => {
-        console.info('retrieved Divesite');
-        //console.info(response.data);
         // remove any existing information cards and add one to the DOM
         $('information-card').remove();
         const scope = $rootScope.$new();
         scope.site = response.data;
-        //scope.icvm.site = response.data;
         $('map').append($compile('<information-card></information-card>')(scope));
-        //$rootScope.$broadcast('show-information-card', response.data);
+        // TODO: check whether marker is occluded by the information card,
+        // and pan the map to reveal it
       });
     }
-
 
     /*
      * Check site data against filter preferences to see if it should be
@@ -88,7 +98,6 @@
      */
     function shouldBeVisible(marker, preferences) {
       const depth = marker.depth <= preferences.maximumDepth;
-      //const depth = true;
       const level = marker.level <= preferences.maximumLevel;
       const entries = (marker.boatEntry && preferences.boatEntry) || (marker.shoreEntry && preferences.shoreEntry);
       return depth && level && entries;

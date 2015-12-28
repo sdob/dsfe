@@ -1,8 +1,11 @@
 @import 'collapse';
 @import 'dive';
 @import 'responsive-svg';
+@import 'filter-menu';
+@import 'information-card';
 @import 'navigation-bar';
 @import 'profile';
+@import 'shadows';
 
 body {
   font-family: sans-serif;
@@ -19,27 +22,6 @@ body {
   content: '';
   clear: both;
   display: table;
-}
-.filter-menu {
-  position: absolute;
-  z-index: 1;
-  top: 80px;
-  left: 80px;
-  width: 250px;
-  background-color: #fff;
-}
-.information-card {
-  position: absolute;
-  z-index: 1;
-  right: 80px;
-  top: 120px;
-  max-height: calc(100% - 160px);
-  width: 512px;
-  background-color: #ffffff;
-  overflow-y: auto;
-  & .mdl-collapse {
-    margin-bottom: 16px;
-  }
 }
 .mdl-card__title.has-header-image,
 .mdl-card__menu.has-header-image {

@@ -3,12 +3,9 @@
 
   function InformationCardController($scope, informationCardCharts) {
     const vm = this;
-    console.log('InformationCardController.scope');
-    console.log($scope);
     activate();
 
     function activate() {
-      console.info('InformationCardController.activate()');
       vm.dismiss = dismiss;
       vm.site = $scope.site;
       vm.visible = true;
@@ -22,22 +19,12 @@
       const depths = vm.site.dives.map((d) => d.depth);
       const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
 
-      // Calculate our own average duration, with a sanity check (set to 0
-      // if we have no logged dives
-      vm.site.averageDuration = 0;
-      if (durations) {
-        vm.site.averageDuration = (durations.reduce((acc, n) => acc + n, 0)) / durations.length;
-      }
-
-      // Clear existing SVGs
-      d3.select('#information-card-depth-histogram').remove();
-      d3.select('#information-card-duration-histogram').remove();
-      // Build depth and duration histograms
-      if (depths) {
+      // Build depth and duration histograms (if we have the data we need)
+      if (!!depths.length) {
         const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
         $('#information-card-depth-histogram-container').append(dh);
       }
-      if (durations) {
+      if (!!durations.length) {
         $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
       }
     }

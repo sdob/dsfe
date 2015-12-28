@@ -1,3 +1,7 @@
+.navigation-bar__main {
+  z-index: 1; // in front of map
+  border-radius: 0;
+}
 .navigation-bar__home-link {
     text-decoration: none;
     color: inherit;

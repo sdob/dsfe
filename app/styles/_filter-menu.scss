@@ -1,0 +1,34 @@
+.filter-menu {
+  position: absolute;
+  z-index: 1;
+  top: 80px;
+  left: 80px;
+  width: 250px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.filter-menu__header {
+  background: blue;
+  color: #fff;
+  padding-left: 16px;
+}
+.filter-menu__header-text {
+  margin: 8px 0px;
+}
+.filter-menu__content {
+}
+.filter-menu__section {
+  border-top: solid 1px rgba(0, 0, 0, 0.16);
+  padding: 8px 16px;
+}
+.filter-menu__section-header {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+.filter-menu__depth-range-slider-container {
+  display: flex;
+}
+.filter-menu__depth-range-slider-value {
+  margin-left: 16px;
+}
