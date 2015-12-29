@@ -30,10 +30,8 @@
   padding: 0;
 }
 .dive-stat {
+  width: 100%;
   text-align: center;
-  &:not(:last-of-type) {
-    margin-right: 16px;
-  }
 }
 .dive-stat__number {
   font-weight: 500;
@@ -51,4 +49,23 @@
 }
 .profile__activity-details {
   padding: 8px;
+}
+.profile__dive {
+  display: flex;
+  margin-bottom: 16px;
+  .dive__details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+  }
+  .dive__start-time {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  .dive__divesite-name {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+  }
 }

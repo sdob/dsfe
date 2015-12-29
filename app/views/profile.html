@@ -42,44 +42,35 @@
             </ul>
         </div>
     </section>
-
-    <section class="profile__recent-activity">
-        <h2>Recent activity</h2>
-        <div 
-            ng-repeat="activity in pcvm.user.recentActivity"
-            >
-            <div ng-if="activity.dive" class="profile__activity">
-                <i class="profile__activity-icon fa fa-fw fa-thumbs-down"></i>
-                <div class="profile__activity-details">
-                    <div>
-                        Dive logged at {{ activity.dive.divesite.name }}
+    <section class="profile__dive-log">
+        <div class="row">
+            <h2 class="col-xs-8 col-xs-offset-4">Dive log</h2>
+        </div>
+        <div class="profile__dive row" ng-repeat="dive in pcvm.user.dives | orderBy:'-'">
+                <div class="col-xs-4 dive__details">
+                    <div class="dive__start-time">
+                        {{ dive.start_time | date }}
+                        {{ dive.start_time | date:'HH:mm'}}
                     </div>
                     <div>
-                        {{ activity.creation_date | date}}
-                    </div>
-                </div>
-            </div>
-            <div ng-if="activity.divesite" class="profile__activity">
-                <i class="profile__activity-icon fa fa-fw fa-map-marker"></i>
-                <div class="profile__activity-details">
-                    <div>
-                        Divesite created: {{ activity.divesite.name }}
+                        {{ dive.depth }} m
                     </div>
                     <div>
-                        {{ activity.creation_date | date }}
+                        {{ dive.duration | duration }} min.
                     </div>
                 </div>
-            </div>
+                <div class="col-xs-8">
+                    <h3 class="dive__divesite-name">
+                        {{ dive.divesite.name }}
+                    </h3>
+                    <div>
+                        {{ dive.comment }}
+                    </div>
+                </div>
         </div>
     </section>
-    <section class="profile__contributions">
-        <h2>Contributions</h2>
-        <section>
-        </section>
-        <section>
-        </section>
-    </section>
 </div>
+
 
 <!--
 <section class="">

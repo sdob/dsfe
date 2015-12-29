@@ -7,7 +7,7 @@
   left: 4em;
   right: 4em;
   max-height: calc(100% - 160px);
-  overflow-y: auto;
+  overflow-y: hidden;
 
   @media (min-width: 48em) {
     top: 80px;
@@ -31,6 +31,9 @@
 }
 .filter-menu__header-text {
   margin: 8px 0px;
+}
+.filter-menu__collapse {
+  overflow-y: auto;
 }
 .filter-menu__header-chevron {
   margin-left: auto;

@@ -13,7 +13,7 @@
     </div>
     <div class="information-card__close-button">
         <a href ng-click="icvm.dismiss()">
-            <span class="glyphicon glyphicon-remove-circle"></span>
+            <span class="fa fa-times-circle"></span>
         </a>
     </div>
     <div class=""
@@ -28,38 +28,44 @@
                 {{ icvm.site.longitude }} ° E
             </div>
         </div>
-        <div class="">
-            Average maximum depth: {{ icvm.site.depth | number:0 }} m
-            <a href class=""
-                data-toggle="collapse"
-                data-target="#information-card__depth-collapse">
-                <span class="glyphicon glyphicon-chevron-down"></span>
-            </a>
-            <div id="information-card__depth-collapse" class="collapse">
-                <div class="">
-                    <div
-                        class="information-card-chart-container"
-                        id="information-card-depth-histogram-container"
-                        style="height: 200px"
-                        >
+        <div class="information-card__charts">
+            <div class="information-card__chart">
+                <a class="information-card__chart chart-header"
+                    data-toggle="collapse"
+                    data-target="#information-card__depth-collapse">
+                    <div class="information-card__chart chart-header__text">
+                        Average maximum depth: {{ icvm.site.depth | number:0 }} m
+                    </div>
+                    <span class="information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                </a>
+                <div id="information-card__depth-collapse" class="collapse">
+                    <div class="">
+                        <div
+                            class="information-card-chart-container"
+                            id="information-card-depth-histogram-container"
+                            style="height: 200px"
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="">
-            Average dive duration: {{ icvm.site.duration }} min.
-            <a href class=""
-                data-toggle="collapse"
-                data-target="#information-card__duration-collapse">
-                <span class="glyphicon glyphicon-chevron-down"></span>
-            </a>
-            <div class="collapse"
-                id="information-card__duration-collapse">
-                <div class="">
-                    <div
-                        class="information-card-chart-container"
-                        id="information-card-duration-histogram-container"
-                        style="height: 200px;">
+            <div class="information-card__chart">
+                <a href class="information-card__chart chart-header"
+                    data-toggle="collapse"
+                    data-target="#information-card__duration-collapse">
+                    <div class="information-card__chart chart-header__text">
+                        Average dive duration: {{ icvm.site.duration }} min.
+                    </div>
+                    <span class=" information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                </a>
+                <div class="collapse"
+                    id="information-card__duration-collapse">
+                    <div class="">
+                        <div
+                            class="information-card-chart-container"
+                            id="information-card-duration-histogram-container"
+                            style="height: 200px;">
+                        </div>
                     </div>
                 </div>
             </div>
