@@ -9,7 +9,7 @@
      templateUrl: 'views/main.html',
    })
    .when('/users/:userId', {
-     templateUrl: 'views/profile-view.html',
+     template: '<profile></profile>'
    })
    .when('/divesites/:divesiteId', {
      templateUrl: 'views/divesite.html',

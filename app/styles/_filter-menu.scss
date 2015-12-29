@@ -1,20 +1,41 @@
 .filter-menu {
   position: absolute;
   z-index: 1;
-  top: 80px;
-  left: 80px;
-  width: 250px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  left: 4em;
+  right: 4em;
+  max-height: calc(100% - 160px);
+  overflow-y: auto;
+
+  @media (min-width: 48em) {
+    top: 80px;
+    left: 80px;
+    width: 250px;
+  }
 }
 .filter-menu__header {
   background: blue;
   color: #fff;
+  cursor: pointer;
   padding-left: 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  &:hover, &:active {
+    text-decoration: none;
+    color: #fff;
+    //color: darken(#fff, 15%);
+  }
 }
 .filter-menu__header-text {
   margin: 8px 0px;
+}
+.filter-menu__header-chevron {
+  margin-left: auto;
+  margin-right: 16px;
+  font-size: 16px;
 }
 .filter-menu__content {
 }

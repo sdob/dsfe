@@ -7,9 +7,6 @@
       controller: 'ProfileController',
       controllerAs: 'pcvm',
       link: (scope, elem, attrs, ctrl) => {
-        // Apply MDL behaviour to MDL components
-        componentHandler.upgradeAllRegistered();
-        componentHandler.upgradeDom();
       },
     };
   }

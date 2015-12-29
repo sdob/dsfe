@@ -5,10 +5,23 @@
     activate();
 
     function activate() {
-      console.debug('ProfileController.activate()');
       const userId = parseInt($routeParams.userId);
       // TODO: fix circular import problem in the backend so
       // I can return all this in one request
+      dsapi.getUser(userId)
+      .then((response) => {
+        vm.user = response.data;
+        return dsapi.getUserRecentActivity(userId);
+      })
+      .then((response) => {
+      })
+      .then(() => {
+        // just for dev only...
+        vm.user.divesites.forEach((site) => {
+          site.header_image_url = 'http://res.cloudinary.com/divesites/image/upload/w_512,h_200,c_fill/sample.jpg';
+        });
+      });
+      /*
       dsapi.getUser(userId)
       .then((response) => {
         //console.info(response.data);
@@ -39,6 +52,7 @@
       .then(() => {
         console.log(vm.recentActivity);
       });
+      */
     }
   }
 

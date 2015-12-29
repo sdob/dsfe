@@ -1,11 +1,17 @@
 .information-card {
   position: absolute;
   z-index: 1;
-  right: 80px;
-  top: 120px;
-  //bottom: 80px;
-  max-height: calc(100% - 160px);
-  width: 512px;
+  //height: calc(100% - 160px);
+  height: calc(100% - 50px);
+  max-height: 768px;
+  width: 100%;
+  bottom: 0;
+  @media (min-width: 62em) {
+    max-height: calc(100% - 160px);
+    max-width: 512px;
+    right: 80px;
+    top: 80px;
+  }
   background-color: #ffffff;
   overflow-y: auto;
   & .mdl-collapse {
@@ -76,4 +82,16 @@
 .information-card__dive-comment {
   padding-left: 8px;
   padding-right: 16px;
+}
+.information-card-chart-container {
+  position: relative;
+  .bar rect {
+    fill: steelBlue;
+    shape-rendering: crispEdges;
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
 }

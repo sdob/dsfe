@@ -1,8 +1,15 @@
 <div class="filter-menu shadow-2dp">
-    <div class="filter-menu__header">
-        <h2 class="filter-menu__header-text">Filter</h2>
-    </div>
-    <div class="filter-menu__content">
+    <!-- <div class="filter-menu__header"> -->
+        <a 
+            class="filter-menu__header"
+            data-toggle="collapse"
+            data-target="#js-filter-menu__collapse"
+            >
+            <h2 class="filter-menu__header-text">Filter</h2>
+            <span class="filter-menu__header-chevron glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <!-- </div>-->
+    <div id="js-filter-menu__collapse" class="filter-menu__content collapse">
         <div class="filter-menu__section filter-menu__entry-types">
             <h3 class="filter-menu__section-header">
                 Entry types
@@ -74,22 +81,20 @@
                 Maximum depth
             </h3>
             <div class="filter-menu__depth-range-slider-container">
-            <input type="range"
-            min="0" max="100"
-            id="js-information-card__depth-range-slider"
-            data-slider-id="information-card__depth-range-slider"
-            data-slider-min="0"
-            data-slider-max="100"
-            data-slider-step="5"
-            data-slider-max="{{fmvm.preferences.maximumDepth}}"
-            data-slider-value="0"
-            ng-model="fmvm.preferences.maximumDepth"
-            ng-change="fmvm.updatePreferences()"
-            >
-            <div class="filter-menu__depth-range-slider-value">
-                {{ fmvm.preferences.maximumDepth }}
+                <input type="range"
+                min="0" max="100"
+                id="js-information-card__depth-range-slider"
+                data-slider-id="information-card__depth-range-slider"
+                data-slider-min="0"
+                data-slider-max="100"
+                data-slider-max="{{fmvm.preferences.maximumDepth}}"
+                ng-model="fmvm.preferences.maximumDepth"
+                ng-change="fmvm.updatePreferences()"
+                >
+                <div class="filter-menu__depth-range-slider-value">
+                    {{ fmvm.preferences.maximumDepth }}
+                </div>
             </div>
-        </div>
         </div>
     </div>
 </div>

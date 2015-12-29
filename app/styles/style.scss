@@ -8,8 +8,12 @@
 @import 'shadows';
 
 body {
-  font-family: sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 200;
   margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
 }
 .angular-google-map-container {
   position: absolute;
@@ -32,32 +36,5 @@ body {
   a {
     text-decoration: none;
     color: inherit;
-  }
-}
-.information-card-chart-container {
-  position: relative;
-  .bar rect {
-    fill: steelBlue;
-    shape-rendering: crispEdges;
-  }
-  .axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-}
-.mdl-card__title.has-header-image {
-  height: 200px;
-  color: #fff;
-  position: relative;
-  // Add a floor-fade effect to ensure that the site name is visible
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 30%);
   }
 }
