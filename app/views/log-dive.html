@@ -1,0 +1,65 @@
+<div class="log-dive container">
+    <h1 class="log-dive__title">Log a dive at <strong>{{ ldvm.site.name }}</strong></h1>
+    <form>
+        <section class="log-dive__compulsory-details">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Date {{ !!ldvm.dive.date ? ': ' + (ldvm.dive.date | date:'d MMM yyyy') : '' }}</h2>
+                    <uib-datepicker ng-model="ldvm.dive.date"
+                        show-weeks="false"
+                        max-date="ldvm.settings.maxDate"
+                        >
+                    </uib-datepicker>
+                </div>
+                <div class="col-sm-6">
+                    <h2>Time in {{ !!ldvm.dive.time ? ': ' + (ldvm.dive.time | date:'HH:mm') : ''}}</h2>
+                    <uib-timepicker ng-model="ldvm.dive.time"></uib-timepicker>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2>Maximum depth</h2>
+                    <div class="form-group has-error has-feedback">
+                        <input type="number" class="form-control">
+                        <span class="form-control-feedback">
+                            m
+                        </span>
+                        <span class="help-block">
+                            Set the maximum depth for this dive.
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h2>Average depth <span style="font-size: 24px;">(optional)</span></h2>
+                    <div class="form-group has-feedback">
+                        <input type="number" class="form-control">
+                        <span class="form-control-feedback">
+                            m
+                        </span>
+                        <span class="help-block">
+                            Set the average depth for this dive.
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h2>Duration</h2>
+                    <div class="form-group has-feedback has-error">
+                        <input type="number" class="form-control">
+                        <span class="form-control-feedback"> min.  </span>
+                        <span class="help-block">
+                            Set the dive's duration.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="log-dive__optional-details">
+            <h2>Comment <span style="font-size: 24px;">(optional)</span></h2>
+            <textarea class="form-control">
+            </textarea>
+        </section>
+        <section class="log-dive__submit ds-form__submit-row">
+            <button type="submit" class="btn btn-default big-button">Save</button>
+        </section>
+    </form>
+</div>

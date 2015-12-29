@@ -16,6 +16,9 @@
    })
    .when('/add-site', {
      template: '<add-site></add-site>',
+   })
+   .when('/log-dive/:divesiteId', {
+     template: '<log-dive></log-dive>',
    });
  });
 })();
