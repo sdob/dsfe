@@ -13,6 +13,9 @@
    })
    .when('/divesites/:divesiteId', {
      templateUrl: 'views/divesite.html',
+   })
+   .when('/add-site', {
+     template: '<add-site></add-site>',
    });
  });
 })();
