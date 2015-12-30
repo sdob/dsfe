@@ -1,65 +1,117 @@
 <div class="log-dive container">
     <h1 class="log-dive__title">Log a dive at <strong>{{ ldvm.site.name }}</strong></h1>
-    <form>
+    <form novalidate name="logDiveForm">
         <section class="log-dive__compulsory-details">
             <div class="row">
-                <div class="col-sm-6">
-                    <h2>Date {{ !!ldvm.dive.date ? ': ' + (ldvm.dive.date | date:'d MMM yyyy') : '' }}</h2>
-                    <uib-datepicker ng-model="ldvm.dive.date"
-                        show-weeks="false"
-                        max-date="ldvm.settings.maxDate"
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label
+                            style="font-size: 30px; font-weight: 200"
+                            for="log-dive-date">Date</label>
+                        <input type="text"
+                        ng-model="ldvm.dive.date"
+                        style="font-size: 30px; height: auto;"
+                        class="form-control"
+                        uib-datepicker-popup="{{dd-MMM-yyyy}}"
                         >
-                    </uib-datepicker>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <h2>Time in {{ !!ldvm.dive.time ? ': ' + (ldvm.dive.time | date:'HH:mm') : ''}}</h2>
-                    <uib-timepicker ng-model="ldvm.dive.time"></uib-timepicker>
+                <div class="col-sm-4">
+                    <label
+                        style="font-size: 30px; font-weight: 200"
+                        for="log-dive-time">Time in
+                        (<a href ng-click="ldvm.options.showMeridian = !ldvm.options.showMeridian">
+                            {{ ldvm.options.showMeridian ? '12hr' : '24hr' }}
+                        </a>)
+                    </label>
+                    <uib-timepicker
+                        template-url="views/templates/timepicker.html"
+                        ng-model="ldvm.dive.time"
+                        show-meridian="ldvm.options.showMeridian"
+                        >
+                    </uib-timepicker>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
+                    <h2>Duration</h2>
+                    <div class="form-group has-feedback"
+                        ng-class="{'has-error': ldvm.checkForError(logDiveForm, logDiveForm.duration)}"
+                        >
+                        <input type="number"
+                        class="form-control ld-form-control"
+                        name="duration"
+                        ng-model="ldvm.dive.duration"
+                        ng-required="true"
+                        >
+                        <span class="form-control-feedback ld-feedback"> min.</span>
+                        <span class="help-block"
+                            ng-style="{'visibility': ldvm.checkForError(logDiveForm, logDiveForm.duration) ? 'visible' : 'hidden'}"
+                            >
+                            <span>
+                                Set the dive's duration in minutes.
+                            </span>
+                            <span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
                     <h2>Maximum depth</h2>
-                    <div class="form-group has-error has-feedback">
-                        <input type="number" class="form-control">
-                        <span class="form-control-feedback">
+                    <div class="form-group has-feedback"
+                        ng-class="{'has-error': ldvm.checkForError(logDiveForm, logDiveForm.maximumDepth)}"
+                        >
+                        <input type="number"
+                        class="form-control ld-form-control"
+                        name="maximumDepth"
+                        ng-model="ldvm.dive.maximumDepth"
+                        ng-required="true"
+                        >
+                        <span class="form-control-feedback ld-feedback">
                             m
                         </span>
-                        <span class="help-block">
+                        <span
+                            class="help-block"
+                            ng-style="{'visibility': ldvm.checkForError(logDiveForm, logDiveForm.maximumDepth) ? 'visible' : 'hidden'}"
+                            >
                             Set the maximum depth for this dive.
                         </span>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <h2>Average depth <span style="font-size: 24px;">(optional)</span></h2>
+                    <h2>Average depth</h2>
                     <div class="form-group has-feedback">
-                        <input type="number" class="form-control">
-                        <span class="form-control-feedback">
+                        <input type="number" class="form-control ld-form-control"
+                        ng-model="ldvm.dive.averageDepth">
+                        <span class="form-control-feedback ld-feedback">
                             m
                         </span>
                         <span class="help-block">
-                            Set the average depth for this dive.
-                        </span>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <h2>Duration</h2>
-                    <div class="form-group has-feedback has-error">
-                        <input type="number" class="form-control">
-                        <span class="form-control-feedback"> min.  </span>
-                        <span class="help-block">
-                            Set the dive's duration.
+                            Optional: set the average depth for this dive.
                         </span>
                     </div>
                 </div>
             </div>
         </section>
         <section class="log-dive__optional-details">
-            <h2>Comment <span style="font-size: 24px;">(optional)</span></h2>
-            <textarea class="form-control">
-            </textarea>
+            <h2>Comment</h2>
+            <textarea class="form-control"></textarea>
+            <span class="help-block">
+                Optional: leave a comment on this dive.
+            </span>
         </section>
         <section class="log-dive__submit ds-form__submit-row">
-            <button type="submit" class="btn btn-default big-button">Save</button>
+            <button type="submit" class="btn btn-default big-button"
+                ng-disabled="ldvm.saveButton.disabled"
+                ng-click="!ldvm.saveButton.disabled && ldvm.submit()">
+                <span
+                    class="fa fa-fw fa-spinner fa-spin"
+                    ng-show="ldvm.saveButton.disabled"
+                    ></span>
+                <span
+                    ng-show="!ldvm.saveButton.disabled"
+                    >Save</span>
+            </button>
         </section>
     </form>
 </div>
