@@ -1,0 +1,36 @@
+<div class="login-modal container">
+    <form novalidate name="loginModalForm">
+        <h1 class="login-modal__title">
+            Sign in
+        </h1>
+        <div>
+            <div
+                ng-class="{'has-error': true}"
+                class="form-group">
+                <label for="bs-login-modal__email">Email address</label>
+                <input
+                ng-required="true"
+                type="email" class="form-control" id="bs-login-modal__email"
+                placeholder="Email" >
+            </div>
+        </div>
+        <div>
+            <div
+                ng-class="{'has-error': true}"
+                class="form-group">
+                <label for="bs-login-modal__password">Password</label>
+                <input
+                ng-required="true"
+                type="password" class="form-control" id="bs-login-modal__password"
+                placeholder="Password" >
+            </div>
+            <div class="ds-form__submit-row">
+                <button type="submit"
+                    ng-click="lmvm.submit()"
+                    class="btn big-button">
+                    Sign in
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

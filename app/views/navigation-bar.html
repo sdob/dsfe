@@ -17,30 +17,25 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-navigation-bar__collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href>Profile</a></li>
-                <li><a href>Sign in</a></li>
+                <li><a href="/#/"><i class="fa fa-fw fa-globe"></i>Home</a></li>
+                <li
+                    ng-if="nbvm.isAuthenticated()"
+                    ><a href='/#/me'><i class="fa fa-fw fa-user"></i>Profile</a></li>
+                <li
+                    ng-show="!nbvm.isAuthenticated()"
+                    >
+                    <a href ng-click="nbvm.summonLoginModal()">
+                        <i  class="fa fa-fw fa-sign-in"></i>Sign in
+                    </a>
+                </li>
+                <li
+                    ng-show="!!nbvm.isAuthenticated()"
+                    >
+                    <a href ng-click="nbvm.signOut()">
+                        <i class="fa fa-fw fa-sign-out"></i>Sign out
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-<!-- 
-<header class="">
-    <div class=""></div>
-    <div class="">
-        <span class=""><a href="/#/" class="">divesit.es</a></span>
-        <div class=""></div>
-        <nav class="">
-            <a class="" href>Link</a>
-            <a class="" href>Link</a>
-        </nav>
-    </div>
-</header>
-<div class="">
-    <span class="">Title</span>
-    <nav class="">
-        <a class="">Home</a>
-        <a class="">Home</a>
-        <a class="">Home</a>
-    </nav>
-</div>
--->

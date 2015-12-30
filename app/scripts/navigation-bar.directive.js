@@ -3,7 +3,10 @@
   function NavigationBar() {
     return {
       templateUrl: 'views/navigation-bar.html',
+      controller: 'NavigationBarController',
+      controllerAs: 'nbvm',
       link: () => {
+        console.log('navigationBar.link()');
       },
     };
   }

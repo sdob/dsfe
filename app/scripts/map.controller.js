@@ -97,6 +97,7 @@
      * visible on the map
      */
     function shouldBeVisible(marker, preferences) {
+      if (!marker) return false;
       const depth = marker.depth <= preferences.maximumDepth;
       const level = marker.level <= preferences.maximumLevel;
       const entries = (marker.boatEntry && preferences.boatEntry) || (marker.shoreEntry && preferences.shoreEntry);

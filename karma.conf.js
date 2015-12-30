@@ -31,6 +31,7 @@ module.exports = function(config) {
       'bower_components/d3.compose/dist/d3.compose-all.js',
       'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js',
+      'bower_components/satellizer/satellizer.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/**/*.js',
