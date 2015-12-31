@@ -1,0 +1,25 @@
+<div ng-repeat="dive in dives"
+    class="dive-log__item">
+    <div class="col-xs-4 dive__details">
+        <div class="dive__start-time">
+            {{ dive.start_time | date }}
+            {{ dive.start_time | date:'HH:mm' }}
+        </div>
+        <div>
+            {{ dive.depth }} m
+        </div>
+        <div>
+            {{ dive.duration | duration }} min.
+        </div>
+    </div>
+    <div class="col-xs-8 dive__bumf">
+        <h3 class="dive__divesite-name">
+            <a href="/#/divesites/{{ dive.divesite.id }}/">
+                {{ dive.divesite.name }}
+            </a>
+        </h3>
+        <div>
+            {{ dive.comment }}
+        </div>
+    </div>
+</div>
