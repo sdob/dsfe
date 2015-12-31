@@ -52,12 +52,10 @@
         return;
       }
       $scope.logDiveForm.$setSubmitted();
-      vm.saveButton.disabled = true;
-      vm.saveButton.text = ' ';
+      vm.isSaving = true;
       $timeout(() => {
         console.log('unsetting disabled');
-        vm.saveButton.disabled = false;
-        vm.saveButton.text = 'Save';
+        vm.isSaving = false;
       }, 2000);
       const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
       // Build the object that the API expects

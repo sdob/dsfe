@@ -1,0 +1,21 @@
+<div class="profile__badges">
+    <div
+        class="contribution-badge"
+        ng-if="user.dives_in_last_90_days > 0"
+        >
+        <i class="fa fa-fw fa-star active-diver-badge badge--bronze"></i>
+        Active diver
+    </div>
+    <div
+        class="contribution-badge"
+        ng-if="user.divesites.length > 0">
+        <i class="fa fa-fw fa-star badge--silver"></i>
+        Trailblazer
+    </div>
+    <div
+        class="contribution-badge"
+        ng-if="user.divesites.length >= 10">
+        <i class="fa fa-fw fa-star badge--gold"></i>
+        Explorer
+    </div>
+</div>

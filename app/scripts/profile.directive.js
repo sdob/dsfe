@@ -4,9 +4,10 @@
     return {
       templateUrl: 'views/profile.html',
       restrict: 'E',
-      controller: 'ProfileController',
-      controllerAs: 'pcvm',
+      controllerAs: 'vm',
       link: (scope, elem, attrs, ctrl) => {
+        console.log('profile.link()');
+        console.log(scope);
       },
     };
   }

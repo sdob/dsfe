@@ -1,0 +1,34 @@
+<ul class="list-unstyled profile-header__dive-stats">
+    <li class="profile-header__dive-stat">
+        <div class="profile-header__dive-stat__number">
+            {{ user.divesites.length }}
+        </div>
+        <div class="profile-header__dive-stat__desc">
+            Divesites created
+        </div>
+    </li>
+    <li class="profile-header__dive-stat">
+        <div class="profile-header__dive-stat__number">
+            {{ user.dives.length }}
+        </div>
+        <div class="profile-header__dive-stat__desc">
+            Dives logged
+        </div>
+    </li>
+    <li class="profile-header__dive-stat">
+        <div class="profile-header__dive-stat__number">
+            {{ user.hours_underwater }}
+        </div>
+        <div class="profile-header__dive-stat__desc">
+            Hours underwater
+        </div>
+    </li>
+    <li class="profile-header__dive-stat">
+        <div class="profile-header__dive-stat__number">
+            {{ user.divesites_visited }}
+        </div>
+        <div class="dive-stat__desc">
+            Divesites visited
+        </div>
+    </li>
+</ul>

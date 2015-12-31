@@ -5,6 +5,7 @@
     activate();
 
     function activate() {
+      console.log('ProfileController.activate()');
       const userId = parseInt($routeParams.userId);
       // TODO: fix circular import problem in the backend so
       // I can return all this in one request
