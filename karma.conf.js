@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/satellizer/satellizer.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+      'app/scripts/app.js',
       'app/**/*.js',
       'test/**/*.spec.js'
     ],
