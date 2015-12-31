@@ -1,0 +1,19 @@
+.own-profile {
+  .profile-header__image {
+    position: relative;
+  }
+  .profile-header__edit-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    color: #fff;
+  }
+  .profile-header__name {
+    display: flex;
+    align-items: baseline;
+  }
+  &__flex-edit-button {
+    margin-left: auto;
+    font-size: 16px;
+  }
+}

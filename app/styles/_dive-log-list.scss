@@ -1,0 +1,20 @@
+.dive-log__item {
+  display: flex;
+  margin-bottom: 16px;
+  .dive__details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding-right: 0;
+  }
+  .dive__start-time {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  .dive__divesite-name {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+  }
+}
