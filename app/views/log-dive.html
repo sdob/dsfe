@@ -106,11 +106,12 @@
                 ng-click="!ldvm.saveButton.disabled && ldvm.submit()">
                 <span
                     class="fa fa-fw fa-spinner fa-spin"
-                    ng-show="ldvm.saveButton.disabled"
+                    ng-show="ldvm.isSaving"
                     ></span>
                 <span
-                    ng-show="!ldvm.saveButton.disabled"
-                    >Save</span>
+                    ng-show="!ldvm.isSaving"
+                    >Save
+                </span>
             </button>
         </section>
     </form>

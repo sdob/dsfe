@@ -10,22 +10,32 @@
      templateUrl: 'views/main.html',
    })
    .when('/users/:userId', {
-     template: '<profile></profile>'
+     template: '<profile></profile>',
+     controller: 'ProfileController',
+     controllerAs: 'vm',
    })
    .when('/divesites/:divesiteId', {
      templateUrl: 'views/divesite.html',
    })
    .when('/add-site', {
      template: '<add-site></add-site>',
+     controller: 'AddSiteController',
+     controllerAs: 'vm',
    })
    .when('/log-dive/:divesiteId', {
      template: '<log-dive></log-dive>',
+   })
+   .when('/me', {
+     template: '<profile></profile>',
+     controller: 'OwnProfileController',
+     controllerAs: 'vm',
    });
  })
  .constant('API_URL', API_URL)
  .config(($authProvider) => {
    // Send login attempts to our API server
    $authProvider.loginUrl = `${API_URL}api-token-auth/`;
+   $authProvider.authToken = 'Token';
  })
  ;
 })();
