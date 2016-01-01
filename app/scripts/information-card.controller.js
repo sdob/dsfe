@@ -1,12 +1,13 @@
 (function () {
   'use strict';
 
-  function InformationCardController($scope, informationCardCharts) {
+  function InformationCardController($auth, $scope, informationCardCharts) {
     const vm = this;
     activate();
 
     function activate() {
       vm.dismiss = dismiss;
+      vm.isAuthenticated = $auth.isAuthenticated;
       vm.site = $scope.site;
       vm.visible = true;
       // Initially collapse depth histogram
@@ -35,6 +36,6 @@
     }
   }
 
-  InformationCardController.$inject = ['$scope', 'informationCardCharts',];
+  InformationCardController.$inject = ['$auth', '$scope', 'informationCardCharts',];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();

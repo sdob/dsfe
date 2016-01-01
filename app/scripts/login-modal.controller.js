@@ -5,25 +5,24 @@
     activate();
 
     function activate() {
-      console.log(`API_URL: ${API_URL}`);
       vm.submit = submit;
     }
 
     function submit() {
-      console.log('LoginModalController.submit()');
+      // Set the login form to submitted (this will flag validation errors)
       $scope.loginModalForm.$setSubmitted();
+      // XXX: hardcoded for now
       const user = 'testuser@example.com';
       const password = 'password';
+      // Use Satellizer to login on the API server
       $auth.login({username: user, password: password})
       .then((response) => {
-        console.log('response from api server:');
-        console.log(response.data);
-        console.log(`user is authenticated: ${$auth.isAuthenticated()}`);
+        // On success, dismiss the login modal
         $uibModalInstance.close();
       })
       .catch((response) => {
-        console.log('error from api server');
-        console.log(response.data);
+        console.error('error from api server');
+        console.error(response.data);
       });
     }
   }

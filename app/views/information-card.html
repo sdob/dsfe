@@ -73,8 +73,10 @@
         <div>
             {{ icvm.site.description }}
         </div>
-        <div>
-            <a href="#/log-dive/{{icvm.site.id}}">
+        <div class="information-card__actions">
+            <a href="#/log-dive/{{icvm.site.id}}"
+                ng-if="icvm.isAuthenticated()"
+                >
                 <span class="fa fa-pencil"></span>
                 Log a dive here
             </a>
