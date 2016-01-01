@@ -2,7 +2,9 @@
     <filter-menu></filter-menu>
     <!-- <information-card></information-card> -->
     <ui-gmap-google-map center='mc.map.center' zoom='mc.map.zoom'
-        events='mc.mapEvents'>
+        events='mc.mapEvents'
+        options='mc.options'
+        >
         <ui-gmap-markers
             coords="'loc'"
             events="mc.markerEvents"
@@ -12,7 +14,7 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
     <a href="/#/add-site/" class="main-map__add-site-button text-shadow-2dp">
-        <span class="fa-stack fa-3x text-shadow-2dp">
+        <span class="fa-stack text-shadow-2dp">
             <i class="fa fa-fw fa-stack-2x fa-circle text-shadow-2dp" style="color: pink;"></i>
             <i class="fa fa-fw fa-stack-1x fa-plus"></i>
         </span>

@@ -22,10 +22,13 @@
       vm.markerEvents = {
         click: markerClick,
       };
+      vm.options = {
+        disableDefaultUI: true,
+      };
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
-      $scope.$on('$destroy', listenForPreferenceChanges);
+      //$scope.$on('$destroy', listenForPreferenceChanges);
 
       // Retrieve divesites
       dsapi.getDivesites()
