@@ -1,14 +1,14 @@
-.add-site .angular-google-map-container {
-  //width: 200px;
-  width: 100%;
-  height: 200px;
-  max-height: 200px;
-}
 .add-site {
+
+  .angular-google-map-container {
+    width: 100%;
+    height: 400px;
+  }
+
   &__title,
   &__map-section,
   &__details,
-  &__comment,
+  &__description,
   &__submit
   {
     padding-left: 32px;
@@ -16,6 +16,9 @@
   }
   &__title {
     margin-bottom: 16px;
+  }
+  &__submit {
+    padding-bottom: 32px;
   }
 }
 .add-site__map-container {

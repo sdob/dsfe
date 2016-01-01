@@ -5,11 +5,9 @@
     activate();
 
     function activate() {
-      console.log('NavigationBarController.activate()');
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.signOut = signOut;
       vm.summonLoginModal = summonLoginModal;
-      console.log('is the user authenticated? ' + vm.isAuthenticated());
     }
 
     function signOut() {
@@ -20,7 +18,6 @@
     }
     
     function summonLoginModal() {
-      console.log('NavigationBarController.summonLoginModal()');
       const modalInstance = $uibModal.open({
         templateUrl: 'views/login-modal.html',
         controller: 'LoginModalController',
