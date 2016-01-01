@@ -23,7 +23,7 @@ module.exports = (cfg) => {
     },
     test: {
       options: {
-        port: 9001,
+        port: 9010,
         middleware: (connect) => {
           return [
             serveStatic('.tmp'),

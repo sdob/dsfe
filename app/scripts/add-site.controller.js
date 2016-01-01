@@ -1,11 +1,12 @@
 (function () {
   'use strict';
-  function AddSiteController($timeout, mapSettings) {
+  function AddSiteController($scope, $timeout, mapSettings) {
     const vm = this;
     activate();
 
     function activate() {
       console.log('AddSiteController.activate()');
+      vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
       vm.map = mapSettings.get();
       vm.site = vm.site || {
         boat_entry: false,
@@ -15,7 +16,6 @@
           longitude: vm.map.center.longitude,
         },
       };
-      console.log(vm.map);
       vm.marker = {
         id: 0,
         coords: {
@@ -27,9 +27,24 @@
         },
       };
       vm.submit = submit;
+
+      vm.checkAtLeastOneEntryIsSelected();
+      console.log(vm.atLeastOneEntryIsSelected);
     }
+
+    function checkAtLeastOneEntryIsSelected() {
+      console.log('checking entries');
+        vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
+    }
+
     function submit() {
       console.log('submitted!');
+      // Set the site form's $submitted property to true
+      // (this will check validation for untouched forms)
+      $scope.addSiteForm.$submitted = true;
+      // If the form is invalid, just return
+      if (!$scope.addSiteForm.$valid) return;
+
       // Re-format site data
       const data = Object.assign({}, vm.site);
       data.latitude = data.coords.latitude;
@@ -45,6 +60,6 @@
     }
   }
 
-  AddSiteController.$inject = ['$timeout', 'mapSettings'];
+  AddSiteController.$inject = ['$scope', '$timeout', 'mapSettings'];
   angular.module('divesites').controller('AddSiteController', AddSiteController);
 })();

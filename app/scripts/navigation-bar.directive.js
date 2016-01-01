@@ -6,7 +6,6 @@
       controller: 'NavigationBarController',
       controllerAs: 'nbvm',
       link: () => {
-        console.log('navigationBar.link()');
       },
     };
   }
