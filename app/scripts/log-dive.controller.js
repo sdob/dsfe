@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function LogDiveController($routeParams, $scope, $timeout, dsapi) {
+  function LogDiveController($location, $routeParams, $scope, $timeout, dsapi, mapSettings) {
     const vm = this;
     activate();
 
@@ -68,10 +68,17 @@
       // POSt to the API server
       dsapi.postDive(data)
       .then((response) => {
+        // A successful post request
         console.log('return');
         vm.isSaving = false;
         console.log(response);
-        return response;
+        //return response;
+        // Update the map settings before returning us to the map
+        mapSettings.set('center', {
+          latitude: response.data.divesite.latitude,
+          longitude: response.data.divesite.longitude,
+        });
+        $location.path('/');
       }, (err) => {
         // TODO: handle server-side errors
         console.log('catching error!');
@@ -85,6 +92,6 @@
     }
   }
 
-  LogDiveController.$inject = ['$routeParams', '$scope', '$timeout', 'dsapi'];
+  LogDiveController.$inject = ['$location', '$routeParams', '$scope', '$timeout', 'dsapi', 'mapSettings',];
   angular.module('divesites').controller('LogDiveController', LogDiveController);
 })();
