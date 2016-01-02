@@ -4,21 +4,19 @@
         <section class="log-dive__compulsory-details">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="form-group">
+                    <div class="form-group ds-form-group-lg">
                         <label
-                            style="font-size: 30px; font-weight: 200"
                             for="log-dive-date">Date</label>
                         <input type="text"
                         ng-model="ldvm.dive.date"
-                        style="font-size: 30px; height: auto;"
                         class="form-control"
                         uib-datepicker-popup="dd MMM yyyy"
                         >
                     </div>
                 </div>
                 <div class="col-sm-4">
+                    <div class="form-group ds-form-group-lg">
                     <label
-                        style="font-size: 30px; font-weight: 200"
                         for="log-dive-time">Time in
                         (<a href ng-click="ldvm.options.showMeridian = !ldvm.options.showMeridian">
                             {{ ldvm.options.showMeridian ? '12hr' : '24hr' }}
@@ -31,13 +29,18 @@
                         >
                     </uib-timepicker>
                 </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    <h2>Duration</h2>
-                    <div class="form-group has-feedback"
+                    <div class="form-group ds-form-group-lg has-feedback"
                         ng-class="{'has-error': ldvm.checkForError(logDiveForm, logDiveForm.duration)}"
                         >
+                        <label
+                            for=""
+                            >
+                            Duration
+                        </label>
                         <input type="number"
                         class="form-control ld-form-control"
                         name="duration"
@@ -57,10 +60,12 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <h2>Maximum depth</h2>
-                    <div class="form-group has-feedback"
+                    <div class="form-group ds-form-group-lg has-feedback"
                         ng-class="{'has-error': ldvm.checkForError(logDiveForm, logDiveForm.maximumDepth)}"
                         >
+                        <label>
+                            Maximum depth
+                        </label>
                         <input type="number"
                         class="form-control ld-form-control"
                         name="maximumDepth"
@@ -94,11 +99,15 @@
             </div>
         </section>
         <section class="log-dive__optional-details">
-            <h2>Comment</h2>
-            <textarea class="form-control"></textarea>
-            <span class="help-block">
-                Optional: leave a comment on this dive.
-            </span>
+            <div class="form group ds-form-group-lg">
+                <label>
+                    Comment
+                </label>
+                <textarea class="form-control"></textarea>
+                <span class="help-block">
+                    Optional: leave a comment on this dive.
+                </span>
+            </div>
         </section>
         <section class="log-dive__submit ds-form__submit-row">
             <button type="submit" class="btn btn-default big-button"
