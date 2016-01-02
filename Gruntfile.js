@@ -23,6 +23,13 @@ module.exports = (grunt) => {
     connect: require('./config/connect')(cfg),
     // copy: require('./config/copy')(cfg),
 
+    coverage: {
+      options: {
+        coverageDir: 'coverage',
+        recursive: true,
+      },
+    },
+
     jshint: require('./config/jshint'),
 
     karma: {
