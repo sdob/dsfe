@@ -109,8 +109,14 @@
             </li>
         </ul>
         </div>
+
+
+
         <div class="information-card__dive-list">
-            <div class="information-card__dive" ng-repeat="dive in icvm.site.dives | orderBy:'-'">
+            <h3 class="dive-list__title">Dives</h3>
+            <div class="information-card__dive" ng-repeat="dive in icvm.site.dives | orderBy:'-'"
+                editable="{{dive.diver.id == icvm.userId}}"
+                >
                 <div class="information-card__dive-header">
                     <div class="information-card__dive-image">
                         <img ng-src="{{ dive.user.picture }}"
@@ -127,9 +133,17 @@
                         </div>
                         <span class="">{{ dive.depth }} m</span>
                         <span class="">{{ dive.duration | duration }} minutes</span>
+                        <a
+                            href
+                            ng-if="dive.diver.id == icvm.userId"
+                            class="information-card__edit-this-dive"
+                            >
+                            <span class="fa fa-fw fa-edit"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="information-card__dive-comment" ng-show="!!dive.comment">
+                <div class="information-card__dive-comment">
+                    hhello
                     {{ dive.comment }}
                 </div>
             </div>

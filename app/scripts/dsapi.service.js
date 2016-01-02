@@ -9,6 +9,11 @@
       },
       getDivesites: () => $http.get(`${API_URL}/divesites/`),
       // TODO: insert auth token into all api requests
+      getOwnId: () => {
+        console.log('dsapi.getOwnId()');
+        return $http.get(`${API_URL}/users/whoami/`, {
+        });
+      },
       getOwnProfile: () => {
         console.log('dsapi.getOwnProfile()');
         const token = $auth.getToken();

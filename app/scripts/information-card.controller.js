@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $scope, informationCardCharts) {
+  function InformationCardController($auth, $scope, dsapi, informationCardCharts) {
     const vm = this;
     activate();
 
@@ -28,6 +28,13 @@
       if (!!durations.length) {
         $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
       }
+
+      dsapi.getOwnId()
+      .then((response) => {
+        console.log('response from dsapi.getOwnId');
+        console.log(response.data);
+        vm.userId = response.data.id;
+      });
     }
 
     function dismiss() {
@@ -36,6 +43,6 @@
     }
   }
 
-  InformationCardController.$inject = ['$auth', '$scope', 'informationCardCharts',];
+  InformationCardController.$inject = ['$auth', '$scope', 'dsapi', 'informationCardCharts',];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();
