@@ -66,10 +66,32 @@
       return self.map;
     }
 
+    function set(k, v=undefined) {
+      // If passed an object, then set the internal object to it
+      if (typeof(k) === 'object') {
+        console.log('MapSettings: setting an object');
+        console.log(k);
+        // TODO: validate
+        self.map = k;
+        ls.set('map', self.map);
+      }
+      //if (typeof(k) === 'string' && typeof(v) === 'string') {
+      if (typeof(k) === 'string') {
+        console.log('MapSettings: setting with a k-v pair');
+        self.map[k] = v;
+        console.log(self.map);
+        ls.set('map', self.map);
+        return;
+      }
+      return; // We were called with invalid params
+    }
+
+    /*
     function set(mapObj) {
       // TODO: validate first
       ls.set('map', mapObj);
     }
+    */
   }
 
   MapSettings.$inject = ['localStorageService'];
