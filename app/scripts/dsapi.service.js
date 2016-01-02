@@ -25,6 +25,12 @@
         console.log(`dsapi.getUser(${id}`);
         return $http.get(`${API_URL}/users/${id}/`);
       },
+      /* POST methods */
+      postDive: (data) => {
+        console.log(`dsapi.postDive()`);
+        console.log(data);
+        return $http.post(`${API_URL}/dives/`, data);
+      },
     };
   }
 

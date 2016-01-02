@@ -27,6 +27,7 @@
       .then((response) => {
         vm.site = response.data;
       });
+      console.log(vm.dive.date);
     }
 
     function checkForError(form, formElement) {
@@ -53,12 +54,9 @@
       }
       $scope.logDiveForm.$setSubmitted();
       vm.isSaving = true;
-      $timeout(() => {
-        console.log('unsetting disabled');
-        vm.isSaving = false;
-      }, 2000);
-      const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
+
       // Build the object that the API expects
+      const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
       const data = {
         start_time: combinedDateTime.toISOString(),
         duration: vm.dive.duration,
@@ -67,7 +65,23 @@
         comment: vm.dive.comment,
         divesite: vm.site.id,
       };
-      console.log(data);
+      // POSt to the API server
+      dsapi.postDive(data)
+      .then((response) => {
+        console.log('return');
+        vm.isSaving = false;
+        console.log(response);
+        return response;
+      }, (err) => {
+        // TODO: handle server-side errors
+        console.log('catching error!');
+        console.log(err);
+        vm.isSaving = false;
+      })
+      .catch((response) => {
+        console.log('caught summat');
+        console.log(response);
+      });
     }
   }
 
