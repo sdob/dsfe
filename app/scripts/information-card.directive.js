@@ -8,10 +8,21 @@
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
         const card = element.find('.information-card');
-        //console.log('card:');
-        //console.log(card);
-        //console.log(card[0].offsetTop);
-        //console.log(card[0].offsetLeft);
+        // TODO: refactor
+        $('#js-information-card__depth-chart-toggle')
+        .click((e) => {
+          console.log(e);
+          $('#js-information-card__depth-chart-toggle')
+          .find('.chart-header__chevron')
+          .toggleClass('opened');
+        });
+        $('#js-information-card__duration-chart-toggle')
+        .click((e) => {
+          console.log(e);
+          $('#js-information-card__duration-chart-toggle')
+          .find('.chart-header__chevron')
+          .toggleClass('opened');
+        });
       },
     };
   }

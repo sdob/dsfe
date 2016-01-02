@@ -37,5 +37,9 @@
    $authProvider.loginUrl = `${API_URL}api-token-auth/`;
    $authProvider.authToken = 'Token';
  })
- ;
+ .run(($rootScope) => {
+   $rootScope.$on('$routeChangeStart', (event, next, current) => {
+     console.log('$routeChangeStart');
+   });
+ });
 })();

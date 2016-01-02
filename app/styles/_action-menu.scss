@@ -1,0 +1,22 @@
+  .action-menu {
+    display: flex;
+    justify-content: space-around;
+    .action-item {
+      text-align: center;
+      &:hover {
+          background-color: darken(#fff, 15%);
+      }
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8px 16px;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      &__text {
+        margin-top: 4px;
+      }
+    }
+  }

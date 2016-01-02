@@ -1,12 +1,13 @@
 (function () {
   'use strict';
 
-  function InformationCardController($scope, informationCardCharts) {
+  function InformationCardController($auth, $scope, informationCardCharts) {
     const vm = this;
     activate();
 
     function activate() {
       vm.dismiss = dismiss;
+      vm.isAuthenticated = $auth.isAuthenticated;
       vm.site = $scope.site;
       vm.visible = true;
       // Initially collapse depth histogram
@@ -21,7 +22,7 @@
 
       // Build depth and duration histograms (if we have the data we need)
       if (!!depths.length) {
-        const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
+        const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 0, 100);
         $('#information-card-depth-histogram-container').append(dh);
       }
       if (!!durations.length) {
@@ -35,6 +36,6 @@
     }
   }
 
-  InformationCardController.$inject = ['$scope', 'informationCardCharts',];
+  InformationCardController.$inject = ['$auth', '$scope', 'informationCardCharts',];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();

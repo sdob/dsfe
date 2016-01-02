@@ -4,17 +4,22 @@
     return {
       createHistogram,
     };
-    function createHistogram(name, values, ticks=20, width=512, height=200, xMax=undefined) {
+    function createHistogram(name, values, ticks=20, width=512, height=200, xMin=undefined, xMax=undefined) {
       const formatCount = d3.format('');
 
       let _xMax = xMax;
+      let _xMin = xMin;
+      if (xMin === undefined) {
+        _xMin = 0;
+      }
       if (xMax === undefined) {
         _xMax = d3.max(values);
       } 
+      console.log(`createHistogram: _xMin: ${_xMin}, _xMax: ${_xMax}`);
 
       // x scale
       const x = d3.scale.linear()
-      .domain([0, _xMax])
+      .domain([_xMin, _xMax])
       .range([0, width]);
 
       // Histogram data
