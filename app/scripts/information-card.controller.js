@@ -22,7 +22,7 @@
 
       // Build depth and duration histograms (if we have the data we need)
       if (!!depths.length) {
-        const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 100);
+        const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 0, 100);
         $('#information-card-depth-histogram-container').append(dh);
       }
       if (!!durations.length) {
