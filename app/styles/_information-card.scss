@@ -50,17 +50,24 @@
       }
     }
   }
-  &__close-button {
+  &__header-actions {
     position: absolute;
     top: 16px;
     right: 16px;
+    display: flex;
+    flex-direction: column;
+    .header__action-item {
+      color: #fff;
     font-size: 36px;
     line-height: 1;
-    a {
-      color: #fff;
+    margin-bottom: 16px;
       &:hover {
         color: darken(#fff, 15%);
       }
+    }
+  }
+  &__close-button {
+    a {
     }
   }
   &__dive {

@@ -8,6 +8,8 @@
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
         const card = element.find('.information-card');
+        // Toggle chevron direction when the charts are
+        // collapsed/uncollapsed
         // TODO: refactor
         $('#js-information-card__depth-chart-toggle')
         .click((e) => {

@@ -11,9 +11,16 @@
             </h3>
         </div>
     </div>
-    <div class="information-card__close-button">
-        <a href ng-click="icvm.dismiss()">
+    <div class="information-card__header-actions">
+        <a href
+            class="header__action-item"
+            ng-click="icvm.dismiss()">
             <span class="fa fa-times-circle"></span>
+        </a>
+        <a href
+            class="header__action-item"
+            ng-click="icvm.editSite()">
+            <span class="fa fa-edit"></span>
         </a>
     </div>
     <div class=""
@@ -37,7 +44,9 @@
                     <div class="information-card__chart chart-header__text">
                         Average maximum depth: {{ icvm.site.depth | number:0 }} m
                     </div>
-                    <span class="information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                    <span
+                        ng-if="icvm.site.depth"
+                        class="information-card__chart chart-header__chevron fa fa-chevron-down"></span>
                 </a>
                 <div id="information-card__depth-collapse" class="collapse">
                     <div class="">
@@ -58,7 +67,9 @@
                     <div class="information-card__chart chart-header__text">
                         Average dive duration: {{ icvm.site.duration }} min.
                     </div>
-                    <span class=" information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                    <span
+                        ng-if="icvm.site.duration"
+                        class=" information-card__chart chart-header__chevron fa fa-chevron-down"></span>
                 </a>
                 <div class="collapse"
                     id="information-card__duration-collapse">
