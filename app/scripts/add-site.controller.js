@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function AddSiteController($scope, $timeout, mapSettings) {
+  function AddSiteController($scope, $timeout, dsapi, mapSettings) {
     const vm = this;
     activate();
 
@@ -53,13 +53,19 @@
       console.log(data);
       // Disable the save button while we contact the API server
       vm.isSaving = true;
-      $timeout(() => {
-        console.log('finished saving');
+      //$timeout(() => {
+        //console.log('finished saving');
+        //vm.isSaving = false;
+      //}, 1000);
+      dsapi.postDivesite(data)
+      .then((response) => {
+        console.log('return from api');
+        console.log(response);
         vm.isSaving = false;
-      }, 1000);
+      });
     }
   }
 
-  AddSiteController.$inject = ['$scope', '$timeout', 'mapSettings'];
+  AddSiteController.$inject = ['$scope', '$timeout', 'dsapi', 'mapSettings'];
   angular.module('divesites').controller('AddSiteController', AddSiteController);
 })();

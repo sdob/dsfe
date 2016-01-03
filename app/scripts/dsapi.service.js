@@ -36,6 +36,11 @@
         console.log(data);
         return $http.post(`${API_URL}/dives/`, data);
       },
+      postDivesite: (data) => {
+        console.log(`dsapi.postDivesite()`);
+        console.log(data);
+        return $http.post(`${API_URL}/divesites/`, data);
+      },
     };
   }
 
