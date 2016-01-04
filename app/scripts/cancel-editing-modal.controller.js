@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function CancelEditingModalController($location, $uibModalInstance) {
+  function CancelEditingModalController($location, $uibModalInstance, $window) {
     const vm = this;
     activate();
 
@@ -12,8 +12,8 @@
       console.log(`perform cancel`);
       // Dismiss the modal instance
       $uibModalInstance.close();
-      // Change location to the main map
-      $location.path('/');
+      // Send us back in history
+      $window.history.back();
     }
     function dontPerformCancel() {
       console.log(`don't perform cancel`);
@@ -21,6 +21,6 @@
     }
   }
 
-  CancelEditingModalController.$inject = ['$location', '$uibModalInstance',];
+  CancelEditingModalController.$inject = ['$location', '$uibModalInstance', '$window', ];
   angular.module('divesites').controller('CancelEditingModalController', CancelEditingModalController);
 })();

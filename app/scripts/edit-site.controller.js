@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function EditSiteController($routeParams, $scope, $timeout, $uibModal, dsapi, mapSettings) {
+  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, dsapi, mapSettings) {
     const vm = this;
     activate();
 
@@ -63,7 +63,7 @@
     }
 
     function checkAtLeastOneEntryIsSelected() {
-        vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
+      vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
     }
 
     function submit() {
@@ -106,16 +106,24 @@
     }
 
     function summonCancelEditingModal() {
-      const modalInstance = $uibModal.open({
-        templateUrl: 'views/cancel-editing-modal.html',
-        controller: 'CancelEditingModalController',
-        controllerAs: 'cevm',
-        size: 'lg',
-      });
-    }
-
+      console.log($window);
+      if ($scope.siteForm.$dirty) {
+        // If the form has been edited, then confirm that the user
+        // is OK with losing their changes
+        const modalInstance = $uibModal.open({
+          templateUrl: 'views/cancel-editing-modal.html',
+          controller: 'CancelEditingModalController',
+          controllerAs: 'cevm',
+          size: 'lg',
+        });
+      }
+      else {
+        // Otherwise, just send us back to wherever we came from
+        $window.history.back();
+      }
+    } 
   }
 
-  EditSiteController.$inject = ['$routeParams', '$scope', '$timeout', '$uibModal', 'dsapi', 'mapSettings'];
+  EditSiteController.$inject = ['$routeParams', '$scope', '$timeout', '$uibModal', '$window', 'dsapi', 'mapSettings'];
   angular.module('divesites').controller('EditSiteController', EditSiteController);
 })();
