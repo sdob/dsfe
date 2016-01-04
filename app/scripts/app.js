@@ -1,8 +1,12 @@
 (function () {'use strict';
  const API_URL = 'http://localhost:8000/';
  angular.module('divesites', [
-   'LocalStorageModule', 'ngRoute', 'uiGmapgoogle-maps',
-   'ui.bootstrap', 'satellizer'
+   'LocalStorageModule',
+   'ngFileUpload',
+   'ngRoute',
+   'satellizer',
+   'uiGmapgoogle-maps',
+   'ui.bootstrap',
  ])
  .config(function ($routeProvider) {
    $routeProvider
