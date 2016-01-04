@@ -30,6 +30,7 @@
       };
       vm.options = {
         disableDefaultUI: true,
+        minZoom: 3,
       };
 
       // Listen for filter menu changes
