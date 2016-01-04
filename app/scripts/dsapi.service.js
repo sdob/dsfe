@@ -41,6 +41,12 @@
         console.log(data);
         return $http.post(`${API_URL}/divesites/`, data);
       },
+      /* UPDATE methods */
+      updateDivesite: (id, data) => {
+        console.log(`dsapi.UpdateDivesite()`);
+        console.log(data);
+        return $http.patch(`${API_URL}/divesites/${id}/`, data);
+      },
     };
   }
 

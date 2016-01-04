@@ -28,7 +28,6 @@
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
-      //$scope.$on('$destroy', listenForPreferenceChanges);
 
       // Retrieve divesites
       dsapi.getDivesites()
@@ -118,7 +117,6 @@
         depth: s.depth,
         level: s.level,
         id: s.id,
-        title: s.name,
         loc: {
           latitude: s.latitude,
           longitude: s.longitude,
@@ -126,6 +124,7 @@
         options: {
           visible: false,
         },
+        title: s.name,
         shoreEntry: s.shore_entry,
       };
     }

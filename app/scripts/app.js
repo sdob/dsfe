@@ -9,6 +9,16 @@
    .when('/', {
      templateUrl: 'views/main.html',
    })
+   .when('/add-site', {
+     template: '<edit-site></edit-site>',
+     controller: 'EditSiteController',
+     controllerAs: 'vm',
+   })
+   .when('/edit-site/:divesiteId', {
+     template: '<edit-site></edit-site>',
+     controller: 'EditSiteController',
+     controllerAs: 'vm',
+   })
    .when('/users/:userId', {
      template: '<profile></profile>',
      controller: 'ProfileController',
@@ -16,11 +26,6 @@
    })
    .when('/divesites/:divesiteId', {
      templateUrl: 'views/divesite.html',
-   })
-   .when('/add-site', {
-     template: '<add-site></add-site>',
-     controller: 'AddSiteController',
-     controllerAs: 'vm',
    })
    .when('/log-dive/:divesiteId', {
      template: '<log-dive></log-dive>',
