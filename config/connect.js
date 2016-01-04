@@ -3,7 +3,7 @@ module.exports = (cfg) => {
   return {
     options: {
       port: 9000,
-      hostname: 'localhost',
+      hostname: '0.0.0.0',
       livereload: 35729,
     },
     livereload: {
