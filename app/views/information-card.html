@@ -86,7 +86,7 @@
         </div>
         <ul class="list-unstyled action-menu">
             <li
-                ng-if="icvm.userId == site.owner.id"
+                ng-if="icvm.userIsOwner(icvm.site)"
                 class="action-item"
                 >
                 <a href="/#/edit-site{{icvm.site.id}}">

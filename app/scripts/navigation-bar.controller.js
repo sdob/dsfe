@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function NavigationBarController($auth, $location, $uibModal) {
+  function NavigationBarController($auth, $location, $uibModal, localStorageService) {
     const vm = this;
     activate();
 
@@ -11,6 +11,7 @@
     }
 
     function signOut() {
+      localStorageService.remove('user');
       $auth.logout()
       .then(() => {
         $location.path('/');
@@ -27,6 +28,6 @@
     }
   }
 
-  NavigationBarController.$inject = ['$auth', '$location', '$uibModal'];
+  NavigationBarController.$inject = ['$auth', '$location', '$uibModal', 'localStorageService',];
   angular.module('divesites').controller('NavigationBarController', NavigationBarController);
 })();

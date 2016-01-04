@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, dsapi, informationCardCharts) {
+  function InformationCardController($auth, $document, $location, $rootScope, $scope, dsapi, informationCardCharts, localStorageService) {
     const vm = this;
     activate();
 
@@ -9,6 +9,7 @@
       vm.dismiss = dismiss;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.site = $scope.site;
+      vm.userIsOwner = userIsOwner;
       vm.visible = true;
       // Initially collapse depth histogram
       vm.collapseDepthChart = true;
@@ -35,7 +36,6 @@
         $document.off('keydown', keydownListener);
       });
     }
-    
 
     function dismiss() {
       console.log('dismissing...');
@@ -62,8 +62,14 @@
       }
     }
 
+    function userIsOwner(site) {
+      console.log(localStorageService.get('user'));
+      console.log(site.owner);
+      return localStorageService.get('user') === site.owner.id;
+    }
+
   }
 
-  InformationCardController.$inject = ['$auth', '$document', '$location', '$rootScope', '$scope', 'dsapi', 'informationCardCharts',];
+  InformationCardController.$inject = ['$auth', '$document', '$location', '$rootScope', '$scope', 'dsapi', 'informationCardCharts', 'localStorageService',];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();
