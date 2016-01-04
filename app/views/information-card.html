@@ -15,12 +15,10 @@
         <a href
             class="header__action-item"
             ng-click="icvm.dismiss()">
-            <span class="fa fa-times-circle"></span>
-        </a>
-        <a href="/#/edit-site/{{icvm.site.id}}/"
-            class="header__action-item"
-            ng-click="icvm.editSite()">
-            <span class="fa fa-edit"></span>
+            <span class="fa fa-stack fa-2x">
+                <i class="fa fa-stack-2x fa-circle"></i>
+                <i class="fa fa-stack-1x fa-times"></i>
+            </span>
         </a>
     </div>
     <div class=""
@@ -88,10 +86,19 @@
         </div>
         <ul class="list-unstyled action-menu">
             <li
+                ng-if="icvm.userId == site.owner.id"
+                class="action-item"
+                >
+                <a href="/#/edit-site{{icvm.site.id}}">
+                    <span class="fa fa-pencil-square action-item__icon"></span>
+                    <span class="action-item__text">Edit this site</span>
+                </a>
+            </li>
+            <li
                 ng-if="icvm.isAuthenticated()"
                 class="action-item">
                 <a href="/#/log-dive/{{icvm.site.id}}">
-                    <span class="fa fa-pencil action-item__icon"
+                    <span class="fa fa-list action-item__icon"
                         ></span>
                     <span class="action-item__text">Log a dive here</span>
                 </a>
@@ -149,12 +156,11 @@
                             ng-if="dive.diver.id == icvm.userId"
                             class="information-card__edit-this-dive"
                             >
-                            <span class="fa fa-fw fa-edit"></span>
+                            <span class="fa fa-fw fa-pencil-square"></span>
                         </div>
                     </div>
                 </div>
                 <div class="information-card__dive-comment">
-                    hhello
                     {{ dive.comment }}
                 </div>
             </div>

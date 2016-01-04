@@ -29,13 +29,6 @@
         $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
       }
 
-      dsapi.getOwnId()
-      .then((response) => {
-        console.log('response from dsapi.getOwnId');
-        console.log(response.data);
-        vm.userId = response.data.id;
-      });
-
       // handle keydown events (listening for ESC keypress)
       $document.on('keydown', keydownListener);
       $rootScope.$on('$destroy', () => {
