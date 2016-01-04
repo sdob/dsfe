@@ -1,11 +1,17 @@
 (function () {
   'use strict';
-  function MapController($compile, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+  function MapController($compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+
+      // If there's a 'divesite' query param in the URL,
+      // then try and summon the information card
+      if ($location.$$search.divesite) {
+        summonInformationCard($location.$$search.divesite);
+      }
 
       // Initialize mapMarkers as an empty array so that angular-google-maps
       // doesn't throw a wobbly if it initializes before the divesites
@@ -28,6 +34,16 @@
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
+
+      $scope.$on('$routeUpdate', (e, c) => {
+        // When the route updates (i.e., search params changes),
+        // try and summon the information card; otherwise nuke it.
+        if (c.params.divesite) {
+          summonInformationCard(c.params.divesite);
+        } else {
+          $('information-card').remove();
+        }
+      });
 
       // Retrieve divesites
       dsapi.getDivesites()
@@ -82,16 +98,7 @@
      * and bring up the information card
      */
     function markerClick(marker, event, model, args) {
-      dsapi.getDivesite(model.id)
-      .then((response) => {
-        // remove any existing information cards and add one to the DOM
-        $('information-card').remove();
-        const scope = $rootScope.$new();
-        scope.site = response.data;
-        $('map').append($compile('<information-card></information-card>')(scope));
-        // TODO: check whether marker is occluded by the information card,
-        // and pan the map to reveal it
-      });
+      $location.search(`divesite=${model.id}`);
     }
 
     /*
@@ -129,6 +136,17 @@
       };
     }
 
+    function summonInformationCard(divesite) {
+      // look for 'divesite' in params
+      dsapi.getDivesite(divesite)
+      .then((response) => {
+        // remove any existing information cards and add one to the DOM
+        $('information-card').remove();
+        const scope = $rootScope.$new();
+        scope.site = response.data;
+        $('map').append($compile('<information-card></information-card>')(scope));
+      });
+    }
 
     function updateMarkerVisibility(preferences) {
       vm.mapMarkers.forEach((m) => {
@@ -137,7 +155,7 @@
     }
   }
 
-  MapController.$inject = ['$compile', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
+  MapController.$inject = ['$compile', '$location', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
   angular.module('divesites').controller('MapController', MapController);
 
 })();

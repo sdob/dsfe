@@ -8,6 +8,7 @@
    $routeProvider
    .when('/', {
      templateUrl: 'views/main.html',
+     reloadOnSearch: false,
    })
    .when('/add-site', {
      template: '<edit-site></edit-site>',
