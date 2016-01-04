@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $scope, dsapi, informationCardCharts) {
+  function InformationCardController($auth, $document, $rootScope, $scope, dsapi, informationCardCharts) {
     const vm = this;
     activate();
 
@@ -35,14 +35,37 @@
         console.log(response.data);
         vm.userId = response.data.id;
       });
+
+      // handle keydown events (listening for ESC keypress)
+      $document.on('keydown', keydownListener);
+      $rootScope.$on('$destroy', () => {
+        $document.off('keydown', keydownListener);
+      });
+      // TODO: handle back button. This is probably a bit more
+      // complicated; we'll need to push a history state when
+      // the info card is summoned.
     }
 
     function dismiss() {
       //vm.visible = false;
       $('information-card').remove();
     }
+
+    function keydownListener (evt) {
+      if (evt.isDefaultPrevented()) {
+        return evt;
+      }
+      switch (evt.which) {
+        // Handle ESC keypress
+        case 27: {
+          evt.preventDefault();
+          $('information-card').remove();
+        }
+        break;
+      }
+    }
   }
 
-  InformationCardController.$inject = ['$auth', '$scope', 'dsapi', 'informationCardCharts',];
+  InformationCardController.$inject = ['$auth', '$document', '$rootScope', '$scope', 'dsapi', 'informationCardCharts',];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();
