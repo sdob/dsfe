@@ -3,6 +3,7 @@
         <div ng-if="user.profileImage">
             <img ng-src="{{user.profileImage}}" />
             <a href
+                ng-click="vm.summonProfileImageUploadModal()"
                 ng-if="editable"
                 class="profile-header__image-edit-button"
                 >

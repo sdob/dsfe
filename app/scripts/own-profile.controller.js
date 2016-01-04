@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function OwnProfileController (cloudinaryTransformation, dsapi) {
+  function OwnProfileController ($uibModal, cloudinaryTransformation, dsapi) {
     const vm = this;
     activate();
 
@@ -15,6 +15,6 @@
     }
   }
 
-  OwnProfileController.$inject = ['cloudinaryTransformation', 'dsapi'];
+  OwnProfileController.$inject = ['$uibModal', 'cloudinaryTransformation', 'dsapi'];
   angular.module('divesites').controller('OwnProfileController', OwnProfileController);
 })();

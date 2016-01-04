@@ -7,6 +7,8 @@
         user: '=',
       },
       templateUrl: 'views/profile-header.html',
+      controller: 'ProfileHeaderController',
+      controllerAs: 'vm',
     };
   }
 
