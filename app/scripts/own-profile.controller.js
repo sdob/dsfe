@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function OwnProfileController (cloudinaryTransformation, dsapi) {
+  function OwnProfileController ($uibModal, cloudinaryTransformation, dsapi, dsimg) {
     const vm = this;
     activate();
 
@@ -10,11 +10,23 @@
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = response.data;
-        vm.user.profileImage = cloudinaryTransformation.cropSquare(vm.user.profile_image_url, 318);
+        // Hit the image server for this user's profile image
+        return dsimg.getUserProfileImage(vm.user.id);
+      })
+      .then((response) => {
+        // If we get a meaningful response from the image server,
+        // generate a URL for the profile image
+        const publicID = response.data.image.public_id;
+        const url = $.cloudinary.url(publicID, {
+          width: 318,
+          height: 318,
+          crop: 'fill',
+        });
+        vm.user.profileImageUrl = url;
       });
     }
   }
 
-  OwnProfileController.$inject = ['cloudinaryTransformation', 'dsapi'];
+  OwnProfileController.$inject = ['$uibModal', 'cloudinaryTransformation', 'dsapi', 'dsimg',];
   angular.module('divesites').controller('OwnProfileController', OwnProfileController);
 })();

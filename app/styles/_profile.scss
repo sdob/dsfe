@@ -20,6 +20,14 @@
       }
     }
   }
+  &__details {
+    padding-left: 0;
+    padding-right: 0;
+    @media (min-width: 758px) {
+      padding-left: inherit;
+      padding-right: inherit;
+    }
+  }
   &__dive-stats {
     display: flex;
     justify-content: space-around;
@@ -35,18 +43,21 @@
   }
   &__image {
     padding: 0;
+    @media (min-width: 768px) {
+      text-align: right;
+    }
     img {
       width: 100%;
       height: auto;
       @media (min-width: 768px) {
-        //height: 318px;
-        //width: 318px;
+        height: 318px;
+        width: 318px;
       }
     }
   }
   &__image-edit-button {
     position: absolute;
-    bottom: 16px;
+    top: 16px;
     right: 16px;
     color: #fff;
   }

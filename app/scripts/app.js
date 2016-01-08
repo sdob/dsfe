@@ -1,8 +1,13 @@
 (function () {'use strict';
  const API_URL = 'http://localhost:8000/';
+ const IMG_API_URL = 'http://localhost:9001';
  angular.module('divesites', [
-   'LocalStorageModule', 'ngRoute', 'uiGmapgoogle-maps',
-   'ui.bootstrap', 'satellizer'
+   'LocalStorageModule',
+   'ngFileUpload',
+   'ngRoute',
+   'satellizer',
+   'uiGmapgoogle-maps',
+   'ui.bootstrap',
  ])
  .config(function ($routeProvider) {
    $routeProvider
@@ -38,12 +43,14 @@
    });
  })
  .constant('API_URL', API_URL)
+ .constant('IMG_API_URL', IMG_API_URL)
  .config(($authProvider) => {
    // Send login attempts to our API server
    $authProvider.loginUrl = `${API_URL}api-token-auth/`;
    $authProvider.authToken = 'Token';
  })
  .run(($rootScope) => {
+   $.cloudinary.config().cloud_name = 'divesites';
    $rootScope.$on('$routeChangeStart', (event, next, current) => {
      console.log('$routeChangeStart');
    });
