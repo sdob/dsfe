@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, dsapi, informationCardCharts, localStorageService) {
+  function InformationCardController($auth, $document, $location, $rootScope, $scope, dsapi, dsimg, informationCardCharts, localStorageService) {
     const vm = this;
     activate();
 
@@ -15,13 +15,29 @@
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
+      // XXX: for dev purposes only, set header image
       vm.site.header_image_url = 'http://lorempixel.com/512/178/nature/' + (parseInt(Math.random() * 20) + 1);
 
-      // XXX: for dev purposes only, set header image
-      const depths = vm.site.dives.map((d) => d.depth);
-      const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
+      // Contact image server for divesite images
+      dsimg.getDivesiteImages(vm.site.id)
+      .then((response) => {
+        console.info(response);
+      });
+      // Contact image server for profile images of dives
+      vm.site.dives.forEach((dive) => {
+        dsimg.getUserProfileImage(dive.diver.id)
+        .then((response) => {
+          // We're expecting a JSON object containing at least {image: {public_id: String}}
+          console.log(response);
+          if (response.image && response.image.public_id) {
+            dive.diver.profileImageId = response.image.public_id;
+          }
+        });
+      });
 
       // Build depth and duration histograms (if we have the data we need)
+      const depths = vm.site.dives.map((d) => d.depth);
+      const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
       if (!!depths.length) {
         const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 0, 100);
         $('#information-card-depth-histogram-container').append(dh);
@@ -63,13 +79,20 @@
     }
 
     function userIsOwner(site) {
-      console.log(localStorageService.get('user'));
-      console.log(site.owner);
       return localStorageService.get('user') === site.owner.id;
     }
 
   }
 
-  InformationCardController.$inject = ['$auth', '$document', '$location', '$rootScope', '$scope', 'dsapi', 'informationCardCharts', 'localStorageService',];
+  InformationCardController.$inject = ['$auth',
+    '$document',
+    '$location',
+    '$rootScope',
+    '$scope',
+    'dsapi',
+    'dsimg',
+    'informationCardCharts',
+    'localStorageService',
+  ];
   angular.module('divesites').controller('InformationCardController', InformationCardController);
 })();
