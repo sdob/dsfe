@@ -27,10 +27,18 @@
       vm.site.dives.forEach((dive) => {
         dsimg.getUserProfileImage(dive.diver.id)
         .then((response) => {
-          // We're expecting a JSON object containing at least {image: {public_id: String}}
-          console.log(response);
-          if (response.image && response.image.public_id) {
-            dive.diver.profileImageId = response.image.public_id;
+          if (response.data) {
+            console.log('profile image data');
+            console.log(response.data);
+            // We're expecting a JSON object containing at least {image: {public_id: String}}
+            console.log(response.data);
+            if (response.data.image && response.data.image.public_id) {
+              dive.diver.profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+                height: 60,
+                width: 60,
+                crop: 'fill',
+              });
+            }
           }
         });
       });
@@ -65,16 +73,16 @@
       }
       switch (evt.which) {
         // Handle ESC keypress
-        case 27: {
-          // Wrapping this in $scope.$apply forces the
-          // search params to update immediately
-          evt.preventDefault();
-          $scope.$apply(() => {
-            $location.search('');
-            $('information-card').remove();
-          });
-        }
-        break;
+      case 27: {
+        // Wrapping this in $scope.$apply forces the
+        // search params to update immediately
+        evt.preventDefault();
+        $scope.$apply(() => {
+          $location.search('');
+          $('information-card').remove();
+        });
+      }
+      break;
       }
     }
 
