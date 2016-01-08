@@ -3,14 +3,44 @@
         <h1 class="col-xs-12">Change profile image</h1>
     </div>
     <div class="row compare-images">
-        <div class="col-sm-6">
-            <h2>Current image</h2>
-            <img
-            style="width: 100%; height: auto;"
-            ng-src="{{vm.user.profileImage}}" />
-        </div>
-        <div class="col-sm-6">
-            <h2>uploada</h2>
-        </div>
+        <form name="uploadForm">
+            <div class="col-xs-12">
+                <input type="file"
+                ngf-select
+                ng-model="vm.imgFile"
+                name="file"
+                accept="image/*"
+                required
+                >
+            </div>
+            <div class="col-xs-12 thumb-preview-container">
+                <img
+                ngf-thumbnail="vm.imgFile"
+                class="thumb-preview"
+                >
+            </div>
+            <div class="col-xs-12 ds-form__submit-row">
+                <button type="button"
+                    ng-click="vm.cancelUpload()"
+                    class="btn btn-default big-button">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="btn btn-default big-button"
+                    ng-disabled="!uploadForm.$valid"
+                    ng-click="vm.submit(vm.imgFile)"
+                    >
+                <span
+                    class="fa fa-fw fa-spinner fa-spin"
+                    ng-show="vm.isSaving"
+                    ></span>
+                <span
+                    ng-show="!vm.isSaving"
+                    >
+                    Upload
+                </span>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

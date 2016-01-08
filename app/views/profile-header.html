@@ -1,7 +1,7 @@
 <div class="profile-header">
     <div class="profile-header__image col-sm-4">
-        <div ng-if="user.profileImage">
-            <img ng-src="{{user.profileImage}}" />
+        <div ng-if="user.profileImageUrl">
+            <img ng-src="{{user.profileImageUrl}}" />
             <a href
                 ng-click="vm.summonProfileImageUploadModal()"
                 ng-if="editable"
@@ -10,13 +10,15 @@
                 <i class="fa fa-fw fa-pencil-square fa-2x"><span class="sr-only">Edit</span></i>
             </a>
         </div>
-        <div ng-if="!user.profileImage"
+        <div ng-if="!user.profileImageUrl"
             class="profile-header--no-image-outer"
             >
             <div
                 ng-if="editable"
                 class="profile-header--no-image-inner">
-                <a href class="profile-header-no-image-link">
+                <a href
+                    ng-click="vm.summonProfileImageUploadModal()"
+                    class="profile-header-no-image-link">
                     <i class="fa fa-fw fa-user fa-3x"></i>
                     <div>Add a profile image!</div>
                 </a>
@@ -49,7 +51,7 @@
                 <li class="action-item">
                     <a href>
                         <span>
-                            <i class="fa fa-fw fa-2x fa-pencil action-item__icon"></i>
+                            <i class="fa fa-fw fa-2x fa-list action-item__icon"></i>
                         </span>
                         <span class="action-item__desc">
                             Log a dive

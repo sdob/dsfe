@@ -43,12 +43,15 @@
   }
   &__image {
     padding: 0;
+    @media (min-width: 768px) {
+      text-align: right;
+    }
     img {
       width: 100%;
       height: auto;
       @media (min-width: 768px) {
-        //height: 318px;
-        //width: 318px;
+        height: 318px;
+        width: 318px;
       }
     }
   }

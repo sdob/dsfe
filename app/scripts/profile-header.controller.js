@@ -9,8 +9,7 @@
     }
 
     function summonImageUploadModal () {
-      console.log('$scope:');
-      console.log($scope);
+      // Summon a modal dialog to allow the user to upload a new image
       const instance = $uibModal.open({
         templateUrl: 'views/upload-profile-image-modal.html',
         controller: 'ProfileImageUploadController',
