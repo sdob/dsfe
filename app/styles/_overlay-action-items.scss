@@ -1,0 +1,12 @@
+.overlay-action-item {
+  color: #fff;
+  .background {
+    color: rgba(0, 0, 0, 0.32);
+    
+  }
+  &:hover {
+    .background {
+      color: rgba(0,0, 0, 0.7);
+    }
+  }
+}

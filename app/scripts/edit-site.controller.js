@@ -1,41 +1,31 @@
 (function () {
   'use strict';
-  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, dsapi, mapSettings) {
+  function EditSiteController($routeParams, $scope, $uibModal, $window, Upload, dsapi, dsimg, mapSettings) {
     const vm = this;
     activate();
 
     function activate() {
       console.log('EditSiteController.activate()');
       console.log(`$routeParams.divesiteId: ${$routeParams.divesiteId}`);
+      // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
-      vm.map = mapSettings.get();
-      // Set default marker
-      vm.marker = {
-        id: 0,
-        coords: {
-          latitude: vm.map.center.latitude,
-          longitude: vm.map.center.longitude,
-        },
-        options: {
-          draggable: true,
-        },
-      };
-      // Set default site
-      vm.site = vm.site || {
-        boat_entry: false,
-        shore_entry: false,
-        coords: {
-          latitude: vm.map.center.latitude,
-          longitude: vm.map.center.longitude,
-        },
-      };
+      vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
+      vm.removeImageThumbnail = removeImageThumbnail;
       vm.submit = submit;
       vm.summonCancelEditingModal = summonCancelEditingModal;
-      // Pre-validate checkboxes
-      vm.checkAtLeastOneEntryIsSelected();
-      //console.log(`is at least one entry selected? ${vm.atLeastOneEntryIsSelected}`);
+      vm.handleSuccessfulSave = handleSuccessfulSave;
 
-      // If we're passed a divesite ID, then we're expecting to edit
+      // Retrieve map settings
+      vm.map = mapSettings.get();
+      // Set default marker
+      vm.marker = defaultMarker();
+      // Set default site
+      vm.site = defaultSite();
+
+      // Pre-validate checkboxes (XXX: why?)
+      vm.checkAtLeastOneEntryIsSelected();
+
+      // If we were passed a divesite ID, then we're expecting to edit
       // an existing divesite.
       if ($routeParams.divesiteId) {
         // We are editing a site...
@@ -57,6 +47,15 @@
             },
           };
           vm.checkAtLeastOneEntryIsSelected();
+        })
+        .then(() => dsimg.getDivesiteHeaderImage(vm.site.id))
+        .then((response) => {
+          console.log('response...');
+          console.log(response);
+          if (response.data && response.data.image && response.data.image.url) {
+            vm.site.headerImageUrl = response.data.image.url;
+            console.log(vm.site.headerImageUrl);
+          }
         });
         // TODO: handle invalid/missing divesite IDs
       }
@@ -64,6 +63,38 @@
 
     function checkAtLeastOneEntryIsSelected() {
       vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
+    }
+
+    function defaultMarker() {
+      return {
+        id: 0,
+        coords: {
+          latitude: vm.map.center.latitude,
+          longitude: vm.map.center.longitude,
+        },
+        options: {
+          draggable: true,
+        },
+      };
+    }
+
+    function defaultSite() {
+      return vm.site || {
+        boat_entry: false,
+        shore_entry: false,
+        coords: {
+          latitude: vm.map.center.latitude,
+          longitude: vm.map.center.longitude,
+        },
+      };
+    }
+
+    function prepareToDeleteExistingHeaderImage() {
+      vm.site.headerImageUrl = null;
+    }
+
+    function removeImageThumbnail() {
+      delete vm.imgFile;
     }
 
     function submit() {
@@ -78,6 +109,8 @@
         return;
       }
 
+      // Disable the save button while we contact the API server
+      vm.isSaving = true;
 
       // Re-format site data
       const data = Object.assign({}, vm.site);
@@ -85,28 +118,47 @@
       data.longitude = data.coords.longitude;
       delete data.coords;
       console.log(data);
-      // Disable the save button while we contact the API server
-      vm.isSaving = true;
-      // method depends on whether we're editing or adding
+
+      // Our call to the API server depends on whether we're creating a new
+      // divesite or editing an existing one --- which we can determine based
+      // on whether we were passed a route parameter when the controller was
+      // initialized
+      let apiCall;
       if ($routeParams.divesiteId) {
-        dsapi.updateDivesite($routeParams.divesiteId)
-        .then((response) => {
-          console.log('return from api');
-          console.log(response);
-          vm.isSaving = false;
-        });
+        apiCall = () => dsapi.updateDivesite($routeParams.divesiteId, data);
       } else {
-        dsapi.postDivesite(data)
-        .then((response) => {
-          console.log('return from api');
-          console.log(response);
-          vm.isSaving = false;
-        });
+        apiCall = () => dsapi.postDivesite(data);
       }
+
+      // We are either:
+      // (a) creating or replacing the current divesite header image;
+      // (b) deleting the divesite header image; or
+      // (c) doing nothing with the header image (the default)
+      let imgServerCall = () => Promise.resolve(); // nop (default)
+      if (vm.imgFile) { // creating or replacing
+        imgServerCall = () => uploadHeaderImage(vm.imgFile);
+      } else if (!vm.site.headerImageUrl) { // deleting or not adding
+        imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
+      }
+
+      imgServerCall()
+      .then(apiCall)
+      .then((response) => {
+        console.log('return from api');
+        console.log(response);
+        vm.isSaving = false;
+        // TODO: summon a modal offering to take the user back
+        vm.handleSuccessfulSave();
+      })
+      .catch((err) => {
+        vm.isSaving = false;
+        console.log('I GOT AN ERROR');
+        console.log(err);
+        // TODO: handle 4xx and 5xx errors
+      });
     }
 
     function summonCancelEditingModal() {
-      console.log($window);
       if ($scope.siteForm.$dirty) {
         // If the form has been edited, then confirm that the user
         // is OK with losing their changes
@@ -122,8 +174,30 @@
         $window.history.back();
       }
     } 
+
+
+    function handleSuccessfulSave() {
+      $window.history.back();
+    }
+
+
+    function uploadHeaderImage(file) {
+      return Upload.upload({
+        data: {image: file},
+        url: `${dsimg.IMG_API_URL}/divesites/${vm.site.id}/header`,
+      });
+    }
   }
 
-  EditSiteController.$inject = ['$routeParams', '$scope', '$timeout', '$uibModal', '$window', 'dsapi', 'mapSettings'];
+  EditSiteController.$inject = [
+    '$routeParams',
+    '$scope',
+    '$uibModal',
+    '$window',
+    'Upload',
+    'dsapi',
+    'dsimg',
+    'mapSettings',
+  ];
   angular.module('divesites').controller('EditSiteController', EditSiteController);
 })();
