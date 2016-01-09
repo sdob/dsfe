@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, dsapi, dsimg, informationCardCharts, localStorageService) {
+  function InformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardCharts, localStorageService) {
     const vm = this;
     activate();
 
@@ -15,10 +15,7 @@
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
-      // Initial background style for information card header,
-      // which we'll replace when the image data arrive
-      vm.backgroundStyle = { };
-      console.log(vm.backgroundStyle);
+      vm.summonUploadDivesiteImageModal = summonUploadDivesiteImageModal;
 
 
       // Contact image server for header image
@@ -103,6 +100,18 @@
       }
     }
 
+    function summonUploadDivesiteImageModal() {
+      console.log('summoning image upload modal');
+      $uibModal.open({
+        templateUrl: 'views/upload-divesite-image-modal.html',
+        controller: 'UploadDivesiteImageController',
+        controllerAs: 'vm',
+        resolve: {
+          divesite: () => $scope.site,
+        },
+      });
+    }
+
     function userIsOwner(site) {
       return localStorageService.get('user') === site.owner.id;
     }
@@ -114,6 +123,7 @@
     '$location',
     '$rootScope',
     '$scope',
+    '$uibModal',
     'dsapi',
     'dsimg',
     'informationCardCharts',
