@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function LoginModalController($auth, $scope, $uibModalInstance, API_URL, localStorageService) {
+  function LoginModalController($auth, $scope, $uibModalInstance, API_URL, dsapi, localStorageService) {
     const vm = this;
     activate();
 
@@ -17,11 +17,15 @@
       // Use Satellizer to login on the API server
       $auth.login({username: user, password: password})
       .then((response) => {
-        // On success,
-        console.log(response);
-        localStorageService.set('user', response.data.user);
         // Dismiss the login modal
         $uibModalInstance.close();
+      })
+      // Get the user's profile from the API server
+      .then(dsapi.getOwnProfile)
+      .then((response) => {
+        // Store the user ID
+        console.log(response);
+        localStorageService.set('user', response.data.id);
       })
       .catch((response) => {
         console.error('error from api server');
@@ -30,6 +34,6 @@
     }
   }
 
-  LoginModalController.$inject = ['$auth', '$scope', '$uibModalInstance', 'API_URL', 'localStorageService',];
+  LoginModalController.$inject = ['$auth', '$scope', '$uibModalInstance', 'API_URL', 'dsapi', 'localStorageService',];
   angular.module('divesites').controller('LoginModalController', LoginModalController);
 })();
