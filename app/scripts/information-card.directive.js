@@ -13,14 +13,12 @@
         // TODO: refactor
         $('#js-information-card__depth-chart-toggle')
         .click((e) => {
-          console.log(e);
           $('#js-information-card__depth-chart-toggle')
           .find('.chart-header__chevron')
           .toggleClass('opened');
         });
         $('#js-information-card__duration-chart-toggle')
         .click((e) => {
-          console.log(e);
           $('#js-information-card__duration-chart-toggle')
           .find('.chart-header__chevron')
           .toggleClass('opened');

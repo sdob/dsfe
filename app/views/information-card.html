@@ -43,7 +43,10 @@
                         ng-if="icvm.site.depth"
                         class="information-card__chart chart-header__chevron fa fa-chevron-down"></span>
                 </a>
-                <div id="information-card__depth-collapse" class="collapse">
+                <div
+                    ng-show="icvm.site.dives.length"
+                    class="collapse"
+                    id="information-card__depth-collapse">
                     <div class="">
                         <div
                             class="information-card-chart-container"
@@ -66,7 +69,9 @@
                         ng-if="icvm.site.duration"
                         class=" information-card__chart chart-header__chevron fa fa-chevron-down"></span>
                 </a>
-                <div class="collapse"
+                <div
+                    ng-show="icvm.site.dives.length"
+                    class="collapse"
                     id="information-card__duration-collapse">
                     <div class="">
                         <div
