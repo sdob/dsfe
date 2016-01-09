@@ -40,6 +40,11 @@
      template: '<profile></profile>',
      controller: 'OwnProfileController',
      controllerAs: 'vm',
+   })
+   .when('/upload-divesite-image/:id', {
+     templateUrl: '<upload-divesite-image></upload-divesite-image>',
+     controller: 'UploadDivesiteImageController',
+     controllerAs: 'vm',
    });
  })
  .constant('API_URL', API_URL)
