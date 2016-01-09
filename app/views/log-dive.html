@@ -110,6 +110,11 @@
             </div>
         </section>
         <section class="log-dive__submit ds-form__submit-row">
+            <button
+                ng-click="ldvm.summonCancelEditingModal()"
+                type="button" class="btn btn-default big-button">
+                Quit
+            </button>
             <button type="submit" class="btn btn-default big-button"
                 ng-disabled="ldvm.saveButton.disabled"
                 ng-click="!ldvm.saveButton.disabled && ldvm.submit()">
