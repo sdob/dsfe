@@ -1,6 +1,6 @@
 <div class="information-card shadow-2dp" ng-show="icvm.visible">
-    <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.header_image_url}"
-        ng-style="{'background': 'url(\'' + icvm.site.header_image_url + '\') center / cover'}"
+    <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.headerImageUrl}"
+        ng-style="icvm.backgroundStyle"
         >
         <div class="information-card__divesite-title">
             <h2 class="information-card__divesite-name">
@@ -13,18 +13,15 @@
     </div>
     <div class="information-card__header-actions">
         <a href
-            class="header__action-item"
+            class="overlay-action-item"
             ng-click="icvm.dismiss()">
             <span class="fa fa-stack fa-2x">
-                <i class="fa fa-stack-2x fa-circle"></i>
+                <i class="fa fa-stack-2x fa-circle background"></i>
                 <i class="fa fa-stack-1x fa-times"></i>
             </span>
         </a>
     </div>
-    <div class=""
-        ng-class="{'has-header-image': !!icvm.site.header_image_url}">
-    </div>
-    <div class="">
+    <div>
         <div class="information-card__divesite-coordinates">
             <div class="information-card__divesite-coordinate">
                 {{ icvm.site.latitude }} ° N
@@ -89,7 +86,7 @@
                 ng-if="icvm.userIsOwner(icvm.site)"
                 class="action-item"
                 >
-                <a href="/#/edit-site{{icvm.site.id}}">
+                <a href="/#/edit-site/{{icvm.site.id}}">
                     <span class="fa fa-pencil-square action-item__icon"></span>
                     <span class="action-item__text">Edit this site</span>
                 </a>

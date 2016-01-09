@@ -15,8 +15,25 @@
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
-      // XXX: for dev purposes only, set header image
-      vm.site.header_image_url = 'http://lorempixel.com/512/178/nature/' + (parseInt(Math.random() * 20) + 1);
+      // Initial background style for information card header,
+      // which we'll replace when the image data arrive
+      vm.backgroundStyle = { };
+      console.log(vm.backgroundStyle);
+
+
+      // Contact image server for header image
+      dsimg.getDivesiteHeaderImage(vm.site.id)
+      .then((response) => {
+        console.log(response);
+        if(response.data && response.data.image && response.data.image.public_id) {
+          const public_id = response.data.image.public_id;
+          vm.site.headerImageUrl = $.cloudinary.url(public_id, {
+          });
+          vm.backgroundStyle = {
+            'background': `blue url(${vm.site.headerImageUrl}) center / cover`,
+          };
+        }
+      });
 
       // Contact image server for divesite images
       dsimg.getDivesiteImages(vm.site.id)
