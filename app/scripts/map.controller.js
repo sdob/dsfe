@@ -1,11 +1,13 @@
 (function () {
   'use strict';
   function MapController($compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+    const defaultMapMarkerIcon = '/img/ic_place_black_36dp.png';
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+
 
       // If there's a 'divesite' query param in the URL,
       // then try and summon the information card
@@ -124,6 +126,7 @@
         boatEntry: s.boat_entry,
         depth: s.depth,
         level: s.level,
+        icon: defaultMapMarkerIcon,
         id: s.id,
         loc: {
           latitude: s.latitude,

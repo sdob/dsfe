@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function LogDiveController($location, $routeParams, $scope, $timeout, dsapi, mapSettings) {
+  function LogDiveController($location, $routeParams, $scope, $timeout, $uibModal, dsapi, mapSettings) {
     const vm = this;
     activate();
 
@@ -23,6 +23,10 @@
       };
       vm.submit = submit;
 
+      // Wire up functions
+      vm.summonCancelEditingModal = summonCancelEditingModal;
+
+      // Retrieve divesite data
       dsapi.getDivesite($routeParams.divesiteId)
       .then((response) => {
         vm.site = response.data;
@@ -30,9 +34,11 @@
       console.log(vm.dive.date);
     }
 
+
     function checkForError(form, formElement) {
       return formElement.$error.required && (form.$submitted || formElement.$touched);
     }
+
 
     function combineDateAndTime(date, time) {
       const year = moment(date).year();
@@ -43,6 +49,7 @@
       const combined = moment([year, month, day, hour, minute]);
       return combined;
     }
+
 
     function submit() {
       console.log('logDive.submit()');
@@ -90,8 +97,26 @@
         console.log(response);
       });
     }
+
+
+    function summonCancelEditingModal() {
+      console.log('summoning cancelling editing');
+      $uibModal.open({
+        templateUrl: 'views/cancel-editing-modal.html',
+        controller: 'CancelEditingModalController',
+        controllerAs: 'cevm',
+      });
+    }
   }
 
-  LogDiveController.$inject = ['$location', '$routeParams', '$scope', '$timeout', 'dsapi', 'mapSettings',];
+  LogDiveController.$inject = [
+    '$location',
+    '$routeParams',
+    '$scope',
+    '$timeout',
+    '$uibModal',
+    'dsapi',
+    'mapSettings',
+  ];
   angular.module('divesites').controller('LogDiveController', LogDiveController);
 })();
