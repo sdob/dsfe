@@ -14,7 +14,7 @@
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
       getUserProfileImage: (userID) => {
-        console.log(`dsimg.getUserProfileImage(${userID})`);
+        //console.log(`dsimg.getUserProfileImage(${userID})`);
         return $http.get(`${IMG_API_URL}/users/${userID}/profile`);
       },
 

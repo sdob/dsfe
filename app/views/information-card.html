@@ -111,9 +111,7 @@
                 ng-if="icvm.isAuthenticated()"
                 class="action-item"
                 >
-                <a href
-                    ng-click="icvm.summonUploadDivesiteImageModal()"
-                    >
+                <a href="/#/upload-divesite-image/{{icvm.site.id}}">
                     <span
                         class="fa fa-camera action-item__icon"
                         ></span>
@@ -134,6 +132,20 @@
         </ul>
     </div> <!-- end of actions bar -->
 
+
+    <div ng-if="icvm.site.images.length" class="information-card__divesite-images">
+        <h3 class="divesite-images__title">Pictures</h3>
+        <div class="information-card__divesite-image-container">
+            <a
+                href
+                ng-click="icvm.showBiggerImage(img)"
+                ng-repeat="img in icvm.site.images"
+                class="information-card__divesite-image"
+                >
+                <img ng-src="{{img.transformedUrl}}" />
+            </a>
+        </div>
+    </div> <!-- end of image thumbs -->
 
 
     <div class="information-card__dive-list">

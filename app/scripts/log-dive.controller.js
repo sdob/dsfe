@@ -104,7 +104,7 @@
       $uibModal.open({
         templateUrl: 'views/cancel-editing-modal.html',
         controller: 'CancelEditingModalController',
-        controllerAs: 'cevm',
+        controllerAs: 'vm',
       });
     }
   }

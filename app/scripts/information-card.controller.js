@@ -9,14 +9,14 @@
       vm.dismiss = dismiss;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.site = $scope.site;
+      vm.site.images = {}; // Ensure that this is never undefined
       vm.userIsOwner = userIsOwner;
       vm.visible = true;
       // Initially collapse depth histogram
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
-      vm.summonUploadDivesiteImageModal = summonUploadDivesiteImageModal;
-
+      vm.showBiggerImage = showBiggerImage;
 
       // Contact image server for header image
       dsimg.getDivesiteHeaderImage(vm.site.id)
@@ -35,17 +35,29 @@
       // Contact image server for divesite images
       dsimg.getDivesiteImages(vm.site.id)
       .then((response) => {
-        console.info(response);
+        /*
+        vm.site.images = response.data.map((x) => $.cloudinary.url(x.image.public_id, {
+          height: 60,
+          width: 60,
+          crop: 'fill',
+        }));
+        */
+       vm.site.images = response.data.map((item) => item.image);
+       vm.site.images.forEach((image) => {
+         image.transformedUrl = $.cloudinary.url(image.public_id, {
+           height: 60,
+           width: 60,
+           crop: 'fill',
+         });
+       });
       });
+
       // Contact image server for profile images of dives
       vm.site.dives.forEach((dive) => {
         dsimg.getUserProfileImage(dive.diver.id)
         .then((response) => {
           if (response.data) {
-            console.log('profile image data');
-            console.log(response.data);
             // We're expecting a JSON object containing at least {image: {public_id: String}}
-            console.log(response.data);
             if (response.data.image && response.data.image.public_id) {
               dive.diver.profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
                 height: 60,
@@ -100,17 +112,26 @@
       }
     }
 
-    function summonUploadDivesiteImageModal() {
-      console.log('summoning image upload modal');
+    // Show a full-size version of the image in a modal
+    function showBiggerImage(img) {
+      console.log('showBiggerImage');
+      console.log(img);
       $uibModal.open({
-        templateUrl: 'views/upload-divesite-image-modal.html',
-        controller: 'UploadDivesiteImageController',
+        controller: ($scope, image) => {
+          // TODO: assigning to 'vm.image' doesn't seem to work; I
+          // need to work out why.
+          $scope.image = image;
+        },
         controllerAs: 'vm',
         resolve: {
-          divesite: () => $scope.site,
+          image: () => img,
         },
+        templateUrl: 'views/show-full-size-image.html',
+        size: 'lg',
+        //scope: $scope,
       });
     }
+
 
     function userIsOwner(site) {
       return localStorageService.get('user') === site.owner.id;
