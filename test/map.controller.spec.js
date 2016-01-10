@@ -23,6 +23,8 @@
         dsapi = {
           getDivesites: retrieveDivesitesSuccessfully,
           getDivesite: retrieveDivesiteSuccessfully,
+          getCompressors: retrieveSlipwaysSuccessfully,
+          getSlipways: retrieveSlipwaysSuccessfully,
         };
         filterPreferences = _filterPreferences_;
         mapSettings = _mapSettings_;
@@ -65,7 +67,13 @@
           resolve({});
         });
       }
+      function retrieveSlipwaysSuccessfully() {
+        return $q((resolve, reject) => {
+          resolve({});
+        });
+      }
     });
+
 
   });
 })();

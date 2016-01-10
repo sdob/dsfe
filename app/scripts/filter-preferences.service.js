@@ -5,10 +5,14 @@
     const self = this;
 
     const defaults = {
+      // Divesites
       boatEntry: true,
       shoreEntry: true,
       maximumDepth: MAX_DEPTH,
       maximumLevel: "2",
+      // Amenities
+      compressors: true,
+      slipways: true,
     };
 
     const get = () => {
@@ -21,6 +25,8 @@
       maximumDepth: defaults.maximumDepth,
       maximumLevel: defaults.maximumLevel,
       shoreEntry: defaults.shoreEntry,
+      compressors: defaults.compressors,
+      slipways: defaults.slipways,
     };
 
     const set = (key, value) => {
@@ -28,6 +34,8 @@
       localStorageService.set(key, value);
       $rootScope.$broadcast('filter-preferences', self.preferences);
     };
+
+    const validateBoolean = (value) => true === value || false === value;
 
     const validators = {
       boatEntry: (value) => {
@@ -42,6 +50,8 @@
       maximumLevel: (value) => {
         return value === "0" || value === "1" || value === "2";
       },
+      compressors: validateBoolean,
+      slipways: validateBoolean,
     };
 
     initialize();
@@ -57,15 +67,17 @@
       // set a valid preference.
       const keys = [
         'boatEntry',
+        'compressors',
         'maximumDepth',
         'maximumLevel',
         'shoreEntry',
+        'slipways', 
       ];
       keys.forEach((k) => {
         // Look for any entry
         if (localStorageService.keys().indexOf(k) > -1) {
           const storedValue = localStorageService.get(k);
-          // Validate it
+          // Validate it and set it if valid
           if (validators[k](storedValue)) {
             self.preferences[k] = storedValue;
           }

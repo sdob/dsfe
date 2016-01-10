@@ -2,11 +2,11 @@
     <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.headerImageUrl}"
         ng-style="icvm.backgroundStyle"
         >
-        <div class="information-card__divesite-title">
-            <h2 class="information-card__divesite-name">
+        <div class="information-card__site-title">
+            <h2 class="information-card__site-name">
                 {{ icvm.site.name }}
             </h2>
-            <h3 class="information-card__divesite-owner">
+            <h3 class="information-card__site-owner">
                 Added by <a href="/#/users/{{icvm.site.owner.id}}/">{{ icvm.site.owner.name }}</a>
             </h3>
         </div>
@@ -24,11 +24,11 @@
     </div>
 
     <div>
-        <div class="information-card__divesite-coordinates">
-            <div class="information-card__divesite-coordinate">
+        <div class="information-card__site-coordinates">
+            <div class="information-card__site-coordinate">
                 {{ icvm.site.latitude }} ° N
             </div>
-            <div class="information-card__divesite-coordinate">
+            <div class="information-card__site-coordinate">
                 {{ icvm.site.longitude }} ° E
             </div>
         </div>

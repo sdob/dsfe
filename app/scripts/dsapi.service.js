@@ -3,6 +3,9 @@
   function dsapiService($auth, $http) {
     const API_URL = 'http://localhost:8000';
     return {
+      getCompressors: () => {
+        return $http.get(`${API_URL}/compressors/`);
+      },
       getDivesite: (id) => {
         console.log(`dsapi.getDivesite(${id}`);
         return $http.get(`${API_URL}/divesites/${id}/`);
@@ -22,6 +25,12 @@
             Authorization: `Token ${token}`,
           }
         });
+      },
+      getSlipway: (id) => {
+        return $http.get(`${API_URL}/slipways/${id}`);
+      },
+      getSlipways: () => {
+        return $http.get(`${API_URL}/slipways/`);
       },
       getUserDives: (id) => $http.get(`${API_URL}/users/${id}/dives/`),
       getUserDivesites: (id) => $http.get(`${API_URL}/users/${id}/divesites/`),
