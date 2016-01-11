@@ -2,11 +2,11 @@
     <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.headerImageUrl}"
         ng-style="icvm.backgroundStyle"
         >
-        <div class="information-card__divesite-title">
-            <h2 class="information-card__divesite-name">
+        <div class="information-card__site-title">
+            <h2 class="information-card__site-name">
                 {{ icvm.site.name }}
             </h2>
-            <h3 class="information-card__divesite-owner">
+            <h3 class="information-card__site-owner">
                 Added by <a href="/#/users/{{icvm.site.owner.id}}/">{{ icvm.site.owner.name }}</a>
             </h3>
         </div>
@@ -24,26 +24,26 @@
     </div>
 
     <div>
-        <div class="information-card__divesite-coordinates">
-            <div class="information-card__divesite-coordinate">
+        <div class="information-card__site-coordinates">
+            <div class="information-card__site-coordinate">
                 {{ icvm.site.latitude }} ° N
             </div>
-            <div class="information-card__divesite-coordinate">
+            <div class="information-card__site-coordinate">
                 {{ icvm.site.longitude }} ° E
             </div>
         </div>
         <div class="information-card__charts">
             <div class="information-card__chart">
-                <a class="information-card__chart chart-header"
+                <a class="collapse-header"
                     id="js-information-card__depth-chart-toggle"
                     data-toggle="collapse"
                     data-target="#information-card__depth-collapse">
-                    <div class="information-card__chart chart-header__text">
+                    <div class="collapse-header__text">
                         Average maximum depth: {{ icvm.site.depth | number:0 }} m
                     </div>
                     <span
                         ng-if="icvm.site.depth"
-                        class="information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                        class="collapse-header__chevron fa fa-chevron-down"></span>
                 </a>
                 <div
                     ng-show="icvm.site.dives.length"
@@ -60,16 +60,16 @@
                 </div>
             </div>
             <div class="information-card__chart">
-                <a href class="information-card__chart chart-header"
+                <a href class="collapse-header"
                     id="js-information-card__duration-chart-toggle"
                     data-toggle="collapse"
                     data-target="#information-card__duration-collapse">
-                    <div class="information-card__chart chart-header__text">
+                    <div class="collapse-header__text">
                         Average dive duration: {{ icvm.site.duration }} min.
                     </div>
                     <span
                         ng-if="icvm.site.duration"
-                        class=" information-card__chart chart-header__chevron fa fa-chevron-down"></span>
+                        class="collapse-header__chevron fa fa-chevron-down"></span>
                 </a>
                 <div
                     ng-show="icvm.site.dives.length"
@@ -85,6 +85,9 @@
                 </div>
             </div>
         </div>
+
+        <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
+
         <div>
             {{ icvm.site.description }}
         </div>
@@ -111,7 +114,7 @@
                 ng-if="icvm.isAuthenticated()"
                 class="action-item"
                 >
-                <a href>
+                <a href="/#/upload-divesite-image/{{icvm.site.id}}">
                     <span
                         class="fa fa-camera action-item__icon"
                         ></span>
@@ -132,6 +135,19 @@
         </ul>
     </div> <!-- end of actions bar -->
 
+    <div ng-if="icvm.site.images.length" class="information-card__divesite-images">
+        <h3 class="divesite-images__title">Pictures</h3>
+        <div class="information-card__divesite-image-container">
+            <a
+                href
+                ng-click="icvm.showBiggerImage(img)"
+                ng-repeat="img in icvm.site.images"
+                class="information-card__divesite-image"
+                >
+                <img ng-src="{{img.transformedUrl}}" />
+            </a>
+        </div>
+    </div> <!-- end of image thumbs -->
 
 
     <div class="information-card__dive-list">

@@ -1,0 +1,6 @@
+.modal-dialog.show-full-size {
+  height: calc(100% - 20px);
+  @media (min-width: $screen-sm-min) {
+    height: calc(100% - 60px);
+  }
+}

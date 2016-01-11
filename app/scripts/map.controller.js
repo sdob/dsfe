@@ -1,13 +1,14 @@
 (function () {
   'use strict';
   function MapController($compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+    const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/ic_place_black_36dp.png';
+    const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
-
 
       // If there's a 'divesite' query param in the URL,
       // then try and summon the information card
@@ -15,10 +16,18 @@
         summonInformationCard($location.$$search.divesite);
       }
 
-      // Initialize mapMarkers as an empty array so that angular-google-maps
-      // doesn't throw a wobbly if it initializes before the divesites
+      // If there's a 'slipway' query param in the URL,
+      // try and summon the slipway information card
+      if ($location.$$search.slipway) {
+        summonSlipwayInformationCard($location.$$search.slipway);
+      }
+
+      // Initialize markers as empty arrays so that angular-google-maps
+      // doesn't throw a wobbly if it initializes before the API data
       // are retrieved
       vm.mapMarkers = [];
+      vm.slipwayMarkers  = [];
+      vm.compressorMarkers = [];
 
       // Retrieve stored map settings
       vm.map = mapSettings.get();
@@ -29,6 +38,9 @@
       // Set map marker event listeners
       vm.markerEvents = {
         click: markerClick,
+      };
+      vm.slipwayMarkerEvents = {
+        click: slipwayMarkerClick,
       };
       vm.options = {
         disableDefaultUI: true,
@@ -42,9 +54,14 @@
         // When the route updates (i.e., search params changes),
         // try and summon the information card; otherwise nuke it.
         if (c.params.divesite) {
-          summonInformationCard(c.params.divesite);
-        } else {
+          return summonInformationCard(c.params.divesite);
+        }
+        if (c.params.slipway) {
+          return summonSlipwayInformationCard(c.params.slipway);
+        }
+        {
           $('information-card').remove();
+          $('slipway-information-card').remove();
         }
       });
 
@@ -53,6 +70,19 @@
       .then((response) => {
         vm.mapMarkers = response.data.map(transformSiteToMarker);
         updateMarkerVisibility(filterPreferences.preferences);
+      });
+
+      dsapi.getCompressors()
+      .then((response) => {
+        vm.compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon));
+        updateCompressorMarkerVisibility(filterPreferences.preferences);
+      });
+
+      // Retrieve slipways
+      dsapi.getSlipways()
+      .then((response) => {
+        vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
+        updateSlipwayMarkerVisibility(filterPreferences.preferences);
       });
     }
 
@@ -67,7 +97,6 @@
         const p = proj.fromLatLngToContainerPixel(pos);
         return p;
       }
-      //console.log(map.fromLatLngToContainerPixel(marker.getPosition()));
     }
 
     /*
@@ -77,6 +106,12 @@
     function listenForPreferenceChanges(e, preferences) {
       if (vm.mapMarkers) {
         updateMarkerVisibility(preferences);
+      }
+      if (vm.slipwayMarkers) {
+        updateSlipwayMarkerVisibility(preferences);
+      }
+      if (vm.compressorMarkers) {
+        updateCompressorMarkerVisibility(preferences);
       }
     }
 
@@ -104,6 +139,10 @@
       $location.search(`divesite=${model.id}`);
     }
 
+    function slipwayMarkerClick(marker, event, model, args) {
+      $location.search(`slipway=${model.id}`);
+    }
+
     /*
      * Check site data against filter preferences to see if it should be
      * visible on the map
@@ -114,6 +153,31 @@
       const level = marker.level <= preferences.maximumLevel;
       const entries = (marker.boatEntry && preferences.boatEntry) || (marker.shoreEntry && preferences.shoreEntry);
       return depth && level && entries;
+    }
+
+
+    function summonInformationCard(divesite) {
+      // look for 'divesite' in params
+      dsapi.getDivesite(divesite)
+      .then((response) => {
+        // remove any existing information cards and add one to the DOM
+        $('information-card').remove();
+        $('slipway-information-card').remove();
+        const scope = $rootScope.$new();
+        scope.site = response.data;
+        $('map').append($compile('<information-card></information-card>')(scope));
+      });
+    }
+
+    function summonSlipwayInformationCard(slipway) {
+      dsapi.getSlipway(slipway)
+      .then((response) => {
+        $('information-card').remove();
+        $('slipway-information-card').remove();
+        const scope = $rootScope.$new();
+        scope.slipway = response.data;
+        $('map').append($compile('<slipway-information-card></slipway-information-card>')(scope));
+      });
     }
 
 
@@ -140,21 +204,36 @@
       };
     }
 
-    function summonInformationCard(divesite) {
-      // look for 'divesite' in params
-      dsapi.getDivesite(divesite)
-      .then((response) => {
-        // remove any existing information cards and add one to the DOM
-        $('information-card').remove();
-        const scope = $rootScope.$new();
-        scope.site = response.data;
-        $('map').append($compile('<information-card></information-card>')(scope));
-      });
+    function transformAmenityToMarker(s, icon) {
+      return {
+        icon,
+        id: s.id,
+        loc: {
+          latitude: s.latitude,
+          longitude: s.longitude,
+        },
+        options: {
+          visible: false,
+        },
+        title: s.name,
+      };
     }
 
     function updateMarkerVisibility(preferences) {
       vm.mapMarkers.forEach((m) => {
         m.options.visible = shouldBeVisible(m, preferences);
+      });
+    }
+
+    function updateCompressorMarkerVisibility(preferences) {
+      vm.compressorMarkers.forEach((m) => {
+        m.options.visible = preferences.compressors;
+      });
+    }
+
+    function updateSlipwayMarkerVisibility(preferences) {
+      vm.slipwayMarkers.forEach((m) => {
+        m.options.visible = preferences.slipways;
       });
     }
   }

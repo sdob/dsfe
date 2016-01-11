@@ -10,6 +10,31 @@
         </a>
         <!-- </div>-->
     <div id="js-filter-menu__collapse" class="filter-menu__content collapse">
+        <div class="filter-menu__section filter-menu__amenities">
+            <h3 class="filter-menu__section-header">
+                Amenities
+            </h3>
+            <div>
+                <label for="filter-menu-compressors">
+                    <input
+                    type="checkbox" id="filter-menu-compressors"
+                    ng-model="fmvm.preferences.compressors"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Compressors</span>
+                </label>
+            </div>
+            <div>
+                <label for="filter-menu-slipways">
+                    <input
+                    type="checkbox" id="filter-menu-slipways"
+                    ng-model="fmvm.preferences.slipways"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Slipways</span>
+                </label>
+            </div>
+        </div>
         <div class="filter-menu__section filter-menu__entry-types">
             <h3 class="filter-menu__section-header">
                 Entry types

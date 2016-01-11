@@ -1,0 +1,27 @@
+<section class="information-card__slipway-section">
+    <a href
+        class="collapse-header"
+        data-target="#information-card__slipway-list"
+        data-toggle="collapse"
+        id="js-information-card__nearby-slipways-toggle"
+        >
+        <div class="collapse-header__text">
+            Nearby slipways ({{ slipways.length }})
+        </div>
+        <span ng-if="slipways.length"
+            class="collapse-header__chevron fa fa-chevron-down"
+            ></span>
+    </a>
+    <div
+        ng-show="slipways.length"
+        class="collapse"
+        id="information-card__slipway-list"
+        >
+        <div ng-repeat="slipway in slipways">
+            <a href="/#/?slipway={{ slipway.id }}">{{ slipway.name }}</a>
+            <span>
+                {{ slipway.distanceFromDivesite | number:0 }} km
+            </span>
+        </div>
+    </div>
+</section>

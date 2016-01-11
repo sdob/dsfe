@@ -1,41 +1,30 @@
 (function () {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardCharts, localStorageService) {
+  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardCharts, localStorageService) {
     const vm = this;
     activate();
 
     function activate() {
-      console.log('HAVERSINE');
-      console.log(haversine);
       vm.dismiss = dismiss;
       vm.isAuthenticated = $auth.isAuthenticated;
-      vm.site = $scope.site;
-      vm.site.images = {}; // Ensure that this is never undefined
-      vm.userIsOwner = userIsOwner;
+      vm.site = $scope.slipway;
+      console.log('site');
+      console.log(vm.site);
       vm.visible = true;
+
+      // handle keydown events (listening for ESC keypress)
+      $document.on('keydown', keydownListener);
+      $rootScope.$on('$destroy', () => {
+        $document.off('keydown', keydownListener);
+      });
+      /*
+      vm.userIsOwner = userIsOwner;
       // Initially collapse depth histogram
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
       vm.showBiggerImage = showBiggerImage;
-
-      // Contact API server for nearby slipways
-      dsapi.getNearbySlipways(vm.site.id)
-      .then((response) => {
-        console.log('nearby slipways');
-        console.log(response.data);
-        vm.site.nearbySlipways = response.data.map((slipway) => {
-          const s = slipway;
-          // Global 'haversine' variable
-          s.distanceFromDivesite = haversine(
-            {latitude: vm.site.latitude, longitude: vm.site.longitude},
-            {latitude: slipway.latitude, longitude: slipway.longitude}
-          );
-          console.log(s.distanceFromDivesite);
-          return s;
-        });
-      });
 
       // Contact image server for header image
       dsimg.getDivesiteHeaderImage(vm.site.id)
@@ -54,13 +43,6 @@
       // Contact image server for divesite images
       dsimg.getDivesiteImages(vm.site.id)
       .then((response) => {
-        /*
-        vm.site.images = response.data.map((x) => $.cloudinary.url(x.image.public_id, {
-          height: 60,
-          width: 60,
-          crop: 'fill',
-        }));
-        */
        vm.site.images = response.data.map((item) => item.image);
        vm.site.images.forEach((image) => {
          image.transformedUrl = $.cloudinary.url(image.public_id, {
@@ -99,11 +81,7 @@
         $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
       }
 
-      // handle keydown events (listening for ESC keypress)
-      $document.on('keydown', keydownListener);
-      $rootScope.$on('$destroy', () => {
-        $document.off('keydown', keydownListener);
-      });
+      */
     }
 
     function dismiss() {
@@ -146,7 +124,6 @@
           image: () => img,
         },
         templateUrl: 'views/show-full-size-image.html',
-        windowClass: 'show-full-size',
         size: 'lg',
         //scope: $scope,
       });
@@ -159,7 +136,7 @@
 
   }
 
-  InformationCardController.$inject = ['$auth',
+  SlipwayInformationCardController.$inject = ['$auth',
     '$document',
     '$location',
     '$rootScope',
@@ -170,5 +147,5 @@
     'informationCardCharts',
     'localStorageService',
   ];
-  angular.module('divesites').controller('InformationCardController', InformationCardController);
+  angular.module('divesites').controller('SlipwayInformationCardController', SlipwayInformationCardController);
 })();
