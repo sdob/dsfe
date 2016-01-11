@@ -18,7 +18,7 @@
       vm.collapseDepthChart = true;
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
-      vm.showBiggerImage = showBiggerImage;
+      vm.showFullSizeImage = showFullSizeImage;
 
       // Contact API server for nearby slipways
       dsapi.getNearbySlipways(vm.site.id)
@@ -137,15 +137,10 @@
     }
 
     // Show a full-size version of the image in a modal
-    function showBiggerImage(img) {
-      console.log('showBiggerImage');
+    function showFullSizeImage(img) {
       console.log(img);
       $uibModal.open({
-        controller: ($scope, image) => {
-          // TODO: assigning to 'vm.image' doesn't seem to work; I
-          // need to work out why.
-          $scope.image = image;
-        },
+        controller: 'ShowFullSizeImageController',
         controllerAs: 'vm',
         resolve: {
           image: () => img,
