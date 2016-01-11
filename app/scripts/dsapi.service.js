@@ -11,11 +11,8 @@
         return $http.get(`${API_URL}/divesites/${id}/`);
       },
       getDivesites: () => $http.get(`${API_URL}/divesites/`),
-      // TODO: insert auth token into all api requests
-      getOwnId: () => {
-        console.log('dsapi.getOwnId()');
-        return $http.get(`${API_URL}/users/whoami/`, {
-        });
+      getNearbySlipways: (id) => {
+        return $http.get(`${API_URL}/divesites/${id}/nearby_slipways/`);
       },
       getOwnProfile: () => {
         console.log('dsapi.getOwnProfile()');
@@ -27,7 +24,7 @@
         });
       },
       getSlipway: (id) => {
-        return $http.get(`${API_URL}/slipways/${id}`);
+        return $http.get(`${API_URL}/slipways/${id}/`);
       },
       getSlipways: () => {
         return $http.get(`${API_URL}/slipways/`);

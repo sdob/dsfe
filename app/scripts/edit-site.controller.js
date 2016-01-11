@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function EditSiteController($routeParams, $scope, $uibModal, $window, Upload, dsapi, dsimg, mapSettings) {
+  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, Upload, dsapi, dsimg, mapSettings) {
     const vm = this;
     activate();
 
@@ -9,6 +9,7 @@
       console.log(`$routeParams.divesiteId: ${$routeParams.divesiteId}`);
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
+      vm.maintainCoordinateMaxLength = maintainCoordinateMaxLength;
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
       vm.removeImageThumbnail = removeImageThumbnail;
       vm.submit = submit;
@@ -17,8 +18,14 @@
 
       // Retrieve map settings
       vm.map = mapSettings.get();
+      vm.maintainCoordinateMaxLength();
       // Set default marker
       vm.marker = defaultMarker();
+      vm.marker.events = {
+        dragend: () => {
+          vm.maintainCoordinateMaxLength();
+        }
+      };
       // Set default site
       vm.site = defaultSite();
 
@@ -89,6 +96,18 @@
       };
     }
 
+    function maintainCoordinateMaxLength() {
+      // Truncate coordinate lengths (quick and dirty way to avoid
+      // floating-point errors that break ng-maxlength)
+      $timeout(() => {
+        console.log('truncating');
+        vm.site.coords = {
+          latitude: truncateCoordinate(vm.site.coords.latitude),
+          longitude: truncateCoordinate(vm.site.coords.longitude),
+        };
+      }, 0);
+    }
+
     function prepareToDeleteExistingHeaderImage() {
       vm.site.headerImageUrl = null;
     }
@@ -141,8 +160,11 @@
         imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
       }
 
-      imgServerCall()
-      .then(apiCall)
+      apiCall()
+      .then((response) => {
+        vm.site.id = response.data.id; // This is the edited/created site's ID
+        return imgServerCall();
+      })
       .then((response) => {
         console.log('return from api');
         console.log(response);
@@ -181,6 +203,11 @@
     }
 
 
+    function truncateCoordinate(n) {
+      return Math.round(n * 10e6) / 10e6;
+    }
+
+
     function uploadHeaderImage(file) {
       return Upload.upload({
         data: {image: file},
@@ -192,6 +219,7 @@
   EditSiteController.$inject = [
     '$routeParams',
     '$scope',
+    '$timeout',
     '$uibModal',
     '$window',
     'Upload',

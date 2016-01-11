@@ -132,6 +132,16 @@
         </ul>
     </div> <!-- end of actions bar -->
 
+    <div>
+        <h3 class="">
+            Nearby slipways
+        </h3>
+        <div
+            ng-repeat="slipway in icvm.site.nearbySlipways"
+            >
+            <a href="/#/?slipway={{ slipway.id }}">{{ slipway.name }}</a> ({{slipway.distanceFromDivesite | number:0 }} km away)
+        </div>
+    </div>
 
     <div ng-if="icvm.site.images.length" class="information-card__divesite-images">
         <h3 class="divesite-images__title">Pictures</h3>

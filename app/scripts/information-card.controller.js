@@ -6,6 +6,8 @@
     activate();
 
     function activate() {
+      console.log('HAVERSINE');
+      console.log(haversine);
       vm.dismiss = dismiss;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.site = $scope.site;
@@ -17,6 +19,23 @@
       // Initially collapse duration histogram
       vm.collapseDurationHistogram = true;
       vm.showBiggerImage = showBiggerImage;
+
+      // Contact API server for nearby slipways
+      dsapi.getNearbySlipways(vm.site.id)
+      .then((response) => {
+        console.log('nearby slipways');
+        console.log(response.data);
+        vm.site.nearbySlipways = response.data.map((slipway) => {
+          const s = slipway;
+          // Global 'haversine' variable
+          s.distanceFromDivesite = haversine(
+            {latitude: vm.site.latitude, longitude: vm.site.longitude},
+            {latitude: slipway.latitude, longitude: slipway.longitude}
+          );
+          console.log(s.distanceFromDivesite);
+          return s;
+        });
+      });
 
       // Contact image server for header image
       dsimg.getDivesiteHeaderImage(vm.site.id)
@@ -127,6 +146,7 @@
           image: () => img,
         },
         templateUrl: 'views/show-full-size-image.html',
+        windowClass: 'show-full-size',
         size: 'lg',
         //scope: $scope,
       });

@@ -28,7 +28,8 @@
     "seiyria-bootstrap-slider": "~5.3.7",
     "satellizer": "~0.13.3",
     "ng-file-upload": "~11.0.0",
-    "cloudinary-jquery": "~2.0.4"
+    "cloudinary-jquery": "~2.0.4",
+    "haversine": "*"
   },
   "overrides": {
     "bootstrap": {

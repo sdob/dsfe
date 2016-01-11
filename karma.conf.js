@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/satellizer/satellizer.js',
       'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/cloudinary-jquery/cloudinary-jquery.js',
+      'bower_components/haversine/haversine.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/app.js',
