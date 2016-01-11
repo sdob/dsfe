@@ -66,17 +66,19 @@
       const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
       const data = {
         start_time: combinedDateTime.toISOString(),
-        duration: vm.dive.duration,
+        duration: moment.duration(vm.dive.duration, 'minutes'),
         depth: vm.dive.maximumDepth,
         average_depth: vm.dive.averageDepth,
         comment: vm.dive.comment,
         divesite: vm.site.id,
       };
-      // POSt to the API server
+      console.log('duration');
+      console.log(vm.dive.duration);
+      vm.isSaving = false;
+      // POST to the API server
       dsapi.postDive(data)
       .then((response) => {
         // A successful post request
-        console.log('return');
         vm.isSaving = false;
         console.log(response);
         //return response;
@@ -93,7 +95,6 @@
         vm.isSaving = false;
       })
       .catch((response) => {
-        console.log('caught summat');
         console.log(response);
       });
     }

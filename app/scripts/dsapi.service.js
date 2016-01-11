@@ -1,7 +1,6 @@
 (function () {
   'use strict';
-  function dsapiService($auth, $http) {
-    const API_URL = 'http://localhost:8000';
+  function dsapiService($auth, $http, API_URL) {
     return {
       getCompressors: () => {
         return $http.get(`${API_URL}/compressors/`);
@@ -56,6 +55,6 @@
     };
   }
 
-  dsapiService.$inject = ['$auth', '$http',];
+  dsapiService.$inject = ['$auth', '$http', 'API_URL',];
   angular.module('divesites').factory('dsapi', dsapiService);
 })();

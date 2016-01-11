@@ -32,6 +32,9 @@
     "haversine": "*"
   },
   "overrides": {
+    "angular": {
+      "main": "angular.min.js"
+    },
     "bootstrap": {
       "main": [
         "dist/js/bootstrap.js",

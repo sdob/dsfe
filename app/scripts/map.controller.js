@@ -43,7 +43,8 @@
         click: slipwayMarkerClick,
       };
       vm.options = {
-        disableDefaultUI: true,
+        //disableDefaultUI: true,
+        streetViewControl: false,
         minZoom: 3,
       };
 

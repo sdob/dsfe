@@ -18,6 +18,8 @@
 
       // Retrieve map settings
       vm.map = mapSettings.get();
+      // Set default site
+      vm.site = defaultSite();
       vm.maintainCoordinateMaxLength();
       // Set default marker
       vm.marker = defaultMarker();
@@ -26,8 +28,9 @@
           vm.maintainCoordinateMaxLength();
         }
       };
-      // Set default site
-      vm.site = defaultSite();
+      console.log('HELLLLLLLO');
+      //console.log(vm.marker);
+      //console.log(vm.marker.coords);
 
       // Pre-validate checkboxes (XXX: why?)
       vm.checkAtLeastOneEntryIsSelected();

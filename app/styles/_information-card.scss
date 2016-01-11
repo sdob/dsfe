@@ -26,9 +26,6 @@
 
   &__chart {
     margin-bottom: 0px;
-    &:last-child {
-      margin-bottom: 8px;
-    }
     &.chart-header {
       display: flex;
       cursor: pointer;
@@ -137,6 +134,7 @@
   }
   &__site-coordinates {
     display: flex;
+    font-size: 20px;
     justify-content: space-around;
   }
   &__divesite-images {
@@ -149,6 +147,13 @@
   }
   &__divesite-image {
     margin: 8px;
+  }
+  &__site-description {
+    margin-bottom: 16px;
+    margin-top: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 20px;
   }
   &__site-name {
     font-weight: 500;

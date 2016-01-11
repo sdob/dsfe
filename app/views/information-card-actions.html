@@ -1,0 +1,42 @@
+<ul class="list-unstyled action-menu">
+    <li
+        ng-if="icvm.userIsOwner(icvm.site)"
+        class="action-item"
+        >
+        <a href="/#/edit-site/{{icvm.site.id}}">
+            <span class="fa fa-pencil-square action-item__icon"></span>
+            <span class="action-item__text">Edit this site</span>
+        </a>
+    </li>
+    <li
+        ng-if="icvm.isAuthenticated()"
+        class="action-item">
+        <a href="/#/log-dive/{{icvm.site.id}}">
+            <span class="fa fa-list action-item__icon"
+                ></span>
+            <span class="action-item__text">Log a dive here</span>
+        </a>
+    </li>
+    <li
+        ng-if="icvm.isAuthenticated()"
+        class="action-item"
+        >
+        <a href="/#/upload-divesite-image/{{icvm.site.id}}">
+            <span
+                class="fa fa-camera action-item__icon"
+                ></span>
+            <span class="action-item__text">Add a picture</span>
+        </a>
+    </li>
+    <li
+        ng-if="icvm.isAuthenticated()"
+        class="action-item"
+        >
+        <a href class="text-danger">
+            <span
+                class="fa fa-exclamation-circle action-item__icon"
+                ></span>
+            <span class="action-item__text">Report a problem</span>
+        </a>
+    </li>
+</ul>

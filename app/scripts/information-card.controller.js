@@ -88,14 +88,19 @@
         });
       });
 
+      console.log('dives recorded here...');
+      console.log(vm.site.dives);
+
       // Build depth and duration histograms (if we have the data we need)
       const depths = vm.site.dives.map((d) => d.depth);
       const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
-      if (!!depths.length) {
+      console.log('durations:');
+      console.log(durations);
+      if (depths.length) {
         const dh = informationCardCharts.createHistogram('depth', depths, 20, 512, 178, 0, 100);
         $('#information-card-depth-histogram-container').append(dh);
       }
-      if (!!durations.length) {
+      if (durations.length) {
         $('#information-card-duration-histogram-container').append(informationCardCharts.createHistogram('duration', durations));
       }
 
