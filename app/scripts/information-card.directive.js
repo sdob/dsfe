@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function InformationCard() {
+  function InformationCard(collapseBehaviour) {
     return {
       templateUrl: 'views/information-card.html',
       controller: 'InformationCardController',
@@ -10,24 +10,13 @@
         const card = element.find('.information-card');
         // Toggle chevron direction when the charts are
         // collapsed/uncollapsed
-        // TODO: refactor
-        $('#js-information-card__depth-chart-toggle')
-        .click((e) => {
-          $('#js-information-card__depth-chart-toggle')
-          .find('.chart-header__chevron')
-          .toggleClass('opened');
-        });
-        $('#js-information-card__duration-chart-toggle')
-        .click((e) => {
-          $('#js-information-card__duration-chart-toggle')
-          .find('.chart-header__chevron')
-          .toggleClass('opened');
-        });
+        $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle, #js-information-card__nearby-slipways-toggle')
+        .click(collapseBehaviour.toggleChevron);
       },
     };
   }
 
-  InformationCard.$inject = [];
+  InformationCard.$inject = ['collapseBehaviour'];
 
   angular.module('divesites').directive('informationCard', InformationCard);
 
