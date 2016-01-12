@@ -16,13 +16,15 @@
       .then((response) => {
         // If we get a meaningful response from the image server,
         // generate a URL for the profile image
-        const publicID = response.data.image.public_id;
-        const url = $.cloudinary.url(publicID, {
-          width: 318,
-          height: 318,
-          crop: 'fill',
-        });
-        vm.user.profileImageUrl = url;
+        if (response.data && response.data.image && response.data.image.public_id) {
+          const publicID = response.data.image.public_id;
+          const url = $.cloudinary.url(publicID, {
+            width: 318,
+            height: 318,
+            crop: 'fill',
+          });
+          vm.user.profileImageUrl = url;
+        }
       });
     }
   }
