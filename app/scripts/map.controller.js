@@ -1,14 +1,15 @@
 (function () {
   'use strict';
-  function MapController($compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
-    const defaultMapMarkerIcon = '/img/ic_place_black_36dp.png';
+    const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+      vm.isAuthenticated = $auth.isAuthenticated;
 
       // If there's a 'divesite' query param in the URL,
       // then try and summon the information card
@@ -239,7 +240,7 @@
     }
   }
 
-  MapController.$inject = ['$compile', '$location', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
+  MapController.$inject = ['$auth', '$compile', '$location', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
   angular.module('divesites').controller('MapController', MapController);
 
 })();

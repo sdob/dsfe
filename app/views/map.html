@@ -29,10 +29,5 @@
             >
         </ui-gmap-markers>
     </ui-gmap-google-map>
-    <a href="/#/add-site/" class="main-map__add-site-button text-shadow-2dp">
-        <span class="fa-stack text-shadow-2dp">
-            <i class="fa fa-fw fa-stack-2x fa-circle text-shadow-2dp"></i>
-            <i class="fa fa-fw fa-stack-1x fa-plus"></i>
-        </span>
-    </a>
+    <add-something-menu ng-show="mc.isAuthenticated()"></add-something-menu>
 </div>

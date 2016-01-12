@@ -1,16 +1,38 @@
 .main-map__add-site-button {
   position: absolute;
   z-index: 1;
-  bottom: 2em;
-  right: 2em;
+  bottom: 32px;
+  right: 64px;
+  //bottom: 2em;
+  //right: 2em;
   @media (min-width: 62em) {
-    bottom: 64px;
-    right: 64px;
+    //bottom: 64px;
+    //right: 64px;
   }
   .fa-stack-2x {
     color: $pink-500;
   }
   .fa-stack-1x {
     color: #fff;
+  }
+}
+.add-something-menu {
+  position: absolute;
+  bottom: calc(32px + 37px);
+  right: 66px;
+  z-index: 4; // in front of map and information card
+  background: #fff;
+  .list-group {
+    margin: 0;
+  }
+  .list-group-item {
+    border-radius: 0;
+  }
+  img.media-object {
+    width: 36px;
+    height: 36px;
+  }
+  .media-body {
+    width: initial;
   }
 }
