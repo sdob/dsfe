@@ -19,7 +19,7 @@
     // Validate
     const validators = {
       latitude: (value) => {
-        return value >= -90 && value <= -90;
+        return value >= -90 && value <= 90;
       },
       longitude: (value) => {
         return value >= -180 && value <= 180;
