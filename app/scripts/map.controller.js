@@ -178,7 +178,7 @@
         $('information-card').remove();
         $('slipway-information-card').remove();
         const scope = $rootScope.$new();
-        scope.slipway = response.data;
+        scope.site = response.data;
         $('map').append($compile('<slipway-information-card></slipway-information-card>')(scope));
       });
     }

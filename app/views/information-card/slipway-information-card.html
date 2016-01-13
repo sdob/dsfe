@@ -1,4 +1,4 @@
-<div class="information-card shadow-2dp" ng-show="icvm.visible">
+<div class="information-card shadow-2dp">
     <div class="information-card__title"
         ng-style="icvm.backgroundStyle"
         >
@@ -26,13 +26,8 @@
         </a>
     </div>
 
-    <div class="information-card__site-coordinates">
-        <div class="information-card__site-coordinate">
-            {{ icvm.site.latitude }} ° N
-        </div>
-        <div class="information-card__site-coordinate">
-            {{ icvm.site.longitude }} ° E
-        </div>
+    <div class="information-card__body">
+        <information-card-coordinates></information-card-coordinates>
     </div>
 
     <div>
