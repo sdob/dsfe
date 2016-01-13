@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardCharts, localStorageService) {
+  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, localStorageService) {
     const vm = this;
     activate();
 
@@ -144,8 +144,7 @@
     '$uibModal',
     'dsapi',
     'dsimg',
-    'informationCardCharts',
     'localStorageService',
   ];
-  angular.module('divesites').controller('SlipwayInformationCardController', SlipwayInformationCardController);
+  angular.module('divesites.informationCard').controller('SlipwayInformationCardController', SlipwayInformationCardController);
 })();
