@@ -1,0 +1,97 @@
+<section class="edit-site__details">
+
+    <site-name></site-name>
+    <section class="site-details__name">
+        <div class="form-group ds-form-group-lg"
+            ng-class="{'has-error': siteForm.siteName.$error.required && (siteForm.$submitted || siteForm.siteName.$touched)}"
+            >
+            <label for="bs-edit-site__name">
+                Site name
+            </label>
+            <input type="text" class="form-control"
+            ng-model="vm.site.name"
+            name="siteName"
+            ng-required="true"
+            id="bs-edit-site__name" placeholder="Name"
+            style="font-weight: 500"
+            >
+            <span class="help-block">
+                Give your new site a name.
+            </span>
+        </div>
+    </section>
+
+    <section class="row">
+        <section class="site-details__entries col-sm-6">
+            <div class="form-group"
+                ng-class="{'has-error': (siteForm.boatEntry.$error.required && siteForm.shoreEntry.$error.required)}"
+                >
+                <h2>Entry types</h2>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="edit-site__boat-entry"
+                        ng-model="vm.site.boat_entry"
+                        name="boatEntry"
+                        ng-change="vm.checkAtLeastOneEntryIsSelected()"
+                        ng-required="!vm.atLeastOneEntryIsSelected"
+                        value="boat_entry"> Boat
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox"
+                        id="edit-site__shore-entry"
+                        ng-change="vm.checkAtLeastOneEntryIsSelected()"
+                        ng-model="vm.site.shore_entry"
+                        name="shoreEntry"
+                        ng-required="!vm.atLeastOneEntryIsSelected"
+                        value="shore_entry"> Shore
+                    </label>
+                </div>
+                <span class="help-block">
+                    Select at least one entry type.
+                </span>
+            </div>
+        </section>
+        <section class="site-details__level col-sm-6">
+            <div class="form-group"
+                ng-class="{'has-error': siteForm.addSiteExperienceLevel.$error.required && (siteForm.$submitted || addsiteForm.addSiteExperienceLevel.$touched )}"
+                >
+                <h2>Experience level</h2>
+                <label class="radio-inline">
+                    <input type="radio" name="addSiteExperienceLevel"
+                    ng-model="vm.site.level"
+                    ng-required="true"
+                    id="edit-site-experience-level-0" value="0"> Beginner
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="addSiteExperienceLevel"
+                    ng-model="vm.site.level"
+                    ng-required="true"
+                    id="edit-site-experience-level-1" value="1"> Intermediate
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="addSiteExperienceLevel"
+                    ng-model="vm.site.level"
+                    ng-required="true"
+                    id="edit-site-experience-level-2" value="2"> Advanced
+                </label>
+                <span class="help-block">
+                    Select an appropriate experience level.
+                </span>
+            </div>
+        </section>
+    </section>
+    <section class="row">
+        <div class="col-xs-12">
+            <h3>Description</h3>
+            <textarea
+                class="form-control"
+                style="font-weight: 500"
+                ng-model="vm.site.description"
+                rows=4
+                ></textarea>
+            <span class="help-block">
+                Optional: describe this divesite.
+            </span>
+        </div>
+    </section>
+</section>

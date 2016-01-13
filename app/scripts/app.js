@@ -11,6 +11,7 @@
    'ui.bootstrap',
 
    /* Feature areas */
+   'divesites.editSite',
    'divesites.informationCard',
  ])
  .config(function ($routeProvider) {
@@ -24,9 +25,19 @@
      controller: 'EditSiteController',
      controllerAs: 'vm',
    })
+   .when('/add-slipway/', {
+     template: '<edit-slipway></edit-slipway',
+     controller: 'EditSlipwayController',
+     controllerAs: 'vm',
+   })
    .when('/edit-site/:divesiteId', {
      template: '<edit-site></edit-site>',
      controller: 'EditSiteController',
+     controllerAs: 'vm',
+   })
+   .when('/edit-slipway/:id', {
+     template: '<edit-slipway></edit-slipway>',
+     controller: 'EditSlipwayController',
      controllerAs: 'vm',
    })
    .when('/users/:userId', {

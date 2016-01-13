@@ -58,12 +58,49 @@
     self.map = mapObj;
 
     return {
+      defaultMarker,
+      defaultSite,
       get,
+      maintainCoordinateMaxLength,
       set,
     };
 
+    function defaultMarker(map) {
+      return {
+        id: 0,
+        coords: {
+          latitude: map.center.latitude,
+          longitude: map.center.longitude,
+        },
+        options: {
+          draggable: true,
+        },
+      };
+    }
+
+    function defaultSite(map) {
+      return {
+        boat_entry: false,
+        shore_entry: false,
+        coords: {
+          latitude: map.center.latitude,
+          longitude: map.center.longitude,
+        },
+      };
+    }
+
     function get() {
       return self.map;
+    }
+
+    function maintainCoordinateMaxLength(site) {
+      // Truncate coordinate lengths (quick and dirty way to avoid
+      // floating-point errors that break ng-maxlength)
+      const coords = {
+          latitude: truncateCoordinate(site.coords.latitude),
+          longitude: truncateCoordinate(site.coords.longitude),
+      };
+      return coords;
     }
 
     function set(k, v=undefined) {
@@ -80,6 +117,10 @@
         return;
       }
       return; // We were called with invalid params
+    }
+
+    function truncateCoordinate(n) {
+      return Math.round(n * 10e6) / 10e6;
     }
   }
 

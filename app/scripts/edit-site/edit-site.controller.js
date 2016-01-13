@@ -22,7 +22,7 @@
       vm.site = defaultSite();
       vm.maintainCoordinateMaxLength();
       // Set default marker
-      vm.marker = defaultMarker();
+      vm.marker = mapSettings.defaultMarker(vm.site);
       vm.marker.events = {
         dragend: () => {
           vm.maintainCoordinateMaxLength();
@@ -75,29 +75,6 @@
       vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
     }
 
-    function defaultMarker() {
-      return {
-        id: 0,
-        coords: {
-          latitude: vm.map.center.latitude,
-          longitude: vm.map.center.longitude,
-        },
-        options: {
-          draggable: true,
-        },
-      };
-    }
-
-    function defaultSite() {
-      return vm.site || {
-        boat_entry: false,
-        shore_entry: false,
-        coords: {
-          latitude: vm.map.center.latitude,
-          longitude: vm.map.center.longitude,
-        },
-      };
-    }
 
     function maintainCoordinateMaxLength() {
       // Truncate coordinate lengths (quick and dirty way to avoid
@@ -230,5 +207,5 @@
     'dsimg',
     'mapSettings',
   ];
-  angular.module('divesites').controller('EditSiteController', EditSiteController);
+  angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
 })();

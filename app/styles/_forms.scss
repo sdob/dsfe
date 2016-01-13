@@ -2,7 +2,12 @@
   padding-bottom: 32px;
 }
 .ds-form__submit-row {
+  margin-top: 16px;
   text-align: right;
+  // Space out row children
+  & > :not(:last-child) {
+    margin-right: 16px;
+  }
 }
 .ds-form-group-lg {
   label {

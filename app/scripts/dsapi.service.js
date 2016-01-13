@@ -46,6 +46,11 @@
         console.log(data);
         return $http.post(`${API_URL}/divesites/`, data);
       },
+      postSlipway: (data) => {
+        console.log(`dsapi.postSlipway()`);
+        console.log(data);
+        return $http.post(`${API_URL}/slipways/`, data);
+      },
       /* UPDATE methods */
       updateDivesite: (id, data) => {
         console.log(`dsapi.UpdateDivesite()`);

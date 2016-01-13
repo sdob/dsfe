@@ -1,7 +1,16 @@
 .edit-site {
 
+  // Apply extra left and right padding to make scrolling past the map
+  // easier on mobile devices
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
+
   &__map-container {
     width: 100%;
+  }
+
+  &__edit-site-section {
   }
 
   &__title,
@@ -10,14 +19,11 @@
   &__description,
   &__header-image,
   &__submit {
-    padding-left: 32px;
-    padding-right: 32px;
+    // padding-left: 32px;
+    // padding-right: 32px;
   }
   &__title {
     margin-bottom: 16px;
-  }
-  &__submit {
-    padding-bottom: 32px;
   }
   &__header-image-container {
     .thumb-preview-container {

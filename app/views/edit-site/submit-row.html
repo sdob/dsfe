@@ -1,0 +1,21 @@
+<section class="ds-form__submit-row">
+    <button
+        class="btn btn-default big-button"
+        ng-click="vm.summonCancelEditingModal()"
+        >
+        Quit
+    </button>
+    <button type="submit"
+        class="btn btn-primary big-button"
+        ng-disabled="vm.isSaving"
+        ng-click="!vm.isSaving && vm.submit()">
+        <span
+            class="fa fa-fw fa-spinner fa-spin"
+            ng-show="vm.isSaving"
+            ></span>
+        <span
+            ng-show="!vm.isSaving"
+            >Save
+        </span>
+    </button>
+</section>

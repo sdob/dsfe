@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  function EditSite() {
+  function editSite() {
     return {
-      templateUrl: 'views/edit-site.html',
+      templateUrl: 'views/edit-site/main.html',
       restrict: 'E',
       link: (scope, elem, attrs, ctrl) => {
         $('#add-site__boat-entry').on('click', () => {
@@ -16,7 +16,7 @@
     };
   }
 
-  EditSite.$inject = [];
+  editSite.$inject = [];
 
-  angular.module('divesites').directive('editSite', EditSite);
+  angular.module('divesites.editSite').directive('editSite', editSite);
 })();
