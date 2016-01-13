@@ -22,7 +22,7 @@
         class="collapse"
         id="information-card__slipway-list"
         >
-        <div ng-repeat="slipway in slipways">
+        <div ng-repeat="slipway in slipways" class="information-card__nearby-slipway">
             <a href="/#/?slipway={{ slipway.id }}">{{ slipway.name }}</a>
             <span>
                 {{ slipway.distanceFromDivesite | number:0 }} km
