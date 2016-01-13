@@ -26,9 +26,11 @@
 
     <information-card-actions></information-card-actions>
     <div class="information-card__body">
-        <information-card-coordinates></information-card-coordinates>
-        <information-card-charts></information-card-charts>
-        <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
+        <div class="information-card__site-statistics">
+            <information-card-coordinates></information-card-coordinates>
+            <information-card-charts></information-card-charts>
+            <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
+        </div>
 
 
         <log-dive-form ng-if="icvm.sectionVisibilities.logDiveForm"></log-dive-form>

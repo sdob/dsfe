@@ -192,6 +192,11 @@
       color: $blue-100;
     }
   }
+
+  &__site-statistics {
+    margin-bottom: 16px;
+  }
+
   &__site-title {
     z-index: 1; // On top of floor-fade
   }
