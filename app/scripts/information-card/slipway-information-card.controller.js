@@ -6,8 +6,11 @@
     activate();
 
     function activate() {
+      /* Wire up functions */
       vm.dismiss = dismiss;
       vm.isAuthenticated = $auth.isAuthenticated;
+      vm.userIsOwner = userIsOwner;
+
       vm.site = $scope.slipway;
       console.log('site');
       console.log(vm.site);
@@ -130,8 +133,8 @@
     }
 
 
-    function userIsOwner(site) {
-      return localStorageService.get('user') === site.owner.id;
+    function userIsOwner() {
+      return localStorageService.get('user') === vm.site.owner.id;
     }
 
   }

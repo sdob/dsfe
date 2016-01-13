@@ -6,11 +6,16 @@
         id="js-information-card__nearby-slipways-toggle"
         >
         <div class="collapse-header__text">
-            Nearby slipways ({{ slipways.length }})
+            Nearby slipways
         </div>
-        <span ng-if="slipways.length"
-            class="collapse-header__chevron fa fa-chevron-down"
-            ></span>
+        <div class="collapse-header__value">
+            {{ slipways.length }}
+        </div>
+        <div class="collapse-header__chevron-container">
+            <span ng-if="slipways.length"
+                class="collapse-header__chevron fa fa-chevron-down"
+                ></span>
+        </div>
     </a>
     <div
         ng-show="slipways.length"

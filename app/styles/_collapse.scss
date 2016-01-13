@@ -4,15 +4,16 @@
   cursor: pointer;
   display: flex;
   font-size: 16px;
+  margin-top: 8px;
   text-decoration: none;
   &:hover {
     text-decoration: none;
     color: darken(#333, 15%);
   }
   &__text {
-    width: 40%;
+    width: 50%;
     @media (min-width: $screen-sm-min) {
-      width: 50%;
+      width: 40%;
     }
   }
   &__value {
@@ -22,7 +23,7 @@
     }
   }
   &__chevron-container {
-    width: 40%;
+    width: 10%;
     text-align: right;
     @media (min-width: $screen-sm-min) {
       width: 10%;
