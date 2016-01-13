@@ -1,0 +1,13 @@
+<li
+    ng-if="icvm.isAuthenticated()"
+    class="action-item"
+    >
+    <a href
+        ng-class="{'well': vm.sectionVisibilities.uploadImageForm}"
+        ng-click="vm.toggleSectionVisibility('uploadImageForm')">
+        <span
+            class="fa fa-camera action-item__icon"
+            ></span>
+        <span class="action-item__text">Add an image</span>
+    </a>
+</li>
