@@ -16,6 +16,11 @@
     top: 80px;
   }
 
+  &__body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .divesite-images__title,
   .dive-list__title {
     margin: 0;
@@ -27,12 +32,10 @@
   &__chart {
     margin-bottom: 0px;
     &.chart-header {
-      display: flex;
       cursor: pointer;
       color: #333;
       text-decoration: none;
       font-size: 20px;
-      padding-left: 8px;
       &:hover {
         color: darken(#333, 15%);
       }
@@ -56,6 +59,7 @@
     display: flex;
     flex-direction: column;
   }
+
   &__dive {
     //margin-top: 16px;
     //margin-bottom: 16px;
@@ -78,6 +82,7 @@
       }
     }
   }
+
   &__divesite-title {
     z-index: 1; // On top of floor-fade
   }
@@ -131,11 +136,17 @@
     border-top: solid 1px rgba(0, 0, 0, 0.16);
   }
   &__site-coordinate {
+    padding-right: 1em;
   }
   &__site-coordinates {
     display: flex;
-    font-size: 20px;
-    justify-content: space-around;
+    font-size: 16px;
+    & :first-child {
+      width: 50%;
+    }
+    & :second-child {
+      width: 50%;
+    }
   }
   &__divesite-images {
     border-top: solid 1px rgba(0, 0, 0, 0.16);

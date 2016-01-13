@@ -119,5 +119,5 @@
     'dsapi',
     'mapSettings',
   ];
-  angular.module('divesites').controller('LogDiveController', LogDiveController);
+  angular.module('divesites.informationCard').controller('LogDiveController', LogDiveController);
 })();

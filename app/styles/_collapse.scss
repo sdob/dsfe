@@ -3,18 +3,32 @@
   color: #333;
   cursor: pointer;
   display: flex;
-  font-size: 20px;
-  padding-left: 8px;
+  font-size: 16px;
   text-decoration: none;
   &:hover {
     text-decoration: none;
     color: darken(#333, 15%);
   }
   &__text {
+    width: 40%;
+    @media (min-width: $screen-sm-min) {
+      width: 50%;
+    }
+  }
+  &__value {
+    width: 40%;
+    @media (min-width: $screen-sm-min) {
+      width: 40%;
+    }
+  }
+  &__chevron-container {
+    width: 40%;
+    text-align: right;
+    @media (min-width: $screen-sm-min) {
+      width: 10%;
+    }
   }
   &__chevron {
-    margin-left: auto;
-    margin-right: 32px;
     transition: transform 300ms;
     &.opened {
       transform: rotate(-180deg);

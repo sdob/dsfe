@@ -167,7 +167,8 @@
         $('slipway-information-card').remove();
         const scope = $rootScope.$new();
         scope.site = response.data;
-        $('map').append($compile('<information-card></information-card>')(scope));
+        console.log(scope);
+        $('map').append($compile(`<information-card></information-card>`)(scope));
       });
     }
 

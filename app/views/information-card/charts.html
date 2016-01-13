@@ -1,0 +1,64 @@
+<div class="information-card__charts">
+    <div class="information-card__chart">
+        <a 
+            class="collapse-header"
+            id="js-information-card__depth-chart-toggle"
+            data-toggle="collapse"
+            data-target="#information-card__depth-collapse">
+            <div class="collapse-header__text">
+                Average maximum depth:
+            </div>
+            <div class="collapse-header__value">
+                {{ vm.site.depth | number:0 }} m
+            </div>
+            <div class="collapse-header__chevron-container">
+                <span
+                    ng-if="vm.site.depth"
+                    class="collapse-header__chevron fa fa-chevron-down">
+                </span>
+            </div>
+        </a>
+        <div
+            ng-show="vm.site.dives.length"
+            class="collapse"
+            id="information-card__depth-collapse">
+            <div class="">
+                <div
+                    class="information-card-chart-container"
+                    id="information-card-depth-histogram-container"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="information-card__chart">
+        <a class="collapse-header"
+            id="js-information-card__duration-chart-toggle"
+            data-toggle="collapse"
+            data-target="#information-card__duration-collapse">
+            <div class="collapse-header__text">
+                Average dive duration
+            </div>
+            <div class="collapse-header__value">
+                {{ vm.site.duration }} min.
+            </div>
+            <div class="collapse-header__chevron-container">
+                <span
+                    ng-if="vm.site.duration"
+                    class="collapse-header__chevron fa fa-chevron-down"></span>
+            </div>
+        </a>
+        <div
+            ng-show="vm.site.dives.length"
+            class="collapse"
+            id="information-card__duration-collapse">
+            <div class="">
+                <div
+                    class="information-card-chart-container"
+                    id="information-card-duration-histogram-container"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

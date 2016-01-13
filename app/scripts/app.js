@@ -1,5 +1,6 @@
 (function () {'use strict';
- const API_URL = 'https://divesites-api.herokuapp.com';
+ //const API_URL = 'https://divesites-api.herokuapp.com';
+ const API_URL = 'http://localhost:8000';
  const IMG_API_URL = 'http://dsimg.herokuapp.com';
  angular.module('divesites', [
    'LocalStorageModule',
@@ -8,6 +9,9 @@
    'satellizer',
    'uiGmapgoogle-maps',
    'ui.bootstrap',
+
+   /* Feature areas */
+   'divesites.informationCard',
  ])
  .config(function ($routeProvider) {
    $routeProvider

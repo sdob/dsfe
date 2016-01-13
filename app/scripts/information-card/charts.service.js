@@ -15,7 +15,6 @@
       if (xMax === undefined) {
         _xMax = d3.max(values);
       } 
-      console.log(`createHistogram: _xMin: ${_xMin}, _xMax: ${_xMax}`);
 
       // x scale
       const x = d3.scale.linear()
@@ -70,6 +69,6 @@
   }
 
   InformationCardChartsService.$inject = ['$document'];
-  angular.module('divesites').factory('informationCardCharts', InformationCardChartsService);
+  angular.module('divesites.informationCard').factory('informationCardChartsService', InformationCardChartsService);
 
 })();

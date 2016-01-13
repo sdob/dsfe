@@ -1,0 +1,64 @@
+<div class="information-card shadow-2dp">
+    <div class="information-card__title" ng-class="{'has-header-image': !!vm.site.headerImageUrl}"
+        ng-style="vm.backgroundStyle"
+        >
+        <div class="information-card__site-title">
+            <h2 class="information-card__site-name">
+                {{ vm.site.name }}
+            </h2>
+            <h3 class="information-card__site-owner">
+                Added by <a href="/#/users/{{vm.site.owner.id}}/">{{ vm.site.owner.name }}</a>
+            </h3>
+        </div>
+    </div>
+
+    <div class="information-card__header-actions">
+        <a href
+            class="overlay-action-item"
+            ng-click="vm.dismiss()">
+            <span class="fa fa-stack">
+                <i class="fa fa-stack-2x fa-circle background"></i>
+                <i class="fa fa-stack-1x fa-times"></i>
+            </span>
+        </a>
+    </div>
+
+    <information-card-actions></information-card-actions>
+    <div>
+        <table class="information-card__site-details-table">
+            <tr>
+                <th class="site-detail__name-header"></td>
+                <th class="site-detail__value-header"></th>
+                <th class="site-detail__chevron-header"></th>
+            </tr>
+            <tr class="site-detail__row"><td>Coordinates</td><td>{{ vm.site.latitude }}, {{vm.site.longitude}}</td><td></td></tr>
+            <tr><td>Average dive depth</td><td>{{ vm.site.depth | number:0 }}</td><td>more</td></tr>
+            <tr><td>Average dive duration</td><td>{{ vm.site.duration | number:0 }}</td><td>more</td></tr>
+        </table>
+        <!-- <information-card-coordinates></information-card-coordinates> -->
+        <information-card-charts></information-card-charts>
+        <nearby-slipways slipways="vm.site.nearbySlipways"></nearby-slipways>
+    </div>
+
+
+    <log-dive-form ng-if="vm.sectionVisibilities.logDiveForm"></log-dive-form>
+    <upload-image-form ng-if="vm.sectionVisibilities.uploadImageForm"></upload-image-form>
+
+    <div ng-show="vm.sectionVisibilities.default">
+        <div ng-if="vm.site.images.length" class="information-card__divesite-images">
+            <h3 class="divesite-images__title">Pictures</h3>
+            <div class="information-card__divesite-image-container">
+                <a
+                    href
+                    ng-click="vm.showFullSizeImage(img)"
+                    ng-repeat="img in vm.site.images"
+                    class="information-card__divesite-image"
+                    >
+                    <img ng-src="{{img.transformedUrl}}" />
+                </a>
+            </div>
+        </div> <!-- end of image thumbs -->
+        <dive-list></dive-list>
+    </div>
+
+</div>
