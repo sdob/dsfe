@@ -37,13 +37,11 @@
       vm.siteTypeString = 'slipway';
       vm.map = mapSettings.get();
       vm.site = mapSettings.defaultSite(vm.map);
-      vm.site.coords = mapSettings.maintainCoordinateMaxLength(vm.site);
       vm.marker = mapSettings.defaultMarker(vm.map);
       vm.marker.events = {
         dragend: () => {
           console.log('dragend');
           $timeout(() => {
-            vm.site.coords = mapSettings.maintainCoordinateMaxLength(vm.site);
           }, 0);
         }
       }; 
@@ -57,7 +55,6 @@
           // TODO: check whether the data returned are OK
           // Format site data for angular-google-maps
           vm.site = formatResponse(response);
-          vm.site.coords = mapSettings.maintainCoordinateMaxLength(vm.site);
           vm.map.center = vm.site.coords;
           vm.marker = {
             id: vm.site.id,
@@ -111,9 +108,14 @@
       const requestData = formatRequest(vm.site);
       console.log(requestData);
 
-
       if ($routeParams.id) {
         // We're editing an existing slipway
+        dsapi.updateSlipway(vm.site.id, requestData)
+        .then((response) => {
+          console.log(response);
+          vm.isSaving = false;
+          $location.path('/');
+        });
       } else {
         // We're adding a new slipway
         dsapi.postSlipway(requestData)
@@ -125,6 +127,7 @@
           }, 1000);
         })
         .catch((error) => {
+          vm.isSaving = false;
           console.error(error);
         });
       }

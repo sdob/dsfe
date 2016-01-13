@@ -57,6 +57,9 @@
         console.log(data);
         return $http.patch(`${API_URL}/divesites/${id}/`, data);
       },
+      updateSlipway: (id, data) => {
+        return $http.patch(`${API_URL}/slipways/${id}/`, data);
+      },
     };
   }
 
