@@ -3,24 +3,31 @@
         <h1 class="login-modal__title">
             Sign in
         </h1>
+        <div class="login-modal__error"
+            ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
+            >
+            Incorrect email/password combination.
+        </div>
         <div>
             <div
-                ng-class="{'has-error': true}"
                 class="form-group">
                 <label for="bs-login-modal__email">Email address</label>
                 <input
                 ng-required="true"
+                ng-model="lmvm.email"
+                name="email"
                 type="email" class="form-control" id="bs-login-modal__email"
                 placeholder="Email" >
             </div>
         </div>
         <div>
             <div
-                ng-class="{'has-error': true}"
                 class="form-group">
                 <label for="bs-login-modal__password">Password</label>
                 <input
                 ng-required="true"
+                name="password"
+                ng-model="lmvm.password"
                 type="password" class="form-control" id="bs-login-modal__password"
                 placeholder="Password" >
             </div>
@@ -28,6 +35,14 @@
                 <button type="submit"
                     ng-click="lmvm.submit()"
                     class="btn big-button">
+                    <span
+                        class="fa fa-spinner fa-spin"
+                        ng-show="lmvm.isSubmitting"
+                        >
+                    </span>
+                    <span
+                        ng-show="!lmvm.isSubmitting"
+                        >
                     Sign in
                 </button>
             </div>

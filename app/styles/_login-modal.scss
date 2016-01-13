@@ -6,3 +6,8 @@
 .login-modal__title {
   margin-top: 0;
 }
+.login-modal__error {
+  color: $error-color;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function LoginModalController($auth, $scope, $uibModalInstance, API_URL, dsapi, localStorageService) {
+  function LoginModalController($auth, $scope, $timeout, $uibModalInstance, API_URL, dsapi, localStorageService) {
     const vm = this;
     activate();
 
@@ -11,10 +11,14 @@
     function submit() {
       // Set the login form to submitted (this will flag validation errors)
       $scope.loginModalForm.$setSubmitted();
-      // XXX: hardcoded for now
-      const user = 'testuser@example.com';
-      const password = 'password';
-      // Use Satellizer to login on the API server
+      if (!$scope.loginModalForm.$valid) {
+        return;
+      }
+      vm.hasError = false;
+      vm.isSubmitting = true; // disable the save button
+      const user = vm.email;
+      const password = vm.password;
+      console.log({username: user, password: password});
       $auth.login({username: user, password: password})
       .then((response) => {
         // Dismiss the login modal
@@ -28,12 +32,15 @@
         localStorageService.set('user', response.data.id);
       })
       .catch((response) => {
+        vm.isSubmitting = false;
         console.error('error from api server');
         console.error(response.data);
+        vm.hasError = true;
+        // TODO: display error message on modal
       });
     }
   }
 
-  LoginModalController.$inject = ['$auth', '$scope', '$uibModalInstance', 'API_URL', 'dsapi', 'localStorageService',];
+  LoginModalController.$inject = ['$auth', '$scope', '$timeout', '$uibModalInstance', 'API_URL', 'dsapi', 'localStorageService',];
   angular.module('divesites').controller('LoginModalController', LoginModalController);
 })();

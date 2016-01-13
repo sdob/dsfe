@@ -1,7 +1,13 @@
 .collapsing {
+  /* Faster collapse */
   transition: height .2s ease;
 }
 .well {
+  /* Remove margin and border radius on 'well' dom objects */
   border-radius: 0;
   margin-bottom: 0;
+}
+.modal.fade .modal-dialog {
+  /* Stop Bootstrap modals from sliding */
+  transform: translate(0, 0);
 }
