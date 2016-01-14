@@ -1,7 +1,12 @@
 .collapse-header {
   align-items: center;
   color: #333;
-  cursor: pointer;
+  &.has-collapse {
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 0, 0, 0.17);
+    }
+  }
   display: flex;
   font-size: 16px;
   margin-top: 8px;
@@ -13,9 +18,6 @@
   padding-right: $information-card-body-padding;
   padding-top: 8px;
   padding-bottom:8px;
-  &:hover {
-    background: rgba(0, 0, 0, 0.17);
-  }
 
   &:hover {
     text-decoration: none;

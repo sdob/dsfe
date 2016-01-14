@@ -2,6 +2,7 @@
     <div class="information-card__chart">
         <a 
             class="collapse-header"
+            ng-class="{'has-collapse': !!vm.site.dives.length}"
             id="js-information-card__depth-chart-toggle"
             data-toggle="collapse"
             data-target="#information-card__depth-collapse">
@@ -11,7 +12,8 @@
             <div class="collapse-header__value">
                 {{ vm.site.depth | number:0 }} m
             </div>
-            <div class="collapse-header__chevron-container">
+            <div class="collapse-header__chevron-container"
+                >
                 <span
                     ng-if="vm.site.depth"
                     class="collapse-header__chevron fa fa-chevron-down">
@@ -33,6 +35,7 @@
     </div>
     <div class="information-card__chart">
         <a class="collapse-header"
+            ng-class="{'has-collapse': !!vm.site.dives.length}"
             id="js-information-card__duration-chart-toggle"
             data-toggle="collapse"
             data-target="#information-card__duration-collapse">
