@@ -7,6 +7,8 @@
   border-radius: 0;
   margin-bottom: 0;
   border: none;
+  background: $well-bg;
+  border: $well-border;
 }
 .modal.fade .modal-dialog {
   /* Stop Bootstrap modals from sliding */

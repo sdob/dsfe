@@ -13,8 +13,10 @@
         flex-direction: column;
         justify-content: center;
         padding: 8px 16px;
-        &:hover {
-          text-decoration: none;
+        text-decoration: none !important;
+        &.well {
+          background-color: darken(#fff, 30%);
+          //background: darken($well-bg, 10%);
         }
       }
       &__text {

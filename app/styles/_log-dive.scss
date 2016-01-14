@@ -3,13 +3,13 @@
   height: auto;
 }
 .has-feedback .ld-form-control {
-  padding-right: 70px;
+  padding-right: $ld-feedback-width;
 }
 .ld-feedback {
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1.42857143;
   padding-top: 6px;
   padding-bottom: 6px;
   text-align: left;
-  width: 2em;
+  width: $ld-feedback-width;
 }

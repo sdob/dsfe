@@ -1,11 +1,13 @@
 <li
     ng-if="icvm.isAuthenticated()"
-    ng-click="vm.toggleSectionVisibility('logDiveForm')"
-    class="action-item">
+    class="action-item"
+    >
     <a href
-        ng-class="{'well': vm.sectionVisibilities.logDiveForm}"
+        ng-class="{'well': icvm.sectionVisibilities.logDiveForm}"
+        ng-click="icvm.toggleSectionVisibility('logDiveForm')"
         >
-        <span class="fa fa-list action-item__icon"
+        <span
+            class="fa fa-list action-item__icon"
             ></span>
         <span class="action-item__text">Log a dive</span>
     </a>
