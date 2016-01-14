@@ -1,18 +1,13 @@
 <div class="show-full-size__container">
-    <a
-        href
-        class="fa fa-stack dismiss-modal"
-        ng-click="vm.dismiss()"
+    <div
+        class="show-full-size__image-container"
         >
-        <i class="fa fa-stack-2x fa-circle"
-            style="color: rgba(0, 0, 0, 0.17)"
-            ></i>
-        <i class="fa fa-stack-1x fa-times"
-            style="color: #fff"
-            ></i>
-    </a>
-    <img
-    class="show-full-size__image"
-    ng-src="{{image.url}}"
-    />
+        <img
+        class="show-full-size__image"
+        ng-src="{{image.image.url}}"
+        />
+    </div>
+    <div class="show-full-size__details-container">
+        {{ vm.user.name }}
+    </div>
 </div>
