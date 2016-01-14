@@ -5,11 +5,12 @@
     activate();
 
     function activate() {
+      vm.siteTypeString = 'divesite';
+
       console.log('EditSiteController.activate()');
       console.log(`$routeParams.divesiteId: ${$routeParams.divesiteId}`);
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
-      vm.maintainCoordinateMaxLength = maintainCoordinateMaxLength;
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
       vm.removeImageThumbnail = removeImageThumbnail;
       vm.submit = submit;
@@ -18,15 +19,12 @@
 
       // Retrieve map settings
       vm.map = mapSettings.get();
+      console.log(vm.map);
       // Set default site
-      vm.site = defaultSite();
-      vm.maintainCoordinateMaxLength();
+      vm.site = mapSettings.defaultSite(vm.map);
       // Set default marker
-      vm.marker = mapSettings.defaultMarker(vm.site);
+      vm.marker = mapSettings.defaultMarker(vm.map);
       vm.marker.events = {
-        dragend: () => {
-          vm.maintainCoordinateMaxLength();
-        }
       };
       console.log('HELLLLLLLO');
       //console.log(vm.marker);
@@ -73,19 +71,6 @@
 
     function checkAtLeastOneEntryIsSelected() {
       vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
-    }
-
-
-    function maintainCoordinateMaxLength() {
-      // Truncate coordinate lengths (quick and dirty way to avoid
-      // floating-point errors that break ng-maxlength)
-      $timeout(() => {
-        console.log('truncating');
-        vm.site.coords = {
-          latitude: truncateCoordinate(vm.site.coords.latitude),
-          longitude: truncateCoordinate(vm.site.coords.longitude),
-        };
-      }, 0);
     }
 
     function prepareToDeleteExistingHeaderImage() {
