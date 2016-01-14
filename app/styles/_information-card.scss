@@ -167,10 +167,25 @@
     border-top: solid 1px rgba(0, 0, 0, 0.16);
     margin-top: 16px;
     overflow-x: hidden;
+    position: relative;
+    /* Show/hide image grid button */
+    .show-grid {
+      cursor: pointer;
+      &:hover {
+        background: rgba(0, 0, 0, 0.17);
+      }
+      position: absolute;
+      top: 8px;
+      right: 0;
+      padding: 8px;
+    }
   }
   &__divesite-image-container {
     display: flex;
     overflow-x: auto;
+    &.showing-grid {
+      flex-wrap: wrap;
+    }
   }
   &__divesite-image {
     margin: 8px;

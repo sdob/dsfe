@@ -45,9 +45,22 @@
         <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
 
         <div ng-show="icvm.sectionVisibilities.default">
-            <div ng-if="icvm.site.images.length" class="information-card__divesite-images">
+            <div ng-if="icvm.site.images.length"
+                class="information-card__divesite-images"
+                >
+                <div
+                    ng-class="{'well': icvm.showingGrid}"
+                    class="show-grid">
+                    <a
+                        ng-click="icvm.showingGrid = !!!icvm.showingGrid"
+                        >
+                        <span class="fa fa-th"></span>
+                    </a>
+                </div>
                 <h3 class="divesite-images__title">Images</h3>
-                <div class="information-card__divesite-image-container">
+                <div
+                    ng-class="{'showing-grid': icvm.showingGrid}"
+                    class="information-card__divesite-image-container">
                     <a
                         href
                         ng-click="icvm.showFullSizeImage(img)"
