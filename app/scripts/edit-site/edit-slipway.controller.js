@@ -114,7 +114,13 @@
         .then((response) => {
           console.log(response);
           vm.isSaving = false;
+          // Return to the slipway information card
           $location.path('/');
+          $location.search(`slipway=${response.data.id}`);
+        })
+        .catch((err) => {
+          console.error(err);
+          // TODO: handle server-side errors
         });
       } else {
         // We're adding a new slipway
@@ -122,13 +128,18 @@
         .then((response) => {
           console.log(response);
           $timeout(() => {
+            // Add a bit of latency so that it's obvious that the request
+            // was handled
             vm.isSaving = false;
+            // Return to the slipway information card
             $location.path('/');
-          }, 1000);
+            $location.search(`slipway=${response.data.id}`);
+          }, 500);
         })
         .catch((error) => {
           vm.isSaving = false;
           console.error(error);
+          // TODO: handle server-side errors
         });
       }
 
