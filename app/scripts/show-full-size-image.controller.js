@@ -17,6 +17,14 @@
       .then(() => dsimg.getUserProfileImage(vm.user.id))
       .then((response) => {
         console.log(response.data);
+        if (response.data && response.data.image && response.data.image.public_id) {
+          vm.user.imageUrl = $.cloudinary.url(response.data.image.public_id, {
+            width: 60,
+            height: 60,
+            crop: 'fill',
+            gravity: 'face',
+          });
+        }
       });
 
     }

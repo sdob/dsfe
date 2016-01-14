@@ -8,6 +8,11 @@
         />
     </div>
     <div class="show-full-size__details-container">
-        {{ vm.user.name }}
+        <div class="details__user-profile-image">
+            <img ng-src="{{vm.user.imageUrl}}" height="60" width="60" />
+        </div>
+        <div class="details__user-name">
+            {{ vm.user.name }}
+        </div>
     </div>
 </div>
