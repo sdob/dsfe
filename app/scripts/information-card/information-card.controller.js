@@ -12,21 +12,22 @@
       // Initially show dive list
       vm.sectionVisibilities = {
         default: true,
-        uploadImageForm: false,
-        logDiveForm: false,
+          uploadImageForm: false,
+          logDiveForm: false,
       };
       // Initially collapse histograms
       vm.collapseDepthChart = true;
       vm.collapseDurationHistogram = true;
       // Wire up functions
       vm.dismiss = dismiss;
+      vm.getDivesiteImages = getDivesiteImages;
       $timeout(() => {
-      vm.isAuthenticated = $auth.isAuthenticated;
-      $scope.isAuthenticated = $auth.isAuthenticated;
-      vm.toggleSectionVisibility = toggleSectionVisibility;
-      vm.showFullSizeImage = showFullSizeImage;
-      vm.toggleUploadImageForm = toggleUploadImageForm;
-      vm.userIsOwner = userIsOwner;
+        vm.isAuthenticated = $auth.isAuthenticated;
+        $scope.isAuthenticated = $auth.isAuthenticated;
+        vm.toggleSectionVisibility = toggleSectionVisibility;
+        vm.showFullSizeImage = showFullSizeImage;
+        vm.toggleUploadImageForm = toggleUploadImageForm;
+        vm.userIsOwner = userIsOwner;
       }, 0);
 
       console.log($auth.isAuthenticated);
@@ -151,6 +152,7 @@
 
 
     function toggleUploadImageForm() {
+      console.log('toggling!');
       // If the upload image form is currently visible, hide it and
       // show the dive list (the default view)
       if (vm.sectionVisibilities.uploadImageForm) {
