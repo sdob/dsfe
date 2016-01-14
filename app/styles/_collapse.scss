@@ -1,6 +1,6 @@
 .collapse-header {
   align-items: center;
-  color: #333;
+  color: #333 !important; // Override Bootstrap
   &.has-collapse {
     cursor: pointer;
     &:hover {
@@ -9,9 +9,10 @@
   }
   display: flex;
   font-size: 16px;
-  margin-top: 8px;
-  text-decoration: none !important;
+  text-decoration: none !important; // Override Bootstrap
 
+  // Set negative margins and positive padding so that the hover
+  // effect spans the entire information card
   margin-left: -$information-card-body-padding;
   margin-right: -$information-card-body-padding;
   padding-left: $information-card-body-padding;
@@ -19,10 +20,6 @@
   padding-top: 8px;
   padding-bottom:8px;
 
-  &:hover {
-    text-decoration: none;
-    color: darken(#333, 15%);
-  }
   &__text {
     width: 50%;
     @media (min-width: $screen-sm-min) {
@@ -39,7 +36,7 @@
     width: 10%;
     text-align: right;
     @media (min-width: $screen-sm-min) {
-      width: 10%;
+      width: 20%;
     }
   }
   &__chevron {

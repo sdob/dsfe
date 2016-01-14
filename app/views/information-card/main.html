@@ -28,6 +28,14 @@
     <div class="information-card__body">
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>
+            <div class="collapse-header">
+                <div class="collapse-header__text">
+                    Level
+                </div>
+                <div class="collapse-header__value">
+                    {{ icvm.site.level | level }}
+                </div>
+            </div>
             <information-card-charts></information-card-charts>
             <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
         </div>
