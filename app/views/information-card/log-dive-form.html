@@ -35,30 +35,48 @@
 
             <div class="col-sm-4"> <!-- Max depth -->
                 <div class="form-group ds-form-group-lg has-feedback"
-                    ng-class="{'has-error': false}"
+                    ng-class="{'has-error': !logDiveForm.maximumDepth.$valid && (logDiveForm.$submitted || logDiveForm.maximumDepth.$touched)}"
                     >
-                    <label> Maximum depth</label>
-                    <input type="number"
-                    class="form-control ld-form-control"
-                    name="maximumDepth"
-                    ng-model="vm.dive.maximumDepth"
-                    ng-required="true"
+                    <label class="control-label">Maximum depth</label>
+                    <input type="number" class="form-control ld-form-control"
+                    name="maximumDepth" ng-model="vm.dive.maximumDepth"
+                    required min="0.1"
                     />
                     <span class="form-control-feedback ld-feedback">m</span>
+                    <span class="help-block"
+                        ng-show="logDiveForm.maximumDepth.$valid || logDiveForm.maximumDepth.$error.required"
+                        >Enter this dive's maximum depth.</span>
+                    <span class="help-block"
+                        ng-show="!logDiveForm.maximumDepth.$error.required && logDiveForm.maximumDepth.$error.min"
+                        >
+                        Depth must be greater than 0.
+                    </span>
                 </div>
             </div> <!-- Max depth -->
 
             <div class="col-sm-4"> <!-- Duration -->
-                <div class="form-group ds-form-group-lg has-feedback">
-                    <label>Duration</label>
+                <div class="form-group ds-form-group-lg has-feedback"
+                    ng-class="{'has-error': !logDiveForm.duration.$valid && (logDiveForm.$submitted || logDiveForm.duration.$touched)}"
+                    >
+                    <label class="control-label">Duration</label>
                     <input type="number"
                     class="form-control ld-form-control"
-                    name="duration"
-                    ng-model="vm.dive.duration"
-                    ng-required="true"
+                    name="duration" ng-model="vm.dive.duration"
+                    required
+                    min="1"
                     />
                     <span class="form-control-feedback ld-feedback">
                         min.
+                    </span>
+                    <span class="help-block"
+                        ng-show="logDiveForm.duration.$valid || logDiveForm.duration.$error.required"
+                        >
+                        Set this dive's duration (in minutes).
+                    </span>
+                    <span class="help-block"
+                        ng-show="!logDiveForm.duration.$valid && logDiveForm.duration.$error.min"
+                        >
+                        Duration must be greater than 0.
                     </span>
                 </div>
             </div> <!-- Duration -->
@@ -70,9 +88,18 @@
                     class="form-control ld-form-control"
                     name="averageDepth"
                     ng-model="vm.dive.averageDepth"
+                    min="0.1"
                     />
                     <span class="form-control-feedback ld-feedback">m</span>
                 </div>
+                <span class="help-block"
+                    ng-show="logDiveForm.averageDepth.$valid"
+                    >Optional: enter this dive's average depth.</span>
+                <span class="help-block"
+                    ng-show="logDiveForm.$error.min"
+                    >
+                    Average depth must be greater than 0.
+                </span>
             </div> <!-- Average depth -->
         </div>
 
