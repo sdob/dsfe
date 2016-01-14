@@ -1,7 +1,10 @@
 (function () {
   'use strict';
-  function InformationCardLogDiveFormController($scope, dsapi, logDiveService, uiPreferencesService) {
+  function InformationCardLogDiveFormController($scope, $timeout, dsapi, logDiveService, uiPreferencesService) {
     const vm = this;
+    // TODO: get these into scope some other way
+    vm.site = $scope.$parent.site;
+    const icvm = $scope.icvm;
     activate();
 
     function activate() {
@@ -10,15 +13,13 @@
 
       console.log('$scope: ');
       console.log($scope);
-      // TODO: get this into scope some other way
-      const site = $scope.$parent.site;
 
       // Set defaults
       const dt = logDiveService.defaultDateAndTime();
       vm.dive = {
         date: dt.date,
         time: dt.time,
-        site: site,
+        site: vm.site,
       };
       vm.options = {
         showMeridian: uiPreferencesService.get().clock === '12hr',
@@ -59,9 +60,17 @@
       .then((response) => {
         console.log('response from API server:');
         console.log(response.data);
-        $timeout(() => {
-          vm.isSaving = false;
-        }, 500);
+        dsapi.getDivesite(vm.site.id)
+        .then((response) => {
+          // TODO: ensure that the information card shows the updated data
+          // when we return
+          $timeout(() => {
+            // Add a little latency at the end of the chain to make it obvious
+            // that we've done something
+            vm.isSaving = false;
+            icvm.toggleSectionVisibility('default');
+          }, 500);
+        });
       })
       .catch((err) => {
         // Catch errors returned from the server (server error or bad request)
@@ -72,6 +81,7 @@
   }
   InformationCardLogDiveFormController.$inject = [
     '$scope',
+    '$timeout',
     'dsapi',
     'logDiveService',
     'uiPreferencesService',
