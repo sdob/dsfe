@@ -89,14 +89,17 @@
       // Contact image server for divesite images
       dsimg.getDivesiteImages(vm.site.id)
       .then((response) => {
-        vm.site.images = response.data.map((item) => item.image);
+        //vm.site.images = response.data.map((item) => item.image);
+        vm.site.images = response.data;
         vm.site.images.forEach((image) => {
-          image.transformedUrl = $.cloudinary.url(image.public_id, {
+          image.transformedUrl = $.cloudinary.url(image.image.public_id, {
             height: 60,
             width: 60,
             crop: 'fill',
           });
         });
+        console.log('vm.site.images:');
+        console.log(vm.site.images);
       });
     }
 
