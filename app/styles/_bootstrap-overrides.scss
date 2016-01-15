@@ -1,8 +1,17 @@
+@import 'bootstrap/wells';
+.link--undecorated {
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: none !important;
+  }
+}
 .collapsing {
   /* Faster collapse */
   transition: height .2s ease;
 }
-.well {
+.well--unpadded {
+  @extend .well;
+  padding: 0;
   /* Remove margin and border radius on 'well' dom objects */
   border-radius: 0;
   margin-bottom: 0;

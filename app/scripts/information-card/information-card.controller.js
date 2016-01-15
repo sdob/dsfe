@@ -63,6 +63,7 @@
                 height: 60,
                 width: 60,
                 crop: 'fill',
+                gravity: 'face',
               });
             }
           }

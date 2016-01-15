@@ -1,5 +1,16 @@
+@import 'bootstrap/mixins/';
 @import 'bootstrap/variables';
 @import 'variables';
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 200;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+
 @import 'bootstrap-overrides';
 @import 'action-menu';
 @import 'cancel-editing-modal';
@@ -27,34 +38,10 @@
 @import 'inputs';
 @import 'thumbs';
 
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 200;
-  margin: 0;
-}
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
-}
 .main-map .angular-google-map-container {
   position: absolute;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-}
-.clearfix:after {
-  content: '';
-  clear: both;
-  display: table;
-}
-.mdl-card__title.has-header-image,
-.mdl-card__menu.has-header-image {
-  color: #ffffff;
-  h2 {
-    z-index: 1; // in front of floor fade
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
 }
