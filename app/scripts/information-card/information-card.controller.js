@@ -148,7 +148,7 @@
           image: () => img,
         },
         templateUrl: 'views/show-full-size-image.html',
-        windowClass: 'show-full-size',
+        windowClass: 'show-full-size-image',
         size: 'lg',
         //scope: $scope,
       });

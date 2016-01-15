@@ -24,6 +24,7 @@
         controller: 'LoginModalController',
         controllerAs: 'lmvm',
         size: 'lg',
+        windowClass: 'sign-in',
       });
     }
   }

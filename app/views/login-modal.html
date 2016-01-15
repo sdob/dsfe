@@ -1,51 +1,106 @@
-<div class="login-modal container">
-    <form novalidate name="loginModalForm">
-        <h1 class="login-modal__title">
-            Sign in
-        </h1>
-        <div class="login-modal__error"
-            ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
-            >
-            Incorrect email/password combination.
+<div class="login-modal">
+    <h1 class="login-modal__title">
+        Sign in to divesit.es
+    </h1>
+    <div class="login-modal__form-pair-container">
+        <div class="login-modal__form login-modal__register"> <!-- register new account -->
+            <form novalidate name="registerModalForm">
+                <h2>Register</h2>
+                <div class="login-modal__error"
+                    ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
+                    >
+                    Invalid email or passwords don't match.
+                </div>
+                <div class="form-group">
+                    <label for="register__username">
+                        Email address
+                    </label>
+                    <input required name="email" class="form-control"
+                    id="register__username"
+                    placeholder="Email"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="register__password">Password</label>
+                    <input required name="password" class="form-control"
+                    id="register__password" />
+                </div>
+                <div class="form-group">
+                    <label for="register__passwordConfirm">Password (confirm)</label>
+                    <input required name="passwordConfirm" class="form-control"
+                    id="register__passwordConfirm" />
+                </div>
+                <div class="ds-form__submit-row">
+                    <button type="submit"
+                        ng-click="lmvm.submit()"
+                        class="btn btn-primary big-button">
+                        <span
+                            class="fa fa-spinner fa-spin"
+                            ng-show="lmvm.isSubmitting"
+                            >
+                        </span>
+                        <span
+                            ng-show="!lmvm.isSubmitting"
+                            >
+                            Register</span>
+                    </button>
+                </div>
+            </form>
+        </div> <!-- Register new account -->
+
+        <div class="login-modal__form-separator">
+            <span class="login-modal__form-separator-text">or</span>
         </div>
-        <div>
-            <div
-                class="form-group">
-                <label for="bs-login-modal__email">Email address</label>
-                <input
-                ng-required="true"
-                ng-model="lmvm.email"
-                name="email"
-                type="email" class="form-control" id="bs-login-modal__email"
-                placeholder="Email" >
-            </div>
-        </div>
-        <div>
-            <div
-                class="form-group">
-                <label for="bs-login-modal__password">Password</label>
-                <input
-                ng-required="true"
-                name="password"
-                ng-model="lmvm.password"
-                type="password" class="form-control" id="bs-login-modal__password"
-                placeholder="Password" >
-            </div>
-            <div class="ds-form__submit-row">
-                <button type="submit"
-                    ng-click="lmvm.submit()"
-                    class="btn big-button">
-                    <span
-                        class="fa fa-spinner fa-spin"
-                        ng-show="lmvm.isSubmitting"
-                        >
-                    </span>
-                    <span
-                        ng-show="!lmvm.isSubmitting"
-                        >
-                    Sign in
-                </button>
-            </div>
-        </div>
-    </form>
+
+        <div class="login-modal__form login-modal__sign-in"> <!-- Sign in with existing account -->
+            <form novalidate name="loginModalForm">
+                <h2>Sign in</h2>
+                <div class="login-modal__error"
+                    ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
+                    >
+                    Incorrect email/password combination.
+                </div>
+                <div>
+                    <div
+                        class="form-group">
+                        <label for="bs-login-modal__email">Email address</label>
+                        <input
+                        ng-required="true"
+                        ng-model="lmvm.email"
+                        name="email"
+                        type="email" class="form-control" id="bs-login-modal__email"
+                        placeholder="Email" >
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="form-group">
+                        <label for="bs-login-modal__password">Password</label>
+                        <input
+                        ng-required="true"
+                        name="password"
+                        ng-model="lmvm.password"
+                        type="password" class="form-control" id="bs-login-modal__password"
+                        placeholder="Password" >
+                    </div>
+                    <div class="login-modal__sign-in-row ds-form__submit-row">
+                        <button type="submit"
+                            ng-click="lmvm.submit()"
+                            class="btn btn-primary big-button">
+                            <span
+                                class="fa fa-spinner fa-spin"
+                                ng-show="lmvm.isSubmitting"
+                                >
+                            </span>
+                            <span
+                                ng-show="!lmvm.isSubmitting"
+                                >
+                                Sign in</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div> <!-- Sign in w/ existing account -->
+
+    </div>
 </div>

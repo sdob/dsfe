@@ -1,13 +1,19 @@
 .modal-content {
   border-radius: 0;
 }
-.show-full-size {
+.modal-center {
   &.modal {
     display: flex !important; // override Bootstrap modal inline
     align-items: center;
     align-content: center;
     justify-content: center;
   }
+}
+.sign-in {
+  @extend .modal-center;
+}
+.show-full-size-image {
+  @extend .modal-center;
   .modal-dialog.modal-lg {
     height: calc(100% - 60px);
     width: 80%;
