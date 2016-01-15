@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, Upload, dsapi, dsimg, mapSettings) {
+  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, Upload, dsapi, dsimg, editSiteService, mapSettings) {
     const vm = this;
     activate();
 
@@ -26,7 +26,6 @@
       vm.marker = mapSettings.defaultMarker(vm.map);
       vm.marker.events = {
       };
-      console.log('HELLLLLLLO');
       //console.log(vm.marker);
       //console.log(vm.marker.coords);
 
@@ -36,6 +35,7 @@
       // If we were passed a divesite ID, then we're expecting to edit
       // an existing divesite.
       if ($routeParams.divesiteId) {
+        vm.title = 'Edit this divesite';
         // We are editing a site...
         dsapi.getDivesite($routeParams.divesiteId)
         .then((response) => {
@@ -66,6 +66,8 @@
           }
         });
         // TODO: handle invalid/missing divesite IDs
+      } else {
+        vm.title = "Add a new divesite";
       }
     }
 
@@ -107,12 +109,15 @@
       // divesite or editing an existing one --- which we can determine based
       // on whether we were passed a route parameter when the controller was
       // initialized
+      /*
       let apiCall;
       if ($routeParams.divesiteId) {
         apiCall = () => dsapi.updateDivesite($routeParams.divesiteId, data);
       } else {
         apiCall = () => dsapi.postDivesite(data);
       }
+      */
+     const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
       // We are either:
       // (a) creating or replacing the current divesite header image;
@@ -125,7 +130,8 @@
         imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
       }
 
-      apiCall()
+      //apiCall()
+      apiCall(data)
       .then((response) => {
         vm.site.id = response.data.id; // This is the edited/created site's ID
         return imgServerCall();
@@ -190,6 +196,7 @@
     'Upload',
     'dsapi',
     'dsimg',
+    'editSiteService',
     'mapSettings',
   ];
   angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);

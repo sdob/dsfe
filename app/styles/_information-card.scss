@@ -188,7 +188,10 @@
     }
   }
   &__divesite-image {
-    margin: 8px;
+    margin: 8px 0px;
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
   }
   &__site-description {
     margin-top: 8px;

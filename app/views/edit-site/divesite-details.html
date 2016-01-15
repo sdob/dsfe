@@ -1,26 +1,5 @@
 <section class="edit-site__details">
 
-    <site-name></site-name>
-    <section class="site-details__name">
-        <div class="form-group ds-form-group-lg"
-            ng-class="{'has-error': siteForm.siteName.$error.required && (siteForm.$submitted || siteForm.siteName.$touched)}"
-            >
-            <label for="bs-edit-site__name">
-                Site name
-            </label>
-            <input type="text" class="form-control"
-            ng-model="vm.site.name"
-            name="siteName"
-            ng-required="true"
-            id="bs-edit-site__name" placeholder="Name"
-            style="font-weight: 500"
-            >
-            <span class="help-block">
-                Give your new site a name.
-            </span>
-        </div>
-    </section>
-
     <section class="row">
         <section class="site-details__entries col-sm-6">
             <div class="form-group"

@@ -1,7 +1,9 @@
 <div class="edit-site container">
     <form novalidate name="siteForm">
 
-        <h1 class="edit-site__title">Add a new divesite</h1>
+        <h1 class="edit-site__title">{{ vm.title }}</h1>
+
+        <ng-include src="'views/edit-site/site-name.html'"></ng-include>
 
         <section class="edit-site__map-section">
             <editable-site-map></editable-site-map>
