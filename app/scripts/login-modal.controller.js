@@ -5,17 +5,41 @@
     activate();
 
     function activate() {
-      vm.submit = submit;
+      vm.signIn = {
+        isSubmitting: false,
+        submit: signInSubmit,
+      };
+      vm.register = {
+        isSubmitting: false,
+        submit: registerSubmit,
+      };
+      vm.user = {
+      };
     }
 
-    function submit() {
+    function registerSubmit() {
+      // Adding a new user
+      $scope.registerModalForm.$setSubmitted();
+      //console.log($scope.registerModalForm);
+      console.log($scope.registerModalForm.passwordConfirm);
+      if (!$scope.registerModalForm.$valid) {
+        console.error('invalid form...');
+        return;
+      }
+      vm.register.isSubmitting = true;
+      $timeout(() => {
+        vm.register.isSubmitting = false;
+      }, 1000);
+    }
+
+    function signInSubmit() {
       // Set the login form to submitted (this will flag validation errors)
       $scope.loginModalForm.$setSubmitted();
       if (!$scope.loginModalForm.$valid) {
         return;
       }
       vm.hasError = false;
-      vm.isSubmitting = true; // disable the save button
+      vm.signIn.isSubmitting = true; // disable the save button
       const user = vm.email;
       const password = vm.password;
       console.log({username: user, password: password});
@@ -32,7 +56,7 @@
         localStorageService.set('user', response.data.id);
       })
       .catch((response) => {
-        vm.isSubmitting = false;
+        vm.signIn.isSubmitting = false;
         console.error('error from api server');
         console.error(response.data);
         vm.hasError = true;

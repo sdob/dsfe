@@ -6,41 +6,63 @@
         <div class="login-modal__form login-modal__register"> <!-- register new account -->
             <form novalidate name="registerModalForm">
                 <h2>Register</h2>
-                <div class="login-modal__error"
-                    ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
+                <div class="form-group"
+                    ng-class="{'has-error': registerModalForm.email.$invalid && registerModalForm.$submitted}"
                     >
-                    Invalid email or passwords don't match.
-                </div>
-                <div class="form-group">
-                    <label for="register__username">
+                    <label class="control-label" for="register__username">
                         Email address
                     </label>
-                    <input required name="email" class="form-control"
+                    <input ng-required="true" name="email" class="form-control"
                     id="register__username"
+                    ng-model="lmvm.user.email"
                     placeholder="Email"
                     />
+                    <span class="help-block"
+                        ng-show="registerModalForm.email.$invalid && registerModalForm.$submitted"
+                        >
+                        Enter a valid email address
+                    </span>
                 </div>
-                <div class="form-group">
-                    <label for="register__password">Password</label>
-                    <input required name="password" class="form-control"
-                    id="register__password" />
-                </div>
-                <div class="form-group">
-                    <label for="register__passwordConfirm">Password (confirm)</label>
-                    <input required name="passwordConfirm" class="form-control"
-                    id="register__passwordConfirm" />
+                <div>
+                    <div class="form-group"
+                        ng-class="{'has-error': registerModalForm.$submitted && (registerModalForm.password.$error.required || registerModalForm.passwordConfirm.$error.compareTo)}"
+                        >
+                        <label for="register__password">Password</label>
+                        <input required name="password" class="form-control"
+                        type="password"
+                        ng-model="lmvm.user.password"
+                        id="register__password" />
+                        <span class="help-block"
+                            ng-show="registerModalForm.$submitted && registerModalForm.password.$error.required"
+                            >
+                            Enter a password
+                        </span>
+                        <label for="register__passwordConfirm">Password (confirm)</label>
+                        <input required name="passwordConfirm" class="form-control"
+                        type="password"
+                        compare-to="lmvm.user.password"
+                        ng-model="lmvm.user.passwordConfirm"
+                        id="register__passwordConfirm" />
+                        <span class="help-block"
+                            ng-show="registerModalForm.passwordConfirm.$error.compareTo"
+                            >
+                            Passwords must match
+                        </span>
+                    </div>
                 </div>
                 <div class="ds-form__submit-row">
                     <button type="submit"
-                        ng-click="lmvm.submit()"
+                        ng-disabled="lmvm.register.isSubmitting"
+                        ng-switch="lmvm.register.isSubmitting"
+                        ng-click="lmvm.register.submit()"
                         class="btn btn-primary big-button">
                         <span
                             class="fa fa-spinner fa-spin"
-                            ng-show="lmvm.isSubmitting"
+                            ng-switch-when="true"
                             >
                         </span>
                         <span
-                            ng-show="!lmvm.isSubmitting"
+                            ng-switch-default
                             >
                             Register</span>
                     </button>
@@ -56,25 +78,34 @@
             <form novalidate name="loginModalForm">
                 <h2>Sign in</h2>
                 <div class="login-modal__error"
-                    ng-style="{'visibility': lmvm.hasError ? 'visible' : 'hidden'}"
+                    ng-show="lmvm.hasError"
                     >
                     Incorrect email/password combination.
                 </div>
                 <div>
                     <div
-                        class="form-group">
+                        class="form-group"
+                        ng-class="{'has-error': loginModalForm.email.$invalid && loginModalForm.$submitted}"
+                        >
                         <label for="bs-login-modal__email">Email address</label>
                         <input
                         ng-required="true"
                         ng-model="lmvm.email"
                         name="email"
                         type="email" class="form-control" id="bs-login-modal__email"
-                        placeholder="Email" >
+                        placeholder="Email" />
+                        <span class="help-block"
+                            ng-show="loginModalForm.$submitted && loginModalForm.email.$invalid"
+                            >
+                            Enter an email address
+                        </span>
                     </div>
                 </div>
                 <div>
                     <div
-                        class="form-group">
+                        class="form-group"
+                        ng-class="{'has-error': loginModalForm.password.$invalid && loginModalForm.$submitted}"
+                        >
                         <label for="bs-login-modal__password">Password</label>
                         <input
                         ng-required="true"
@@ -82,10 +113,16 @@
                         ng-model="lmvm.password"
                         type="password" class="form-control" id="bs-login-modal__password"
                         placeholder="Password" >
+                        <span class="help-block"
+                            ng-show="loginModalForm.$submitted && loginModalForm.password.$invalid"
+                            >
+                            Enter a password
+                        </span>
                     </div>
                     <div class="login-modal__sign-in-row ds-form__submit-row">
                         <button type="submit"
-                            ng-click="lmvm.submit()"
+                            ng-click="lmvm.signIn.submit()"
+                            ng-disabled="lmvm.signIn.isSubmitting"
                             class="btn btn-primary big-button">
                             <span
                                 class="fa fa-spinner fa-spin"
