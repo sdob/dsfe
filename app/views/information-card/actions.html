@@ -1,6 +1,6 @@
 <ul class="list-unstyled action-menu">
-    <ng-include src="'views/information-card/actions/edit.html'"></ng-include>
-    <ng-include src="'views/information-card/actions/log-dive.html'"></ng-include>
-    <ng-include src="'views/information-card/actions/upload-image.html'"></ng-include>
-    <ng-include src="'views/information-card/actions/report-problem.html'"></ng-include>
+    <li class="action-item" ng-if="icvm.userIsOwner()" ng-include="'views/information-card/actions/edit.html'"></li>
+    <li class="action-item" ng-if="icvm.isAuthenticated()" ng-include="'views/information-card/actions/log-dive.html'"></li>
+    <li class="action-item" ng-if="icvm.isAuthenticated()" ng-include="'views/information-card/actions/upload-image.html'"></li>
+    <li class="action-item" ng-if="icvm.isAuthenticated()" ng-include="'views/information-card/actions/report-problem.html'"></li>
 </ul>
