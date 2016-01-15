@@ -37,7 +37,10 @@ module.exports = function(config) {
       'bower_components/haversine/haversine.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+      // Load module files first
       'app/scripts/app.js',
+      'app/scripts/information-card/information-card.module.js',
+      'app/scripts/edit-site/edit-site.module.js',
       'app/**/*.js',
       'test/**/*.spec.js'
     ],
