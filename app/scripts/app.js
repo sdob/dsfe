@@ -1,7 +1,7 @@
 (function () {'use strict';
  //const API_URL = 'https://divesites-api.herokuapp.com';
- const API_URL = 'http://divesites-api.herokuapp.com';
- //const API_URL = 'http://localhost:8000';
+ //const API_URL = 'http://divesites-api.herokuapp.com';
+ const API_URL = 'http://localhost:8000';
  const IMG_API_URL = 'http://dsimg.herokuapp.com';
  angular.module('divesites', [
    'LocalStorageModule',
@@ -68,6 +68,7 @@
  .config(($authProvider) => {
    // Send login attempts to our API server
    $authProvider.loginUrl = `${API_URL}/api-token-auth/`;
+   $authProvider.signupUrl = `${API_URL}/auth/register`;
    $authProvider.authToken = 'Token';
  })
  .run(($rootScope) => {
