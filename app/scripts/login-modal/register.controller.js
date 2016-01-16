@@ -49,6 +49,7 @@
         console.error('error from api server');
         console.error(err);
         vm.hasError = true;
+        vm.errorMessage = err.data.message;
       });
     }
   }

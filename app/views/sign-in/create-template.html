@@ -3,7 +3,10 @@
     > <!-- register new account -->
     <form novalidate name="registerForm">
         <h2>Register</h2>
-        <div class="form-group"
+        <div class="login-modal__error" ng-show="vm.errorMessage">
+            {{ vm.errorMessage }}
+        </div>
+        <div class="form-group ds-form-group-lg"
             ng-class="{'has-error': registerForm.fullName.$invalid && registerForm.$submitted}"
             >
             <label class="control-label" for="register__fullname">
@@ -19,7 +22,7 @@
                 Enter your name
             </span>
         </div>
-        <div class="form-group"
+        <div class="form-group ds-form-group-lg"
             ng-class="{'has-error': registerForm.email.$invalid && registerForm.$submitted}"
             >
             <label class="control-label" for="register__username">
@@ -36,7 +39,7 @@
             </span>
         </div>
         <div>
-            <div class="form-group"
+            <div class="form-group ds-form-group-lg"
                 ng-class="{'has-error': registerForm.$submitted && (registerForm.password.$error.required || registerForm.passwordConfirm.$error.compareTo)}"
                 >
                 <label for="register__password">Password</label>
