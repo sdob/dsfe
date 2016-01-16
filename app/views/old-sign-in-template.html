@@ -1,0 +1,64 @@
+<div class="login-modal__form login-modal__sign-in"> <!-- Sign in with existing account -->
+    <form novalidate name="loginModalForm">
+        <h2>Sign in</h2>
+        <div class="login-modal__error"
+            ng-show="lmvm.hasError"
+            >
+            Incorrect email/password combination.
+        </div>
+        <div>
+            <div
+                class="form-group"
+                ng-class="{'has-error': loginModalForm.email.$invalid && loginModalForm.$submitted}"
+                >
+                <label for="bs-login-modal__email">Email address</label>
+                <input
+                ng-required="true"
+                ng-model="lmvm.email"
+                name="email"
+                type="email" class="form-control" id="bs-login-modal__email"
+                placeholder="Email" />
+                <span class="help-block"
+                    ng-show="loginModalForm.$submitted && loginModalForm.email.$invalid"
+                    >
+                    Enter an email address
+                </span>
+            </div>
+        </div>
+        <div>
+            <div
+                class="form-group"
+                ng-class="{'has-error': loginModalForm.password.$invalid && loginModalForm.$submitted}"
+                >
+                <label for="bs-login-modal__password">Password</label>
+                <input
+                ng-required="true"
+                name="password"
+                ng-model="lmvm.password"
+                type="password" class="form-control" id="bs-login-modal__password"
+                placeholder="Password" >
+                <span class="help-block"
+                    ng-show="loginModalForm.$submitted && loginModalForm.password.$invalid"
+                    >
+                    Enter a password
+                </span>
+            </div>
+            <div class="login-modal__sign-in-row ds-form__submit-row">
+                <button type="submit"
+                    ng-click="lmvm.signIn.submit()"
+                    ng-disabled="lmvm.signIn.isSubmitting"
+                    class="btn btn-primary big-button">
+                    <span
+                        class="fa fa-spinner fa-spin"
+                        ng-show="lmvm.signIn.isSubmitting"
+                        >
+                    </span>
+                    <span
+                        ng-show="!lmvm.signIn.isSubmitting"
+                        >
+                        Sign in</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div> <!-- Sign in w/ existing account -->

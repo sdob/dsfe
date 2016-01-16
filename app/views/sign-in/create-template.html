@@ -1,0 +1,63 @@
+<div class="login-modal__form login-modal__register"> <!-- register new account -->
+    <form novalidate name="registerModalForm">
+        <h2>Register</h2>
+        <div class="form-group">
+            <label class="control-label" for="register__fullname">
+                Full name
+            </label>
+            <input ng-required="true" class="form-control" name="fullName"
+            id="register__fullname"
+            ng-model="lmvm.user.fullName"
+            />
+        </div>
+        <div class="form-group"
+            ng-class="{'has-error': registerModalForm.email.$invalid && registerModalForm.$submitted}"
+            >
+            <label class="control-label" for="register__username">
+                Email address
+            </label>
+            <input ng-required="true" name="email" class="form-control"
+            id="register__username"
+            ng-model="lmvm.user.email"
+            />
+            <span class="help-block"
+                ng-show="registerModalForm.email.$invalid && registerModalForm.$submitted"
+                >
+                Enter a valid email address
+            </span>
+        </div>
+        <div>
+            <div class="form-group"
+                ng-class="{'has-error': registerModalForm.$submitted && (registerModalForm.password.$error.required || registerModalForm.passwordConfirm.$error.compareTo)}"
+                >
+                <label for="register__password">Password</label>
+                <input required name="password" class="form-control"
+                type="password"
+                ng-model="lmvm.user.password"
+                id="register__password" />
+                <span class="help-block"
+                    ng-show="registerModalForm.$submitted && registerModalForm.password.$error.required"
+                    >
+                    Enter a password
+                </span>
+            </div>
+        </div>
+        <div class="ds-form__submit-row">
+            <button type="submit"
+                ng-disabled="lmvm.register.isSubmitting"
+                ng-switch="lmvm.register.isSubmitting"
+                ng-click="lmvm.register.submit()"
+                class="btn btn-primary big-button">
+                <span
+                    class="fa fa-spinner fa-spin"
+                    ng-switch-when="true"
+                    >
+                </span>
+                <span
+                    ng-switch-default
+                    >
+                    Create an account</span>
+            </button>
+        </div>
+    </form>
+</div> <!-- Register new account -->
