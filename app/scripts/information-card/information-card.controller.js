@@ -32,11 +32,22 @@
 
       console.log($auth.isAuthenticated);
 
-      /* Contact API for various bits and bobs */
+      /* Contact API for nearby slipways and images */
       getNearbySlipways();
       getDivesiteHeaderImage();
       getDivesiteImages();
       getDiverProfileImages();
+
+      /* Try to parse the geocoding_data field, if one was returned */
+      if (vm.site.geocoding_data) {
+        const geocodingData = JSON.parse(vm.site.geocoding_data);
+        console.log(geocodingData.results);
+        if (geocodingData.results && geocodingData.results.length) {
+          // For the moment, let's assume that the first result is the most detailed
+          // TODO: check that this is in the Google geocoding docs
+          vm.site.geocodingData = geocodingData.results[0];
+        }
+      }
 
       // handle keydown events (ESC keypress dismisses the information card */
       $document.on('keydown', keydownListener);

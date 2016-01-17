@@ -69,12 +69,7 @@
   }
 
   &__dive {
-    //margin-top: 16px;
-    //margin-bottom: 16px;
-    margin-left: 4px;
-    margin-right: 4px;
     margin-bottom: 16px;
-    padding: 4px;
     &[editable="true"]:hover {
       background: rgba(0, 0, 0, 0.17);
     }
@@ -101,6 +96,7 @@
     position: relative;
     color: #fff;
     height: 200px;
+    padding-left: 16px;
     &:before {
       content: '';
       position: absolute;
@@ -198,12 +194,18 @@
     margin-bottom: 16px;
     font-size: 20px;
   }
+  &__site-location {
+    font-size: 20px;
+    margin: 0;
+  }
   &__site-name {
     font-weight: 500;
-    margin: 16px;
+    margin: 0;
+    //margin: 16px;
   }
   &__site-owner {
     margin: 16px;
+    margin-left: 0;
     font-weight: 500;
     font-size: 14px;
     a {

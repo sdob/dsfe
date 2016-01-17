@@ -6,6 +6,9 @@
             <h2 class="information-card__site-name">
                 {{ icvm.site.name }}
             </h2>
+            <h3 class="information-card__site-location">
+                {{ icvm.site.geocodingData | geocodingResult }}
+            </h3>
             <h3 class="information-card__site-owner">
                 Added by <a href="/#/users/{{icvm.site.owner.id}}/">{{ icvm.site.owner.name }}</a>
             </h3>
