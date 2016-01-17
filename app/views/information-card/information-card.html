@@ -7,7 +7,7 @@
                 {{ icvm.site.name }}
             </h2>
             <h3 class="information-card__site-location">
-                {{ icvm.site.geocodingData | geocodingResult }}
+                {{ icvm.site.locData.join(', ') }}
             </h3>
             <h3 class="information-card__site-owner">
                 Added by <a href="/#/users/{{icvm.site.owner.id}}/">{{ icvm.site.owner.name }}</a>

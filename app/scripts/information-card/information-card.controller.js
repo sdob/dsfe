@@ -6,7 +6,6 @@
     activate();
 
     function activate() {
-      console.log($scope);
       vm.site = $scope.site;
       vm.site.images = {}; // Ensure that this is never undefined
       // Initially show dive list
@@ -30,8 +29,6 @@
         vm.userIsOwner = userIsOwner;
       }, 0);
 
-      console.log($auth.isAuthenticated);
-
       /* Contact API for nearby slipways and images */
       getNearbySlipways();
       getDivesiteHeaderImage();
@@ -41,11 +38,25 @@
       /* Try to parse the geocoding_data field, if one was returned */
       if (vm.site.geocoding_data) {
         const geocodingData = JSON.parse(vm.site.geocoding_data);
-        console.log(geocodingData.results);
+        //console.log(geocodingData.results);
         if (geocodingData.results && geocodingData.results.length) {
           // For the moment, let's assume that the first result is the most detailed
           // TODO: check that this is in the Google geocoding docs
-          vm.site.geocodingData = geocodingData.results[0];
+          const locData = [];
+          const res = geocodingData.results[0];
+          const ADMIN_AREA_1 = 'administrative_area_level_1';
+          const COUNTRY = 'country';
+          const highestAdminComponent = res.address_components.filter(x => x.types.indexOf(ADMIN_AREA_1) >= 0)[0];
+          const countryComponent = res.address_components.filter(x => x.types.indexOf(COUNTRY) >= 0)[0];
+          // Derive the country name (if present) and the highest-level
+          // administrative area name (if present) from the JSON
+          if (highestAdminComponent !== undefined) {
+            locData.push(highestAdminComponent.long_name);
+          }
+          if (countryComponent !== undefined) {
+            locData.push(countryComponent.long_name);
+          }
+          vm.site.locData = locData;
         }
       }
 
@@ -110,8 +121,6 @@
             crop: 'fill',
           });
         });
-        console.log('vm.site.images:');
-        console.log(vm.site.images);
       });
     }
 
@@ -167,7 +176,6 @@
 
 
     function toggleUploadImageForm() {
-      console.log('toggling!');
       // If the upload image form is currently visible, hide it and
       // show the dive list (the default view)
       if (vm.sectionVisibilities.uploadImageForm) {
