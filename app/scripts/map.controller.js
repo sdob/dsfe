@@ -70,6 +70,7 @@
       // Retrieve divesites
       dsapi.getDivesites()
       .then((response) => {
+        vm.sites = response.data; // Allow us to use the sites in other controllers
         vm.mapMarkers = response.data.map(transformSiteToMarker);
         updateMarkerVisibility(filterPreferences.preferences);
       });

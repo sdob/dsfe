@@ -1,5 +1,4 @@
 <div class="filter-menu shadow-2dp">
-    <!-- <div class="filter-menu__header"> -->
         <a 
             class="filter-menu__header collapsed"
             data-toggle="collapse"
@@ -10,6 +9,19 @@
         </a>
         <!-- </div>-->
     <div id="js-filter-menu__collapse" class="filter-menu__content collapse">
+
+        <section class="filter-menu__section filter-menu__search-bar">
+            <h3 class="filter-menu__section-header">
+                Search
+            </h3>
+            <form novalidate>
+                <input class="form-control" type="text"
+                ng-model="fmvm.selectedSite"
+                uib-typeahead="divesite.name for divesite in mc.sites | filter:$viewValue.name"
+                />
+            </form>
+        </section>
+
         <div class="filter-menu__section filter-menu__amenities">
             <h3 class="filter-menu__section-header">
                 Amenities
