@@ -21,7 +21,7 @@
   @media (min-width: $screen-lg-min) {
     // Card size and positioning
     max-height: calc(100% - 160px);
-    max-width: 512px;
+    max-width: 600px;
     right: 80px;
     top: 80px;
   }
@@ -73,12 +73,12 @@
     @media (min-width: $screen-lg-min) {
       height: 200px;
     }
-    // Title sits in front of floor-fade
-    z-index: 1; 
   }
 
   &__site-title {
     padding-top: 16px;
+    // Title sits in front of floor-fade
+    z-index: 1; 
   }
   &__site-location {
     font-size: 20px;
@@ -130,8 +130,7 @@
    * devices it's never collapsed (but can be dismissed).
    */
   &__body {
-    padding-left: $information-card-body-padding;
-    padding-right: $information-card-body-padding;
+    padding: $information-card-body-padding;
     &.collapse {
       @media (min-width: $screen-lg-min) {
         display: block !important; // never collapse on large screens

@@ -9,7 +9,12 @@
 
     function activate() {
       // Wire up functions 
+      vm.openDatepicker = openDatepicker;
       vm.submit = submit;
+
+      vm.datepicker = {
+        opened: false,
+      };
 
       console.log('$scope: ');
       console.log($scope);
@@ -38,6 +43,11 @@
         divesite: dive.site.id,
       };
       return request;
+    }
+
+    function openDatepicker() {
+      console.log('opening timepicker');
+      vm.datepicker.opened = true;
     }
 
     function submit() {

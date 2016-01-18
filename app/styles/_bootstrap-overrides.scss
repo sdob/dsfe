@@ -3,7 +3,9 @@
 label {
   font-weight: 200;
 }
-
+.input-group-addon {
+  border-radius: 0;
+}
 .link--undecorated {
   text-decoration: none !important;
   &:hover {
