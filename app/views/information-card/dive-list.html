@@ -1,39 +1,39 @@
-    <div class="information-card__dive-list">
-        <h3 class="dive-list__title">Dives</h3>
+<div class="information-card__body-section">
+    <h3 class="information-card__section-title">Dives</h3>
 
-        <div class="information-card__dive" ng-repeat="dive in vm.site.dives | orderBy:'-'"
-            editable="{{dive.diver.id == vm.userId}}"
-            >
-            <div class="information-card__dive-header">
-                <div class="information-card__dive-image">
-                    <!-- width and height seemt to need hard-coding -->
-                    <img
-                    height="60" width="60"
-                    ng-src="{{ dive.diver.profileImageUrl }}"
-                    />
-                </div>
-                <!-- </div> -->
-            <div class="information-card__dive-details">
-                <div class="">
-                    <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
-                </div>
-                <div class="">
-                    {{ dive.start_time | date:'d MMM yyyy' }}
-                    at
-                    {{ dive.start_time | date:'HH:mm' }}
-                </div>
-                <span class="">{{ dive.depth }} m</span>
-                <span class="">{{ dive.duration | duration }} minutes</span>
-                <a
-                    href
-                    ng-if="dive.diver.id == vm.userId"
-                    class="information-card__edit-this-dive"
-                    >
-                    <span class="fa fa-fw fa-pencil-square"></span>
-                </a>
+    <div class="information-card__dive" ng-repeat="dive in vm.site.dives | orderBy:'-'"
+        editable="{{dive.diver.id == vm.userId}}"
+        >
+        <div class="information-card__dive-header">
+            <div class="information-card__dive-image">
+                <!-- width and height seemt to need hard-coding -->
+                <img
+                height="60" width="60"
+                ng-src="{{ dive.diver.profileImageUrl }}"
+                />
             </div>
-        </div>
-        <div class="information-card__dive-comment">
-            {{ dive.comment }}
+            <!-- </div> -->
+        <div class="information-card__dive-details">
+            <div>
+                <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
+            </div>
+            <div>
+                {{ dive.start_time | date:'d MMM yyyy' }}
+                at
+                {{ dive.start_time | date:'HH:mm' }}
+            </div>
+            <span>{{ dive.depth }} m</span>
+            <span>{{ dive.duration | duration }} minutes</span>
+            <a
+                href
+                ng-if="dive.diver.id == vm.userId"
+                class="information-card__edit-this-dive"
+                >
+                <span class="fa fa-fw fa-pencil-square"></span>
+            </a>
         </div>
     </div>
+    <div class="information-card__dive-comment">
+        {{ dive.comment }}
+    </div>
+</div>

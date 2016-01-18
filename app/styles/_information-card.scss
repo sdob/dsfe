@@ -1,19 +1,19 @@
+/* 'information-card__*' namespace */
 .information-card {
 
   /* Shared properties across all device sizes */
   background-color: #ffffff;
-  bottom: 0;
-  max-height: 100%;
   overflow-y: auto;
   position: absolute;
-  width: 100%;
-  z-index: 3; // in front of filter menu? Also occludes dropdown...
+  z-index: 3;
 
   /*
    * On small devices, the information card is initiallly
    * displayed collapsed, with only the title visible
    */
-
+  bottom: 0;
+  max-height: 100%;
+  width: 100%;
 
   /*
    * On large devices, the information card is always full-height
@@ -26,61 +26,7 @@
     top: 80px;
   }
 
-  &__collapse-chevron {
-    pointer: cursor;
-    color: #fff !important;
-    &.opened .fa-chevron-up {
-      transition: transform 100ms;
-      transform: rotate(-180deg);
-    }
-  }
-
-  &__body {
-    padding-left: $information-card-body-padding;
-    padding-right: $information-card-body-padding;
-    &.collapse {
-      @media (min-width: $screen-lg-min) {
-        display: block !important; // never collapse on large screens
-      }
-    }
-  }
-
-  .divesite-images__title,
-  .dive-list__title,
-  .upload-image-form__title,
-  .log-dive-form__title
-  {
-    margin: 0;
-    margin-top: 16px;
-    margin-bottom: 8px;
-  }
-  
-  .upload-image-form__thumbnail-container {
-    margin-top: 16px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  &__chart {
-    margin-bottom: 0px;
-    &.chart-header {
-      cursor: pointer;
-      color: #333;
-      text-decoration: none;
-      font-size: 20px;
-      &:hover {
-        color: darken(#333, 15%);
-      }
-    }
-    &.chart-header__chevron {
-      margin-left: auto;
-      margin-right: 32px;
-      transition: transform 300ms;
-      &.opened {
-        transform: rotate(-180deg);
-      }
-    }
-  }
+  /* Header */
 
   /*
    * Header actions. On large devices, this is an 'x' whose ng-click
@@ -105,126 +51,34 @@
     }
   }
 
-  &__dive {
-    margin-bottom: 16px;
-    &[editable="true"]:hover {
-      background: rgba(0, 0, 0, 0.17);
-    }
-    &__dive {
-      //margin-top: 16px;
-      //margin-bottom: 16px;
-      margin-left: 4px;
-      margin-right: 4px;
-      margin-bottom: 16px;
-      padding: 4px;
-      &[editable="true"]:hover {
-        background: rgba(0, 0, 0, 0.17);
-      }
+  &__collapse-chevron {
+    pointer: cursor;
+    color: #fff !important;
+    &.opened .fa-chevron-up {
+      transition: transform 100ms;
+      transform: rotate(-180deg);
     }
   }
 
   &__title {
+    @include floor-fade();
     align-items: flex-end;
     background: $blue-700;
-    display: flex;
-    position: relative;
     color: #fff;
+    display: flex;
     padding-left: 16px;
+    position: relative;
+    /* On large devices,the title section has a minimum width */
     @media (min-width: $screen-lg-min) {
       height: 200px;
     }
-    z-index: 1;
-    @include floor-fade();
-  }
-  &-chart-container {
-    margin-bottom: 20px; // for x axis
-    padding-left: 8px;
-    padding-right: 8px;
-    position: relative;
-    .bar rect {
-      fill: steelBlue;
-      shape-rendering: crispEdges;
-    }
-    .axis path, .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-  }
-  &__dive-comment {
-    margin-top: 8px;
-    padding-right: 32px;
-  }
-  &__dive-details {
-    position: relative;
-    width: 100%;
-    padding-left: 8px;
-  }
-  &__dive-header {
-    display: flex;
-  }
-  &__dive-image {
-    display: block;
-    height: 60px !important;
-    width: 60px !important;
-  }
-  &__dive-list,
-  &__upload-image-form,
-  &__log-dive-form
-  {
-    border-top: solid 1px rgba(0, 0, 0, 0.16);
-    margin-top: 16px;
+    // Title sits in front of floor-fade
+    z-index: 1; 
   }
 
-  &__nearby-slipway {
-    &:first-child {
-      margin-top: 8px;
-    }
-    &:not(:last-child) {
-      margin-bottom: 8px;
-    }
-  }
-
-  &__site-coordinate {
-    &:not(:last-child) {
-      padding-right: 1em;
-    }
-  }
-
-  &__divesite-images {
-    border-top: solid 1px rgba(0, 0, 0, 0.16);
-    margin-top: 16px;
-    overflow-x: hidden;
-    position: relative;
-    /* Show/hide image grid button */
-    .show-grid {
-      cursor: pointer;
-      &:hover {
-        background: rgba(0, 0, 0, 0.17);
-      }
-      position: absolute;
-      top: 8px;
-      right: 0;
-      padding: 8px;
-    }
-  }
-  &__divesite-image-container {
-    display: flex;
-    overflow-x: auto;
-    &.showing-grid {
-      flex-wrap: wrap;
-    }
-  }
-  &__divesite-image {
-    margin: 8px 0px;
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
-  }
-  &__site-description {
-    margin-top: 8px;
-    margin-bottom: 16px;
-    font-size: 20px;
+  &__site-title {
+    z-index: 1; // On top of floor-fade
+    padding-top: 16px;
   }
   &__site-location {
     font-size: 20px;
@@ -245,12 +99,152 @@
     }
   }
 
+  /* Statistics and metadata section */
+
+  &__site-description {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+
   &__site-statistics {
     margin-bottom: 16px;
   }
 
-  &__site-title {
-    z-index: 1; // On top of floor-fade
-    padding-top: 16px;
+  &__site-coordinate {
+    &:not(:last-child) {
+      padding-right: 1em;
+    }
   }
+
+  &__chart {
+    margin-bottom: 0px;
+  }
+
+
+  /* Body */
+
+  /*
+   * The body of the information card. This is initially collapsed
+   * (by markup) on small devices and opens on click; on large
+   * devices it's never collapsed (but can be dismissed).
+   */
+  &__body {
+    padding-left: $information-card-body-padding;
+    padding-right: $information-card-body-padding;
+    &.collapse {
+      @media (min-width: $screen-lg-min) {
+        display: block !important; // never collapse on large screens
+      }
+    }
+  }
+
+  &__body-section {
+    border-top: solid 1px rgba(0, 0, 0, 0.16);
+    margin-top: 16px;
+  }
+
+  &__section-title {
+    margin: 16px 0 8px; // T H B
+  }
+
+  &__upload-thumbnail-container {
+    margin: 16px 0;
+    text-align: center;
+  }
+
+  &__dive {
+    margin-bottom: 16px;
+    &[editable="true"]:hover {
+      background: rgba(0, 0, 0, 0.17);
+    }
+    &__dive {
+      //margin-top: 16px;
+      //margin-bottom: 16px;
+      margin-left: 4px;
+      margin-right: 4px;
+      margin-bottom: 16px;
+      padding: 4px;
+      &[editable="true"]:hover {
+        background: rgba(0, 0, 0, 0.17);
+      }
+    }
+    &-comment {
+      margin-top: 8px;
+      padding-right: 32px;
+    }
+    &-details {
+      position: relative;
+      width: 100%;
+      padding-left: 8px;
+    }
+    &-header {
+      display: flex;
+    }
+    &-image {
+      display: block;
+      height: 60px !important;
+      width: 60px !important;
+    }
+  }
+
+  &-chart-container {
+    margin-bottom: 20px; // for x axis
+    padding-left: 8px;
+    padding-right: 8px;
+    position: relative;
+    .bar rect {
+      fill: steelBlue;
+      shape-rendering: crispEdges;
+    }
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+  }
+
+  &__nearby-slipway {
+    &:first-child {
+      margin-top: 8px;
+    }
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+
+  /* Site images */
+
+  &__divesite-image-section {
+    border-top: solid 1px rgba(0, 0, 0, 0.16);
+    margin-top: 16px;
+    overflow-x: hidden;
+    position: relative;
+  }
+  &__divesite-image-container {
+    display: flex;
+    overflow-x: auto;
+    &.showing-grid {
+      flex-wrap: wrap;
+    }
+  }
+  &__divesite-image {
+    margin: 8px 0px;
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+/* Show/hide image grid button */
+.show-grid {
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.17);
+  }
+  position: absolute;
+  top: 8px;
+  right: 0;
+  padding: 8px;
 }
