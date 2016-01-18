@@ -63,7 +63,7 @@
   }
 
   &__collapse-chevron {
-    pointer: cursor;
+    cursor: pointer;
     color: #fff !important;
     transition: transform 100ms;
   }
@@ -73,11 +73,13 @@
     align-items: flex-end;
     background: $blue-700;
     color: #fff;
+    cursor: pointer; // on small devices, this div collapses/uncollapses the info card
     display: flex;
     padding-left: 16px;
     position: relative;
     /* On large devices,the title section has a minimum width */
     @media (min-width: $screen-lg-min) {
+      cursor: inherit;
       height: 200px;
     }
   }
