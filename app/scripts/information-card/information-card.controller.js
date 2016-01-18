@@ -35,6 +35,20 @@
       getDivesiteImages();
       getDiverProfileImages();
 
+      /* Listen for events emitted upwards by LogDiveController */
+      $scope.$on('dive-list-updated', (event) => {
+        console.log('InformationController heard event...');
+        console.log(event);
+        dsapi.getDivesite(vm.site.id)
+        .then((response) => {
+          console.log(response.data);
+          /* $scope.site = response.data; */
+          vm.site = response.data;
+          //$scope.$apply();
+          //console.log($scope.vm);
+        });
+      });
+
       /* Try to parse the geocoding_data field, if one was returned */
       if (vm.site.geocoding_data) {
         const geocodingData = JSON.parse(vm.site.geocoding_data);

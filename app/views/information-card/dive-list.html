@@ -1,7 +1,7 @@
 <div class="information-card__body-section">
     <h3 class="information-card__section-title">Dives</h3>
 
-    <div class="information-card__dive" ng-repeat="dive in vm.site.dives | orderBy:'-'"
+    <div class="information-card__dive" ng-repeat="dive in dives | orderBy:'-'"
         editable="{{dive.diver.id == vm.userId}}"
         >
         <div class="information-card__dive-header">

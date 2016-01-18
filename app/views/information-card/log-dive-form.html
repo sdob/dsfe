@@ -12,13 +12,14 @@
                         <input type="text" class="form-control ds-form-control"
                         ng-model="vm.dive.date"
                         uib-datepicker-popup="dd MMM yyyy"
+                        is-open="vm.datepicker.opened"
                         />
-                        <span class="input-group-addon">
-                            <!-- <button type="button" class="btn btn-default"> -->
-                                <a href>
-                                    <i class="fa fa-calendar"></i>
-                                </a>
-                                <!-- </button> -->
+                        <span class="ds-form-control input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                ng-click="vm.openDatepicker()"
+                                >
+                                <i class="fa fa-calendar"></i>
+                            </button>
                         </span>
                     </div>
                 </div>

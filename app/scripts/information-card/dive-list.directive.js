@@ -2,6 +2,9 @@
   'use strict';
   function diveList() {
     return {
+      scope: {
+        dives: '=',
+      },
       templateUrl: 'views/information-card/dive-list.html',
     };
   }

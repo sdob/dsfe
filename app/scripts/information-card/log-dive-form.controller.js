@@ -74,6 +74,10 @@
         .then((response) => {
           // TODO: ensure that the information card shows the updated data
           // when we return
+          
+          // Emit an event up to the information card controller
+          $scope.$emit('dive-list-updated');
+
           $timeout(() => {
             // Add a little latency at the end of the chain to make it obvious
             // that we've done something
