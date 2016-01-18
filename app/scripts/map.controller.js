@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings) {
+  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings, uiGmapGoogleMapApi) {
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
@@ -10,6 +10,11 @@
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
       vm.isAuthenticated = $auth.isAuthenticated;
+
+      uiGmapGoogleMapApi
+      .then((maps) => {
+        vm.maps = maps;
+      });
 
       // If there's a 'divesite' query param in the URL,
       // then try and summon the information card
@@ -242,7 +247,16 @@
     }
   }
 
-  MapController.$inject = ['$auth', '$compile', '$location', '$rootScope', '$scope', 'dsapi', 'filterPreferences', 'mapSettings',];
+  MapController.$inject = ['$auth',
+    '$compile',
+    '$location',
+    '$rootScope',
+    '$scope',
+    'dsapi',
+    'filterPreferences',
+    'mapSettings',
+    'uiGmapGoogleMapApi',
+    ];
   angular.module('divesites').controller('MapController', MapController);
 
 })();

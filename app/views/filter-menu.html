@@ -17,7 +17,8 @@
             <form novalidate>
                 <input class="form-control" type="text"
                 ng-model="fmvm.selectedSite"
-                uib-typeahead="divesite.name for divesite in mc.sites | filter:$viewValue.name"
+                uib-typeahead="divesite.name for divesite in mc.sites | filter:$viewValue"
+                typeahead-on-select="fmvm.handleSearchSelect($item)"
                 />
             </form>
         </section>
