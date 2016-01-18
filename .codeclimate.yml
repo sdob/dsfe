@@ -1,0 +1,8 @@
+engines:
+  eslint:
+    enabled: true
+    checks:
+      comma-dangle:
+        enabled: false
+      wrap-iife:
+        enabled: false
