@@ -1,4 +1,9 @@
 @import 'bootstrap/wells';
+
+label {
+  font-weight: 200;
+}
+
 .link--undecorated {
   text-decoration: none !important;
   &:hover {

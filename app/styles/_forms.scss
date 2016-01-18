@@ -10,15 +10,29 @@
   }
 }
 .ds-form-group-lg {
-  label {
-    font-size: 20px;
-    font-weight: 200;
-  }
+  font-size: 20px;
   input[type="text"] {
-    font-size: 20px;
     height: auto;
   }
   &.has-feedback label ~ .form-control-feedback {
     top: 48px;
   }
+  .help-block {
+    font-size: 14px;
+  }
+}
+.ds-form-control {
+  font-size: 30px;
+  height: auto;
+}
+.has-feedback .ds-form-control {
+  padding-right: $ds-feedback-width;
+}
+.ds-feedback {
+  font-size: 20px;
+  line-height: 1.42857143;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  text-align: left;
+  width: $ds-feedback-width;
 }
