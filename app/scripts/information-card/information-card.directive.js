@@ -7,6 +7,12 @@
       controller: 'InformationCardController',
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
+        //console.log(element.find('.information-card__collapse-chevron'));
+        element.find('.information-card__collapse-chevron')
+        .click(function (e) {
+          console.log($(this));
+          $(this).toggleClass('opened');
+        });
       },
     };
   }

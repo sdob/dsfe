@@ -1,10 +1,8 @@
 .main-map__add-site-button {
   position: absolute;
   z-index: 1;
-  bottom: 32px;
-  right: 64px;
-  //bottom: 2em;
-  //right: 2em;
+  top: 80px;
+  right: 16px;
   @media (min-width: 62em) {
     //bottom: 64px;
     //right: 64px;
@@ -18,8 +16,8 @@
 }
 .add-something-menu {
   position: absolute;
-  bottom: calc(32px + 37px);
-  right: 66px;
+  top: calc(80px + 37px);
+  right: 16px + (37px / 2);
   z-index: 4; // in front of map and information card
   background: #fff;
   .list-group {
