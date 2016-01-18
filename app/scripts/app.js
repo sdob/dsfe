@@ -2,7 +2,8 @@
  //const API_URL = 'https://divesites-api.herokuapp.com';
  //const API_URL = 'http://divesites-api.herokuapp.com';
  const API_URL = 'http://localhost:8000';
- const IMG_API_URL = 'http://dsimg.herokuapp.com';
+ //const IMG_API_URL = 'http://dsimg.herokuapp.com';
+ const IMG_API_URL = 'http://localhost:9001';
  angular.module('divesites', [
    'LocalStorageModule',
    'ngFileUpload',
@@ -31,7 +32,7 @@
      controller: 'EditSlipwayController',
      controllerAs: 'vm',
    })
-   .when('/edit-site/:divesiteId', {
+   .when('/edit-site/:id', {
      template: '<edit-site></edit-site>',
      controller: 'EditSiteController',
      controllerAs: 'vm',

@@ -8,7 +8,7 @@
       vm.siteTypeString = 'divesite';
 
       console.log('EditSiteController.activate()');
-      console.log(`$routeParams.divesiteId: ${$routeParams.divesiteId}`);
+      console.log(`$routeParams.id: ${$routeParams.id}`);
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
@@ -34,10 +34,10 @@
 
       // If we were passed a divesite ID, then we're expecting to edit
       // an existing divesite.
-      if ($routeParams.divesiteId) {
+      if ($routeParams.id) {
         vm.title = 'Edit this divesite';
         // We are editing a site...
-        dsapi.getDivesite($routeParams.divesiteId)
+        dsapi.getDivesite($routeParams.id)
         .then((response) => {
           vm.site = Object.assign({}, response.data);
           vm.site.coords = {
@@ -105,19 +105,9 @@
       delete data.coords;
       console.log(data);
 
-      // Our call to the API server depends on whether we're creating a new
-      // divesite or editing an existing one --- which we can determine based
-      // on whether we were passed a route parameter when the controller was
-      // initialized
-      /*
-      let apiCall;
-      if ($routeParams.divesiteId) {
-        apiCall = () => dsapi.updateDivesite($routeParams.divesiteId, data);
-      } else {
-        apiCall = () => dsapi.postDivesite(data);
-      }
-      */
-     const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
+      // Based on whether $routeParams.id is defined, decide which
+      // API call to use (create/update)
+      const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
       // We are either:
       // (a) creating or replacing the current divesite header image;
@@ -130,7 +120,7 @@
         imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
       }
 
-      //apiCall()
+
       apiCall(data)
       .then((response) => {
         vm.site.id = response.data.id; // This is the edited/created site's ID
