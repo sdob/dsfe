@@ -15,6 +15,16 @@
   max-height: 100%;
   width: 100%;
 
+  &.opened {
+    // When the information card is opened on small devices,
+    // it should take up the entire screen height, and the
+    // chevron should flip to face down
+    height: 100%;
+    .fa-chevron-up {
+      transform: rotate(-180deg);
+    }
+  }
+
   /*
    * On large devices, the information card is always full-height
    */
@@ -55,10 +65,7 @@
   &__collapse-chevron {
     pointer: cursor;
     color: #fff !important;
-    &.opened .fa-chevron-up {
-      transition: transform 100ms;
-      transform: rotate(-180deg);
-    }
+    transition: transform 100ms;
   }
 
   &__title {

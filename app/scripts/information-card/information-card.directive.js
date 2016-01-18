@@ -10,8 +10,9 @@
         //console.log(element.find('.information-card__collapse-chevron'));
         element.find('.information-card__collapse-chevron')
         .click(function (e) {
-          console.log($(this));
-          $(this).toggleClass('opened');
+          //console.log($(this));
+          //$(this).toggleClass('opened');
+          element.find('.information-card').toggleClass('opened');
         });
       },
     };
