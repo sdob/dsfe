@@ -1,6 +1,8 @@
 <div class="information-card shadow-2dp">
     <div class="information-card__title" ng-class="{'has-header-image': !!icvm.site.headerImageUrl}"
         ng-style="icvm.backgroundStyle"
+        data-toggle="collapse"
+        data-target="#information-card__body"
         >
         <div class="information-card__site-title">
             <h2 class="information-card__site-name">
@@ -18,8 +20,6 @@
     <div class="information-card__header-actions">
         <div class="information-card__header-actions--mobile">
             <a class="overlay-action-item information-card__collapse-chevron"
-                data-toggle="collapse"
-                data-target="#information-card__body"
                 >
                 <span class="fa fa-stack">
                     <i class="fa fa-stack-2x fa-circle background"></i>
