@@ -47,6 +47,9 @@
     "start": "node index.js",
     "test": "grunt test"
   },
+  "engines": {
+    "node": "4.2.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
