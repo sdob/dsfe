@@ -15,13 +15,25 @@ module.exports = (grunt) => {
 
     babel: require('./config/babel'),
     clean: require('./config/clean'),
-    compass: require('./config/compass'),
+    //compass: require('./config/compass'),
     concurrent: require('./config/concurrent'),
     connect: require('./config/connect')(cfg),
     copy: require('./config/copy'),
     filerev: require('./config/filerev'),
     jscs: require('./config/jscs'),
     jshint: require('./config/jshint'),
+
+    sass: {
+      options: {
+        sourceMap: true,
+      },
+      dist: {
+        files: {
+          '.tmp/styles/style.css': '<%= cfg.app %>/styles/style.scss',
+        },
+      },
+      //files: ['.tmp/styles/style.css', '<%= cfg.app %>/styles/style.scss'],
+    },
 
     ngAnnotate: {
       dist: {
@@ -63,7 +75,7 @@ module.exports = (grunt) => {
   grunt.registerTask('build', [
     'clean:dist', // Wipe the dist directory
     'babel', // Transpile ES2015 to ES5
-    'compass', // Compile SASS to CSS
+    'sass', // Compile SASS to CSS
     'wiredep', // Update Bower dependencies
     'useminPrepare', // Generate usemin configuration
     'concat', // Concatenate JS and CSS

@@ -5,8 +5,8 @@ module.exports = {
     tasks: ['wiredep'],
   },
 
-  compass: {
-    files: ['<%= cfg.app %>/styles/{,*/}*.{sass,scss}'], tasks: ['compass'],
+  sass: {
+    files: ['<%= cfg.app %>/styles/{,*/}*.{sass,scss}'], tasks: ['sass'],
   },
 
   js: {

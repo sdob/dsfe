@@ -1,6 +1,6 @@
 module.exports = {
   server: [
-    'compass:server',
+    'sass',
     'babel',
     //'copy:styles',
   ],
