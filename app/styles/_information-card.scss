@@ -144,8 +144,9 @@
    */
   &__body {
     padding: $information-card-body-padding;
-    &.collapse {
+    &.collapse, &.collapsing {
       @media (min-width: $screen-lg-min) {
+        height: initial !important; // override bootstrap
         display: block !important; // never collapse on large screens
       }
     }
