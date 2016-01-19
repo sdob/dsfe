@@ -1,6 +1,8 @@
 <div class="information-card shadow-2dp">
     <div class="information-card__title"
         ng-style="icvm.backgroundStyle"
+        data-toggle="collapse"
+        data-target="#information-card__body"
         >
         <div class="information-card__site-title">
             <h2 class="information-card__site-name">
@@ -13,6 +15,7 @@
     </div>
 
 
+    <!--
     <div class="information-card__header-actions">
         <a href
             class="overlay-action-item"
@@ -24,15 +27,18 @@
             </span>
         </a>
     </div>
+    -->
 
-    <div class="information-card__body">
+    <ng-include src="'views/information-card/header-actions.html'"></ng-include>
+
+    <div class="information-card__body collapse"
+        id="information-card__body"
+        >
+        <ng-include src="'views/information-card/description.html'"></ng-include>
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>
         </div>
         <ng-include src="'views/information-card/slipway-actions.html'"></ng-include>
     </div>
 
-    <div>
-        {{ icvm.site.description }}
-    </div>
 </div>

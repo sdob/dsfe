@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings, uiGmapGoogleMapApi) {
+  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, informationCardService, mapSettings, uiGmapGoogleMapApi) {
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
@@ -18,14 +18,16 @@
 
       // If there's a 'divesite' query param in the URL,
       // then try and summon the information card
+      console.log('looking for $location.$$search');
+      console.log($location.$$search);
       if ($location.$$search.divesite) {
-        summonInformationCard($location.$$search.divesite);
+        summonCard($location.$$search.divesite, 'divesite');
       }
 
       // If there's a 'slipway' query param in the URL,
       // try and summon the slipway information card
       if ($location.$$search.slipway) {
-        summonSlipwayInformationCard($location.$$search.slipway);
+        summonCard($location.$$search.slipway, 'slipway');
       }
 
       // Initialize markers as empty arrays so that angular-google-maps
@@ -60,18 +62,18 @@
       $scope.$on('filter-preferences', listenForPreferenceChanges);
 
       $scope.$on('$routeUpdate', (e, c) => {
-        // When the route updates (i.e., search params changes),
-        // try and summon the information card; otherwise nuke it.
-        if (c.params.divesite) {
-          return summonInformationCard(c.params.divesite);
-        }
-
-        if (c.params.slipway) {
-          return summonSlipwayInformationCard(c.params.slipway);
-        }
-
+        console.log('$routeUpdate');
         $('information-card').remove();
         $('slipway-information-card').remove();
+        // When the route updates (i.e., search params changes),
+        // try to summon an information card. These are chained
+        // with else statements so that a malformed search string
+        // won't try to repeatedly create information cards
+        if (c.params.divesite) {
+          return summonCard(c.params.divesite, 'divesite');
+        } else if (c.params.slipway) {
+          return summonCard(c.params.slipway, 'slipway');
+        } 
       });
 
       // Retrieve divesites
@@ -181,6 +183,20 @@
       });
     }
 
+    function summonCard(id, type) {
+      const {apiCall, directiveString} = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
+
+      // Remove any existing DOM elements
+      $('information-card').remove();
+      $('slipway-information-card').remove();
+      apiCall(id)
+      .then((response) => {
+        const scope = $rootScope.$new();
+        scope.site = response.data;
+        $('map').append($compile(directiveString)(scope));
+      });
+    }
+
     function summonSlipwayInformationCard(slipway) {
       dsapi.getSlipway(slipway)
       .then((response) => {
@@ -256,9 +272,10 @@
     '$scope',
     'dsapi',
     'filterPreferences',
+    'informationCardService',
     'mapSettings',
     'uiGmapGoogleMapApi',
-    ];
+  ];
   angular.module('divesites').controller('MapController', MapController);
 
 })();

@@ -62,6 +62,10 @@
     }
   }
 
+  &__dismiss-button {
+    cursor: pointer;
+  }
+
   &__collapse-chevron {
     cursor: pointer;
     color: #fff !important;

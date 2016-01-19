@@ -1,13 +1,16 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, localStorageService) {
+  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
     function activate() {
+      // Site data is loaded by the map controller before the information card
+      // is loaded
       vm.site = $scope.site;
       vm.site.images = {}; // Ensure that this is never undefined
+      vm.site.locData = informationCardService.formatGeocodingData(vm.site);
 
       // Initially show dive list
       vm.sectionVisibilities = {
@@ -20,22 +23,46 @@
       vm.collapseDepthChart = true;
       vm.collapseDurationHistogram = true;
 
-      // Wire up functions
-      vm.dismiss = dismiss;
-      vm.getDivesiteImages = getDivesiteImages;
+
+      // TODO: why am I wrapping this in a timeout?
       $timeout(() => {
+        // Wire up functions
         vm.isAuthenticated = $auth.isAuthenticated;
         $scope.isAuthenticated = $auth.isAuthenticated;
         vm.toggleSectionVisibility = toggleSectionVisibility;
-        vm.showFullSizeImage = showFullSizeImage;
+        vm.showFullSizeImage = informationCardService.showFullSizeImage;
         vm.toggleUploadImageForm = toggleUploadImageForm;
-        vm.userIsOwner = userIsOwner;
+
+        // Note that informationCardService.userIsOwner(site) returns a function
+        vm.userIsOwner = informationCardService.userIsOwner(vm.site);
       }, 0);
 
-      /* Contact API for nearby slipways and images */
-      getNearbySlipways();
-      getDivesiteHeaderImage();
-      getDivesiteImages();
+      // Get nearby slipways
+      informationCardService.getNearbySlipways(vm.site)
+      .then((slipways) => {
+        vm.site.nearbySlipways = slipways;
+      });
+
+      // Get the divesite header image (if it exists)
+      informationCardService.getDivesiteHeaderImage(vm.site)
+      .then((imageUrl) => {
+        console.log('imageUrl');
+        console.log(imageUrl);
+        if (imageUrl) {
+          vm.site.headerImageUrl = imageUrl;
+          vm.backgroundStyle = {
+            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
+          };
+        }
+      });
+
+      // Get the divesite's images (if they exist)
+      informationCardService.getDivesiteImages(vm.site)
+      .then((images) => {
+        vm.site.images = images;
+      });
+
+      // Get divers' profile images
       getDiverProfileImages();
 
       /* Listen for events emitted upwards by LogDiveController */
@@ -48,53 +75,9 @@
           vm.site = response.data;
         });
       });
-
-      vm.site.locData = formatGeocodingData(vm.site);
-
-      // handle keydown events (ESC keypress dismisses the information card */
-      $document.on('keydown', keydownListener);
-      $rootScope.$on('$destroy', () => {
-        $document.off('keydown', keydownListener);
-      });
-    }
-
-    function formatGeocodingData(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      const locData = [];
-      if (site.geocoding_data) {
-        const geocodingData = JSON.parse(site.geocoding_data);
-        if (geocodingData.results && geocodingData.results.length) {
-
-          // For the moment, let's assume that the first result is the most detailed
-          // TODO: check that this is in the Google geocoding docs
-          const res = geocodingData.results[0];
-          const ADMIN_AREA_1 = 'administrative_area_level_1';
-          const COUNTRY = 'country';
-          const highestAdminComponent = res.address_components.filter(x => x.types.indexOf(ADMIN_AREA_1) >= 0)[0];
-          const countryComponent = res.address_components.filter(x => x.types.indexOf(COUNTRY) >= 0)[0];
-
-          // Derive the country name (if present) and the highest-level
-          // administrative area name (if present) from the JSON
-          if (highestAdminComponent !== undefined) {
-            locData.push(highestAdminComponent.long_name);
-          }
-
-          if (countryComponent !== undefined) {
-            locData.push(countryComponent.long_name);
-          }
-        }
-      }
-
-      return locData;
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function dismiss() {
-      // Remove self from the DOM
-      $location.search('');
-      $('information-card').remove();
     }
 
     function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-
       // Contact image server for profile images of dives
       vm.site.dives.forEach((dive) => {
         dsimg.getUserProfileImage(dive.diver.id)
@@ -113,76 +96,6 @@
         });
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function getDivesiteHeaderImage() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-
-      // Contact image server for header image
-      dsimg.getDivesiteHeaderImage(vm.site.id)
-      .then((response) => {
-        if (response.data && response.data.image && response.data.image.public_id) {
-          const public_id = response.data.image.public_id;
-          vm.site.headerImageUrl = $.cloudinary.url(public_id, {
-          });
-          vm.backgroundStyle = {
-            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
-          };
-        }
-      });
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function getDivesiteImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      // Contact image server for divesite images
-      dsimg.getDivesiteImages(vm.site.id)
-      .then((response) => {
-        //vm.site.images = response.data.map((item) => item.image);
-        vm.site.images = response.data;
-        vm.site.images.forEach((image) => {
-          image.transformedUrl = $.cloudinary.url(image.image.public_id, {
-            height: 60,
-            width: 60,
-            crop: 'fill',
-          });
-        });
-      });
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function getNearbySlipways() {
-      // Contact API server for nearby slipways
-      dsapi.getNearbySlipways(vm.site.id)
-      .then((response) => {
-        vm.site.nearbySlipways = response.data.map((slipway) => {
-          const s = slipway;
-
-          // Global 'haversine' variable
-          s.distanceFromDivesite = haversine(
-            { latitude: vm.site.latitude, longitude: vm.site.longitude },
-            { latitude: slipway.latitude, longitude: slipway.longitude }
-          );
-          return s;
-        });
-      });
-    }
-
-    function keydownListener(evt) {
-      if (evt.isDefaultPrevented()) {
-        return evt;
-      }
-
-      switch (evt.which) {
-        // Handle ESC keypress
-      case 27: {
-        // Wrapping this in $scope.$apply forces the
-        // search params to update immediately
-        evt.preventDefault();
-        $scope.$apply(() => {
-          $location.search('');
-          $('information-card').remove();
-        });
-      }
-
-      break;
-      }
-    }
 
     // Show a full-size version of the image in a modal
     function showFullSizeImage(img) {
@@ -234,10 +147,12 @@
       }
     }
 
+    /*
     function userIsOwner() {
       // Check whether the authenticated user owns this site
       return localStorageService.get('user') === vm.site.owner.id;
     }
+    */
 
   }
 
@@ -250,6 +165,7 @@
     '$uibModal',
     'dsapi',
     'dsimg',
+    'informationCardService',
     'localStorageService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardController', InformationCardController);
