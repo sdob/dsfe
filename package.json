@@ -48,7 +48,8 @@
     "test": "grunt test"
   },
   "engines": {
-    "node": "4.2.2"
+    "node": "4.2.2",
+    "npm": "3.5.2"
   },
   "keywords": [],
   "author": "",
