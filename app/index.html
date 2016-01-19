@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>divesit.es</title>
@@ -13,12 +12,15 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300' rel='stylesheet' type='text/css'>
         <!-- compiled CSS -->
+        <!-- build:css(.tmp) styles/style.css -->
         <link rel="stylesheet" href="styles/style.css" />
+        <!-- endbuild -->
     </head>
     <body ng-app="divesites">
         <navigation-bar></navigation-bar>
         <div ng-view></div>
     </div>
+    <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
@@ -40,6 +42,9 @@
     <script src="bower_components/cloudinary-jquery/cloudinary-jquery.js"></script>
     <script src="bower_components/haversine/haversine.js"></script>
     <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js js/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/add-something-menu.directive.js"></script>
     <script src="scripts/authentication.service.js"></script>
@@ -108,5 +113,6 @@
     <script src="scripts/upload-divesite-image.controller.js"></script>
     <script src="scripts/upload-divesite-image.directive.js"></script>
     <script src="scripts/upload-profile-image.controller.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
