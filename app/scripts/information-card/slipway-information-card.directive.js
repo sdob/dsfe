@@ -30,13 +30,11 @@
           element.find('.information-card__title').off('click', toggleOpened);
           element.find('.information-card__dismiss-button').off('click', removeSelf);
           $document.off('keydown', keydownListener);
-          $location.search('');
+          // $location.search('');
         });
 
         function removeSelf() {
-          scope.$apply(() => {
-            element.remove();
-          });
+          scope.$emit('please-kill-me', element);
         }
       },
     };

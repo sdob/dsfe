@@ -16,17 +16,13 @@
         vm.maps = maps;
       });
 
-      // If there's a 'divesite' query param in the URL,
-      // then try and summon the information card
+      // If there's a query param in the URL when the controller
+      // is activated, then try and summon an information card
       console.log('looking for $location.$$search');
       console.log($location.$$search);
       if ($location.$$search.divesite) {
         summonCard($location.$$search.divesite, 'divesite');
-      }
-
-      // If there's a 'slipway' query param in the URL,
-      // try and summon the slipway information card
-      if ($location.$$search.slipway) {
+      } else if ($location.$$search.slipway) {
         summonCard($location.$$search.slipway, 'slipway');
       }
 
@@ -58,25 +54,39 @@
         minZoom: 3,
       };
 
+      function clearSearchPath() {
+        // Wrapping this in $apply forces it to happen immediately
+        $scope.$apply(() => {
+          $location.search('');
+        });
+      }
+
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
 
+      // Listen for an information card declaring that it wants to be removed.
+      // In this case, we remove the element *and* clear the search path.
+      $scope.$on('please-kill-me', (evt, element) => {
+        console.log('an element wants to die');
+        element.remove();
+        clearSearchPath();
+      });
+
+      // Here's where we handle the search path changes caused by
+      // marker clicks
       $scope.$on('$routeUpdate', (e, c) => {
         console.log('$routeUpdate');
-        $('information-card').remove();
-        $('slipway-information-card').remove();
         // When the route updates (i.e., search params changes),
-        // try to summon an information card. These are chained
-        // with else statements so that a malformed search string
-        // won't try to repeatedly create information cards
+        // try to summon an information card.
         if (c.params.divesite) {
           return summonCard(c.params.divesite, 'divesite');
-        } else if (c.params.slipway) {
+        }
+        if (c.params.slipway) {
           return summonCard(c.params.slipway, 'slipway');
         } 
       });
 
-      // Retrieve divesites
+      // Retrieve divesites and create markers
       dsapi.getDivesites()
       .then((response) => {
         vm.sites = response.data; // Allow us to use the sites in other controllers
@@ -84,13 +94,14 @@
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
+      // Retrieve compressors and create markers
       dsapi.getCompressors()
       .then((response) => {
         vm.compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon));
         updateCompressorMarkerVisibility(filterPreferences.preferences);
       });
 
-      // Retrieve slipways
+      // Retrieve slipways and createMarkers
       dsapi.getSlipways()
       .then((response) => {
         vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
@@ -112,10 +123,7 @@
       }
     }
 
-    /*
-     * Update marker visibility when new filter preference data
-     * arrive
-     */
+    // Update marker visibility when new filter preference information arrives
     function listenForPreferenceChanges(e, preferences) {
       if (vm.mapMarkers) {
         updateMarkerVisibility(preferences);
@@ -145,15 +153,14 @@
       });
     }
 
-    /*
-     * When the user clicks on a site marker, retrieve detailed info
-     * and bring up the information card
-     */
+    // Clicking a divesite marker just changes the search path
     function markerClick(marker, event, model, args) {
       $location.search(`divesite=${model.id}`);
     }
 
+    // Clicking a slipway marker just changes the search path
     function slipwayMarkerClick(marker, event, model, args) {
+      console.log('click a slipway');
       $location.search(`slipway=${model.id}`);
     }
 
@@ -169,21 +176,10 @@
       return depth && level && entries;
     }
 
-    function summonInformationCard(divesite) {
-      // look for 'divesite' in params
-      dsapi.getDivesite(divesite)
-      .then((response) => {
-        // remove any existing information cards and add one to the DOM
-        $('information-card').remove();
-        $('slipway-information-card').remove();
-        const scope = $rootScope.$new();
-        scope.site = response.data;
-        console.log(scope);
-        $('map').append($compile(`<information-card></information-card>`)(scope));
-      });
-    }
 
     function summonCard(id, type) {
+      // ID is a uuid for an object, but that doesn't tell us what the
+      // type is, so we pass that into this bit here
       const {apiCall, directiveString} = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
 
       // Remove any existing DOM elements
@@ -191,20 +187,10 @@
       $('slipway-information-card').remove();
       apiCall(id)
       .then((response) => {
-        const scope = $rootScope.$new();
-        scope.site = response.data;
-        $('map').append($compile(directiveString)(scope));
-      });
-    }
-
-    function summonSlipwayInformationCard(slipway) {
-      dsapi.getSlipway(slipway)
-      .then((response) => {
-        $('information-card').remove();
-        $('slipway-information-card').remove();
-        const scope = $rootScope.$new();
-        scope.site = response.data;
-        $('map').append($compile('<slipway-information-card></slipway-information-card>')(scope));
+        console.log(response.data);
+        //vm.site = response.data;
+        $scope.site = response.data;
+        $('map').append($compile(directiveString)($scope));
       });
     }
 

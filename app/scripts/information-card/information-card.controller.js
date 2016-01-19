@@ -23,7 +23,6 @@
       vm.collapseDepthChart = true;
       vm.collapseDurationHistogram = true;
 
-
       // TODO: why am I wrapping this in a timeout?
       $timeout(() => {
         // Wire up functions
@@ -146,14 +145,6 @@
         vm.sectionVisibilities[section] = true;
       }
     }
-
-    /*
-    function userIsOwner() {
-      // Check whether the authenticated user owns this site
-      return localStorageService.get('user') === vm.site.owner.id;
-    }
-    */
-
   }
 
   InformationCardController.$inject = ['$auth',

@@ -7,6 +7,8 @@
       controller: 'InformationCardController',
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
+        console.log('linking info card');
+        console.log(scope);
         const keydownListener = informationCardService.escapeKeydownListener(removeSelf);
         const toggleOpened = informationCardService.toggleOpened(element);
         // XXX: This seems hacky, but the alternative *appears* to be inserting
@@ -41,17 +43,11 @@
 
           // Remove ESC key 
           $document.off('keydown', keydownListener);
-
-          // Remove the search string
-          $location.search('');
         });
 
         function removeSelf() {
-          // Wrapping this in $apply forces the $location.search update to
-          // occur immediately (otherwise it waits at least until the map is dragged)
-          scope.$apply(() => {
-            element.remove();
-          });
+          // politely ask parent scope to remove me
+          scope.$emit('please-kill-me', element);
         }
       },
     };
