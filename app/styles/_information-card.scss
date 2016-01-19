@@ -15,13 +15,25 @@
   max-height: 100%;
   width: 100%;
 
+
+  &__body {
+    display: none;
+    @media (min-width: $screen-lg-min) {
+      display: block;
+    }
+  }
+
   &.opened {
     // When the information card is opened on small devices,
     // it should take up the entire screen height, and the
-    // chevron should flip to face down
+    // chevron should flip to face down; the body should be
+    // visible
     height: 100%;
     .fa-chevron-up {
       transform: rotate(-180deg);
+    }
+    .information-card__body {
+      display: block;
     }
   }
 

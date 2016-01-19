@@ -1,8 +1,6 @@
 <div class="information-card shadow-2dp">
     <div class="information-card__title"
         ng-style="icvm.backgroundStyle"
-        data-toggle="collapse"
-        data-target="#information-card__body"
         >
         <div class="information-card__site-title">
             <h2 class="information-card__site-name">
@@ -14,24 +12,9 @@
         </div>
     </div>
 
-
-    <!--
-    <div class="information-card__header-actions">
-        <a href
-            class="overlay-action-item"
-            ng-click="icvm.dismiss()"
-            >
-            <span class="fa fa-stack">
-                <i class="fa fa-stack-2x fa-circle background"></i>
-                <i class="fa fa-stack-1x fa-times"></i>
-            </span>
-        </a>
-    </div>
-    -->
-
     <ng-include src="'views/information-card/header-actions.html'"></ng-include>
 
-    <div class="information-card__body collapse"
+    <div class="information-card__body"
         id="information-card__body"
         >
         <ng-include src="'views/information-card/description.html'"></ng-include>
