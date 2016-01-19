@@ -8,8 +8,10 @@ module.exports = {
       src: [
         '*.{ico,png,txt}',
         '.htaccess',
-        '*.html',
+        '{,*/}*.html',
+        'views/**/*.html',
         'views/{,*/}*.html',
+        'img/**/*',
       ],
     }],
   },

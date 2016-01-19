@@ -37,5 +37,12 @@ module.exports = (cfg) => {
         }
       }
     },
+    dist: {
+      options: {
+        open: true,
+        base: cfg.dist,
+        keepalive: true,
+      },
+    },
   };
 };

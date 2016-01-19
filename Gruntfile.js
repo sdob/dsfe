@@ -23,6 +23,17 @@ module.exports = (grunt) => {
     jscs: require('./config/jscs'),
     jshint: require('./config/jshint'),
 
+    ngAnnotate: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat/scripts',
+          src: ['*.js'],
+          dest: '.tmp/concat/scripts',
+        }],
+      },
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -31,14 +42,12 @@ module.exports = (grunt) => {
     },
 
     useminPrepare: require('./config/usemin-prepare'),
-
     usemin: require('./config/usemin'),
-
     watch: require('./config/watch'),
     wiredep: require('./config/wiredep')(cfg),
   });
 
-  grunt.registerTask('serve', (target) => {
+  grunt.registerTask('serve', 'Compile and start a web server', (target) => {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
@@ -58,6 +67,7 @@ module.exports = (grunt) => {
     'wiredep', // Update Bower dependencies
     'useminPrepare', // Generate usemin configuration
     'concat', // Concatenate JS and CSS
+    'ngAnnotate',
     'copy:dist', // Move files across to the dist/ directory
     'cssmin', // Minify CSS
     'uglify', // Minify JS
