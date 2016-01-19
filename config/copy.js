@@ -1,10 +1,22 @@
-module.exports = (cfg) => {
-  return {
-    styles: {
+module.exports = {
+  dist: {
+    files: [{
       expand: true,
-      cwd: '<%= cfg.app %>/styles',
-      dest: '.tmp/styles/',
-      src: '{,*/}*.css'
-    },
-  };
+      dot: true,
+      cwd: '<%= cfg.app %>',
+      dest: '<%= cfg.dist %>',
+      src: [
+        '*.{ico,png,txt}',
+        '.htaccess',
+        '*.html',
+        'views/{,*/}*.html',
+      ],
+    }],
+  },
+  styles: {
+    expand: true,
+    cwd: '<%= cfg.app %>/styles',
+    dest: '.tmp/styles/',
+    src: '{,*/}*.css'
+  },
 };

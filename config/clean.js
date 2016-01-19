@@ -4,8 +4,8 @@ module.exports = {
       dot: true,
       src: [
         '.tmp',
-        // <%= cfg.dist %>/{,/*/}*',
-        // <%= cfg.dist %>/.git{<*/}*'
+        '<%= cfg.dist %>/{,/*/}*',
+        '!<%= cfg.dist %>/.git{<*/}*'
       ],
     }],
   },
