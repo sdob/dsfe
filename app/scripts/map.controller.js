@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, mapSettings, uiGmapGoogleMapApi) {
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
@@ -37,10 +37,12 @@
 
       // Retrieve stored map settings
       vm.map = mapSettings.get();
+
       // Set map event listeners
       vm.mapEvents =  {
         idle: mapIdle,
       };
+
       // Set map marker event listeners
       vm.markerEvents = {
         click: markerClick,
@@ -63,13 +65,13 @@
         if (c.params.divesite) {
           return summonInformationCard(c.params.divesite);
         }
+
         if (c.params.slipway) {
           return summonSlipwayInformationCard(c.params.slipway);
         }
-        {
-          $('information-card').remove();
-          $('slipway-information-card').remove();
-        }
+
+        $('information-card').remove();
+        $('slipway-information-card').remove();
       });
 
       // Retrieve divesites
@@ -96,7 +98,8 @@
 
     function getMarkerScreenPosition(map, marker) {
       const overlay = new google.maps.OverlayView();
-      overlay.draw = function () {};
+      overlay.draw = function() {};
+
       overlay.setMap(map);
       const proj = overlay.getProjection();
       if (proj) {
@@ -115,16 +118,18 @@
       if (vm.mapMarkers) {
         updateMarkerVisibility(preferences);
       }
+
       if (vm.slipwayMarkers) {
         updateSlipwayMarkerVisibility(preferences);
       }
+
       if (vm.compressorMarkers) {
         updateCompressorMarkerVisibility(preferences);
       }
     }
 
     /*
-     * When the map idles, have the map settings service store the 
+     * When the map idles, have the map settings service store the
      * current position
      */
     function mapIdle(map) {
@@ -137,7 +142,6 @@
         zoom: map.zoom,
       });
     }
-
 
     /*
      * When the user clicks on a site marker, retrieve detailed info
@@ -162,7 +166,6 @@
       const entries = (marker.boatEntry && preferences.boatEntry) || (marker.shoreEntry && preferences.shoreEntry);
       return depth && level && entries;
     }
-
 
     function summonInformationCard(divesite) {
       // look for 'divesite' in params
@@ -189,12 +192,11 @@
       });
     }
 
-
     /*
      * Transform site data from the Divesites API to a marker that
      * angular-google-maps understands.
      */
-    function transformSiteToMarker(s) {
+    function transformSiteToMarker(s) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       return {
         boatEntry: s.boat_entry,
         depth: s.depth,
@@ -211,9 +213,9 @@
         title: s.name,
         shoreEntry: s.shore_entry,
       };
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-    function transformAmenityToMarker(s, icon) {
+    function transformAmenityToMarker(s, icon) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       return {
         icon,
         id: s.id,
@@ -226,7 +228,7 @@
         },
         title: s.name,
       };
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function updateMarkerVisibility(preferences) {
       vm.mapMarkers.forEach((m) => {

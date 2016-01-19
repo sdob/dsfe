@@ -23,6 +23,8 @@ module.exports = (grunt) => {
     connect: require('./config/connect')(cfg),
     // copy: require('./config/copy')(cfg),
 
+    jscs: require('./config/jscs'),
+
     jshint: require('./config/jshint'),
 
     karma: {

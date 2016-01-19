@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   function DivesiteDetailController($routeParams, dsapi) {

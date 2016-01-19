@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function FilterMenuController($scope, filterPreferences) {
     const vm = this;
@@ -8,8 +8,10 @@
 
     function activate() {
       console.log($scope);
+
       // Wire up scope functions
       vm.handleSearchSelect = handleSearchSelect;
+
       // handle filter preferences
       vm.preferences = filterPreferences.preferences;
       vm.updatePreferences();
@@ -22,6 +24,7 @@
         latitude: item.latitude,
         longitude: item.longitude,
       };
+
       // Emulate a marker click here
       console.log($scope.mc.mapMarkers);
       const marker = $scope.mc.mapMarkers.filter((m) => m.id === item.id)[0];
@@ -29,7 +32,7 @@
       $scope.mc.markerEvents.click(marker, undefined, item);
     }
 
-    function updatePreferences () {
+    function updatePreferences() {
       Object.keys(vm.preferences).forEach((k) => {
         filterPreferences.set(k, vm.preferences[k]);
       });

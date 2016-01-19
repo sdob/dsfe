@@ -1,6 +1,6 @@
-(function () {
+(function() {
   'use strict';
-  function ProfileHeader() {
+  function profileHeader() {
     return {
       scope: {
         editable: '=',
@@ -12,6 +12,6 @@
     };
   }
 
-  ProfileHeader.$inject = [];
-  angular.module('divesites').directive('profileHeader', ProfileHeader);
+  profileHeader.$inject = [];
+  angular.module('divesites').directive('profileHeader', profileHeader);
 })();

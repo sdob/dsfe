@@ -1,15 +1,17 @@
-(function () {
+(function() {
   'use strict';
-  function FilterPreferencesService ($rootScope, localStorageService) {
+  function FilterPreferencesService($rootScope, localStorageService) {
     const MAX_DEPTH = 100;
-    const self = this;
+    const vm = this;
 
     const defaults = {
+
       // Divesites
       boatEntry: true,
       shoreEntry: true,
       maximumDepth: MAX_DEPTH,
-      maximumLevel: "2",
+      maximumLevel: '2',
+
       // Amenities
       compressors: true,
       slipways: true,
@@ -20,7 +22,7 @@
     };
 
     // Set defaults to show everything initially
-    self.preferences = {
+    vm.preferences = {
       boatEntry: defaults.boatEntry,
       maximumDepth: defaults.maximumDepth,
       maximumLevel: defaults.maximumLevel,
@@ -30,26 +32,30 @@
     };
 
     const set = (key, value) => {
-      self.preferences[key] = value;
+      vm.preferences[key] = value;
       localStorageService.set(key, value);
-      $rootScope.$broadcast('filter-preferences', self.preferences);
+      $rootScope.$broadcast('filter-preferences', vm.preferences);
     };
 
-    const validateBoolean = (value) => true === value || false === value;
+    const validateBoolean = (value) => value === true || value === false;
 
     const validators = {
       boatEntry: (value) => {
-        return true === value || false === value;
+        return value === true || value === false;
       },
+
       shoreEntry: (value) => {
-        return true === value || false === value;
+        return value === true || value === false;
       },
+
       maximumDepth: (value) => {
         return value >= 0 && value <= 100;
       },
+
       maximumLevel: (value) => {
-        return value === "0" || value === "1" || value === "2";
+        return value === '0' || value === '1' || value === '2';
       },
+
       compressors: validateBoolean,
       slipways: validateBoolean,
     };
@@ -57,11 +63,12 @@
     initialize();
     return {
       get,
-      preferences: self.preferences,
-      set
+      preferences: vm.preferences,
+      set,
     };
 
     function initialize() {
+
       // For each key, try to find a valid entry in localStorage. If we find
       // one, then set it to preferences (otherwise use the defaults); otherwise,
       // set a valid preference.
@@ -71,19 +78,22 @@
         'maximumDepth',
         'maximumLevel',
         'shoreEntry',
-        'slipways', 
+        'slipways',
       ];
       keys.forEach((k) => {
+
         // Look for any entry
         if (localStorageService.keys().indexOf(k) > -1) {
           const storedValue = localStorageService.get(k);
+
           // Validate it and set it if valid
           if (validators[k](storedValue)) {
-            self.preferences[k] = storedValue;
+            vm.preferences[k] = storedValue;
           }
+
           // Either way, set the localStorage key to something valid
-          localStorageService.set(k, self.preferences[k]);
-       }
+          localStorageService.set(k, vm.preferences[k]);
+        }
       });
     }
   }

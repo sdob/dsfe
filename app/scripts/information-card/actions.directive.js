@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function InformationCardActions() {
     return {
@@ -11,6 +11,7 @@
       },
     };
   }
+
   InformationCardActions.$inject = [];
   angular.module('divesites.informationCard').directive('informationCardActions', InformationCardActions);
 })();

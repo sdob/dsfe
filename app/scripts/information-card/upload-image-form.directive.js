@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function uploadImageForm() {
     return {
@@ -8,9 +8,10 @@
       link: (scope, elem, attrs, ctrl) => {
         console.log('uicd.link');
         console.log(scope);
-      }
+      },
     };
   }
+
   uploadImageForm.$inject = [];
   angular.module('divesites.informationCard').directive('uploadImageForm', uploadImageForm);
 })();

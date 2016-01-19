@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function informationCardCharts(collapseBehaviour) {
     return {
@@ -11,12 +11,14 @@
         if (controller.histograms.depth) {
           element.find('#information-card-depth-histogram-container').append(controller.histograms.depth);
         }
+
         if (controller.histograms.duration) {
           element.find('#information-card-duration-histogram-container').append(controller.histograms.duration);
         }
       },
     };
   }
+
   informationCardCharts.$inject = ['collapseBehaviour'];
   angular.module('divesites.informationCard').directive('informationCardCharts', informationCardCharts);
 })();

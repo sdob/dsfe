@@ -1,7 +1,7 @@
-(function () {
+(function() {
   'use strict';
 
-  function SlipwayInformationCard() {
+  function slipwayInformationCard() {
     return {
       templateUrl: 'views/information-card/slipway-information-card.html',
       controller: 'SlipwayInformationCardController',
@@ -11,8 +11,6 @@
     };
   }
 
-  SlipwayInformationCard.$inject = [];
-
-  angular.module('divesites.informationCard').directive('slipwayInformationCard', SlipwayInformationCard);
-
+  slipwayInformationCard.$inject = [];
+  angular.module('divesites.informationCard').directive('slipwayInformationCard', slipwayInformationCard);
 })();

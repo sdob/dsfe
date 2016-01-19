@@ -1,6 +1,6 @@
-(function () {
+(function() {
   'use strict';
-  function ProfileStats() {
+  function profileStats() {
     return {
       scope: {
         user: '=',
@@ -9,6 +9,6 @@
     };
   }
 
-  ProfileStats.$inject = [];
-  angular.module('divesites').directive('profileStats', ProfileStats);
+  profileStats.$inject = [];
+  angular.module('divesites').directive('profileStats', profileStats);
 })();

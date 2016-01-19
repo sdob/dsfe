@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function durationFilter() {
     return (duration) => moment.duration(duration).minutes();

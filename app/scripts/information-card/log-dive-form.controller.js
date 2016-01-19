@@ -1,14 +1,15 @@
-(function () {
+(function() {
   'use strict';
   function InformationCardLogDiveFormController($scope, $timeout, dsapi, logDiveService, uiPreferencesService) {
     const vm = this;
+
     // TODO: get these into scope some other way
     vm.site = $scope.$parent.site;
     const icvm = $scope.icvm;
     activate();
 
     function activate() {
-      // Wire up functions 
+      // Wire up functions
       vm.openDatepicker = openDatepicker;
       vm.submit = submit;
 
@@ -31,7 +32,7 @@
       };
     }
 
-    function formatRequest(dive) {
+    function formatRequest(dive) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       // Build the object that DSAPI expects
       const combinedDateAndTime = logDiveService.combineDateAndTime(dive.date, dive.time);
       const request = {
@@ -43,7 +44,7 @@
         divesite: dive.site.id,
       };
       return request;
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function openDatepicker() {
       console.log('opening timepicker');
@@ -56,6 +57,7 @@
       console.log('submitting...');
       const request = formatRequest(vm.dive);
       console.log(request);
+
       // Bail out early if the form fails client-side validation
       if (!$scope.logDiveForm.$valid) {
         console.error('invalid form');
@@ -64,6 +66,7 @@
         vm.isSaving = false;
         return;
       }
+
       // We've passed client-side validation; send the data
       console.log('passed client-side validation');
       dsapi.postDive(request)
@@ -74,7 +77,6 @@
         .then((response) => {
           // TODO: ensure that the information card shows the updated data
           // when we return
-          
           // Emit an event up to the information card controller
           $scope.$emit('dive-list-updated');
 
@@ -93,6 +95,7 @@
       });
     }
   }
+
   InformationCardLogDiveFormController.$inject = [
     '$scope',
     '$timeout',

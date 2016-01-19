@@ -1,9 +1,6 @@
-(function () {
+(function() {
   'use strict';
   function uiPreferencesService(localStorageService) {
-
-
-    initialize();
 
     return {
       get,
@@ -16,10 +13,8 @@
       const preferences = localStorageService.get('preferences') || defaults;
       return preferences;
     }
-
-    function initialize() {
-    }
   }
+
   uiPreferencesService.$inject = [
     'localStorageService',
   ];

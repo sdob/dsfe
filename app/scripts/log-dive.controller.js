@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function LogDiveController($location, $routeParams, $scope, $timeout, $uibModal, dsapi, mapSettings) {
     const vm = this;
@@ -19,7 +19,7 @@
         text: 'Save',
       };
       vm.settings = {
-        maxDate: moment()
+        maxDate: moment(),
       };
       vm.submit = submit;
 
@@ -34,11 +34,9 @@
       console.log(vm.dive.date);
     }
 
-
     function checkForError(form, formElement) {
       return formElement.$error.required && (form.$submitted || formElement.$touched);
     }
-
 
     function combineDateAndTime(date, time) {
       const year = moment(date).year();
@@ -50,20 +48,32 @@
       return combined;
     }
 
+    function formatRequest(dive) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+      const combinedDateTime = combineDateAndTime(dive.date, dive.time);
+      const data = {
+        start_time: combinedDateTime.toISOString(),
+        duration: moment.duration(dive.duration, 'minutes'),
+        depth: dive.maximumDepth,
+        average_depth: dive.averageDepth,
+        comment: dive.comment,
+        divesite: vm.site.id,
+      };
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function submit() {
       console.log('logDive.submit()');
-      //vm.disableSaveButton = true;
       console.log($scope.logDiveForm);
       if ($scope.logDiveForm.$invalid) {
         console.log('form is invalid; returning');
         return;
       }
+
       $scope.logDiveForm.$setSubmitted();
       vm.isSaving = true;
+      const data = formatRequest(vm.dive);
 
       // Build the object that the API expects
-      const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
+      /* const combinedDateTime = combineDateAndTime(vm.dive.date, vm.dive.time);
       const data = {
         start_time: combinedDateTime.toISOString(),
         duration: moment.duration(vm.dive.duration, 'minutes'),
@@ -71,17 +81,18 @@
         average_depth: vm.dive.averageDepth,
         comment: vm.dive.comment,
         divesite: vm.site.id,
-      };
+      }; */
       console.log('duration');
       console.log(vm.dive.duration);
       vm.isSaving = false;
+
       // POST to the API server
       dsapi.postDive(data)
       .then((response) => {
         // A successful post request
         vm.isSaving = false;
         console.log(response);
-        //return response;
+
         // Update the map settings before returning us to the map
         mapSettings.set('center', {
           latitude: response.data.divesite.latitude,
@@ -98,7 +109,6 @@
         console.log(response);
       });
     }
-
 
     function summonCancelEditingModal() {
       console.log('summoning cancelling editing');

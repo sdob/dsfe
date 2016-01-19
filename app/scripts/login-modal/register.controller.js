@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function RegisterController($auth, $scope, $timeout, dsapi, localStorageService) {
     const vm = this;
@@ -9,34 +9,38 @@
       vm.submit = submit;
     }
 
-    function formatRequest(user) {
+    function formatRequest(user) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       const data = Object.assign({}, user);
       data.full_name = data.fullName;
       delete data.fullName;
       return data;
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function submit() {
       $scope.registerForm.$setSubmitted();
       if (!$scope.registerForm.$valid) {
         return;
       }
+
       vm.hasError = false;
       vm.isSubmitting = true;
       const data = formatRequest(vm.user);
       console.log('data');
       console.log(data);
+
       // Sign up
       $auth.signup(data)
       .then((response) => {
         // TODO: Persuade Satellizer that we're logged in now that we have the password
-        return $auth.login({username: data.email, password: data.password});
+        return $auth.login({ username: data.email, password: data.password });
       })
+
       // Get the newly-created user's profile from the API server
       .then(dsapi.getOwnProfile)
       .then((response) => {
         // Store the user ID
         localStorageService.set('user', response.data.id);
+
         // Add some latency to the modal close to make it obvious to the user
         // that the request has been processed
         $timeout(() => {

@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function EditSlipwayController($location, $routeParams, $scope, $timeout, dsapi, mapSettings) {
 
@@ -43,15 +43,18 @@
           console.log('dragend');
           $timeout(() => {
           }, 0);
-        }
-      }; 
+        },
+      };
 
       if ($routeParams.id) {
+
         // We're editing a slipway
         vm.templateStrings = TEMPLATE_STRINGS.edit;
+
         // Retrieve slipway data
         dsapi.getSlipway($routeParams.id)
         .then((response) => {
+
           // TODO: check whether the data returned are OK
           // Format site data for angular-google-maps
           vm.site = formatResponse(response);
@@ -63,13 +66,16 @@
               draggable: true,
             },
           };
+
           // TODO: this is subject to change when the slipway's name changes
           vm.title = 'Edit this slipway';
         })
         .then((response) => {
+
           // TODO: get header image from dsimg server
         });
       } else {
+
         // We're adding a slipway
         vm.title = 'Add a slipway';
         vm.templateStrings = TEMPLATE_STRINGS.add;
@@ -77,6 +83,7 @@
     }
 
     function formatResponse(response) {
+
       // Convert DSAPI response data to a format that angular-google-maps
       // understands.
       const site = Object.assign({}, response.data);
@@ -90,6 +97,7 @@
     }
 
     function formatRequest(site) {
+
       // Convert Angular model to a format that DSAPI understands.
       const requestData = Object.assign({}, site);
       requestData.latitude = site.coords.latitude;
@@ -103,34 +111,41 @@
         console.log($scope.siteForm.$error);
         return;
       }
+
       $scope.siteForm.$submitted = true;
       vm.isSaving = true;
       const requestData = formatRequest(vm.site);
       console.log(requestData);
 
       if ($routeParams.id) {
+
         // We're editing an existing slipway
         dsapi.updateSlipway(vm.site.id, requestData)
         .then((response) => {
           console.log(response);
           vm.isSaving = false;
+
           // Return to the slipway information card
           $location.path('/');
           $location.search(`slipway=${response.data.id}`);
         })
         .catch((err) => {
           console.error(err);
+
           // TODO: handle server-side errors
         });
       } else {
+
         // We're adding a new slipway
         dsapi.postSlipway(requestData)
         .then((response) => {
           console.log(response);
           $timeout(() => {
+
             // Add a bit of latency so that it's obvious that the request
             // was handled
             vm.isSaving = false;
+
             // Return to the slipway information card
             $location.path('/');
             $location.search(`slipway=${response.data.id}`);
@@ -139,6 +154,7 @@
         .catch((error) => {
           vm.isSaving = false;
           console.error(error);
+
           // TODO: handle server-side errors
         });
       }

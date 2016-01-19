@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, localStorageService) {
@@ -21,37 +21,6 @@
       $rootScope.$on('$destroy', () => {
         $document.off('keydown', keydownListener);
       });
-      /*
-      vm.showBiggerImage = showBiggerImage;
-
-      // Contact image server for header image
-      dsimg.getDivesiteHeaderImage(vm.site.id)
-      .then((response) => {
-        console.log(response);
-        if(response.data && response.data.image && response.data.image.public_id) {
-          const public_id = response.data.image.public_id;
-          vm.site.headerImageUrl = $.cloudinary.url(public_id, {
-          });
-          vm.backgroundStyle = {
-            'background': `blue url(${vm.site.headerImageUrl}) center / cover`,
-          };
-        }
-      });
-
-      // Contact image server for divesite images
-      dsimg.getDivesiteImages(vm.site.id)
-      .then((response) => {
-       vm.site.images = response.data.map((item) => item.image);
-       vm.site.images.forEach((image) => {
-         image.transformedUrl = $.cloudinary.url(image.public_id, {
-           height: 60,
-           width: 60,
-           crop: 'fill',
-         });
-       });
-      });
-
-      */
     }
 
     function dismiss() {
@@ -60,10 +29,11 @@
       $('information-card').remove();
     }
 
-    function keydownListener (evt) {
+    function keydownListener(evt) {
       if (evt.isDefaultPrevented()) {
         return evt;
       }
+
       switch (evt.which) {
         // Handle ESC keypress
       case 27: {
@@ -75,6 +45,7 @@
           $('information-card').remove();
         });
       }
+
       break;
       }
     }
@@ -89,16 +60,15 @@
           // need to work out why.
           $scope.image = image;
         },
+
         controllerAs: 'vm',
         resolve: {
           image: () => img,
         },
         templateUrl: 'views/show-full-size-image.html',
         size: 'lg',
-        //scope: $scope,
       });
     }
-
 
     function userIsOwner() {
       return localStorageService.get('user') === vm.site.owner.id;

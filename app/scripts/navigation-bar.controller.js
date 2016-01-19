@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function NavigationBarController($auth, $location, $uibModal, localStorageService) {
     const vm = this;
@@ -17,7 +17,7 @@
         $location.path('/');
       });
     }
-    
+
     function summonLoginModal() {
       const modalInstance = $uibModal.open({
         templateUrl: 'views/login-modal.html',
@@ -29,6 +29,11 @@
     }
   }
 
-  NavigationBarController.$inject = ['$auth', '$location', '$uibModal', 'localStorageService',];
+  NavigationBarController.$inject = [
+    '$auth',
+    '$location',
+    '$uibModal',
+    'localStorageService',
+  ];
   angular.module('divesites').controller('NavigationBarController', NavigationBarController);
 })();

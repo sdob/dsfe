@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function InformationCardChartsService($document) {
     return {
@@ -9,12 +9,14 @@
 
       let _xMax = xMax;
       let _xMin = xMin;
+
       if (xMin === undefined) {
         _xMin = 0;
       }
+
       if (xMax === undefined) {
         _xMax = d3.max(values);
-      } 
+      }
 
       // x scale
       const x = d3.scale.linear()

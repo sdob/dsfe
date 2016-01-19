@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function FilterMenu() {
     return {
@@ -10,12 +10,13 @@
         angular.element(elem).ready(() => {
           const prefs = ctrl.preferences;
           const slider = angular.element('#js-information-card__depth-range-slider').slider({
-            tooltip: 'hide'
+            tooltip: 'hide',
           });
           slider.slider('setValue', parseInt(ctrl.preferences.maximumDepth));
         });
       },
     };
   }
+
   angular.module('divesites').directive('filterMenu', FilterMenu);
 })();

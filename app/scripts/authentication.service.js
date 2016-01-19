@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function authenticationService(API_URL) {
     return {

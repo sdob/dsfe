@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function dsimgService($http, IMG_API_URL) {
     return {
@@ -9,12 +9,13 @@
         console.log(`dsimg.getDivesiteImages(${divesiteID})`);
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/`);
       },
+
       getDivesiteHeaderImage: (divesiteID) => {
         console.log(`dsimg.getDivesiteHeaderImage(${divesiteID})`);
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
+
       getUserProfileImage: (userID) => {
-        //console.log(`dsimg.getUserProfileImage(${userID})`);
         return $http.get(`${IMG_API_URL}/users/${userID}/profile`);
       },
 
@@ -29,6 +30,7 @@
         console.log(`dsimg.deleteDivesiteHeaderImage(${divesiteID})`);
         return $http.delete(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
+
     };
   }
 

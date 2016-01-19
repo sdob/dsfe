@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function loginModal() {
     return {
@@ -7,7 +7,7 @@
       controllerAs: 'lmvm',
       restrict: 'E',
       link: () => {
-      }
+      },
     };
   }
 

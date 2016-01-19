@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function InformationCardChartsController($scope, informationCardChartsService) {
 
@@ -11,6 +11,7 @@
     }
 
     function constructHistograms() {
+
       // Build depth and duration histograms (if we have the data we need)
       const depths = vm.site.dives.map((d) => d.depth);
       const durations = vm.site.dives.map(d => moment.duration(d.duration).minutes());
@@ -18,12 +19,12 @@
       let durationHistogram;
       if (depths.length) {
         depthHistogram = informationCardChartsService.createHistogram('depth', depths, 20, 512, 178, 0, 100);
-        //$('#information-card-depth-histogram-container').append(dh);
       }
+
       if (durations.length) {
         durationHistogram = informationCardChartsService.createHistogram('duration', durations);
-        //$('#information-card-duration-histogram-container').append(informationCardChartsService.createHistogram('duration', durations));
       }
+
       vm.histograms = {
         depth: depthHistogram,
         duration: durationHistogram,

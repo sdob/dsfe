@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, Upload, dsapi, dsimg, editSiteService, mapSettings) {
     const vm = this;
@@ -9,6 +9,7 @@
 
       console.log('EditSiteController.activate()');
       console.log(`$routeParams.id: ${$routeParams.id}`);
+
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
@@ -20,14 +21,14 @@
       // Retrieve map settings
       vm.map = mapSettings.get();
       console.log(vm.map);
+
       // Set default site
       vm.site = mapSettings.defaultSite(vm.map);
+
       // Set default marker
       vm.marker = mapSettings.defaultMarker(vm.map);
       vm.marker.events = {
       };
-      //console.log(vm.marker);
-      //console.log(vm.marker.coords);
 
       // Pre-validate checkboxes (XXX: why?)
       vm.checkAtLeastOneEntryIsSelected();
@@ -36,6 +37,7 @@
       // an existing divesite.
       if ($routeParams.id) {
         vm.title = 'Edit this divesite';
+
         // We are editing a site...
         dsapi.getDivesite($routeParams.id)
         .then((response) => {
@@ -65,14 +67,60 @@
             console.log(vm.site.headerImageUrl);
           }
         });
+
         // TODO: handle invalid/missing divesite IDs
       } else {
-        vm.title = "Add a new divesite";
+        vm.title = 'Add a new divesite';
       }
     }
 
     function checkAtLeastOneEntryIsSelected() {
-      vm.atLeastOneEntryIsSelected = (vm.site.boat_entry || vm.site.shore_entry);
+      vm.atLeastOneEntryIsSelected = (vm.site.boatEntry || vm.site.shoreEntry);
+    }
+
+    function formatResponse(data) {
+      // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+
+      const site = Object.assign({}, data);
+
+      // Format coordinates
+      site.coords = {
+        latitude: data.latitude,
+        longitude: data.longitude,
+      };
+      delete site.latitude;
+      delete site.longitude;
+
+      // Format snake-cased fields
+      site.boatEntry = site.boat_entry;
+      site.shoreEntry = site.shore_entry;
+      delete site.shore_entry;
+      delete site.boat_entry;
+
+      // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+      return site;
+    }
+
+    function formatRequest(data) {
+      // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+
+      const obj = Object.assign(data);
+
+      // Convert lat/lng data to a format that dsapi expects
+      data.latitude = data.coords.latitude;
+      data.longitude = data.coords.longitude;
+      delete data.coords;
+
+      // Convert camel-cased entry types to the format dsapi expects
+      site.boat_entry = site.boatEntry;
+      site.shore_entry = site.shoreEntry;
+      delete site.boatEntry;
+      delete site.shoreEntry;
+
+      console.log(data);
+      return data;
+
+      // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
     }
 
     function prepareToDeleteExistingHeaderImage() {
@@ -85,9 +133,11 @@
 
     function submit() {
       console.log('EditSiteController.submit()');
+
       // Set the site form's $submitted property to true
       // (this will check validation for untouched forms)
       $scope.siteForm.$submitted = true;
+
       // If the form is invalid, just return
       if (!$scope.siteForm.$valid) {
         console.error('form is invalid; returning');
@@ -99,10 +149,7 @@
       vm.isSaving = true;
 
       // Re-format site data
-      const data = Object.assign({}, vm.site);
-      data.latitude = data.coords.latitude;
-      data.longitude = data.coords.longitude;
-      delete data.coords;
+      const data = formatRequest(vm.site);
       console.log(data);
 
       // Based on whether $routeParams.id is defined, decide which
@@ -120,7 +167,6 @@
         imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
       }
 
-
       apiCall(data)
       .then((response) => {
         vm.site.id = response.data.id; // This is the edited/created site's ID
@@ -130,6 +176,7 @@
         console.log('return from api');
         console.log(response);
         vm.isSaving = false;
+
         // TODO: summon a modal offering to take the user back
         vm.handleSuccessfulSave();
       })
@@ -137,12 +184,14 @@
         vm.isSaving = false;
         console.log('I GOT AN ERROR');
         console.log(err);
+
         // TODO: handle 4xx and 5xx errors
       });
     }
 
     function summonCancelEditingModal() {
       if ($scope.siteForm.$dirty) {
+
         // If the form has been edited, then confirm that the user
         // is OK with losing their changes
         const modalInstance = $uibModal.open({
@@ -151,27 +200,24 @@
           controllerAs: 'vm',
           size: 'lg',
         });
-      }
-      else {
+      } else {
+
         // Otherwise, just send us back to wherever we came from
         $window.history.back();
       }
-    } 
-
+    }
 
     function handleSuccessfulSave() {
       $window.history.back();
     }
 
-
     function truncateCoordinate(n) {
       return Math.round(n * 10e6) / 10e6;
     }
 
-
     function uploadHeaderImage(file) {
       return Upload.upload({
-        data: {image: file},
+        data: { image: file },
         url: `${dsimg.IMG_API_URL}/divesites/${vm.site.id}/header`,
       });
     }

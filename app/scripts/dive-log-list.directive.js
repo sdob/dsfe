@@ -1,9 +1,9 @@
-(function () {
+(function() {
   'use strict';
-  function DiveLogList() {
+  function diveLogList() {
     return {
       scope: {
-        dives: '='
+        dives: '=',
       },
       templateUrl: 'views/dive-log-list.html',
       link: (scope, elem, attrs, ctrl) => {
@@ -11,6 +11,7 @@
       },
     };
   }
-  DiveLogList.$inject = [];
-  angular.module('divesites').directive('diveLogList', DiveLogList);
+
+  diveLogList.$inject = [];
+  angular.module('divesites').directive('diveLogList', diveLogList);
 })();

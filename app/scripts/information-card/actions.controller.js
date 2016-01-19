@@ -1,4 +1,4 @@
-(function () {
+(function() {
   function InformationCardActionsController($auth, $scope) {
     const vm = this;
     activate();
@@ -9,6 +9,10 @@
       console.log($scope);
     }
   }
-  InformationCardActionsController.$inject = ['$auth', '$scope',];
+
+  InformationCardActionsController.$inject = [
+    '$auth',
+    '$scope',
+  ];
   angular.module('divesites.informationCard').controller('InformationCardActionsController', InformationCardActionsController);
 })();

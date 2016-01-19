@@ -1,7 +1,7 @@
-(function () {
+(function() {
   'use strict';
 
-  function LogDive() {
+  function logDive() {
     return {
       templateUrl: 'views/log-dive.html',
       restrict: 'E',
@@ -13,7 +13,6 @@
     };
   }
 
-  LogDive.$inject = [];
-
-  angular.module('divesites').directive('logDive', LogDive);
+  logDive.$inject = [];
+  angular.module('divesites').directive('logDive', logDive);
 })();

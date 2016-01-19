@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function logDiveService() {
     return {
@@ -11,14 +11,16 @@
         const combined = moment([year, month, day, hour, minute]);
         return combined;
       },
+
       defaultDateAndTime: () => {
         return {
           date: new Date(),
           time: new Date(),
         };
-      }
+      },
     };
   }
+
   logDiveService.$inject = [];
   angular.module('divesites').factory('logDiveService', logDiveService);
 })();

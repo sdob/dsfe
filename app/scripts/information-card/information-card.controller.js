@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, localStorageService) {
@@ -8,15 +8,18 @@
     function activate() {
       vm.site = $scope.site;
       vm.site.images = {}; // Ensure that this is never undefined
+
       // Initially show dive list
       vm.sectionVisibilities = {
-        default: true,
-          uploadImageForm: false,
-          logDiveForm: false,
+        defaultSection: true,
+        uploadImageForm: false,
+        logDiveForm: false,
       };
+
       // Initially collapse histograms
       vm.collapseDepthChart = true;
       vm.collapseDurationHistogram = true;
+
       // Wire up functions
       vm.dismiss = dismiss;
       vm.getDivesiteImages = getDivesiteImages;
@@ -42,37 +45,11 @@
         dsapi.getDivesite(vm.site.id)
         .then((response) => {
           console.log(response.data);
-          /* $scope.site = response.data; */
           vm.site = response.data;
-          //$scope.$apply();
-          //console.log($scope.vm);
         });
       });
 
-      /* Try to parse the geocoding_data field, if one was returned */
-      if (vm.site.geocoding_data) {
-        const geocodingData = JSON.parse(vm.site.geocoding_data);
-        //console.log(geocodingData.results);
-        if (geocodingData.results && geocodingData.results.length) {
-          // For the moment, let's assume that the first result is the most detailed
-          // TODO: check that this is in the Google geocoding docs
-          const locData = [];
-          const res = geocodingData.results[0];
-          const ADMIN_AREA_1 = 'administrative_area_level_1';
-          const COUNTRY = 'country';
-          const highestAdminComponent = res.address_components.filter(x => x.types.indexOf(ADMIN_AREA_1) >= 0)[0];
-          const countryComponent = res.address_components.filter(x => x.types.indexOf(COUNTRY) >= 0)[0];
-          // Derive the country name (if present) and the highest-level
-          // administrative area name (if present) from the JSON
-          if (highestAdminComponent !== undefined) {
-            locData.push(highestAdminComponent.long_name);
-          }
-          if (countryComponent !== undefined) {
-            locData.push(countryComponent.long_name);
-          }
-          vm.site.locData = locData;
-        }
-      }
+      vm.site.locData = formatGeocodingData(vm.site);
 
       // handle keydown events (ESC keypress dismisses the information card */
       $document.on('keydown', keydownListener);
@@ -81,13 +58,43 @@
       });
     }
 
+    function formatGeocodingData(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+      const locData = [];
+      if (site.geocoding_data) {
+        const geocodingData = JSON.parse(site.geocoding_data);
+        if (geocodingData.results && geocodingData.results.length) {
+
+          // For the moment, let's assume that the first result is the most detailed
+          // TODO: check that this is in the Google geocoding docs
+          const res = geocodingData.results[0];
+          const ADMIN_AREA_1 = 'administrative_area_level_1';
+          const COUNTRY = 'country';
+          const highestAdminComponent = res.address_components.filter(x => x.types.indexOf(ADMIN_AREA_1) >= 0)[0];
+          const countryComponent = res.address_components.filter(x => x.types.indexOf(COUNTRY) >= 0)[0];
+
+          // Derive the country name (if present) and the highest-level
+          // administrative area name (if present) from the JSON
+          if (highestAdminComponent !== undefined) {
+            locData.push(highestAdminComponent.long_name);
+          }
+
+          if (countryComponent !== undefined) {
+            locData.push(countryComponent.long_name);
+          }
+        }
+      }
+
+      return locData;
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+
     function dismiss() {
       // Remove self from the DOM
       $location.search('');
       $('information-card').remove();
     }
 
-    function getDiverProfileImages() {
+    function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+
       // Contact image server for profile images of dives
       vm.site.dives.forEach((dive) => {
         dsimg.getUserProfileImage(dive.diver.id)
@@ -105,24 +112,25 @@
           }
         });
       });
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-    function getDivesiteHeaderImage() {
+    function getDivesiteHeaderImage() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+
       // Contact image server for header image
       dsimg.getDivesiteHeaderImage(vm.site.id)
       .then((response) => {
-        if(response.data && response.data.image && response.data.image.public_id) {
+        if (response.data && response.data.image && response.data.image.public_id) {
           const public_id = response.data.image.public_id;
           vm.site.headerImageUrl = $.cloudinary.url(public_id, {
           });
           vm.backgroundStyle = {
-            'background': `blue url(${vm.site.headerImageUrl}) center / cover`,
+            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
           };
         }
       });
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-    function getDivesiteImages() {
+    function getDivesiteImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       // Contact image server for divesite images
       dsimg.getDivesiteImages(vm.site.id)
       .then((response) => {
@@ -136,7 +144,7 @@
           });
         });
       });
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function getNearbySlipways() {
       // Contact API server for nearby slipways
@@ -144,20 +152,22 @@
       .then((response) => {
         vm.site.nearbySlipways = response.data.map((slipway) => {
           const s = slipway;
+
           // Global 'haversine' variable
           s.distanceFromDivesite = haversine(
-            {latitude: vm.site.latitude, longitude: vm.site.longitude},
-            {latitude: slipway.latitude, longitude: slipway.longitude}
+            { latitude: vm.site.latitude, longitude: vm.site.longitude },
+            { latitude: slipway.latitude, longitude: slipway.longitude }
           );
           return s;
         });
       });
     }
 
-    function keydownListener (evt) {
+    function keydownListener(evt) {
       if (evt.isDefaultPrevented()) {
         return evt;
       }
+
       switch (evt.which) {
         // Handle ESC keypress
       case 27: {
@@ -169,6 +179,7 @@
           $('information-card').remove();
         });
       }
+
       break;
       }
     }
@@ -184,10 +195,8 @@
         templateUrl: 'views/show-full-size-image.html',
         windowClass: 'show-full-size-image',
         size: 'lg',
-        //scope: $scope,
       });
     }
-
 
     function toggleUploadImageForm() {
       // If the upload image form is currently visible, hide it and
@@ -213,7 +222,7 @@
         // If the section is currently visible, hide it, then
         // show the dive list (the default view)
         vm.sectionVisibilities[section] = false;
-        vm.sectionVisibilities.default = true;
+        vm.sectionVisibilities.defaultSection = true;
       } else {
         // If the section is currently invisible, set
         // all other section visibilities to false and the upload image
@@ -237,7 +246,7 @@
     '$location',
     '$rootScope',
     '$scope',
-    '$timeout', 
+    '$timeout',
     '$uibModal',
     'dsapi',
     'dsimg',

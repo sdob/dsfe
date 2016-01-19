@@ -1,6 +1,6 @@
-(function () {
+(function() {
   'use strict';
-  function ProfileHeaderController ($scope, $uibModal) {
+  function ProfileHeaderController($scope, $uibModal) {
     const vm = this;
     activate();
 
@@ -8,7 +8,7 @@
       vm.summonProfileImageUploadModal = summonImageUploadModal;
     }
 
-    function summonImageUploadModal () {
+    function summonImageUploadModal() {
       // Summon a modal dialog to allow the user to upload a new image
       const instance = $uibModal.open({
         templateUrl: 'views/upload-profile-image-modal.html',

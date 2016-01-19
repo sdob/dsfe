@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   function ShowFullSizeImageController($scope, $uibModalInstance, dsapi, dsimg, image) {
     const vm = this;
@@ -8,6 +8,7 @@
       vm.dismiss = dismiss;
       $scope.image = image;
       console.log($scope.image);
+
       // Get the uploader's details from the API
       dsapi.getUser($scope.image.ownerID)
       .then((response) => {
@@ -17,8 +18,9 @@
       .then(() => dsimg.getUserProfileImage(vm.user.id))
       .then((response) => {
         console.log(response.data);
-        if (response.data && response.data.image && response.data.image.public_id) {
-          vm.user.imageUrl = $.cloudinary.url(response.data.image.public_id, {
+        const cloudinaryIdKey = 'public_id';
+        if (response.data && response.data.image && response.data[cloudinaryIdKey]) {
+          vm.user.imageUrl = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
             width: 60,
             height: 60,
             crop: 'fill',
@@ -26,7 +28,6 @@
           });
         }
       });
-
     }
 
     function dismiss() {

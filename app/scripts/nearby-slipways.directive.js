@@ -1,6 +1,6 @@
-(function () {
+(function() {
   'use strict';
-  function NearbySlipways(collapseBehaviour) {
+  function nearbySlipways(collapseBehaviour) {
     return {
       scope: {
         slipways: '=',
@@ -12,6 +12,9 @@
       },
     };
   }
-  NearbySlipways.$inject = ['collapseBehaviour'];
-  angular.module('divesites').directive('nearbySlipways', NearbySlipways);
+
+  nearbySlipways.$inject = [
+    'collapseBehaviour',
+  ];
+  angular.module('divesites').directive('nearbySlipways', nearbySlipways);
 })();
