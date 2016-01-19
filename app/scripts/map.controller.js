@@ -75,7 +75,6 @@
       // Here's where we handle the search path changes caused by
       // marker clicks
       $scope.$on('$routeUpdate', (e, c) => {
-        console.log('$routeUpdate');
         // When the route updates (i.e., search params changes),
         // try to summon an information card.
         if (c.params.divesite) {
@@ -84,6 +83,9 @@
         if (c.params.slipway) {
           return summonCard(c.params.slipway, 'slipway');
         } 
+        // If there are no search params (e.g. if the user hit the back button)
+        // then any existing information cards should be removed
+        $('.information-card').remove();
       });
 
       // Retrieve divesites and create markers
