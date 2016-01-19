@@ -1,9 +1,23 @@
 {
   "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "jscs": "^2.8.0",
+    "karma": "^0.13.15",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.19",
+    "serve-static": "^1.10.0"
+  },
+  "name": "dsfe",
+  "version": "1.0.0",
+  "main": "Gruntfile.js",
+  "dependencies": {
     "babel-preset-es2015": "^6.3.13",
-    "chai": "^3.4.1",
     "grunt": "^0.4.5",
     "grunt-babel": "^6.0.0",
+    "grunt-cli": "^0.1.13",
     "grunt-concurrent": "^2.1.0",
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-compass": "^1.0.4",
@@ -24,25 +38,10 @@
     "grunt-ng-annotate": "^1.0.1",
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^2.0.0",
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^2.2.0",
-    "jasmine-core": "^2.4.1",
-    "jscs": "^2.8.0",
-    "karma": "^0.13.15",
-    "karma-babel-preprocessor": "^6.0.1",
-    "karma-coverage": "^0.5.3",
-    "karma-jasmine": "^0.3.6",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "load-grunt-tasks": "^3.3.0",
-    "phantomjs": "^1.9.19",
-    "serve-static": "^1.10.0"
+    "load-grunt-tasks": "^3.3.0"
   },
-  "name": "dsfe",
-  "version": "1.0.0",
-  "main": "Gruntfile.js",
-  "dependencies": {},
   "scripts": {
-    "postinstall": "grunt build",
+    "postinstall": "npm install -g bower && bower install && grunt build",
     "test": "grunt test"
   },
   "keywords": [],
