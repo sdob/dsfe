@@ -1,8 +1,7 @@
 .main-map__add-site-button {
-  position: absolute;
+  position:absolute;
+  right: 0;
   z-index: 1;
-  top: 80px;
-  right: 16px;
   @media (min-width: 62em) {
     //bottom: 64px;
     //right: 64px;
@@ -14,11 +13,18 @@
     color: #fff;
   }
 }
-.add-something-menu {
+
+add-something-menu {
   position: absolute;
-  top: calc(80px + 37px);
-  z-index: 4; // in front of map and information card
-  background: #fff;
+  right: 2em;
+  .add-something-menu {
+    position: relative;
+    top: 37px;
+    z-index: 5; // in front of map and information card
+    background: #fff;
+  }
+}
+.map-context-menu {
   .list-group {
     margin: 0;
   }
@@ -32,4 +38,7 @@
   .media-body {
     width: initial;
   }
+}
+.rc-context-menu {
+  position: absolute;
 }
