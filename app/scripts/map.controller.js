@@ -54,6 +54,7 @@
       // Set map event listeners
       vm.mapEvents =  {
         click: mapClick,
+        dragstart: mapDragStart,
         idle: mapIdle,
         rightclick: mapRightClick,
       };
@@ -162,6 +163,14 @@
       const latLng = args[0].latLng; 
       if (contextMenuIsOpen) {
         $('map-context-menu').remove();
+        contextMenuIsOpen = false;
+      }
+    }
+
+    function mapDragStart(map, evt, args) {
+      if (contextMenuIsOpen) {
+        $('map-context-menu').remove();
+        contextMenuIsOpen = false;
       }
     }
 
