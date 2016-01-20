@@ -47,11 +47,10 @@
       text-align: right;
     }
     img {
+      border: solid 1px rgba(0, 0, 0, 0.32);
       width: 100%;
       height: auto;
       @media (min-width: 768px) {
-        height: 318px;
-        width: 318px;
       }
     }
   }
@@ -60,6 +59,9 @@
     top: 16px;
     right: 16px;
     color: #fff;
+    .background {
+      color: rgba(0, 0, 0, 0.32);
+    }
   }
   &__name {
     margin-top: 0;

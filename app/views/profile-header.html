@@ -7,7 +7,10 @@
                 ng-if="editable"
                 class="profile-header__image-edit-button"
                 >
-                <i class="fa fa-fw fa-pencil-square fa-2x"><span class="sr-only">Edit</span></i>
+                <span class="fa fa-stack">
+                    <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
+                    <i class="fa fa-fw fa-pencil fa-stack-1x"><span class="sr-only">Edit</span></i>
+            </span>
             </a>
         </div>
         <div ng-if="!user.profileImageUrl"
