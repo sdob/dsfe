@@ -46,7 +46,7 @@
         <div class="profile-header__member-since">
             Member since {{ user.date_joined | date:'MMMM yyyy' }}
         </div>
-        <profile-stats user="user"></profile-stats>
+        <profile-stats class="profile-header__stats" user="user"></profile-stats>
         <div
             ng-if="editable"
             class="profile-header__actions">

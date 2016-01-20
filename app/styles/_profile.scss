@@ -23,10 +23,16 @@
   &__details {
     padding-left: 0;
     padding-right: 0;
+    display: flex;
+    flex-direction: column;
     @media (min-width: 758px) {
       padding-left: inherit;
       padding-right: inherit;
     }
+  }
+  &__stats {
+    margin-top: auto;
+    margin-bottom: auto;
   }
   &__dive-stats {
     display: flex;
