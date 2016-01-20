@@ -1,9 +1,24 @@
 (function() {
   'use strict';
-  function MapController($auth, $compile, $location, $rootScope, $scope, dsapi, filterPreferences, informationCardService, mapSettings, uiGmapGoogleMapApi) {
+  function MapController(
+    $auth,
+    $compile,
+    $location,
+    $rootScope,
+    $scope,
+    contextMenuService,
+    dsapi,
+    filterPreferences,
+    informationCardService,
+    mapSettings,
+    uiGmapGoogleMapApi
+  ) {
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
+
+    // Flag to tell us whether the right-click menu is open
+    let contextMenuIsOpen = false;
     const vm = this;
     activate();
 
@@ -38,7 +53,9 @@
 
       // Set map event listeners
       vm.mapEvents =  {
+        click: mapClick,
         idle: mapIdle,
+        rightclick: mapRightClick,
       };
 
       // Set map marker event listeners
@@ -140,6 +157,14 @@
       }
     }
 
+    // handle map click events
+    function mapClick(map, evt, args) {
+      const latLng = args[0].latLng; 
+      if (contextMenuIsOpen) {
+        $('map-context-menu').remove();
+      }
+    }
+
     /*
      * When the map idles, have the map settings service store the
      * current position
@@ -153,6 +178,22 @@
         },
         zoom: map.zoom,
       });
+    }
+
+    function mapRightClick(map, evt, args) {
+      // Only show the context menu if the user is authenticated
+      if ($auth.isAuthenticated()) {
+        console.log('right click detected');
+        contextMenuService.latLng([args[0].latLng.lat(), args[0].latLng.lng()]);
+        contextMenuService.pixel(args[0].pixel);
+        if (contextMenuIsOpen) {
+          console.log('removing context menu');
+          $('map-context-menu').remove();
+        }
+        console.log('opening rc menu');
+        $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
+        contextMenuIsOpen = true;
+      } 
     }
 
     // Clicking a divesite marker just changes the search path
@@ -258,6 +299,7 @@
     '$location',
     '$rootScope',
     '$scope',
+    'contextMenuService',
     'dsapi',
     'filterPreferences',
     'informationCardService',

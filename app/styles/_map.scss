@@ -17,7 +17,6 @@
 .add-something-menu {
   position: absolute;
   top: calc(80px + 37px);
-  right: 16px + (37px / 2);
   z-index: 4; // in front of map and information card
   background: #fff;
   .list-group {
