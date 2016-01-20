@@ -5,11 +5,11 @@
             {{ dive.start_time | date }}
             {{ dive.start_time | date:'HH:mm' }}
         </div>
-        <div>
-            {{ dive.depth }} m
+        <div class="dive__depth">
+            <span> {{ dive.depth }} m </span>
         </div>
-        <div>
-            {{ dive.duration | duration }} min.
+        <div class="dive__duration">
+            <span> {{ dive.duration | duration }} min.  </span>
         </div>
     </div>
     <div class="col-xs-8 dive__bumf">
