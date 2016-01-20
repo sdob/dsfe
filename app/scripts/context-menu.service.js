@@ -4,6 +4,10 @@
     let latLng;
     let pixel;
     return {
+      clear: () => {
+        latLng = undefined;
+        pixel = undefined;
+      },
       latLng: (coords) => {
         if (coords === undefined) {
           return latLng;

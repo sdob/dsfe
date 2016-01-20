@@ -1,14 +1,23 @@
 (function() {
   'use strict';
-  function EditSiteController($routeParams, $scope, $timeout, $uibModal, $window, Upload, dsapi, dsimg, editSiteService, mapSettings) {
+  function EditSiteController(
+    $routeParams,
+    $scope,
+    $timeout,
+    $uibModal,
+    $window,
+    Upload,
+    contextMenuService,
+    dsapi,
+    dsimg,
+    editSiteService,
+    mapSettings
+  ) {
     const vm = this;
     activate();
 
     function activate() {
       vm.siteTypeString = 'divesite';
-
-      console.log('EditSiteController.activate()');
-      console.log(`$routeParams.id: ${$routeParams.id}`);
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
@@ -18,17 +27,27 @@
       vm.summonCancelEditingModal = summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
 
+      // By default, we're adding a new site
+      vm.title = 'Add a new divesite';
+
       // Retrieve map settings
       vm.map = mapSettings.get();
-      console.log(vm.map);
+      // If we arrived here via the map context menu, 
+      // then there will be a lat/lng pair for us to centre on;
+      // use that instead
+      console.log(contextMenuService.latLng());
+      if (contextMenuService.latLng() !== undefined) {
+        vm.map.center = {
+          latitude: contextMenuService.latLng()[0],
+          longitude: contextMenuService.latLng()[1],
+        };
+      }
 
-      // Set default site
+      // Create a default site
       vm.site = mapSettings.defaultSite(vm.map);
-
-      // Set default marker
+      // Create a default marker from the map
       vm.marker = mapSettings.defaultMarker(vm.map);
-      vm.marker.events = {
-      };
+      vm.marker.events = { };
 
       // Pre-validate checkboxes (XXX: why?)
       vm.checkAtLeastOneEntryIsSelected();
@@ -38,16 +57,16 @@
       if ($routeParams.id) {
         vm.title = 'Edit this divesite';
 
-        // We are editing a site...
+        // Retrieve this site's data from dsapi
         dsapi.getDivesite($routeParams.id)
         .then((response) => {
-          vm.site = Object.assign({}, response.data);
-          vm.site.coords = {
-            latitude: response.data.latitude,
-            longitude: response.data.longitude,
-          };
-          delete vm.site.latitude;
-          delete vm.site.longitude;
+          // Format the site data
+          vm.site = formatResponse(response.data);
+
+          // Validate the entry checkboxes
+          vm.checkAtLeastOneEntryIsSelected();
+
+          // Set up map and marker
           vm.map.center = vm.site.coords;
           vm.marker = {
             id: vm.site.id,
@@ -56,12 +75,10 @@
               draggable: true,
             },
           };
-          vm.checkAtLeastOneEntryIsSelected();
         })
         .then(() => dsimg.getDivesiteHeaderImage(vm.site.id))
         .then((response) => {
-          console.log('response...');
-          console.log(response);
+          // Handle image data from dsimg
           if (response.data && response.data.image && response.data.image.url) {
             vm.site.headerImageUrl = response.data.image.url;
             console.log(vm.site.headerImageUrl);
@@ -69,8 +86,6 @@
         });
 
         // TODO: handle invalid/missing divesite IDs
-      } else {
-        vm.title = 'Add a new divesite';
       }
     }
 
@@ -78,9 +93,7 @@
       vm.atLeastOneEntryIsSelected = (vm.site.boatEntry || vm.site.shoreEntry);
     }
 
-    function formatResponse(data) {
-      // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-
+    function formatResponse(data) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       const site = Object.assign({}, data);
 
       // Format coordinates
@@ -97,12 +110,10 @@
       delete site.shore_entry;
       delete site.boat_entry;
 
-      // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
       return site;
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function formatRequest(data) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-
       const obj = Object.assign(data);
 
       // Convert lat/lng data to a format that dsapi expects
@@ -228,6 +239,7 @@
     '$uibModal',
     '$window',
     'Upload',
+    'contextMenuService',
     'dsapi',
     'dsimg',
     'editSiteService',

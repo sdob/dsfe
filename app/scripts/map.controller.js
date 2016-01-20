@@ -13,28 +13,33 @@
     mapSettings,
     uiGmapGoogleMapApi
   ) {
+    // Default marker icons
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
+
     const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+
+      // Clean up contextMenuService
+      closeContextMenu();
+
+      // Wire up function
       vm.isAuthenticated = $auth.isAuthenticated;
 
-      uiGmapGoogleMapApi
-      .then((maps) => {
+      // When the maps API is ready, store a reference to it
+      uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
       });
 
       // If there's a query param in the URL when the controller
       // is activated, then try and summon an information card
-      console.log('looking for $location.$$search');
-      console.log($location.$$search);
       if ($location.$$search.divesite) {
         summonCard($location.$$search.divesite, 'divesite');
       } else if ($location.$$search.slipway) {
@@ -61,50 +66,27 @@
 
       // Set map marker event listeners
       vm.markerEvents = {
-        click: markerClick,
+        click: markerClick('divesite'),
       };
       vm.slipwayMarkerEvents = {
-        click: slipwayMarkerClick,
+        click: markerClick('slipway'),
       };
       vm.options = {
-        //disableDefaultUI: true,
         streetViewControl: false,
         minZoom: 3,
       };
-
-      function clearSearchPath() {
-        // Wrapping this in $apply forces it to happen immediately
-        $scope.$apply(() => {
-          $location.search('');
-        });
-      }
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
 
       // Listen for an information card declaring that it wants to be removed.
       // In this case, we remove the element *and* clear the search path.
-      $scope.$on('please-kill-me', (evt, element) => {
-        console.log('an element wants to die');
-        element.remove();
-        clearSearchPath();
-      });
+      $scope.$on('please-kill-me', handlePleaseKillMe);
 
-      // Here's where we handle the search path changes caused by
-      // marker clicks
-      $scope.$on('$routeUpdate', (e, c) => {
-        // When the route updates (i.e., search params changes),
-        // try to summon an information card.
-        if (c.params.divesite) {
-          return summonCard(c.params.divesite, 'divesite');
-        }
-        if (c.params.slipway) {
-          return summonCard(c.params.slipway, 'slipway');
-        } 
-        // If there are no search params (e.g. if the user hit the back button)
-        // then any existing information cards should be removed
-        $('.information-card').remove();
-      });
+      // Listen for $routeUpdate events
+      $scope.$on('$routeUpdate', handleRouteUpdate);
+
+      /* Make AJAX requests to DSAPI for site details */
 
       // Retrieve divesites and create markers
       dsapi.getDivesites()
@@ -129,6 +111,13 @@
       });
     }
 
+    function clearSearchPath() {
+      // Wrapping this in $apply forces it to happen immediately
+      $scope.$apply(() => {
+        $location.search('');
+      });
+    }
+
     function getMarkerScreenPosition(map, marker) {
       const overlay = new google.maps.OverlayView();
       overlay.draw = function() {};
@@ -141,6 +130,28 @@
         const p = proj.fromLatLngToContainerPixel(pos);
         return p;
       }
+    }
+
+    function handlePleaseKillMe(evt, element) {
+      console.log('an element wants to die');
+      element.remove();
+      clearSearchPath();
+    }
+
+    // Here's where we handle the search path changes caused by
+    // marker clicks
+    function handleRouteUpdate(e, c) {
+      // When the route updates (i.e., search params changes),
+      // try to summon an information card.
+      if (c.params.divesite) {
+        return summonCard(c.params.divesite, 'divesite');
+      }
+      if (c.params.slipway) {
+        return summonCard(c.params.slipway, 'slipway');
+      } 
+      // If there are no search params (e.g. if the user hit the back button)
+      // then any existing information cards should be removed
+      $('.information-card').remove();
     }
 
     // Update marker visibility when new filter preference information arrives
@@ -158,20 +169,21 @@
       }
     }
 
-    // handle map click events
-    function mapClick(map, evt, args) {
-      const latLng = args[0].latLng; 
+    function closeContextMenu() {
+      contextMenuService.clear();
       if (contextMenuIsOpen) {
         $('map-context-menu').remove();
         contextMenuIsOpen = false;
       }
     }
 
+    // handle map click events
+    function mapClick(map, evt, args) {
+      closeContextMenu();
+    }
+
     function mapDragStart(map, evt, args) {
-      if (contextMenuIsOpen) {
-        $('map-context-menu').remove();
-        contextMenuIsOpen = false;
-      }
+      closeContextMenu();
     }
 
     /*
@@ -205,15 +217,11 @@
       } 
     }
 
-    // Clicking a divesite marker just changes the search path
-    function markerClick(marker, event, model, args) {
-      $location.search(`divesite=${model.id}`);
-    }
-
-    // Clicking a slipway marker just changes the search path
-    function slipwayMarkerClick(marker, event, model, args) {
-      console.log('click a slipway');
-      $location.search(`slipway=${model.id}`);
+    /* Return a listener that will set the location path */
+    function markerClick(type) {
+      return (marker, event, model, args) => {
+        $location.search(`${type}=${model.id}`);
+      };
     }
 
     /*
@@ -222,13 +230,24 @@
      */
     function shouldBeVisible(marker, preferences) {
       if (!marker) return false;
+      // Site depth should be less than or equal to preferred maximum depth
       const depth = marker.depth <= preferences.maximumDepth;
+
+      // Site level should be less than or equal to preferred maximum level
       const level = marker.level <= preferences.maximumLevel;
-      const entries = (marker.boatEntry && preferences.boatEntry) || (marker.shoreEntry && preferences.shoreEntry);
-      return depth && level && entries;
+
+      // A site with boat entry should be visible if preferences want it to be
+      const boatEntry = (marker.boatEntry && preferences.boatEntry);
+
+      // A site with shore entry should be visible if preferences want it to be
+      const shoreEntry = (marker.shoreEntry && preferences.shoreEntry);
+
+      // A site has to meet all of these criteria in order to be visible
+      return depth && level && (boatEntry || shoreEntry);
     }
 
 
+    /* Summon an information card for a site */
     function summonCard(id, type) {
       // ID is a uuid for an object, but that doesn't tell us what the
       // type is, so we pass that into this bit here
