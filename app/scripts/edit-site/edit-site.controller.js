@@ -101,8 +101,7 @@
       return site;
     }
 
-    function formatRequest(data) {
-      // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    function formatRequest(data) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 
       const obj = Object.assign(data);
 
@@ -117,11 +116,10 @@
       delete obj.boatEntry;
       delete obj.shoreEntry;
 
-      console.log(data);
-      return data;
+      console.log(obj);
+      return obj;
 
-      // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-    }
+    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function prepareToDeleteExistingHeaderImage() {
       vm.site.headerImageUrl = null;
