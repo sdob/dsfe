@@ -1,5 +1,5 @@
 <ul class="list-unstyled action-menu">
-    <li class="action-menu__action-item" ng-if="icvm.userIsOwner()" ng-include="'views/information-card/actions/edit.html'"></li>
+    <li class="action-menu__action-item" ng-if="icvm.userIsOwner()" ng-include="'views/information-card/actions/edit-slipway.html'"></li>
     <li class="action-menu__action-item" ng-class="{'well--unpadded': icvm.sectionVisibilities.uploadImageForm}" ng-if="icvm.isAuthenticated()" ng-include="'views/information-card/actions/upload-image.html'"></li>
     <li class="action-menu__action-item" ng-class="{'well--unpadded': icvm.sectionVisibilities.reportProblemForm}" ng-if="icvm.isAuthenticated()" ng-include="'views/information-card/actions/report-problem.html'"></li>
     <!-- 
