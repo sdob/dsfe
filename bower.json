@@ -41,6 +41,9 @@
         "dist/css/bootstrap.css",
         "less/bootstrap.less"
       ]
+    },
+    "lodash": {
+      "main": "lodash.min.js"
     }
   },
   "devDependencies": {
