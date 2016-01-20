@@ -27,8 +27,9 @@
     // When the information card is opened on small devices,
     // it should take up the entire screen height, and the
     // chevron should flip to face down; the body should be
-    // visible
+    // visible and should occlude everything else
     height: 100%;
+    z-index: $z-index-max;
     .fa-chevron-up {
       transform: rotate(-180deg);
     }

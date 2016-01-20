@@ -17,3 +17,7 @@ $ds-feedback-width: 2em;
 
 $well-bg: #f5f5f5 !default;
 $well-border: darken($well-bg, 7%) !default;
+
+// Z-indices. Eventually these should have meaningful
+// names and should be the only use of z-index in the CSS
+$z-index-max: 10;
