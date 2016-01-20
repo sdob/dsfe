@@ -107,15 +107,15 @@
       const obj = Object.assign(data);
 
       // Convert lat/lng data to a format that dsapi expects
-      data.latitude = data.coords.latitude;
-      data.longitude = data.coords.longitude;
-      delete data.coords;
+      obj.latitude = obj.coords.latitude;
+      obj.longitude = obj.coords.longitude;
+      delete obj.coords;
 
       // Convert camel-cased entry types to the format dsapi expects
-      site.boat_entry = site.boatEntry;
-      site.shore_entry = site.shoreEntry;
-      delete site.boatEntry;
-      delete site.shoreEntry;
+      obj.boat_entry = obj.boatEntry;
+      obj.shore_entry = obj.shoreEntry;
+      delete obj.boatEntry;
+      delete obj.shoreEntry;
 
       console.log(data);
       return data;

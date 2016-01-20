@@ -18,9 +18,6 @@ module.exports = function(config) {
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
-      'bower_components/angular-simple-logger/dist/angular-simple-logger.js',
-      'bower_components/lodash/lodash.js',
-      'bower_components/angular-google-maps/dist/angular-google-maps.js',
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/angular-google-chart/ng-google-chart.js',
@@ -35,6 +32,9 @@ module.exports = function(config) {
       'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/cloudinary-jquery/cloudinary-jquery.js',
       'bower_components/haversine/haversine.js',
+      'bower_components/angular-simple-logger/dist/angular-simple-logger.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/angular-google-maps/dist/angular-google-maps.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       // Load module files first
