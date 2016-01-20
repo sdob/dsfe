@@ -23,6 +23,15 @@ module.exports = (grunt) => {
     jscs: require('./config/jscs'),
     jshint: require('./config/jshint'),
 
+    cdnify: {
+      dist: {
+        html: ['<%= cfg.dist %>/*.html'],
+      },
+      options: {
+        cdn: require('google-cdn-data'),
+      },
+    },
+
     sass: {
       options: {
         sourceMap: true,
@@ -81,6 +90,7 @@ module.exports = (grunt) => {
     'concat', // Concatenate JS and CSS
     'ngAnnotate',
     'copy:dist', // Move files across to the dist/ directory
+    'cdnify',
     'cssmin', // Minify CSS
     'uglify', // Minify JS
     'filerev', // Generate file versions to bust caches

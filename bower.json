@@ -32,18 +32,12 @@
     "haversine": "*"
   },
   "overrides": {
-    "angular": {
-      "main": "angular.min.js"
-    },
     "bootstrap": {
       "main": [
         "dist/js/bootstrap.js",
         "dist/css/bootstrap.css",
         "less/bootstrap.less"
       ]
-    },
-    "lodash": {
-      "main": "lodash.min.js"
     }
   },
   "devDependencies": {
