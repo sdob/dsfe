@@ -19,12 +19,16 @@
         // Register listeners
         $document.on('keydown', keydownListener);
 
+        // When the ng-includes have finished running, assign event listeners
         scope.$on('$includeContentLoaded', (evt) => {
-          // When the ng-includes have finished running, assign event listeners
+
+          // When the title element has loaded, give it open/close behaviour
           if (!titleHasLoaded && element.find('.information-card__title').length) {
             titleHasLoaded = true;
             element.find('.information-card__title').on('click', toggleOpened);
           }
+
+          // When the dismiss button has loaded, give it dismiss behaviour
           if (!dismissButtonHasLoaded && element.find('.information-card__dismiss-button').length) {
             dismissButtonHasLoaded = true;
             element.find('.information-card__dismiss-button').on('click', removeSelf);

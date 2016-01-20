@@ -61,18 +61,6 @@
     top: 16px;
     right: 16px;
     z-index: 1; // TODO: why do we need this?
-    &--screen-lg {
-      display: none;
-      @media (min-width: $screen-lg-min) {
-        display: initial;
-      }
-    }
-    &--mobile {
-      display: initial;
-      @media (min-width: $screen-lg-min) {
-        display: none;
-      }
-    }
   }
 
   &__dismiss-button {
