@@ -9,11 +9,17 @@
     justify-content: center;
   }
 }
+
+.cancel-editing {
+  @extend .modal-center;
+}
+
 .sign-in {
   @extend .modal-center;
 }
+
 .show-full-size-image {
-  @extend .modal-center;
+  @extend .responsive-centered;
   .modal-dialog.modal-lg {
     height: calc(100% - 60px);
     width: 80%;

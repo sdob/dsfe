@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function informationCardService(dsapi, dsimg, localStorageService) {
+  function informationCardService($uibModal, dsapi, dsimg, localStorageService) {
 
     const apiCalls = {
       'slipway': {
@@ -181,6 +181,7 @@
   }
 
   informationCardService.$inject = [
+    '$uibModal',
     'dsapi',
     'dsimg',
     'localStorageService',

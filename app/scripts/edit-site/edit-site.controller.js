@@ -24,7 +24,7 @@
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
       vm.removeImageThumbnail = removeImageThumbnail;
       vm.submit = submit;
-      vm.summonCancelEditingModal = summonCancelEditingModal;
+      vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
 
       // By default, we're adding a new site
@@ -196,24 +196,6 @@
 
         // TODO: handle 4xx and 5xx errors
       });
-    }
-
-    function summonCancelEditingModal() {
-      if ($scope.siteForm.$dirty) {
-
-        // If the form has been edited, then confirm that the user
-        // is OK with losing their changes
-        const modalInstance = $uibModal.open({
-          templateUrl: 'views/cancel-editing-modal.html',
-          controller: 'CancelEditingModalController',
-          controllerAs: 'vm',
-          size: 'lg',
-        });
-      } else {
-
-        // Otherwise, just send us back to wherever we came from
-        $window.history.back();
-      }
     }
 
     function handleSuccessfulSave() {

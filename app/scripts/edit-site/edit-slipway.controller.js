@@ -1,6 +1,14 @@
 (function() {
   'use strict';
-  function EditSlipwayController($location, $routeParams, $scope, $timeout, dsapi, mapSettings) {
+  function EditSlipwayController(
+    $location,
+    $routeParams,
+    $scope,
+    $timeout,
+    dsapi,
+    editSiteService,
+    mapSettings
+  ) {
 
     const TEMPLATE_STRINGS = {
       add: {
@@ -32,6 +40,7 @@
     function activate() {
       // Wire up functions
       vm.submit = submit;
+      vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
 
       // Initialize
       vm.siteTypeString = 'slipway';
@@ -168,6 +177,7 @@
     '$scope',
     '$timeout',
     'dsapi',
+    'editSiteService',
     'mapSettings',
   ];
   angular.module('divesites.editSite').controller('EditSlipwayController', EditSlipwayController);

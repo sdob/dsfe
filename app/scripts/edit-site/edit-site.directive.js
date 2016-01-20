@@ -3,7 +3,7 @@
 
   function editSite() {
     return {
-      templateUrl: 'views/edit-site/main.html',
+      templateUrl: 'views/edit-site/edit-site.html',
       restrict: 'E',
       link: (scope, elem, attrs, ctrl) => {
         $('#add-site__boat-entry').on('click', () => {
