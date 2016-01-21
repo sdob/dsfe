@@ -9,6 +9,7 @@
   const IMG_API_URL = 'http://dsimg.herokuapp.com';
   angular.module('divesites', [
     'LocalStorageModule',
+    'bootstrapLightbox',
     'ngFileUpload',
     'ngRoute',
     'satellizer',

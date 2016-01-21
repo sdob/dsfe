@@ -29,7 +29,8 @@
     "ng-file-upload": "~11.0.0",
     "cloudinary-jquery": "~2.0.4",
     "haversine": "*",
-    "angular-google-maps": "master"
+    "angular-google-maps": "master",
+    "angular-bootstrap-lightbox": "~0.10.0"
   },
   "overrides": {
     "bootstrap": {

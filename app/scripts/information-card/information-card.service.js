@@ -25,7 +25,6 @@
       getDivesiteHeaderImage,
       getDivesiteImages,
       getNearbySlipways,
-      showFullSizeImage,
       toggleOpened,
       userIsOwner,
     };
@@ -152,20 +151,6 @@
         return images;
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    // Show a full-size version of the image in a modal
-    function showFullSizeImage(img) {
-      $uibModal.open({
-        controller: 'ShowFullSizeImageController',
-        controllerAs: 'vm',
-        resolve: {
-          image: () => img,
-        },
-        templateUrl: 'views/show-full-size-image.html',
-        windowClass: 'show-full-size-image',
-        size: 'lg',
-      });
-    }
 
     function toggleOpened(element) {
       return (e) => {

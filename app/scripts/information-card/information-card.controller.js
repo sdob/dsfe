@@ -29,7 +29,6 @@
         vm.isAuthenticated = $auth.isAuthenticated;
         $scope.isAuthenticated = $auth.isAuthenticated;
         vm.toggleSectionVisibility = toggleSectionVisibility;
-        vm.showFullSizeImage = informationCardService.showFullSizeImage;
         vm.toggleUploadImageForm = toggleUploadImageForm;
 
         // Note that informationCardService.userIsOwner(site) returns a function
@@ -95,20 +94,6 @@
         });
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    // Show a full-size version of the image in a modal
-    function showFullSizeImage(img) {
-      $uibModal.open({
-        controller: 'ShowFullSizeImageController',
-        controllerAs: 'vm',
-        resolve: {
-          image: () => img,
-        },
-        templateUrl: 'views/show-full-size-image.html',
-        windowClass: 'show-full-size-image',
-        size: 'lg',
-      });
-    }
 
     function toggleUploadImageForm() {
       // If the upload image form is currently visible, hide it and

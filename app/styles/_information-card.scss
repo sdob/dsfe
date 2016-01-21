@@ -250,6 +250,7 @@
     }
   }
   &__divesite-image {
+    cursor: pointer;
     margin: 8px 0px;
     &:not(:last-child) {
       margin-right: 8px;
