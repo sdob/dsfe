@@ -6,6 +6,7 @@
     $location,
     $rootScope,
     $scope,
+    $timeout,
     contextMenuService,
     dsapi,
     filterPreferences,
@@ -13,6 +14,8 @@
     mapSettings,
     uiGmapGoogleMapApi
   ) {
+    const vm = this;
+
     // Default marker icons
     const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
@@ -21,7 +24,6 @@
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
 
-    const vm = this;
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
@@ -30,10 +32,10 @@
       // Clean up contextMenuService
       closeContextMenu();
 
-      // Wire up function
+      // Wire up functions
       vm.isAuthenticated = $auth.isAuthenticated;
 
-      // When the maps API is ready, store a reference to it
+      // Wait for the maps API to be ready, then store a ref to it
       uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
       });
@@ -48,12 +50,9 @@
         summonCard($location.$$search.compressor, 'compressor');
       }
 
-      // Initialize markers as empty arrays so that angular-google-maps
-      // doesn't throw a wobbly if it initializes before the API data
-      // are retrieved
+      // Initialize markers as an empty array so that it's never undefined
+      // (and angular-google-maps doesn't complain)
       vm.mapMarkers = [];
-      vm.slipwayMarkers  = [];
-      vm.compressorMarkers = [];
 
       // Retrieve stored map settings
       vm.map = mapSettings.get();
@@ -68,18 +67,16 @@
 
       // Set map marker event listeners
       vm.markerEvents = {
-        click: markerClick('divesite'),
+        click: markerClick,
       };
-      vm.compressorMarkerEvents = {
-        click: markerClick('compressor'),
-      };
-      vm.slipwayMarkerEvents = {
-        click: markerClick('slipway'),
-      };
+
+      // Set map options
       vm.options = {
         streetViewControl: false,
         minZoom: 3,
       };
+
+      /* Listen for events */
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
@@ -91,31 +88,38 @@
       // Listen for $routeUpdate events
       $scope.$on('$routeUpdate', handleRouteUpdate);
 
-      /* Make AJAX requests to DSAPI for site details */
+      /* Make AJAX requests to DSAPI for site details. These can return in
+       * any order, and we don't want to wait for them all to return, so we'll
+       * concatenate results to the mapMarkers array as they arrive.
+       */
 
       // Retrieve divesites and create markers
       dsapi.getDivesites()
       .then((response) => {
         vm.sites = response.data; // Allow us to use the sites in other controllers
-        vm.mapMarkers = response.data.map(transformSiteToMarker);
+        vm.mapMarkers = vm.mapMarkers.concat(response.data.map(transformSiteToMarker));
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
       // Retrieve compressors and create markers
       dsapi.getCompressors()
       .then((response) => {
-        vm.compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon));
-        updateCompressorMarkerVisibility(filterPreferences.preferences);
+        const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon, 'compressor'));
+        vm.mapMarkers = vm.mapMarkers.concat(compressorMarkers);
+        updateMarkerVisibility(filterPreferences.preferences);
       });
 
       // Retrieve slipways and createMarkers
       dsapi.getSlipways()
       .then((response) => {
-        vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
-        updateSlipwayMarkerVisibility(filterPreferences.preferences);
+        // vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
+        const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon, 'slipway'));
+        vm.mapMarkers = vm.mapMarkers.concat(slipwayMarkers);
+        updateMarkerVisibility(filterPreferences.preferences);
       });
     }
 
+    /* Clear the search path */
     function clearSearchPath() {
       // Wrapping this in $apply forces it to happen immediately
       $scope.$apply(() => {
@@ -137,16 +141,18 @@
       }
     }
 
+    /* Handle requests by information cards to be removed from the DOM */
     function handlePleaseKillMe(evt, element) {
       element.remove();
       clearSearchPath();
     }
 
-    // Here's where we handle the search path changes caused by
-    // marker clicks
+    /* Handle changes in the search path caused by marker clicks */
     function handleRouteUpdate(e, c) {
       // When the route updates (i.e., search params changes),
-      // try to summon an information card.
+      // try to summon an information card. In a well-formed search query,
+      // only one of these three will be true, but we'll return early from
+      // each case to avoid malformed queries like '?divesite=foo&compressor=bar'
       if (c.params.divesite) {
         return summonCard(c.params.divesite, 'divesite');
       }
@@ -166,14 +172,6 @@
     function listenForPreferenceChanges(e, preferences) {
       if (vm.mapMarkers) {
         updateMarkerVisibility(preferences);
-      }
-
-      if (vm.slipwayMarkers) {
-        updateSlipwayMarkerVisibility(preferences);
-      }
-
-      if (vm.compressorMarkers) {
-        updateCompressorMarkerVisibility(preferences);
       }
     }
 
@@ -209,6 +207,9 @@
       });
     }
 
+    /* When an authenticated user right-clicks on the map, show a context menu
+     * allowing them to create sites.
+     */
     function mapRightClick(map, evt, args) {
       // Only show the context menu if the user is authenticated
       if ($auth.isAuthenticated()) {
@@ -223,10 +224,11 @@
     }
 
     /* Return a listener that will set the location path */
-    function markerClick(type) {
-      return (marker, event, model, args) => {
-        $location.search(`${type}=${model.id}`);
-      };
+    function markerClick(marker, event, model, args) {
+      console.log('click on model');
+      console.log(model);
+      const type = model.type === undefined ? 'divesite' : model.type;
+      $location.search(`${type}=${model.id}`);
     }
 
     /*
@@ -234,7 +236,20 @@
      * visible on the map
      */
     function shouldBeVisible(marker, preferences) {
+      // Bail out early
       if (!marker) return false;
+
+      // If this marker is a slipway, handle visibility preferences for it
+      if (marker.type === 'slipway') {
+        return preferences.slipways;
+      }
+
+      // If this marker is a compressor, handle visibility preferences for it
+      if (marker.type === 'compressor') {
+        return preferences.compressors;
+      }
+
+      // Default case: this is a divesite marker
       // Site depth should be less than or equal to preferred maximum depth
       const depth = marker.depth <= preferences.maximumDepth;
 
@@ -250,7 +265,6 @@
       // A site has to meet all of these criteria in order to be visible
       return depth && level && (boatEntry || shoreEntry);
     }
-
 
     /* Summon an information card for a site */
     function summonCard(id, type) {
@@ -273,8 +287,9 @@
     }
 
     /*
-     * Transform site data from the Divesites API to a marker that
-     * angular-google-maps understands.
+     * Transform divesite data from dsapi to a marker object
+     * that angular-google-maps understands. While we're at it, we'll
+     * convert snake_cased fields to camelCased properties.
      */
     function transformSiteToMarker(s) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       return {
@@ -295,7 +310,12 @@
       };
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-    function transformAmenityToMarker(s, icon) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    /*
+     * Transform non-divesite (amenity) data from dsapi to a marker object
+     * that angular-google-maps understands. While we're at it, we'll
+     * convert snake_cased fields to camelCased properties.
+     */
+    function transformAmenityToMarker(s, icon, type) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       return {
         icon,
         id: s.id,
@@ -307,24 +327,17 @@
           visible: false,
         },
         title: s.name,
+        type: type,
       };
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
+    /*
+     * When we receive an event indicating that filter preferences have
+     * changed, iterate over the map markers and set each one's visibility.
+     */
     function updateMarkerVisibility(preferences) {
       vm.mapMarkers.forEach((m) => {
         m.options.visible = shouldBeVisible(m, preferences);
-      });
-    }
-
-    function updateCompressorMarkerVisibility(preferences) {
-      vm.compressorMarkers.forEach((m) => {
-        m.options.visible = preferences.compressors;
-      });
-    }
-
-    function updateSlipwayMarkerVisibility(preferences) {
-      vm.slipwayMarkers.forEach((m) => {
-        m.options.visible = preferences.slipways;
       });
     }
   }
@@ -334,6 +347,7 @@
     '$location',
     '$rootScope',
     '$scope',
+    '$timeout',
     'contextMenuService',
     'dsapi',
     'filterPreferences',
