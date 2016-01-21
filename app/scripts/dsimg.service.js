@@ -6,12 +6,10 @@
 
       /* GET methods */
       getDivesiteImages: (divesiteID) => {
-        console.log(`dsimg.getDivesiteImages(${divesiteID})`);
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/`);
       },
 
       getDivesiteHeaderImage: (divesiteID) => {
-        console.log(`dsimg.getDivesiteHeaderImage(${divesiteID})`);
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
 
@@ -21,13 +19,11 @@
 
       /* POST methods */
       uploadDivesiteImage: (divesiteID, imgFile) => {
-        console.log(`uploading to ${IMG_API_URL}`);
         return $http.post(`${IMG_API_URL}/divesites/${divesiteID}/`);
       },
 
       /* DELETE methods */
       deleteDivesiteHeaderImage: (divesiteID) => {
-        console.log(`dsimg.deleteDivesiteHeaderImage(${divesiteID})`);
         return $http.delete(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
 

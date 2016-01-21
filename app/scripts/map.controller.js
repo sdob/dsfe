@@ -133,7 +133,6 @@
     }
 
     function handlePleaseKillMe(evt, element) {
-      console.log('an element wants to die');
       element.remove();
       clearSearchPath();
     }
@@ -204,14 +203,11 @@
     function mapRightClick(map, evt, args) {
       // Only show the context menu if the user is authenticated
       if ($auth.isAuthenticated()) {
-        console.log('right click detected');
         contextMenuService.latLng([args[0].latLng.lat(), args[0].latLng.lng()]);
         contextMenuService.pixel(args[0].pixel);
         if (contextMenuIsOpen) {
-          console.log('removing context menu');
           $('map-context-menu').remove();
         }
-        console.log('opening rc menu');
         $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
         contextMenuIsOpen = true;
       } 
@@ -258,7 +254,6 @@
       $('slipway-information-card').remove();
       apiCall(id)
       .then((response) => {
-        console.log(response.data);
         //vm.site = response.data;
         $scope.site = response.data;
         $('map').append($compile(directiveString)($scope));

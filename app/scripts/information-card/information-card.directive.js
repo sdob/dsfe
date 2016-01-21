@@ -7,8 +7,6 @@
       controller: 'InformationCardController',
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
-        console.log('linking info card');
-        console.log(scope);
         const keydownListener = informationCardService.escapeKeydownListener(removeSelf);
         const toggleOpened = informationCardService.toggleOpened(element);
         // XXX: This seems hacky, but the alternative *appears* to be inserting

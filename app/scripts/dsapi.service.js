@@ -7,7 +7,6 @@
       },
 
       getDivesite: (id) => {
-        console.log(`dsapi.getDivesite(${id}`);
         return $http.get(`${API_URL}/divesites/${id}/`);
       },
 
@@ -18,7 +17,6 @@
       },
 
       getOwnProfile: () => {
-        console.log('dsapi.getOwnProfile()');
         const token = $auth.getToken();
         return $http.get(`${API_URL}/users/me/`, {
           headers: {
@@ -42,33 +40,24 @@
       getUserRecentActivity: (id) => $http.get(`${API_URL}/users/${id}/recent_activity/`),
 
       getUser: (id) => {
-        console.log(`dsapi.getUser(${id}`);
         return $http.get(`${API_URL}/users/${id}/`);
       },
 
       /* POST methods */
       postDive: (data) => {
-        console.log(`dsapi.postDive()`);
-        console.log(data);
         return $http.post(`${API_URL}/dives/`, data);
       },
 
       postDivesite: (data) => {
-        console.log(`dsapi.postDivesite()`);
-        console.log(data);
         return $http.post(`${API_URL}/divesites/`, data);
       },
 
       postSlipway: (data) => {
-        console.log(`dsapi.postSlipway()`);
-        console.log(data);
         return $http.post(`${API_URL}/slipways/`, data);
       },
 
       /* UPDATE methods */
       updateDivesite: (id, data) => {
-        console.log(`dsapi.UpdateDivesite()`);
-        console.log(data);
         return $http.patch(`${API_URL}/divesites/${id}/`, data);
       },
 

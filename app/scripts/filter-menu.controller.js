@@ -7,8 +7,6 @@
     activate();
 
     function activate() {
-      console.log($scope);
-
       // Wire up scope functions
       vm.handleSearchSelect = handleSearchSelect;
 

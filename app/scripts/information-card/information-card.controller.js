@@ -12,6 +12,11 @@
       vm.site.images = {}; // Ensure that this is never undefined
       vm.site.locData = informationCardService.formatGeocodingData(vm.site);
 
+      $timeout(() => {
+        // Push this into the next tick so that the charts directive has linked
+        $scope.$broadcast('refresh-statistics', vm.site);
+      }, 0);
+
       // Initially show dive list
       vm.sectionVisibilities = {
         defaultSection: true,
@@ -44,8 +49,6 @@
       // Get the divesite header image (if it exists)
       informationCardService.getDivesiteHeaderImage(vm.site)
       .then((imageUrl) => {
-        console.log('imageUrl');
-        console.log(imageUrl);
         if (imageUrl) {
           vm.site.headerImageUrl = imageUrl;
           vm.backgroundStyle = {
@@ -65,12 +68,13 @@
 
       /* Listen for events emitted upwards by LogDiveController */
       $scope.$on('dive-list-updated', (event) => {
-        console.log('InformationController heard event...');
+        console.log('InformationController received "dive-list-updated"...');
         console.log(event);
         dsapi.getDivesite(vm.site.id)
         .then((response) => {
-          console.log(response.data);
           vm.site = response.data;
+          // Broadcast a refresh-histogram event to child scopes
+          $scope.$broadcast('refresh-statistics', vm.site);
         });
       });
     }
