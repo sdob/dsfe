@@ -69,7 +69,6 @@
       /* Listen for events emitted upwards by LogDiveController */
       $scope.$on('dive-list-updated', (event) => {
         console.log('InformationController received "dive-list-updated"...');
-        console.log(event);
         dsapi.getDivesite(vm.site.id)
         .then((response) => {
           vm.site = response.data;
@@ -80,20 +79,22 @@
     }
 
     function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      // Contact image server for profile images of dives
-      vm.site.dives.forEach((dive) => {
-        dsimg.getUserProfileImage(dive.diver.id)
+      // Create a set of user IDs --- no need to ping the image server
+      // repeatedly for the same diver's profile image
+      const ids = new Set(vm.site.dives.map(d => d.diver.id));
+      ids.forEach((id) => {
+        dsimg.getUserProfileImage(id)
         .then((response) => {
-          if (response.data) {
-            // We're expecting a JSON object containing at least {image: {public_id: String}}
-            if (response.data && response.data.image && response.data.image.public_id) {
-              dive.diver.profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
-                height: 60,
-                width: 60,
-                crop: 'fill',
-                gravity: 'face',
-              });
-            }
+          if (response.data && response.data.image && response.data.image.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+              height: 60,
+              width: 60,
+              crop: 'fill',
+              gravity: 'face',
+            });
+            vm.site.dives.filter(d => d.diver.id === id).forEach((d) => {
+              d.diver.profileImageUrl = profileImageUrl;
+            });
           }
         });
       });
