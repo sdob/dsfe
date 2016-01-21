@@ -14,7 +14,7 @@
     uiGmapGoogleMapApi
   ) {
     // Default marker icons
-    const defaultCompressorMarkerIcon = '/img/gauge_28px.png';
+    const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
 
@@ -44,6 +44,8 @@
         summonCard($location.$$search.divesite, 'divesite');
       } else if ($location.$$search.slipway) {
         summonCard($location.$$search.slipway, 'slipway');
+      } else if ($location.$$search.compressor) {
+        summonCard($location.$$search.compressor, 'compressor');
       }
 
       // Initialize markers as empty arrays so that angular-google-maps
@@ -67,6 +69,9 @@
       // Set map marker event listeners
       vm.markerEvents = {
         click: markerClick('divesite'),
+      };
+      vm.compressorMarkerEvents = {
+        click: markerClick('compressor'),
       };
       vm.slipwayMarkerEvents = {
         click: markerClick('slipway'),
@@ -148,6 +153,10 @@
       if (c.params.slipway) {
         return summonCard(c.params.slipway, 'slipway');
       } 
+      if (c.params.compressor) {
+        console.log('handling compressor');
+        return summonCard(c.params.compressor, 'compressor');
+      }
       // If there are no search params (e.g. if the user hit the back button)
       // then any existing information cards should be removed
       $('.information-card').remove();
@@ -245,6 +254,7 @@
 
     /* Summon an information card for a site */
     function summonCard(id, type) {
+      console.log('summoning card');
       // ID is a uuid for an object, but that doesn't tell us what the
       // type is, so we pass that into this bit here
       const {apiCall, directiveString} = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
@@ -252,10 +262,12 @@
       // Remove any existing DOM elements
       $('information-card').remove();
       $('slipway-information-card').remove();
+      $('compressor-information-card').remove();
       apiCall(id)
       .then((response) => {
         //vm.site = response.data;
         $scope.site = response.data;
+        console.log(`trying to compile ${directiveString}`);
         $('map').append($compile(directiveString)($scope));
       });
     }

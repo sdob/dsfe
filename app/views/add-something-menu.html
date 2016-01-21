@@ -11,43 +11,5 @@
 <div class="add-something-menu map-context-menu collapse"
     id="main-map__add-something-menu"
     >
-    <div class="list-group">
-        <a href="/#/add-site/"
-            class="list-group-item">
-            <div class="media">
-                <div class="media-left media-middle">
-                    <img class="media-object" src="/img/ic_place_black_36dp.png"
-                    />
-                </div>
-                <span class="media-body media-middle">
-                    Add a divesite
-                </span>
-            </div>
-        </a>
-        <a
-            href="/#/add-slipway/"
-            class="list-group-item">
-            <div class="media">
-                <div class="media-left media-middle">
-                    <img class="media-object" src="/img/boatlaunch_36px.png" />
-                </div>
-                <span class="media-body media-middle">
-                    Add a slipway
-                </span>
-            </div>
-        </a>
-        <a href
-            class="list-group-item"
-            >
-            <div class="media">
-                <div class="media-left media-middle">
-                    <img class="media-object" src="/img/gauge_28px.svg" />
-
-                </div>
-                <span class="media-body media-middle">
-                    Add a compressor location
-                </span>
-            </div>
-        </a>
-    </div>
+    <ng-include src="'views/context-menu-contents.html'"></ng-include>
 </div>

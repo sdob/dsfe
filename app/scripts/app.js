@@ -26,6 +26,11 @@
       templateUrl: 'views/main.html',
       reloadOnSearch: false,
     })
+    .when('/add-compressor', {
+      template: '<edit-compressor></edit-compressor>',
+      controller: 'EditCompressorController',
+      controllerAs: 'vm',
+    })
     .when('/add-site', {
       template: '<edit-site></edit-site>',
       controller: 'EditSiteController',
@@ -34,6 +39,11 @@
     .when('/add-slipway/', {
       template: '<edit-slipway></edit-slipway',
       controller: 'EditSlipwayController',
+      controllerAs: 'vm',
+    })
+    .when('/edit-compressor/:id', {
+      template: '<edit-compressor></edit-compressor>',
+      controller: 'EditCompressorController',
       controllerAs: 'vm',
     })
     .when('/edit-site/:id', {

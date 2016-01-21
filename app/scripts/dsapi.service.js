@@ -2,6 +2,10 @@
   'use strict';
   function dsapiService($auth, $http, API_URL) {
     return {
+      getCompressor: (id) => {
+        return $http.get(`${API_URL}/compressors/${id}/`);
+      },
+
       getCompressors: () => {
         return $http.get(`${API_URL}/compressors/`);
       },
@@ -44,6 +48,11 @@
       },
 
       /* POST methods */
+
+      postCompressor: (data) => {
+        return $http.post(`${API_URL}/compressors/`, data);
+      },
+
       postDive: (data) => {
         return $http.post(`${API_URL}/dives/`, data);
       },
@@ -57,6 +66,9 @@
       },
 
       /* UPDATE methods */
+      updateCompressor: (id, data) => {
+        return $http.patch(`${API_URL}/compressors/${id}/`, data);
+      },
       updateDivesite: (id, data) => {
         return $http.patch(`${API_URL}/divesites/${id}/`, data);
       },
