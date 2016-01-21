@@ -76,6 +76,16 @@
         minZoom: 3,
       };
 
+      vm.typeOptions = {
+        keepSpiderfied: true, // keep markers spiderfied when clicked
+        nearbyDistance: 48, // Increase pixel radius
+      };
+
+      // Set cluster/spiderfy events
+      vm.typeEvents = {
+        // TODO: handle cluster/spiderfy events in a lovelier way
+      };
+
       /* Listen for events */
 
       // Listen for filter menu changes
