@@ -14,7 +14,7 @@
     uiGmapGoogleMapApi
   ) {
     // Default marker icons
-    const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
+    const defaultCompressorMarkerIcon = '/img/gauge_28px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
 
