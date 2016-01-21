@@ -4,13 +4,14 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  left: 2em;
+  left: 4em;
   max-height: calc(100% - 100px);
   overflow-y: hidden;
+  top: 6em;
   z-index: 4; // In front of information card
 
   @media (min-width: 48em) {
-    top: 80px;
+    //top: 80px;
     left: 80px;
     width: 250px;
   }
