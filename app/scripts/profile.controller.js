@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, dsapi, dsimg) {
+  function ProfileController($routeParams, dsapi, dsimg, profileService) {
     const vm = this;
     activate();
 
@@ -13,8 +13,7 @@
 
       // Query the image server for a profile image for this user
       .then((response) => {
-        console.log(response);
-        vm.user = response.data;
+        vm.user = profileService.formatResponseData(response.data);
         return dsimg.getUserProfileImage(userId);
       })
       .then((response) => {
@@ -33,6 +32,7 @@
     '$routeParams',
     'dsapi',
     'dsimg',
+    'profileService',
   ];
   angular.module('divesites').controller('ProfileController', ProfileController);
 })();

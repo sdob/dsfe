@@ -25,19 +25,26 @@
     padding-right: 0;
     display: flex;
     flex-direction: column;
-    @media (min-width: 758px) {
-      padding-left: inherit;
+    @media (min-width: $screen-sm-min) {
+      padding-left: 16px;
       padding-right: inherit;
     }
   }
-  &__stats {
+  &__about-me {
+    font-weight: 300;
     margin-top: auto;
     margin-bottom: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
   &__dive-stats {
+    border-top: solid 1px rgba(0, 0, 0, 0.17);
     display: flex;
     justify-content: space-around;
     padding: 0;
+    @media (min-width: $screen-sm-min) {
+      border: 0;
+    }
   }
   &__dive-stat {
     width: 100%;
@@ -49,14 +56,14 @@
   }
   &__image {
     padding: 0;
-    @media (min-width: 768px) {
+    @media (min-width: $screen-sm-min) {
       text-align: right;
     }
     img {
       border: solid 1px rgba(0, 0, 0, 0.32);
       width: 100%;
       height: auto;
-      @media (min-width: 768px) {
+      @media (min-width: $screen-sm-min) {
       }
     }
   }
@@ -71,6 +78,7 @@
   }
   &__name {
     margin-top: 0;
+    margin-bottom: 0;
   }
   &--no-image__link {
     display: flex;
@@ -106,8 +114,14 @@
 
 .profile {
   .col-xs-8, .col-sm-8 {
-    @media (min-width: 768px) {
+    @media (min-width: $screen-sm-min) {
       padding-left: 32px;
+    }
+  }
+  &__dive-log {
+    border-top: solid 1px rgba(0, 0, 0, 0.17);
+    @media (min-width: $screen-sm-min) {
+      border-top: 0;
     }
   }
   &__dive {
