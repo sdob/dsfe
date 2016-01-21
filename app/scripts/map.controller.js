@@ -16,7 +16,7 @@
     // Default marker icons
     const defaultCompressorMarkerIcon = '/img/compressor_24px.png';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
-    const defaultSlipwayMarkerIcon = '/img/boatlaunch_24px.png';
+    const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
