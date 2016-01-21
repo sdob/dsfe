@@ -83,8 +83,9 @@
           $timeout(() => {
             // Add a little latency at the end of the chain to make it obvious
             // that we've done something
+            console.log('saved; returning');
             vm.isSaving = false;
-            icvm.toggleSectionVisibility('default');
+            icvm.toggleSectionVisibility('defaultSection');
           }, 500);
         });
       })
