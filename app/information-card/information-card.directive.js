@@ -3,10 +3,13 @@
 
   function informationCard($document, $location, collapseBehaviour, informationCardService) {
     return {
-      templateUrl: 'views/information-card/information-card.html',
+      templateUrl: 'information-card/information-card.html',
       controller: 'InformationCardController',
       controllerAs: 'icvm',
-      link: (scope, element, attrs, controller, transcludeFn) => {
+      link,
+    };
+
+    function link(scope, element, attrs, controller, transcludeFn) {
         const keydownListener = informationCardService.escapeKeydownListener(removeSelf);
         const toggleOpened = informationCardService.toggleOpened(element);
 
@@ -52,8 +55,7 @@
           // politely ask parent scope to remove me
           scope.$emit('please-kill-me', element);
         }
-      },
-    };
+      }
   }
 
   informationCard.$inject = [

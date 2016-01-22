@@ -4,7 +4,7 @@
     return {
       controller: 'InformationCardLogDiveFormController',
       controllerAs: 'vm',
-      templateUrl: 'views/information-card/log-dive-form.html',
+      templateUrl: 'information-card/log-dive-form.html',
     };
   }
 

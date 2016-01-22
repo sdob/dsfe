@@ -5,7 +5,7 @@
       scope: {
         slipways: '=',
       },
-      templateUrl: 'views/information-card/nearby-slipways.html',
+      templateUrl: 'information-card/nearby-slipways.html',
       link: () => {
         $('#js-information-card__nearby-slipways-toggle')
         .click(collapseBehaviour.toggleChevron);
@@ -16,5 +16,5 @@
   nearbySlipways.$inject = [
     'collapseBehaviour',
   ];
-  angular.module('divesites').directive('nearbySlipways', nearbySlipways);
+  angular.module('divesites.informationCard').directive('nearbySlipways', nearbySlipways);
 })();

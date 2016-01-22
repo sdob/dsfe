@@ -5,8 +5,11 @@
     activate();
 
     function activate() {
+      console.log('GalleryController.activate()');
+      console.log($scope);
+
       // We're just looking for the object that contains the url property
-      vm.images = $scope.vm.site.images.map(i => i.image);
+      vm.images = $scope.site.images.map(i => i.image);
       vm.openLightboxModal = openLightboxModal;
     }
 

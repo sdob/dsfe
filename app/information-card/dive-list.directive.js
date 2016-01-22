@@ -5,7 +5,7 @@
       scope: {
         dives: '=',
       },
-      templateUrl: 'views/information-card/dive-list.html',
+      templateUrl: 'information-card/dive-list.html',
     };
   }
 

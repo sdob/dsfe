@@ -3,7 +3,7 @@
 
   function compressorInformationCard($document, $location, informationCardService) {
     return {
-      templateUrl: 'views/information-card/compressor-information-card.html',
+      templateUrl: 'information-card/compressor-information-card.html',
       controller: 'CompressorInformationCardController',
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {

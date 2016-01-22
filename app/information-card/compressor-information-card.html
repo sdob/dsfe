@@ -12,16 +12,16 @@
         </div>
     </div>
 
-    <ng-include src="'views/information-card/header-actions.html'"></ng-include>
+    <ng-include src="'information-card/header-actions.html'"></ng-include>
 
     <div class="information-card__body"
         id="information-card__body"
         >
-        <ng-include src="'views/information-card/description.html'"></ng-include>
+        <ng-include src="'information-card/description.html'"></ng-include>
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>
         </div>
-        <ng-include src="'views/information-card/compressor-actions.html'"></ng-include>
+        <ng-include src="'information-card/compressor-actions.html'"></ng-include>
 
         <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
     </div>

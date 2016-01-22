@@ -4,7 +4,7 @@
     return {
       controller: 'UploadImageFormController',
       controllerAs: 'vm',
-      templateUrl: 'views/information-card/upload-image-form.html',
+      templateUrl: 'information-card/upload-image-form.html',
       link: (scope, elem, attrs, ctrl) => {
         console.log('uicd.link');
         console.log(scope);

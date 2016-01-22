@@ -5,7 +5,7 @@
       controller: 'InformationCardChartsController',
       controllerAs: 'vm',
       scope: true,
-      templateUrl: 'views/information-card/charts.html',
+      templateUrl: 'information-card/charts/charts.html',
       link: (scope, element, attrs, controller) => {
         console.log('**** informationCardCharts.link()');
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')

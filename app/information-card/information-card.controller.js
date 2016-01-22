@@ -6,6 +6,9 @@
     activate();
 
     function activate() {
+      console.log('InformationCardController.activate()');
+      console.log($scope);
+
       // Site data is loaded by the map controller before the information card
       // is loaded
       vm.site = $scope.site;

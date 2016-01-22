@@ -4,7 +4,7 @@
     return {
       controller: 'InformationCardActionsController',
       controllerAs: 'vm',
-      templateUrl: 'views/information-card/actions.html',
+      templateUrl: 'information-card/actions.html',
       link: (scope, element, attrs, controller) => {
         console.log('actions link');
         console.log(scope);

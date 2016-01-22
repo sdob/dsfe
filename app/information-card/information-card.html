@@ -15,20 +15,20 @@
         </div>
     </div>
 
-    <ng-include src="'views/information-card/header-actions.html'"></ng-include>
+    <ng-include src="'information-card/header-actions.html'"></ng-include>
 
     <div class="information-card__body"
         id="information-card__body"
         >
-        <ng-include src="'views/information-card/description.html'"></ng-include>
+        <ng-include src="'information-card/description.html'"></ng-include>
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>
-            <ng-include src="'views/information-card/site-level.html'"></ng-include>
-            <ng-include src="'views/information-card/site-entries.html'"></ng-include>
+            <ng-include src="'information-card/site-level.html'"></ng-include>
+            <ng-include src="'information-card/site-entries.html'"></ng-include>
             <information-card-charts></information-card-charts>
             <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
         </div>
-        <ng-include src="'views/information-card/actions.html'"></ng-include>
+        <ng-include src="'information-card/actions.html'"></ng-include>
 
         <log-dive-form ng-if="icvm.sectionVisibilities.logDiveForm"></log-dive-form>
         <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
