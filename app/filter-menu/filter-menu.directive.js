@@ -6,16 +6,29 @@
       restrict: 'EA',
       controller: 'FilterMenuController',
       controllerAs: 'fmvm',
-      link: (scope, elem, attrs, ctrl) => {
-        angular.element(elem).ready(() => {
-          const prefs = ctrl.preferences;
-          const slider = angular.element('#js-information-card__depth-range-slider').slider({
-            tooltip: 'hide',
-          });
-          slider.slider('setValue', parseInt(ctrl.preferences.maximumDepth));
-        });
-      },
+      link,
     };
+
+    function link(scope, element, attrs, ctrl) {
+      angular.element(element).ready(() => {
+        const prefs = ctrl.preferences;
+        const slider = angular.element('#js-information-card__depth-range-slider').slider({
+          tooltip: 'hide',
+        });
+        slider.slider('setValue', parseInt(ctrl.preferences.maximumDepth));
+      });
+      element.find('.filter-menu__header').on('click', toggleOpened);
+
+      // Clean up
+      element.on('$destroy', () => {
+        element.find('.filter-menu__header').off('click', toggleOpened);
+      });
+
+      function toggleOpened(e) {
+        $('.filter-menu').toggleClass('open');
+      }
+    }
+
   }
 
   angular.module('divesites.filterMenu').directive('filterMenu', FilterMenu);

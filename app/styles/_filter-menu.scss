@@ -1,19 +1,26 @@
 .filter-menu {
   position: absolute;
-  z-index: 2; // in front of add-site button
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  left: 4em;
+  left: 2em;
+  //right: 2em;
   max-height: calc(100% - 100px);
   overflow-y: hidden;
   top: 6em;
-  z-index: 4; // In front of information card
+  z-index: 4; // In front of information card and add-site button
+
+  &.open {
+    right: 2em;
+  }
 
   @media (min-width: 48em) {
     //top: 80px;
     left: 80px;
     width: 250px;
+    .open {
+      right: initial;
+    }
   }
 }
 
