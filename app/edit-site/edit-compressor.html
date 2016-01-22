@@ -10,14 +10,14 @@
             <div class="form-group ds-form-group-lg"
                 ng-class="{'has-error': siteForm.siteName.$error.required && (siteForm.siteName.$touched || siteForm.$submitted)}"
                 >
-                <label class="control-label" for="bs-edit-slipway__name">
+                <label class="control-label" for="bs-edit-compressor__name">
                     {{ vm.templateStrings.name.label }}
                 </label>
                 <input type="text" class="form-control"
                 ng-model="vm.site.name"
                 name="siteName"
                 ng-required="true"
-                id="bs-edit-slipway__name" placeholder="Name"
+                id="bs-edit-compressor__name" placeholder="Name"
                 style="font-weight: 500"
                 />
                 <span class="help-block">
@@ -41,6 +41,6 @@
         </div>
         </section> <!-- description -->
 
-        <ng-include src="'views/edit-site/submit-row.html'"></ng-include>
+        <ng-include src="'edit-site/submit-row.html'"></ng-include>
     </form>
 </div>

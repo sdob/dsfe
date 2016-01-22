@@ -1,7 +1,7 @@
 (function() {
   function divesiteDetails() {
     return {
-      templateUrl: 'views/edit-site/divesite-details.html',
+      templateUrl: 'edit-site/divesite-details.html',
     };
   }
 

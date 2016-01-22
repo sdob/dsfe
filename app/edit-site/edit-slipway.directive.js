@@ -2,7 +2,7 @@
   'use strict';
   function editSlipway() {
     return {
-      templateUrl: 'views/edit-site/edit-slipway.html',
+      templateUrl: 'edit-site/edit-slipway.html',
     };
   }
 

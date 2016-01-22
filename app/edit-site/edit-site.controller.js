@@ -32,7 +32,8 @@
 
       // Retrieve map settings
       vm.map = mapService.get();
-      // If we arrived here via the map context menu, 
+
+      // If we arrived here via the map context menu,
       // then there will be a lat/lng pair for us to centre on;
       // use that instead
       console.log(contextMenuService.latLng());
@@ -45,6 +46,7 @@
 
       // Create a default site
       vm.site = mapService.defaultSite(vm.map);
+
       // Create a default marker from the map
       vm.marker = mapService.defaultMarker(vm.map);
       vm.marker.events = { };

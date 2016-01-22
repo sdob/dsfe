@@ -14,7 +14,7 @@
       }
 
       return (data) => dsapi.postDivesite(data);
-    } 
+    }
 
     function summonCancelEditingModal(form) {
       // If the form has been edited, then confirm that the user
