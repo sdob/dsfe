@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function InformationCardChartsService($document) {
+  function InformationCardChartsService($document, d3) {
     return {
       createHistogram,
     };
@@ -70,7 +70,7 @@
     }
   }
 
-  InformationCardChartsService.$inject = ['$document'];
+  InformationCardChartsService.$inject = ['$document', 'd3',];
   angular.module('divesites.informationCard').factory('informationCardChartsService', InformationCardChartsService);
 
 })();
