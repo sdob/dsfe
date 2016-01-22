@@ -2,11 +2,11 @@
   'use strict';
   function levelFilter() {
     return (level) => {
-      if (level === 0) {
+      if (level === 0 || level === '0') {
         return 'Beginner';
       }
 
-      if (level === 1) {
+      if (level === 1 || level === '1') {
         return 'Intermediate';
       }
 
