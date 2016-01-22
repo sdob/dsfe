@@ -3,12 +3,12 @@
   function EditableSiteMap() {
     return {
       restrict: 'E',
-      templateUrl: 'views/editable-site-map.html',
+      templateUrl: 'edit-site/editable-site-map.html',
       link: (elem, scope, attrs, ctrl) => {
       },
     };
   }
 
   EditableSiteMap.$inject = [];
-  angular.module('divesites').directive('editableSiteMap', EditableSiteMap);
+  angular.module('divesites.editSite').directive('editableSiteMap', EditableSiteMap);
 })();
