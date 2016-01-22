@@ -13,13 +13,8 @@ module.exports = {
     options: {
       livereload: '<%= connect.options.livereload %>',
     },
-    tasks: ['newer:jshint:all', 'babel:server', 'karma',],
-    files: ['<%= cfg.app %>/scripts/{,*/}*.js', '<%= cfg.test %>/{,*/}*.js'],
-  },
-
-  jsTest: {
-    tasks: ['newer:jshint:test', 'karma'],
-    files: ['test/{,*/}*.js'],
+    tasks: ['newer:jshint:all', 'babel:server', 'jscs', 'karma',],
+    files: ['<%= cfg.app %>/{,*/}*.js', '<%= cfg.test %>/{,*/}*.js'],
   },
 
   livereload: {

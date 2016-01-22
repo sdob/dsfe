@@ -23,7 +23,7 @@
   .config(($routeProvider) => {
     $routeProvider
     .when('/', {
-      templateUrl: 'views/main.html',
+      template: '<map></map>',
       reloadOnSearch: false,
     })
     .when('/add-compressor', {
@@ -101,6 +101,7 @@
     if (typeof _.contains === 'undefined') {
       _.contains = _.includes;
     }
+
     if (typeof _.object === 'undefined') {
       _.object = _.zipObject;
     }

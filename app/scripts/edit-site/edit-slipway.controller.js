@@ -7,7 +7,7 @@
     $timeout,
     dsapi,
     editSiteService,
-    mapSettings
+    mapService
   ) {
 
     const TEMPLATE_STRINGS = {
@@ -44,9 +44,9 @@
 
       // Initialize
       vm.siteTypeString = 'slipway';
-      vm.map = mapSettings.get();
-      vm.site = mapSettings.defaultSite(vm.map);
-      vm.marker = mapSettings.defaultMarker(vm.map);
+      vm.map = mapService.get();
+      vm.site = mapService.defaultSite(vm.map);
+      vm.marker = mapService.defaultMarker(vm.map);
       vm.marker.events = {
         dragend: () => {
           console.log('dragend');
@@ -178,7 +178,7 @@
     '$timeout',
     'dsapi',
     'editSiteService',
-    'mapSettings',
+    'mapService',
   ];
   angular.module('divesites.editSite').controller('EditSlipwayController', EditSlipwayController);
 })();

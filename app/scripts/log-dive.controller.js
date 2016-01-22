@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function LogDiveController($location, $routeParams, $scope, $timeout, $uibModal, dsapi, mapSettings) {
+  function LogDiveController($location, $routeParams, $scope, $timeout, $uibModal, dsapi, mapService) {
     const vm = this;
     activate();
 
@@ -94,7 +94,7 @@
         console.log(response);
 
         // Update the map settings before returning us to the map
-        mapSettings.set('center', {
+        mapService.set('center', {
           latitude: response.data.divesite.latitude,
           longitude: response.data.divesite.longitude,
         });
@@ -127,7 +127,7 @@
     '$timeout',
     '$uibModal',
     'dsapi',
-    'mapSettings',
+    'mapService',
   ];
   angular.module('divesites.informationCard').controller('LogDiveController', LogDiveController);
 })();

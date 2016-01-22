@@ -2,7 +2,7 @@
   'use strict';
   function mapDirective() {
     return {
-      templateUrl: 'views/map.html',
+      templateUrl: 'map/map.html',
       restrict: 'EA',
       controller: 'MapController',
       controllerAs: 'mc',

@@ -4,10 +4,9 @@
     return {
       templateUrl: 'views/map-context-menu.html',
       link: (scope, element, attrs, controller) => {
-        const {x, y} = contextMenuService.pixel();
-        console.log(x, y);
-        element.find('.map-context-menu').css({'top': y, 'left': x});
-      }
+        const { x, y } = contextMenuService.pixel();
+        element.find('.map-context-menu').css({ top: y, left: x });
+      },
     };
   }
 

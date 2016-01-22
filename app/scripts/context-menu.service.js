@@ -8,16 +8,20 @@
         latLng = undefined;
         pixel = undefined;
       },
+
       latLng: (coords) => {
         if (coords === undefined) {
           return latLng;
         }
+
         latLng = coords;
       },
+
       pixel: (p) => {
         if (p === undefined) {
           return pixel;
         }
+
         pixel = p;
       },
     };

@@ -2,6 +2,7 @@
     <div class="profile-header__image col-sm-4">
         <div ng-if="user.profileImageUrl">
             <img ng-src="{{user.profileImageUrl}}" />
+            <!--
             <a href
                 ng-click="vm.summonProfileImageUploadModal()"
                 ng-if="editable"
@@ -12,6 +13,7 @@
                     <i class="fa fa-fw fa-pencil fa-stack-1x"><span class="sr-only">Edit</span></i>
                 </span>
             </a>
+            -->
         </div>
         <div ng-if="!user.profileImageUrl"
             class="profile-header--no-image-outer"
@@ -37,11 +39,13 @@
             <span>
                 {{ user.name }}
             </span>
+            <!--
             <a href
                 ng-if="editable"
                 class="own-profile__flex-edit-button">
                 <i class="fa fa-fw fa-pencil-square"></i>
             </a>
+            -->
         </h1>
         <div class="profile-header__member-since">
             Member since {{ user.date_joined | date:'MMMM yyyy' }}
@@ -50,7 +54,7 @@
             {{ user.aboutMe }}
         </div>
         <profile-stats class="profile-header__stats" user="user"></profile-stats>
-        <div
+        <!-- <div
             ng-if="editable"
             class="profile-header__actions">
             <ul class="list-unstyled profile-header__actions-list">
@@ -75,6 +79,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </div>

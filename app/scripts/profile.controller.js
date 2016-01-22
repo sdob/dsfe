@@ -14,6 +14,7 @@
       // Query the image server for a profile image for this user
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
+        console.log(vm.user);
         return dsimg.getUserProfileImage(userId);
       })
       .then((response) => {

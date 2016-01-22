@@ -1,5 +1,5 @@
 module.exports = {
-  src: '<%= cfg.app %>/scripts/{,*/}*.js',
+  src: '<%= cfg.app %>/{,*/}*.js',
   options: {
     config: '.jscsrc',
     esnext: true,

@@ -39,11 +39,8 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       // Load module files first
-      'app/scripts/app.js',
-      'app/scripts/information-card/information-card.module.js',
-      'app/scripts/edit-site/edit-site.module.js',
+      'app/**/*.module.js',
       'app/**/*.js',
-      'test/**/*.spec.js'
     ],
 
 
@@ -56,7 +53,6 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'app/**/*.js': ['babel', 'coverage',],
-      'test/**/*.js': ['babel'],
     },
 
     babelPreprocessor: {

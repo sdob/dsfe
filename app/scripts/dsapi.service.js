@@ -69,6 +69,7 @@
       updateCompressor: (id, data) => {
         return $http.patch(`${API_URL}/compressors/${id}/`, data);
       },
+
       updateDivesite: (id, data) => {
         return $http.patch(`${API_URL}/divesites/${id}/`, data);
       },

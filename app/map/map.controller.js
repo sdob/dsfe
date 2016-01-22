@@ -11,7 +11,7 @@
     dsapi,
     filterPreferences,
     informationCardService,
-    mapSettings,
+    mapService,
     uiGmapGoogleMapApi
   ) {
     const vm = this;
@@ -55,7 +55,7 @@
       vm.mapMarkers = [];
 
       // Retrieve stored map settings
-      vm.map = mapSettings.get();
+      vm.map = mapService.get();
 
       // Set map event listeners
       vm.mapEvents =  {
@@ -163,16 +163,20 @@
       // try to summon an information card. In a well-formed search query,
       // only one of these three will be true, but we'll return early from
       // each case to avoid malformed queries like '?divesite=foo&compressor=bar'
+
       if (c.params.divesite) {
         return summonCard(c.params.divesite, 'divesite');
       }
+
       if (c.params.slipway) {
         return summonCard(c.params.slipway, 'slipway');
-      } 
+      }
+
       if (c.params.compressor) {
         console.log('handling compressor');
         return summonCard(c.params.compressor, 'compressor');
       }
+
       // If there are no search params (e.g. if the user hit the back button)
       // then any existing information cards should be removed
       $('.information-card').remove();
@@ -208,7 +212,7 @@
      */
     function mapIdle(map) {
       // Store current map position
-      mapSettings.set({
+      mapService.set({
         center: {
           latitude: map.center.lat(),
           longitude: map.center.lng(),
@@ -228,9 +232,10 @@
         if (contextMenuIsOpen) {
           $('map-context-menu').remove();
         }
+
         $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
         contextMenuIsOpen = true;
-      } 
+      }
     }
 
     /* Return a listener that will set the location path */
@@ -278,10 +283,9 @@
 
     /* Summon an information card for a site */
     function summonCard(id, type) {
-      console.log('summoning card');
       // ID is a uuid for an object, but that doesn't tell us what the
       // type is, so we pass that into this bit here
-      const {apiCall, directiveString} = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
+      const { apiCall, directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
 
       // Remove any existing DOM elements
       $('information-card').remove();
@@ -362,7 +366,7 @@
     'dsapi',
     'filterPreferences',
     'informationCardService',
-    'mapSettings',
+    'mapService',
     'uiGmapGoogleMapApi',
   ];
   angular.module('divesites').controller('MapController', MapController);

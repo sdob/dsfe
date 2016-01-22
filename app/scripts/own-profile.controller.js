@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function OwnProfileController($uibModal, cloudinaryTransformation, dsapi, dsimg) {
+  function OwnProfileController($uibModal, cloudinaryTransformation, dsapi, dsimg, profileService) {
     const vm = this;
     activate();
 
@@ -9,7 +9,7 @@
       vm.editable = true; // editing own profile
       dsapi.getOwnProfile()
       .then((response) => {
-        vm.user = response.data;
+        vm.user = profileService.formatResponseData(response.data);
 
         // Hit the image server for this user's profile image
         return dsimg.getUserProfileImage(vm.user.id);
@@ -36,6 +36,7 @@
     'cloudinaryTransformation',
     'dsapi',
     'dsimg',
+    'profileService',
   ];
   angular.module('divesites').controller('OwnProfileController', OwnProfileController);
 })();

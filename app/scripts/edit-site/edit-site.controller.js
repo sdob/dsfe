@@ -11,7 +11,7 @@
     dsapi,
     dsimg,
     editSiteService,
-    mapSettings
+    mapService
   ) {
     const vm = this;
     activate();
@@ -31,7 +31,7 @@
       vm.title = 'Add a new divesite';
 
       // Retrieve map settings
-      vm.map = mapSettings.get();
+      vm.map = mapService.get();
       // If we arrived here via the map context menu, 
       // then there will be a lat/lng pair for us to centre on;
       // use that instead
@@ -44,9 +44,9 @@
       }
 
       // Create a default site
-      vm.site = mapSettings.defaultSite(vm.map);
+      vm.site = mapService.defaultSite(vm.map);
       // Create a default marker from the map
-      vm.marker = mapSettings.defaultMarker(vm.map);
+      vm.marker = mapService.defaultMarker(vm.map);
       vm.marker.events = { };
 
       // Pre-validate checkboxes (XXX: why?)
@@ -225,7 +225,7 @@
     'dsapi',
     'dsimg',
     'editSiteService',
-    'mapSettings',
+    'mapService',
   ];
   angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
 })();
