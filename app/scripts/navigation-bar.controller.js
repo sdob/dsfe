@@ -22,9 +22,7 @@
     }
 
     function toggleFullscreen() {
-      $timeout(() => {
-        $(document).fullScreen(vm.isFullscreen);
-      }, 0);
+      $(document).toggleFullScreen();
     }
 
     function signOut() {
