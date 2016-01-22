@@ -13,7 +13,6 @@
 
     function activate() {
       vm.toggleFullscreen = toggleFullscreen;
-      // vm.isFullscreen = false;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.signOut = signOut;
       vm.summonLoginModal = summonLoginModal;
@@ -24,7 +23,7 @@
 
     function toggleFullscreen() {
       $timeout(() => {
-      $(document).fullScreen(vm.isFullscreen);
+        $(document).fullScreen(vm.isFullscreen);
       }, 0);
     }
 
