@@ -78,8 +78,6 @@
       controllerAs: 'vm',
     });
   })
-  .constant('API_URL', API_URL)
-  .constant('IMG_API_URL', IMG_API_URL)
   .config(($authProvider) => {
     // Send login attempts to our API server
     $authProvider.loginUrl = `${API_URL}/api-token-auth/`;
