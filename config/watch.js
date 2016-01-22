@@ -14,7 +14,7 @@ module.exports = {
       livereload: '<%= connect.options.livereload %>',
     },
     tasks: ['newer:jshint:all', 'babel:server', 'jscs', 'karma',],
-    files: ['<%= cfg.app %>/{,*/}*.js', '<%= cfg.test %>/{,*/}*.js'],
+    files: ['<%= cfg.app %>/**/*.js', '<%= cfg.test %>/{,*/}*.js'],
   },
 
   livereload: {
@@ -22,7 +22,7 @@ module.exports = {
       livereload: '<%= connect.options.livereload %>'
     },
     files: [
-      '<%= cfg.app %>/{,*/}*.html', '.tmp/styles{,*/}*.css',
+      '<%= cfg.app %>/{,*/}*.html', '.tmp/styles{,*/}*.css', '<%= cfg.app %>/{,*/}*.js',
     ],
   },
 };
