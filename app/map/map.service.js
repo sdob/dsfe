@@ -2,6 +2,7 @@
   'use strict';
 
   function mapService(ls) {
+    // jshint validthis:true
     // jscs: disable safeContextKeyword
     const self = this;
     const DEFAULT_LATITUDE = 53;
@@ -135,5 +136,5 @@
   }
 
   mapService.$inject = ['localStorageService'];
-  angular.module('divesites').factory('mapService', mapService);
+  angular.module('divesites.map').factory('mapService', mapService);
 })();

@@ -27,5 +27,5 @@
     };
   }
 
-  angular.module('divesites').factory('contextMenuService', contextMenuService);
+  angular.module('divesites.map').factory('contextMenuService', contextMenuService);
 })();

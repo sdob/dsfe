@@ -43,5 +43,5 @@
   }
 
   FilterMenuController.$inject = ['$scope', 'filterPreferences'];
-  angular.module('divesites').controller('FilterMenuController', FilterMenuController);
+  angular.module('divesites.filterMenu').controller('FilterMenuController', FilterMenuController);
 })();

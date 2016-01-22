@@ -11,6 +11,6 @@
   }
 
   mapContextMenu.$inject = ['contextMenuService'];
-  angular.module('divesites').directive('mapContextMenu', mapContextMenu);
+  angular.module('divesites.map').directive('mapContextMenu', mapContextMenu);
 })();
 

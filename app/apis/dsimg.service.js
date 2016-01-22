@@ -34,5 +34,5 @@
     '$http',
     'IMG_API_URL',
   ];
-  angular.module('divesites').factory('dsimg', dsimgService);
+  angular.module('divesites.apis').factory('dsimg', dsimgService);
 })();

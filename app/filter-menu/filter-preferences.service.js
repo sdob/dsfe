@@ -99,5 +99,5 @@
   }
 
   FilterPreferencesService.$inject = ['$rootScope', 'localStorageService'];
-  angular.module('divesites').factory('filterPreferences', FilterPreferencesService);
+  angular.module('divesites.filterMenu').factory('filterPreferences', FilterPreferencesService);
 })();

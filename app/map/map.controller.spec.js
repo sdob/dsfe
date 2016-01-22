@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   describe('MapController', () => {
-    beforeEach(module('divesites'));
+    beforeEach(module('divesites.map'));
     describe('#activate()', () => {
       let $rootScope;
       let $scope;

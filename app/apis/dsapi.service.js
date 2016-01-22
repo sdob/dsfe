@@ -86,5 +86,5 @@
     '$http',
     'API_URL',
   ];
-  angular.module('divesites').factory('dsapi', dsapiService);
+  angular.module('divesites.apis').factory('dsapi', dsapiService);
 })();

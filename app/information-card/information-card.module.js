@@ -1,4 +1,6 @@
 (function() {
   'use strict';
-  angular.module('divesites.informationCard', []);
+  angular.module('divesites.informationCard', [
+    'ui.bootstrap',
+  ]);
 })();

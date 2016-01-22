@@ -18,5 +18,5 @@
     };
   }
 
-  angular.module('divesites').directive('filterMenu', FilterMenu);
+  angular.module('divesites.filterMenu').directive('filterMenu', FilterMenu);
 })();

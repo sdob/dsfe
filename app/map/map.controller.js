@@ -369,6 +369,6 @@
     'mapService',
     'uiGmapGoogleMapApi',
   ];
-  angular.module('divesites').controller('MapController', MapController);
+  angular.module('divesites.map').controller('MapController', MapController);
 
 })();
