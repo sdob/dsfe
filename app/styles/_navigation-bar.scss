@@ -9,3 +9,17 @@
 .navbar-toggle {
   border-radius: 0;
 }
+.navigation-bar__toggle-fullscreen {
+  border: solid 1px #ddd;
+  height: auto;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-top: 3px !important; // override Bootstrap
+  padding-bottom: 3px !important; //override Bootstrap
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  margin-left: 1em !important;
+  &:hover {
+    background-color: #ddd !important; // Override Bootstrap
+  }
+}

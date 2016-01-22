@@ -1,13 +1,31 @@
 (function() {
   'use strict';
-  function NavigationBarController($auth, $location, $uibModal, localStorageService) {
+  function NavigationBarController(
+    $auth,
+    $document,
+    $location,
+    $timeout,
+    $uibModal,
+    localStorageService
+  ) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.toggleFullscreen = toggleFullscreen;
+      // vm.isFullscreen = false;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.signOut = signOut;
       vm.summonLoginModal = summonLoginModal;
+      $document.bind('fullscreenchange', () => {
+        vm.isFullscreen = $(document).fullScreen();
+      });
+    }
+
+    function toggleFullscreen() {
+      $timeout(() => {
+      $(document).fullScreen(vm.isFullscreen);
+      }, 0);
     }
 
     function signOut() {
@@ -31,7 +49,9 @@
 
   NavigationBarController.$inject = [
     '$auth',
+    '$document',
     '$location',
+    '$timeout',
     '$uibModal',
     'localStorageService',
   ];

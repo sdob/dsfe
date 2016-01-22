@@ -13,7 +13,15 @@
             </button>
             <a class="navbar-brand" href="/#/">
                 divesit.es
+                <a href class="navbar-brand navigation-bar__toggle-fullscreen" ng-click="nbvm.toggleFullscreen()">
+                    <i ng-show="!nbvm.isFullscreen" class="fa fa-fw fa-expand"></i>
+                    <i ng-show="nbvm.isFullscreen" class="fa fa-fw fa-compress"></i>
+                </a>
             </a>
+            <ul class="nav navbar-nav">
+                <li>
+                </li>
+            </ul>
         </div>
         <div class="collapse navbar-collapse" id="bs-navigation-bar__collapse">
             <ul class="nav navbar-nav navbar-right">
