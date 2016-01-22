@@ -1,12 +1,12 @@
 (function() {
   'use strict';
 
-  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
+  function CompressorInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
     function activate() {
-      console.log('SlipwayInformationCardController.activate()');
+      console.log('CompressorInformationCardController.activate()');
 
       vm.site = $scope.site;
 
@@ -22,7 +22,6 @@
     }
 
     function toggleSectionVisibility(section) {
-      console.log('toggle');
       // If we've been passed garbage, just return
       if (!vm.sectionVisibilities.hasOwnProperty(section)) return;
 
@@ -44,7 +43,7 @@
     }
   }
 
-  SlipwayInformationCardController.$inject = ['$auth',
+  CompressorInformationCardController.$inject = ['$auth',
     '$document',
     '$location',
     '$rootScope',
@@ -55,5 +54,5 @@
     'informationCardService',
     'localStorageService',
   ];
-  angular.module('divesites.informationCard').controller('SlipwayInformationCardController', SlipwayInformationCardController);
+  angular.module('divesites.informationCard').controller('CompressorInformationCardController', CompressorInformationCardController);
 })();

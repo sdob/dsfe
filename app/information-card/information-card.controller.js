@@ -72,6 +72,7 @@
         dsapi.getDivesite(vm.site.id)
         .then((response) => {
           vm.site = response.data;
+
           // Broadcast a refresh-histogram event to child scopes
           $scope.$broadcast('refresh-statistics', vm.site);
         });

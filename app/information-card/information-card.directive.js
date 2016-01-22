@@ -9,6 +9,7 @@
       link: (scope, element, attrs, controller, transcludeFn) => {
         const keydownListener = informationCardService.escapeKeydownListener(removeSelf);
         const toggleOpened = informationCardService.toggleOpened(element);
+
         // XXX: This seems hacky, but the alternative *appears* to be inserting
         // 'onload' markup into the templates
         let dismissButtonHasLoaded = false;
@@ -43,7 +44,7 @@
           // Remove dismiss listener
           element.find('.information-card__dismiss-button').off('click', removeSelf);
 
-          // Remove ESC key 
+          // Remove ESC key
           $document.off('keydown', keydownListener);
         });
 

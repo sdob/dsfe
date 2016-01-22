@@ -70,7 +70,10 @@
     }
   }
 
-  InformationCardChartsService.$inject = ['$document', 'd3',];
+  InformationCardChartsService.$inject = [
+    '$document',
+    'd3',
+  ];
   angular.module('divesites.informationCard').factory('informationCardChartsService', InformationCardChartsService);
 
 })();

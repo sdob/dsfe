@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  function slipwayInformationCard($document, $location, informationCardService) {
+  function compressorInformationCard($document, $location, informationCardService) {
     return {
-      templateUrl: 'views/information-card/slipway-information-card.html',
-      controller: 'SlipwayInformationCardController',
+      templateUrl: 'views/information-card/compressor-information-card.html',
+      controller: 'CompressorInformationCardController',
       controllerAs: 'icvm',
       link: (scope, element, attrs, controller, transcludeFn) => {
         const keydownListener = informationCardService.escapeKeydownListener(removeSelf);
@@ -19,6 +19,7 @@
             titleHasLoaded = true;
             element.find('.information-card__title').on('click', toggleOpened);
           }
+
           if (!dismissButtonHasLoaded && element.find('.information-card__dismiss-button')) {
             dismissButtonHasLoaded = true;
             element.find('.information-card__dismiss-button').on('click', removeSelf);
@@ -30,7 +31,6 @@
           element.find('.information-card__title').off('click', toggleOpened);
           element.find('.information-card__dismiss-button').off('click', removeSelf);
           $document.off('keydown', keydownListener);
-          // $location.search('');
         });
 
         function removeSelf() {
@@ -40,10 +40,10 @@
     };
   }
 
-  slipwayInformationCard.$inject = [
+  compressorInformationCard.$inject = [
     '$document',
     '$location',
     'informationCardService',
   ];
-  angular.module('divesites.informationCard').directive('slipwayInformationCard', slipwayInformationCard);
+  angular.module('divesites.informationCard').directive('compressorInformationCard', compressorInformationCard);
 })();

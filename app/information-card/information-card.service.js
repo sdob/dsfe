@@ -3,24 +3,27 @@
   function informationCardService($uibModal, dsapi, dsimg, localStorageService) {
 
     const apiCalls = {
-      'compressor': {
+      compressor: {
         apiCall: (id) => {
           return dsapi.getCompressor(id);
         },
+
         directiveString: '<compressor-information-card></compressor-information-card>',
       },
 
-      'slipway': {
+      slipway: {
         apiCall: (id) => {
           return dsapi.getSlipway(id);
         },
+
         directiveString: '<slipway-information-card>',
       },
 
-      'default': {
+      default: {
         apiCall: (id) => {
           return dsapi.getDivesite(id);
         },
+
         directiveString: '<information-card></information-card>',
       },
     };

@@ -20,7 +20,7 @@
           console.log('**** charts scope destroy');
         });
 
-        // Rebuild histograms when told to 
+        // Rebuild histograms when told to
         scope.$on('refresh-statistics', (evt, site) => {
           // Update site in scope to refresh average depth and duration values
           scope.vm.site = site;
