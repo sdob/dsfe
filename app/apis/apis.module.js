@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-  const API_URL = 'http://divesites-api.herokuapp.com';
-  const IMG_API_URL = 'http://dsimg.herokuapp.com';
+  const API_URL = '//divesites-api.herokuapp.com';
+  const IMG_API_URL = '//dsimg.herokuapp.com';
   angular.module('divesites.apis', [
     'satellizer',
   ])

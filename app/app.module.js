@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  const API_URL = 'http://divesites-api.herokuapp.com';
+  const API_URL = '//divesites-api.herokuapp.com';
 
   angular.module('divesites', [
     'LocalStorageModule',
@@ -15,6 +15,7 @@
     /* Feature areas */
     'divesites.editSite',
     'divesites.informationCard',
+    'divesites.login',
     'divesites.map',
     'divesites.profile',
   ])
@@ -74,6 +75,11 @@
       template: '<profile></profile>',
       controller: 'OwnProfileController',
       controllerAs: 'vm',
+    })
+    .when('/me/edit', {
+      template: '<edit-profile></edit-profile>',
+      controller: 'EditProfileController',
+      controllerAs: 'vm',
     });
   })
   .config(($authProvider) => {
@@ -81,6 +87,16 @@
     $authProvider.loginUrl = `${API_URL}/api-token-auth/`;
     $authProvider.signupUrl = `${API_URL}/auth/register`;
     $authProvider.authToken = 'Token';
+    $authProvider.tokenName = 'key';
+
+    $authProvider.facebook({
+      clientId: '1718633528365627',
+      url: `${API_URL}/auth/facebook/`,
+    });
+    $authProvider.google({
+      clientId: '930190391486-htfppm57kf48nf1mr6gmcq9jknmtjkfn.apps.googleusercontent.com',
+      url: `${API_URL}/auth/google/`,
+    });
   })
   .run(($rootScope) => {
     const cloudName = 'cloud_name';

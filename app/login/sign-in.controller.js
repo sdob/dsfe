@@ -5,9 +5,27 @@
     activate();
 
     function activate() {
+      vm.loginFacebook = loginFacebook;
+      vm.loginGoogle = loginGoogle;
       vm.submit = submit;
       vm.user = {
       };
+    }
+
+    function loginFacebook() {
+      console.log('trying to log in with facebook');
+      $auth.authenticate('facebook')
+      .then(() => {
+        console.log('finished authenticating w/ facebook');
+      });
+    }
+
+    function loginGoogle() {
+      console.log('trying to log in with google');
+      $auth.authenticate('google')
+      .then(() => {
+        console.log('finished authenticating with google');
+      });
     }
 
     function submit() {
@@ -52,5 +70,5 @@
     'dsapi',
     'localStorageService',
   ];
-  angular.module('divesites').controller('SignInController', SignInController);
+  angular.module('divesites.login').controller('SignInController', SignInController);
 })();

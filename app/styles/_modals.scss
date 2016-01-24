@@ -1,6 +1,10 @@
 .modal-content {
   border-radius: 0;
 }
+.modal--vertical-center {
+  display: flex !important; // override Bootstrap modal inline style
+  align-items: center;
+}
 .modal-center {
   &.modal {
     display: flex !important; // override Bootstrap modal inline
@@ -15,7 +19,7 @@
 }
 
 .sign-in {
-  @extend .modal-center;
+  @extend .modal--vertical-center;
 }
 
 .lightbox-modal {

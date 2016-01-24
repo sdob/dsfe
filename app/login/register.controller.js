@@ -65,5 +65,5 @@
     'dsapi',
     'localStorageService',
   ];
-  angular.module('divesites').controller('RegisterController', RegisterController);
+  angular.module('divesites.login').controller('RegisterController', RegisterController);
 })();

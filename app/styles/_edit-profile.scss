@@ -1,0 +1,5 @@
+.edit-profile {
+  &__password-label {
+    padding-top: 0 !important; // override Bootstrap
+  }
+}

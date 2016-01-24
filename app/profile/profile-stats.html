@@ -1,7 +1,7 @@
 <ul class="list-unstyled profile-header__dive-stats">
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
-            {{ user.divesites.length }}
+            {{ user.divesites.length | number }}
         </div>
         <div class="profile-header__dive-stat__desc">
             Divesites created
@@ -9,7 +9,7 @@
     </li>
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
-            {{ user.dives.length }}
+            {{ user.dives.length | number }}
         </div>
         <div class="profile-header__dive-stat__desc">
             Dives logged
@@ -17,7 +17,7 @@
     </li>
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
-            {{ user.hours_underwater }}
+            {{ user.hours_underwater | number }}
         </div>
         <div class="profile-header__dive-stat__desc">
             Hours underwater
@@ -25,7 +25,7 @@
     </li>
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
-            {{ user.divesites_visited }}
+            {{ user.divesites_visited | number }}
         </div>
         <div class="dive-stat__desc">
             Divesites visited

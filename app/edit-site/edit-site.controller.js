@@ -33,16 +33,14 @@
       // Retrieve map settings
       vm.map = mapService.get();
 
-      // If we arrived here via the map context menu,
-      // then there will be a lat/lng pair for us to centre on;
-      // use that instead
-      console.log(contextMenuService.latLng());
-      if (contextMenuService.latLng() !== undefined) {
-        vm.map.center = {
-          latitude: contextMenuService.latLng()[0],
-          longitude: contextMenuService.latLng()[1],
-        };
+      // Try to retrieve context menu coordinates and use them instead
+      const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
+      if (contextMenuCoordinates !== undefined) {
+        vm.map.center = contextMenuCoordinates;
       }
+
+      // Clear the context menu's stored settings
+      contextMenuService.clear();
 
       // Create a default site
       vm.site = mapService.defaultSite(vm.map);

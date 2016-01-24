@@ -8,6 +8,7 @@
       vm.dsimgHasResponded = false;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
       console.log('ProfileHeaderController.activate()');
+      console.log($scope);
 
       // TODO: get this into scope more elegantly
       vm.userId = $scope.$parent.userId;

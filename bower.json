@@ -31,7 +31,8 @@
     "haversine": "*",
     "angular-google-maps": "master",
     "angular-bootstrap-lightbox": "~0.10.0",
-    "jquery-fullscreen": "~1.1.4"
+    "jquery-fullscreen": "~1.1.4",
+    "bootstrap-social": "~4.12.0"
   },
   "overrides": {
     "bootstrap": {

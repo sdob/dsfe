@@ -45,6 +45,13 @@
       // Initialize
       vm.siteTypeString = 'compressor';
       vm.map = mapService.get();
+
+      // Try to retrieve context menu coordinates and use them instead
+      const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
+      if (contextMenuCoordinates !== undefined) {
+        vm.map.center = contextMenuCoordinates;
+      }
+
       vm.site = mapService.defaultSite(vm.map);
       vm.marker = mapService.defaultMarker(vm.map);
       vm.marker.events = {

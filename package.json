@@ -16,6 +16,7 @@
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",
     "cdnjs-cdn-data": "^0.1.2",
+    "cors": "^2.7.1",
     "express": "^4.13.3",
     "google-cdn-data": "^0.1.23",
     "grunt": "^0.4.5",

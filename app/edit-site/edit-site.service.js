@@ -1,10 +1,25 @@
 (function() {
   'use strict';
-  function editSiteService($uibModal, $window, dsapi) {
+  function editSiteService($uibModal, $window, contextMenuService, dsapi) {
     return {
+      getContextMenuCoordinates,
       selectSubmissionApiCall,
       summonCancelEditingModal,
     };
+
+    function getContextMenuCoordinates() {
+      console.log(contextMenuService.latLng());
+      if (contextMenuService.latLng() !== undefined) {
+        const coordinates = {
+          latitude: contextMenuService.latLng()[0],
+          longitude: contextMenuService.latLng()[1],
+        };
+        contextMenuService.clear(); // Read-once
+        return coordinates;
+      }
+
+      return undefined;
+    }
 
     function selectSubmissionApiCall(id) {
       // If passed an ID, then we're updating an existing site;
@@ -40,6 +55,7 @@
   editSiteService.$inject = [
     '$uibModal',
     '$window',
+    'contextMenuService',
     'dsapi',
   ];
   angular.module('divesites.editSite').factory('editSiteService', editSiteService);

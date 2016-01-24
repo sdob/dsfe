@@ -5,9 +5,8 @@
     activate();
 
     function activate() {
-      const userId = localStorageService.get('user');
-      $scope.userId = userId;
-      dsapi.getUser(userId)
+      vm.editable = true;
+      dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
       });

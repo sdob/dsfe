@@ -6,6 +6,7 @@
       controllerAs: 'vm',
       link,
       scope: {
+        editable: '=',
         user: '=',
         userId: '=',
       },

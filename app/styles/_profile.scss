@@ -4,21 +4,19 @@
   @media (min-width: $screen-sm-min) {
     flex-direction: row;
   }
-  &__actions-list {
+  &__action-menu {
     margin-top: 32px;
     display: flex;
     justify-content: space-around;
-    .action-item {
-      //width: 100%;
-      text-align: center;
-      padding-left: 16px;
-      padding-right: 16px;
-      a {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-    }
+  }
+  &__action-item {
+    //width: 100%;
+    text-align: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   &__details {
     padding-left: 0;

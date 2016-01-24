@@ -2,7 +2,7 @@
   'use strict';
   function loginModal() {
     return {
-      templateUrl: 'views/login-modal.html',
+      templateUrl: 'login/login-modal.html',
       controller: 'LoginModalController',
       controllerAs: 'lmvm',
       restrict: 'E',
@@ -12,5 +12,5 @@
   }
 
   loginModal.$inject = [];
-  angular.module('divesites').directive('loginModal', loginModal);
+  angular.module('divesites.login').directive('loginModal', loginModal);
 })();
