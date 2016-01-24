@@ -1,0 +1,49 @@
+<div class="profile-header">
+    <div class="profile-header__image col-sm-4">
+        <div ng-show="!vm.dsimgHasResponded">
+            <div class="profile-header--no-image-outer">
+                <div
+                    class="profile-header--no-image-inner">
+                    <i class="fa fa-fw fa-spin fa-spinner fa-3x"></i>
+                </div>
+            </div>
+        </div>
+        <div ng-show="vm.dsimgHasResponded">
+            <div ng-if="vm.profileImageUrl">
+                <img ng-src="{{vm.profileImageUrl}}" />
+            </div>
+            <div ng-if="!vm.profileImageUrl"
+                class="profile-header--no-image-outer"
+                >
+                <div
+                    ng-if="editable"
+                    class="profile-header--no-image-inner">
+                    <a href
+                        ng-click="vm.summonProfileImageUploadModal()"
+                        class="profile-header--no-image__link">
+                        <i class="fa fa-fw fa-user fa-3x"></i>
+                        <div>Add a profile image!</div>
+                    </a>
+                </div>
+                <div ng-if="!editable"
+                    class="profile-header--no-image-inner">
+                    <i class="fa fa-fw fa-user fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-header__details col-sm-8">
+        <h1 class="profile-header__name">
+            <span>
+                {{ user.name }}
+            </span>
+        </h1>
+        <div class="profile-header__member-since">
+            Member since {{ user.date_joined | date:'MMMM yyyy' }}
+        </div>
+        <div class="profile-header__about-me">
+            {{ user.aboutMe }}
+        </div>
+        <profile-stats class="profile-header__stats" user="user"></profile-stats>
+    </div>
+</div>

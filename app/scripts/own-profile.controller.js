@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function OwnProfileController($uibModal, cloudinaryTransformation, dsapi, dsimg, profileService) {
+  function OwnProfileController($scope, $uibModal, cloudinaryTransformation, dsapi, dsimg, profileService) {
     const vm = this;
     activate();
 
@@ -17,6 +17,8 @@
       .then((response) => {
         // If we get a meaningful response from the image server,
         // generate a URL for the profile image
+        console.log('op: dsimg has responded');
+        $scope.dsimgHasResponded = true;
         const cloudinaryIdKey = 'public_id';
         if (response.data && response.data.image && response.data.image[cloudinaryIdKey]) {
           const publicID = response.data.image[cloudinaryIdKey];
@@ -32,6 +34,7 @@
   }
 
   OwnProfileController.$inject = [
+    '$scope',
     '$uibModal',
     'cloudinaryTransformation',
     'dsapi',

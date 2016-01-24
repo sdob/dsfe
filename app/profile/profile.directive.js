@@ -2,7 +2,7 @@
   'use strict';
   function profileDirective() {
     return {
-      templateUrl: 'views/profile.html',
+      templateUrl: 'profile/profile.html',
       restrict: 'E',
       controllerAs: 'vm',
       link: (scope, elem, attrs, ctrl) => {
