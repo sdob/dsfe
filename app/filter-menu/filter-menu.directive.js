@@ -26,6 +26,7 @@
 
       function toggleOpened(e) {
         $('.filter-menu').toggleClass('open');
+        const slider  = angular.element('#js-information-card__depth-range-slider');
         slider.slider('relayout');
       }
     }
