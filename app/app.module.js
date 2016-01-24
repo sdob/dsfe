@@ -16,6 +16,7 @@
     'divesites.editSite',
     'divesites.informationCard',
     'divesites.map',
+    'divesites.profile',
   ])
   .config(($routeProvider) => {
     $routeProvider

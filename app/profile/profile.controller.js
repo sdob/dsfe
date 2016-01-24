@@ -29,5 +29,5 @@
     'dsimg',
     'profileService',
   ];
-  angular.module('divesites').controller('ProfileController', ProfileController);
+  angular.module('divesites.profile').controller('ProfileController', ProfileController);
 })();

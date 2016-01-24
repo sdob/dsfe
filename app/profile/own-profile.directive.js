@@ -8,5 +8,5 @@
   }
 
   ownProfile.$inject = [];
-  angular.module('divesites').directive('ownProfile', ownProfile);
+  angular.module('divesites.profile').directive('ownProfile', ownProfile);
 })();

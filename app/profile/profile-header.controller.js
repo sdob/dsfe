@@ -47,5 +47,5 @@
     '$uibModal',
     'dsimg',
   ];
-  angular.module('divesites').controller('ProfileHeaderController', ProfileHeaderController);
+  angular.module('divesites.profile').controller('ProfileHeaderController', ProfileHeaderController);
 })();

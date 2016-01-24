@@ -23,5 +23,5 @@
     'localStorageService',
     'profileService',
   ];
-  angular.module('divesites').controller('OwnProfileController', OwnProfileController);
+  angular.module('divesites.profile').controller('OwnProfileController', OwnProfileController);
 })();

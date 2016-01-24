@@ -19,5 +19,5 @@
   }
 
   profileHeader.$inject = [];
-  angular.module('divesites').directive('profileHeader', profileHeader);
+  angular.module('divesites.profile').directive('profileHeader', profileHeader);
 })();

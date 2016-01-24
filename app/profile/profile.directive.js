@@ -12,5 +12,5 @@
     };
   }
 
-  angular.module('divesites').directive('profile', profileDirective);
+  angular.module('divesites.profile').directive('profile', profileDirective);
 })();

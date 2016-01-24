@@ -4,7 +4,6 @@
   function profileService() {
     return {
       formatResponseData,
-      retrieveProfileImage,
     };
 
     // Convert snake-cased fields to camelCased fields
@@ -14,10 +13,7 @@
       delete obj.about_me;
       return obj;
     }
-
-    function retrieveProfileImage(id) {
-    }
   }
 
-  angular.module('divesites').factory('profileService', profileService);
+  angular.module('divesites.profile').factory('profileService', profileService);
 })();

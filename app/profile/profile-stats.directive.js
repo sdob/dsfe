@@ -10,5 +10,5 @@
   }
 
   profileStats.$inject = [];
-  angular.module('divesites').directive('profileStats', profileStats);
+  angular.module('divesites.profile').directive('profileStats', profileStats);
 })();
