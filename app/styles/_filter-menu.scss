@@ -68,7 +68,13 @@
 }
 .filter-menu__depth-range-slider-container {
   display: flex;
+  align-items: center;
+  .slider-horizontal {
+    width: 100% !important;
+  }
 }
 .filter-menu__depth-range-slider-value {
   margin-left: 16px;
+  font-weight: 300;
+  font-size: 20px;
 }

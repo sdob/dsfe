@@ -26,6 +26,7 @@
 
       function toggleOpened(e) {
         $('.filter-menu').toggleClass('open');
+        slider.slider('relayout');
       }
     }
 
