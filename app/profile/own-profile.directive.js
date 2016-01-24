@@ -3,8 +3,6 @@
   function ownProfile() {
     return {
       templateUrl: 'views/own-profile.html',
-      controller: 'OwnProfileController',
-      controllerAs: 'opvm',
       restrict: 'E',
     };
   }
