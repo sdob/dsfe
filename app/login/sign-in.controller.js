@@ -23,6 +23,7 @@
       .then(() => {
         // TODO: remove isSubmitting status
         console.log('finished authenticating w/ facebook');
+        $scope.modalInstance.close();
       })
       .then(goToProfile);
     }
@@ -34,6 +35,7 @@
       .then(() => {
         // TODO: remove isSubmitting status
         console.log('finished authenticating with google');
+        $scope.modalInstance.close();
       })
       .then(goToProfile);
     }
