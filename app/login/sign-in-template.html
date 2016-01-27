@@ -1,13 +1,15 @@
 <div ng-controller="SignInController as vm" class="login-modal__form login-modal__signIn">
     <form novalidate name="signInForm">
         <div>
-            <a class="btn btn-social btn-google login-modal__social-button">
+            <a href class="btn btn-social btn-google login-modal__social-button"
+                ng-click="vm.loginGoogle()">
                 <span class="fa fa-google"></span>
                 Sign in with Google
             </a>
         </div>
         <div>
-            <a class="btn btn-social btn-facebook login-modal__social-button">
+            <a href class="btn btn-social btn-facebook login-modal__social-button"
+                ng-click="vm.loginFacebook()">
                 <span class="fa fa-facebook"></span>
                 Sign in with Facebook
             </a>
