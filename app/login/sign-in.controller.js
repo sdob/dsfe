@@ -18,6 +18,7 @@
 
     function loginFacebook() {
       console.log('trying to log in with facebook');
+
       // TODO: set isSubmitting status
       $auth.authenticate('facebook')
       .then(() => {
@@ -30,6 +31,7 @@
 
     function loginGoogle() {
       console.log('trying to log in with google');
+
       // TODO: set isSubmitting status
       $auth.authenticate('google')
       .then(() => {
