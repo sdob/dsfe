@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function SignInController($auth, $scope, dsapi, localStorageService) {
+  function SignInController($auth, $location, $scope, dsapi, localStorageService) {
     const vm = this;
     activate();
 
@@ -12,20 +12,30 @@
       };
     }
 
+    function goToProfile() {
+      $location.path('/me');
+    }
+
     function loginFacebook() {
       console.log('trying to log in with facebook');
+      // TODO: set isSubmitting status
       $auth.authenticate('facebook')
       .then(() => {
+        // TODO: remove isSubmitting status
         console.log('finished authenticating w/ facebook');
-      });
+      })
+      .then(goToProfile);
     }
 
     function loginGoogle() {
       console.log('trying to log in with google');
+      // TODO: set isSubmitting status
       $auth.authenticate('google')
       .then(() => {
+        // TODO: remove isSubmitting status
         console.log('finished authenticating with google');
-      });
+      })
+      .then(goToProfile);
     }
 
     function submit() {
@@ -66,6 +76,7 @@
 
   SignInController.$inject = [
     '$auth',
+    '$location',
     '$scope',
     'dsapi',
     'localStorageService',
