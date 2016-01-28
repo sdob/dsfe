@@ -5,11 +5,11 @@
       templateUrl: 'profile/profile.html',
       restrict: 'E',
       controllerAs: 'vm',
-      link: (scope, elem, attrs, ctrl) => {
-        console.log('profile.link()');
-        console.log(scope);
-      },
+      link,
     };
+
+    function link(scope, elem, attrs, controller) {
+    }
   }
 
   angular.module('divesites.profile').directive('profile', profileDirective);
