@@ -85,7 +85,7 @@
   })
   .config(($authProvider) => {
     // Send login attempts to our API server
-    $authProvider.loginUrl = `${API_URL}/api-token-auth/`;
+    $authProvider.loginUrl = `${API_URL}/auth/login/`;
     $authProvider.signupUrl = `${API_URL}/auth/register`;
     $authProvider.authToken = 'Token';
     $authProvider.tokenName = 'key';
