@@ -52,5 +52,5 @@
     '$uibModal',
     'localStorageService',
   ];
-  angular.module('divesites').controller('NavigationBarController', NavigationBarController);
+  angular.module('divesites.navigationBar').controller('NavigationBarController', NavigationBarController);
 })();

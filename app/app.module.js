@@ -17,6 +17,7 @@
     'divesites.informationCard',
     'divesites.login',
     'divesites.map',
+    'divesites.navigationBar',
     'divesites.profile',
   ])
   .config(($routeProvider) => {

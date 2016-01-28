@@ -2,7 +2,7 @@
   'use strict';
   function NavigationBar() {
     return {
-      templateUrl: 'views/navigation-bar.html',
+      templateUrl: 'navigation-bar/navigation-bar.html',
       controller: 'NavigationBarController',
       controllerAs: 'nbvm',
       link: () => {
@@ -17,5 +17,5 @@
     };
   }
 
-  angular.module('divesites').directive('navigationBar', NavigationBar);
+  angular.module('divesites.navigationBar').directive('navigationBar', NavigationBar);
 })();
