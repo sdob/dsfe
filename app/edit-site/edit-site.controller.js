@@ -165,15 +165,11 @@
       // API call to use (create/update)
       const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
-      // We are either:
-      // (a) creating or replacing the current divesite header image;
-      // (b) deleting the divesite header image; or
-      // (c) doing nothing with the header image (the default)
+      // Upload a header image.
+      // TODO: allow user to delete header image --- have this as a separate action
       let imgServerCall = () => Promise.resolve(); // nop (default)
       if (vm.imgFile) { // creating or replacing
         imgServerCall = () => uploadHeaderImage(vm.imgFile);
-      } else if (!vm.site.headerImageUrl) { // deleting or not adding
-        imgServerCall = () => dsimg.deleteDivesiteHeaderImage(vm.site.id);
       }
 
       apiCall(data)

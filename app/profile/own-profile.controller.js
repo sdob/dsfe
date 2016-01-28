@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function OwnProfileController($scope, $uibModal, cloudinaryTransformation, dsapi, dsimg, localStorageService, profileService) {
+  function OwnProfileController($rootScope, $scope, $uibModal, cloudinaryTransformation, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
@@ -9,11 +9,13 @@
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
+        $rootScope.$broadcast('profile-data-loaded', response.data);
       });
     }
   }
 
   OwnProfileController.$inject = [
+    '$rootScope',
     '$scope',
     '$uibModal',
     'cloudinaryTransformation',

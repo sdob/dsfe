@@ -43,6 +43,7 @@
     "grunt-sass": "^1.1.0",
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^2.0.0",
+    "http-status-codes": "^1.0.5",
     "load-grunt-tasks": "^3.3.0",
     "morgan": "^1.6.1",
     "serve-static": "^1.10.1"
@@ -53,7 +54,7 @@
     "test": "grunt test"
   },
   "engines": {
-    "node": "4.2.2",
+    "node": "4.2.4",
     "npm": "3.5.2"
   },
   "keywords": [],

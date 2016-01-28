@@ -90,7 +90,7 @@ module.exports = (grunt) => {
     'concat', // Concatenate JS and CSS
     'ngAnnotate',
     'copy:dist', // Move files across to the dist/ directory
-    'cdnify',
+    //'cdnify',
     'cssmin', // Minify CSS
     'uglify', // Minify JS
     'filerev', // Generate file versions to bust caches

@@ -24,7 +24,7 @@
       // Upload the file
       file.upload = Upload.upload({
         data: { image: file },
-        url: `${dsimg.IMG_API_URL}/set_profile_image/`,
+        url: `${dsimg.IMG_API_URL}/profile_image/`,
       })
       .then(() => {
         // Check the image server for the new Cloudinary public ID

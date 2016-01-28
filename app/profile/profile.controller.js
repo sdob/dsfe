@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, $scope, dsapi, dsimg, profileService) {
+  function ProfileController($routeParams, $rootScope, $scope, dsapi, dsimg, profileService) {
     const vm = this;
     activate();
 
@@ -8,7 +8,7 @@
       console.log('ProfileController.activate()');
 
       // Get the user's ID and put it into $scope
-      const userId = parseInt($routeParams.userId);
+      const userId = $routeParams.userId;
       vm.userId = userId;
       $scope.userId = userId;
 
@@ -18,12 +18,14 @@
         // Query the image server for a profile image for this user
         vm.user = profileService.formatResponseData(response.data);
         console.log(vm.user);
+        $rootScope.$broadcast('profile-data-loaded', response.data);
       });
     }
   }
 
   ProfileController.$inject = [
     '$routeParams',
+    '$rootScope',
     '$scope',
     'dsapi',
     'dsimg',

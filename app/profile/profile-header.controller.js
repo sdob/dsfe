@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileHeaderController($scope, $uibModal, dsimg) {
+  function ProfileHeaderController($scope, $uibModal, dsapi, dsimg) {
     const vm = this;
     activate();
 
@@ -10,23 +10,22 @@
       console.log('ProfileHeaderController.activate()');
       console.log($scope);
 
-      // TODO: get this into scope more elegantly
-      vm.userId = $scope.$parent.userId;
-      console.log(vm.userId);
-
-      dsimg.getUserProfileImage(vm.userId)
-      .then((response) => {
-        // We've received a response, so remove the spinner
-        vm.dsimgHasResponded = true;
-
-        // Format image URL
-        const cloudinaryIdKey = 'public_id';
-        const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
-          width: 318,
-          height: 318,
-          crop: 'fill',
+      $scope.$on('profile-data-loaded', (evt, user) => {
+        dsimg.getUserProfileImage(user.id)
+        .then((response) => {
+          vm.dsimgHasResponded = true;
+          // Format image URL
+          const cloudinaryIdKey = 'public_id';
+          const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
+            width: 318,
+            height: 318,
+            crop: 'fill',
+          });
+          vm.profileImageUrl = url;
+        })
+        .catch((err) => {
+          vm.dsimgHasResponded = true;
         });
-        vm.profileImageUrl = url;
       });
     }
 
@@ -46,6 +45,7 @@
   ProfileHeaderController.$inject = [
     '$scope',
     '$uibModal',
+    'dsapi',
     'dsimg',
   ];
   angular.module('divesites.profile').controller('ProfileHeaderController', ProfileHeaderController);
