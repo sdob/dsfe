@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function EditProfileController(dsapi, dsimg, localStorageService, profileService) {
+  function EditProfileController($location, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
@@ -31,6 +31,14 @@
 
     function saveProfile() {
       console.log(vm.user);
+      dsapi.updateProfile(profileService.formatRequestData(vm.user))
+      .then((response) => {
+        console.log(response.data);
+        $location.path('/users/me');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     }
 
     function startEditingPassword() {
@@ -39,6 +47,7 @@
   }
 
   EditProfileController.$inject = [
+    '$location',
     'dsapi',
     'dsimg',
     'localStorageService',

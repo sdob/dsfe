@@ -1,0 +1,17 @@
+<div>
+    <h1>
+        Set divesite header image
+    </h1>
+    <div ng-if="vm.site.headerImageUrl">
+    </div>
+    <modal-mask ng-show="vm.isUploading"></modal-mask>
+    <div class="set-divesite-header-image-modal--empty">
+        <i class="set-divesite-header-image-modal--empty__icon fa fa-camera fa-2x"></i>
+        <button type="button"
+            class="btn btn-primary"
+            ngf-select="vm.setDivesiteHeaderImage($file)"
+            ng-model="vm.imageFile">
+            Select image
+        </button>
+    </div>
+</div>

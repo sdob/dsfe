@@ -12,6 +12,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
+@import 'widgets';
+
 @import 'bootstrap-overrides';
 @import 'action-menu';
 @import 'cancel-editing-modal';
@@ -33,6 +35,7 @@ h1, h2, h3, h4, h5, h6 {
 @import 'badges';
 @import 'forms';
 @import 'modals';
+@import 'set-divesite-header-image-modal';
 @import 'upload-divesite-image';
 @import 'upload-profile-image-modal';
 @import 'shadows';

@@ -1,25 +1,18 @@
 <div class="login-modal">
-    <h1 class="login-modal__title">
-        Sign in to divesit.es
-    </h1>
-    <div>
+    <div> </div> 
+
+    <div ng-show="status.isLoggingIn" class="login-modal--is-logging-in"
+        ng-style="{'visibility': status.isLoggingIn ? 'visible' : 'hidden'}">
+        <span>Logging in...</span>
+        <span>
+            <i class="fa fa-spinner fa-spin"></i>
+        </span>
     </div>
-    <div class="login-modal__form-pair-container">
 
-
-        <!--
-        <div class="login-modal__form">
-            <ng-include src="'login/register-template.html'"></ng-include>
-        </div>
-
-        <div class="login-modal__form-separator">
-            <span class="login-modal__form-separator-text">or</span>
-        </div>
-        -->
-
-        <div class="login-modal__form">
-            <ng-include src="'login/sign-in-template.html'"></ng-include>
-        </div>
-
+    <div class="login-modal__form">
+        <h1 class="login-modal__title">
+            Sign in to divesit.es
+        </h1>
+        <sign-in></sign-in>
     </div>
 </div>

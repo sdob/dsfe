@@ -44,7 +44,7 @@
         <div class="profile-header__about-me">
             {{ user.aboutMe }}
         </div>
-        <ul class="list-unstyled action-menu">
+        <ul ng-if="editable" class="list-unstyled action-menu">
             <li class="action-menu__action-item">
                 <a href="/#/me/edit" class="action-menu__link link--undecorated">
                     <i class="action-menu__icon fa fa-edit"></i>

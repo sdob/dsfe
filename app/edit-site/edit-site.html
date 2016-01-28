@@ -12,7 +12,7 @@
         <divesite-details></divesite-details>
 
 
-        <section class="edit-site__header-image">
+        <section ng-if="false" class="edit-site__header-image">
             <h3>Header image</h3>
             <span class="help-block">
                 Optional: give this site a header image.
@@ -65,28 +65,5 @@
             </section>
 
             <ng-include src="'edit-site/submit-row.html'"></ng-include>
-            <!--
-            <section class="edit-site__submit ds-form__submit-row">
-                <button
-                    class="btn btn-default big-button"
-                    ng-click="vm.summonCancelEditingModal()"
-                    >
-                    Quit
-                </button>
-                <button type="submit"
-                    class="btn btn-default big-button"
-                    ng-disabled="vm.isSaving"
-                    ng-click="!vm.isSaving && vm.submit()">
-                    <span
-                        class="fa fa-fw fa-spinner fa-spin"
-                        ng-show="vm.isSaving"
-                        ></span>
-                    <span
-                        ng-show="!vm.isSaving"
-                        >Save
-                    </span>
-                </button>
-            </section>
-            -->
         </form>
     </div>

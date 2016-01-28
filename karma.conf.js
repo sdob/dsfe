@@ -38,8 +38,12 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      // Load module files first
+      // Load main app module and constants first
+      'app/app.module.js',
+      'app/app.constants.js',
+      // Then all other modules
       'app/**/*.module.js',
+      // Then everything else
       'app/**/*.js',
     ],
 

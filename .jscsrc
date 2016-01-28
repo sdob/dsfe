@@ -1,5 +1,6 @@
 {
   "preset": "airbnb",
   "safeContextKeyword": ["vm"],
-  "requirePaddingNewLinesBeforeLineComments": false
+  "requirePaddingNewLinesBeforeLineComments": false,
+  "requireLineFeedAtFileEnd": false
 }

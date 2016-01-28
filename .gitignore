@@ -5,3 +5,5 @@ bower_components/
 .*.sw[po]
 coverage/
 dist/
+# Ignore Grunt-generated app.constants.js file
+app.constants.js

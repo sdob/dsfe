@@ -14,6 +14,9 @@
       $scope.signInModalForm = {};
       $scope.registerModalForm = {};
       $scope.modalInstance = $uibModalInstance;
+      $scope.status = {
+        isLoggingIn: false,
+      };
     }
 
     function registerSubmit() {

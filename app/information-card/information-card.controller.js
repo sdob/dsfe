@@ -36,6 +36,7 @@
         // Wire up functions
         vm.isAuthenticated = $auth.isAuthenticated;
         $scope.isAuthenticated = $auth.isAuthenticated;
+        vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
         vm.toggleSectionVisibility = toggleSectionVisibility;
         vm.toggleUploadImageForm = toggleUploadImageForm;
 
@@ -57,7 +58,12 @@
           vm.backgroundStyle = {
             background: `blue url(${vm.site.headerImageUrl}) center / cover`,
           };
+        } else {
+          console.log('no header image for this site');
         }
+      })
+      .catch((err) => {
+        console.error('no header image');
       });
 
       // Get the divesite's images (if they exist)
@@ -103,6 +109,20 @@
         });
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+
+    function summonSetDivesiteHeaderImageModal() {
+      console.log('summoning divesite-header-image-modal');
+      console.log(vm.site);
+      $uibModal.open({
+        controller: 'SetDivesiteHeaderImageModalController',
+        controllerAs: 'vm',
+        templateUrl: 'information-card/set-divesite-header-image-modal.html',
+        windowClass: 'modal-center',
+        resolve: {
+          site: () => vm.site,
+        },
+      });
+    }
 
     function toggleUploadImageForm() {
       // If the upload image form is currently visible, hide it and

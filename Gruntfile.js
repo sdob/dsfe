@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.load();
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
   var foo = {
@@ -55,6 +57,21 @@ module.exports = (grunt) => {
       },
     },
 
+    ngconstant: {
+      dist: {
+        options: {
+          name: 'divesites.constants',
+          dest: '<%= cfg.app %>/app.constants.js',
+          constants: {
+            'FACEBOOK_CLIENT_ID': process.env.FACEBOOK_CLIENT_ID || 'Facebook App ID',
+            'GOOGLE_CLIENT_ID': process.env.GOOGLE_CLIENT_ID || 'Google Client ID',
+            'API_URL': process.env.API_URL || 'http://localhost:8000',
+            'IMG_API_URL': process.env.IMG_API_URL || 'http://localhost:9001',
+          },
+        },
+      },
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -74,6 +91,7 @@ module.exports = (grunt) => {
     }
     grunt.task.run([
       'clean:server',
+      'ngconstant:dist', // convert environment variables to Angular constants
       'wiredep',
       'concurrent:server',
       'connect:livereload',
@@ -82,6 +100,7 @@ module.exports = (grunt) => {
   });
 
   grunt.registerTask('build', [
+    'ngconstant:dist', // Convert environment variables to Angular constants
     'clean:dist', // Wipe the dist directory
     'babel', // Transpile ES2015 to ES5
     'sass', // Compile SASS to CSS
@@ -99,6 +118,7 @@ module.exports = (grunt) => {
 
   grunt.registerTask('test', [
     'clean:server',
+    'ngconstant:dist', // Convert environment variables to Angular constants
     'connect:test',
     'karma'
   ]);

@@ -10,6 +10,11 @@
       vm.submit = submit;
       vm.user = {
       };
+
+      console.log('SignInController.activate()');
+      console.log($scope);
+      //console.log(`isLoggingIn: ${$scope.status.isLoggingIn}`);
+      //console.log(`isLoggingIn: ${$scope.status.isLoggingIn}`);
     }
 
     function goToProfile() {
@@ -17,25 +22,30 @@
     }
 
     function loginFacebook() {
+      // Set isLoggingIn status
+      $scope.status.isLoggingIn = true;
       console.log('trying to log in with facebook');
-
-      // TODO: set isSubmitting status
       $auth.authenticate('facebook')
       .then(() => {
-        // TODO: remove isSubmitting status
+        // Remove isLoggingIn status
+        $scope.status.isLoggingIn = false;
         console.log('finished authenticating w/ facebook');
         $scope.modalInstance.close();
       })
-      .then(goToProfile);
+      .then(goToProfile)
+      .catch((err) => {
+        console.error(`couldn't log in with facebook`);
+      });
     }
 
     function loginGoogle() {
       console.log('trying to log in with google');
-
-      // TODO: set isSubmitting status
+      // Set isLoggingIn status
+      $scope.status.isLoggingIn = true;
       $auth.authenticate('google')
       .then(() => {
-        // TODO: remove isSubmitting status
+        // remove isLoggingIn status
+        $scope.status.isLoggingIn = false;
         console.log('finished authenticating with google');
         $scope.modalInstance.close();
       })
@@ -53,6 +63,8 @@
 
       vm.hasError = false;
       vm.isSubmitting = true; // disable the save button
+      // Set form-wide isLoggingIn status
+      $scope.status.isLoggingIn = true;
       const user = vm.user.email;
       const password = vm.user.password;
       console.log({ username: user, password: password });
@@ -69,6 +81,8 @@
       })
       .catch((response) => {
         vm.isSubmitting = false;
+        // Remove form-wide isLoggingIn status
+        $scope.status.isLoggingIn = false;
         console.error('error from api server');
         console.error(response.data);
         vm.hasError = true;

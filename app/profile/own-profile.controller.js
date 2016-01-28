@@ -6,10 +6,14 @@
 
     function activate() {
       vm.editable = true;
+      $scope.editable = true;
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
-        $rootScope.$broadcast('profile-data-loaded', response.data);
+      })
+      .catch((err) => {
+        console.error('error from dsapi');
+        console.error(err);
       });
     }
   }

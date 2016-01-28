@@ -78,6 +78,11 @@
         return $http.patch(`${API_URL}/slipways/${id}/`, data);
       },
 
+      updateProfile: (data) => {
+        const id = data.id;
+        return $http.patch(`${API_URL}/users/${id}/`, data);
+      },
+
     };
   }
 
