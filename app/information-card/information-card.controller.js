@@ -102,9 +102,11 @@
               crop: 'fill',
               gravity: 'face',
             });
-            vm.site.dives.filter(d => d.diver.id === id).forEach((d) => {
-              d.diver.profileImageUrl = profileImageUrl;
-            });
+            $timeout(() => {
+              vm.site.dives.filter(d => d.diver.id === id).forEach((d) => {
+                d.diver.profileImageUrl = profileImageUrl;
+              });
+            }, 0);
           }
         });
       });

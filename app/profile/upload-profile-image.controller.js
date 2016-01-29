@@ -26,15 +26,12 @@
         data: { image: file },
         url: `${dsimg.IMG_API_URL}/profile_image/`,
       })
-      .then(() => {
-        // Check the image server for the new Cloudinary public ID
-        return dsimg.getUserProfileImage(vm.user.id);
-      })
       .then((response) => {
         // Return us to the profile view, closing the modal instance
         // on the way
         vm.isSaving = false;
 
+        /*
         // Generate the new profile image URL
         const idKey = 'public_id';
         const url = $.cloudinary.url(response.data.image[idKey], {
@@ -43,11 +40,12 @@
           crop: 'fill',
         });
 
+        */
         // Assign it to the model
-        vm.user.profileImageUrl = url;
+        //vm.user.profileImageUrl = url;
 
         // Close the modal
-        $uibModalInstance.close();
+        $uibModalInstance.close('uploaded');
       });
     }
   }
@@ -59,5 +57,5 @@
     'dsimg',
     'user',
   ];
-  angular.module('divesites').controller('ProfileImageUploadController', ProfileImageUploadController);
+  angular.module('divesites.profile').controller('ProfileImageUploadController', ProfileImageUploadController);
 })();
