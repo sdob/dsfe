@@ -62,6 +62,7 @@
     }
 
     function submit() {
+      // Log in with username and password
       console.log($scope.modalInstance);
 
       // Set the login form to submitted (this will flag validation errors)
@@ -88,6 +89,7 @@
         console.log(response);
         localStorageService.set('user', response.data.id);
       })
+      .then(goToProfile)
       .catch((response) => {
         vm.isSubmitting = false;
         // Remove form-wide isLoggingIn status
