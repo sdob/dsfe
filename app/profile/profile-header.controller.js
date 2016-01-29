@@ -22,14 +22,17 @@
       .then((response) => {
         // If we get a successful response, use it
         console.log('then from dsimg');
-        vm.dsimgHasResponded = true;
         const cloudinaryIdKey = 'public_id';
         const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
           width: 318,
           height: 318,
           crop: 'fill',
         });
-        vm.profileImageUrl = url;
+        // Push this into the next tick
+        $timeout(() => {
+          vm.profileImageUrl = url;
+          vm.dsimgHasResponded = true;
+        }, 0);
       })
       .catch((err) => {
         // On failure (including 404) jus tmake sure that
