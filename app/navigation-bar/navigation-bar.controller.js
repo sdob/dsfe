@@ -6,7 +6,8 @@
     $location,
     $timeout,
     $uibModal,
-    localStorageService
+    localStorageService,
+    profileService
   ) {
     const vm = this;
     activate();
@@ -27,6 +28,7 @@
 
     function signOut() {
       localStorageService.remove('user');
+      profileService.clear(); // remove own profile data from profileService
       $auth.logout()
       .then(() => {
         $location.path('/');
@@ -51,6 +53,7 @@
     '$timeout',
     '$uibModal',
     'localStorageService',
+    'profileService',
   ];
   angular.module('divesites.navigationBar').controller('NavigationBarController', NavigationBarController);
 })();

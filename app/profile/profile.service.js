@@ -4,10 +4,15 @@
   function profileService(dsapi) {
     let ownProfile; // cache the user's profile information here
     return {
+      clear,
       formatRequestData,
       formatResponseData,
       getUserProfile,
     };
+
+    function clear() {
+      ownProfile = undefined;
+    }
 
     // Convert snake-cased fields to camelCased fields
     function formatResponseData(data) {
