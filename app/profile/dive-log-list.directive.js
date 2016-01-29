@@ -5,7 +5,7 @@
       scope: {
         dives: '=',
       },
-      templateUrl: 'views/dive-log-list.html',
+      templateUrl: 'profile/dive-log-list.html',
       link: (scope, elem, attrs, ctrl) => {
         console.log('DiveLogList.link()');
       },
@@ -13,5 +13,5 @@
   }
 
   diveLogList.$inject = [];
-  angular.module('divesites').directive('diveLogList', diveLogList);
+  angular.module('divesites.profile').directive('diveLogList', diveLogList);
 })();
