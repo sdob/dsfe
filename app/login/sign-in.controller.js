@@ -13,8 +13,6 @@
 
       console.log('SignInController.activate()');
       console.log($scope);
-      //console.log(`isLoggingIn: ${$scope.status.isLoggingIn}`);
-      //console.log(`isLoggingIn: ${$scope.status.isLoggingIn}`);
     }
 
     function goToProfile() {
@@ -31,6 +29,9 @@
         $scope.status.isLoggingIn = false;
         console.log('finished authenticating w/ facebook');
         $scope.modalInstance.close();
+      })
+      .then(() => { // Retrieve and store user ID
+        retrieveAndStoreUserID();
       })
       .then(goToProfile)
       .catch((err) => {
@@ -49,7 +50,15 @@
         console.log('finished authenticating with google');
         $scope.modalInstance.close();
       })
+      .then(retrieveAndStoreUserID)
       .then(goToProfile);
+    }
+
+    function retrieveAndStoreUserID() {
+      dsapi.getOwnProfile()
+      .then((response) => {
+        localStorageService.set('user', response.data.id);
+      });
     }
 
     function submit() {
