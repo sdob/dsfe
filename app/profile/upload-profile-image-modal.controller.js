@@ -31,19 +31,6 @@
         // on the way
         vm.isSaving = false;
 
-        /*
-        // Generate the new profile image URL
-        const idKey = 'public_id';
-        const url = $.cloudinary.url(response.data.image[idKey], {
-          width: 318,
-          height: 318,
-          crop: 'fill',
-        });
-
-        */
-        // Assign it to the model
-        //vm.user.profileImageUrl = url;
-
         // Close the modal
         $uibModalInstance.close('uploaded');
       });

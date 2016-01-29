@@ -7,6 +7,7 @@
 
     function activate() {
       vm.dsimgHasResponded = false;
+      vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
 
       $timeout(() => {
@@ -51,10 +52,31 @@
       });
     }
 
+    function summonDeleteProfileImageModal() {
+      console.log('summoning delete profile image modal');
+      const instance = $uibModal.open({
+        templateUrl: 'profile/delete-profile-image-modal.html',
+        controller: 'DeleteProfileImageModalController',
+        controllerAs: 'vm',
+        resolve: {
+          user: () => $scope.user,
+        },
+        size: 'sm',
+      });
+      instance.result.then((reason) => {
+        if (reason === 'deleted') {
+          console.log('deleted');
+          $timeout(() => {
+            vm.profileImageUrl = undefined;
+          });
+        }
+      });
+    }
+
     function summonImageUploadModal() {
       // Summon a modal dialog to allow the user to upload a new image
       const instance = $uibModal.open({
-        templateUrl: 'views/upload-profile-image-modal.html',
+        templateUrl: 'profile/upload-profile-image-modal.html',
         controller: 'ProfileImageUploadController',
         controllerAs: 'vm',
         resolve: {

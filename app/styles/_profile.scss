@@ -28,6 +28,17 @@
       padding-right: inherit;
     }
   }
+  &-image {
+    &__action-menu {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+    }
+    &__action-item {
+        margin-left: 8px;
+    }
+  }
   &__about-me {
     font-size: 150%;
     font-weight: 300;

@@ -11,6 +11,24 @@
         <div ng-show="vm.dsimgHasResponded">
             <div ng-if="vm.profileImageUrl">
                 <img ng-src="{{vm.profileImageUrl}}" />
+                <div ng-if="editable" class="profile-header-image__action-menu">
+                    <div>
+                        <a href
+                            ng-click="vm.summonDeleteProfileImageModal()"
+                            class="profile-header-image__action-item">
+                            <span class="fa fa-stack">
+                                <i class="fa fa-stack-2x fa-circle"></i>
+                                <i class="fa fa-inverse fa-stack-1x fa-trash"></i>
+                            </span>
+                        </a>
+                        <a href class="profile-header-image__action-item">
+                            <span class="fa fa-stack">
+                                <i class="fa fa-stack-2x fa-circle"></i>
+                                    <i class="fa fa-inverse fa-stack-1x fa-edit"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div ng-if="!vm.profileImageUrl"
                 class="profile-header--no-image-outer"
