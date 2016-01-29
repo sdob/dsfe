@@ -1,12 +1,19 @@
 (function() {
   'use strict';
   function ProfileHeaderController($scope, $timeout, $uibModal, dsapi, dsimg, profileService) {
+    const cloudinaryIdKey = 'public_id';
     const vm = this;
     activate();
 
     function activate() {
       vm.dsimgHasResponded = false;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
+
+      $timeout(() => {
+        console.log('editable?');
+        console.log($scope);
+        console.log($scope.editable);
+      });
 
       const userId = $scope.userId;
       console.log(userId);
@@ -22,7 +29,6 @@
       .then((response) => {
         // If we get a successful response, use it
         console.log('then from dsimg');
-        const cloudinaryIdKey = 'public_id';
         const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
           width: 318,
           height: 318,
@@ -38,6 +44,7 @@
         // On failure (including 404) jus tmake sure that
         // the UI is clean
         console.log('catch from dsimg');
+        console.log(err);
         $timeout(() => {
           vm.dsimgHasResponded = true;
         }, 0);
@@ -54,6 +61,36 @@
           user: () => $scope.user,
         },
       });
+      instance.result.then((reason) => {
+        console.log(`modal dismissed with reason: ${reason}`);
+        if (reason === 'uploaded') {
+          dsimg.getUserProfileImage($scope.user.id)
+          .then((response) => {
+            console.log('received response from dsimg');
+            console.log(response.data);
+            const url = formatHeroImageUrl(response);
+            $timeout(() => {
+              console.log('updating vm.profileImageUrl');
+              console.log(url);
+              vm.profileImageUrl = url;
+            }, 0);
+          })
+          .catch((err) => {
+            console.error(`this shouldn't happen - we've uploaded an image`);
+          });
+        }
+      });
+    }
+
+    function formatHeroImageUrl(response) {
+      const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
+        width: 318,
+        height: 318,
+        crop: 'fill',
+      });
+      console.log('formatted hero image:');
+      console.log(url);
+      return url;
     }
   }
 

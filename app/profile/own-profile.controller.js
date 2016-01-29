@@ -5,6 +5,7 @@
     activate();
 
     function activate() {
+      console.log('OwnProfileController.activate()');
       vm.editable = true;
       $scope.editable = true;
       dsapi.getOwnProfile()
