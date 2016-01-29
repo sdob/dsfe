@@ -6,6 +6,11 @@
       template: '<map></map>',
       reloadOnSearch: false,
     })
+    .when('/about-us', {
+      template: '<about-us></about-us>',
+      controller: 'AboutUsController',
+      controllerAs: 'vm',
+    })
     .when('/add-compressor', {
       template: '<edit-compressor></edit-compressor>',
       controller: 'EditCompressorController',

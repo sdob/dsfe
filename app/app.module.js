@@ -17,6 +17,7 @@
     'divesites.login',
     'divesites.map',
     'divesites.navigationBar',
+    'divesites.aboutUs',
     'divesites.profile',
     'divesites.widgets',
   ])
