@@ -7,15 +7,20 @@
     function activate() {
       vm.dsimgHasResponded = false;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
+
       const userId = $scope.userId;
       console.log(userId);
+      // Retrieve the user profile
       profileService.getUserProfile(userId)
       .then((profile) => {
         console.log('profileheadercontroller got user profile');
-        $scope.user = profile;
+        // Put profile data into scope
+        $scope.user = profileService.formatResponseData(profile);
+        // Look for a profile image
         return dsimg.getUserProfileImage(profile.id);
       })
       .then((response) => {
+        // If we get a successful response, use it
         console.log('then from dsimg');
         vm.dsimgHasResponded = true;
         const cloudinaryIdKey = 'public_id';
@@ -27,8 +32,9 @@
         vm.profileImageUrl = url;
       })
       .catch((err) => {
+        // On failure (including 404) jus tmake sure that
+        // the UI is clean
         console.log('catch from dsimg');
-        console.log(err);
         $timeout(() => {
           vm.dsimgHasResponded = true;
         }, 0);
