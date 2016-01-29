@@ -1,4 +1,7 @@
-<div class="upload-profile-image-modal">
+<div class="upload-profile-image-modal"
+    ng-class="{'upload-profile-image-modal--is-saving': vm.isSaving}"
+    >
+    <modal-mask ng-show="vm.isSaving"></modal-mask>
     <div class="row">
         <h1 class="col-xs-12">Upload image</h1>
     </div>
@@ -26,19 +29,11 @@
                     Cancel
                 </button>
                 <button type="submit"
-                    class="btn btn-default big-button"
+                    class="btn btn-primary big-button"
                     ng-disabled="!uploadForm.$valid"
                     ng-click="vm.submit(vm.imgFile)"
                     >
-                <span
-                    class="fa fa-fw fa-spinner fa-spin"
-                    ng-show="vm.isSaving"
-                    ></span>
-                <span
-                    ng-show="!vm.isSaving"
-                    >
-                    Upload
-                </span>
+                <span>Upload</span>
                 </button>
             </div>
         </form>
