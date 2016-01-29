@@ -1,13 +1,9 @@
-<div class="login-modal">
+<div class="login-modal"
+    ng-class="{'login-modal--is-logging-in': status.isLoggingIn}"
+    >
     <div> </div> 
 
-    <div ng-show="status.isLoggingIn" class="login-modal--is-logging-in"
-        ng-style="{'visibility': status.isLoggingIn ? 'visible' : 'hidden'}">
-        <span>Logging in...</span>
-        <span>
-            <i class="fa fa-spinner fa-spin"></i>
-        </span>
-    </div>
+    <modal-mask ng-show="status.isLoggingIn"></modal-mask>
 
     <div class="login-modal__form">
         <h1 class="login-modal__title">
