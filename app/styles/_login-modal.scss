@@ -5,6 +5,12 @@
   font-weight: 500;
   color: #000;
   &--is-logging-in {
+    & .login-modal__form {
+      filter: blur(2px);
+      -moz-filter: blur(2px);
+      -webkit-filter: blur(2px);
+    }
+    /*
     display: flex;
     font-size: 150%;
     flex-direction: column;
@@ -17,6 +23,7 @@
     right: 0;
     background: rgba(255, 255, 255, 0.8);
     z-index: 1; // in front of everything
+    */
   }
   &__social-button {
     width: 100%;
