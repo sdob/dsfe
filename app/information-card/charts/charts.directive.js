@@ -8,6 +8,10 @@
       templateUrl: 'information-card/charts/charts.html',
       link: (scope, element, attrs, controller) => {
         console.log('**** informationCardCharts.link()');
+        // Build charts
+        console.log('scope.site is currently');
+        console.log(scope.site);
+        buildCharts(scope.site, element);
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')
         .click(collapseBehaviour.toggleChevron);
 
@@ -22,8 +26,15 @@
 
         // Rebuild histograms when told to
         scope.$on('refresh-statistics', (evt, site) => {
-          // Update site in scope to refresh average depth and duration values
           scope.vm.site = site;
+          buildCharts(site, element);
+        });
+      },
+    };
+
+    function buildCharts(site, element) {
+          // Update site in scope to refresh average depth and duration values
+          //scope.vm.site = site;
 
           /* Refresh histograms */
 
@@ -40,9 +51,7 @@
 
             element.find('#information-card-duration-histogram-container').append(durationHistogram);
           }
-        });
-      },
-    };
+        }
   }
 
   informationCardCharts.$inject = [
