@@ -1,19 +1,29 @@
 (function() {
   'use strict';
 
-  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
+  function SlipwayInformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.isLoading = true;
       console.log('SlipwayInformationCardController.activate()');
-
-      vm.site = $scope.site;
+      const id = $scope.id;
+      const type = $scope.type;
+      const { apiCall } = informationCardService.apiCalls[type];
 
       /* Wire up functions */
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.toggleSectionVisibility = toggleSectionVisibility;
-      vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+
+      apiCall(id)
+      .then((response) => {
+        vm.site = response.data;
+        vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+        $timeout(() => {
+          vm.isLoading = false;
+        });
+      });
 
       vm.sectionVisibilities = {
         defaultSection: true,
@@ -48,6 +58,7 @@
     '$location',
     '$rootScope',
     '$scope',
+    '$timeout',
     '$uibModal',
     'dsapi',
     'dsimg',

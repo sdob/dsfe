@@ -6,19 +6,14 @@
     activate();
 
     function activate() {
-      console.log('InformationCardController.activate()');
-      console.log($scope);
+      vm.isLoading = true; // We're waiting for the site to load
+      vm.site = {
+        images: {},
+      };
 
-      // Site data is loaded by the map controller before the information card
-      // is loaded
-      vm.site = $scope.site;
-      vm.site.images = {}; // Ensure that this is never undefined
-      vm.site.locData = informationCardService.formatGeocodingData(vm.site);
-
-      $timeout(() => {
-        // Push this into the next tick so that the charts directive has linked
-        $scope.$broadcast('refresh-statistics', vm.site);
-      }, 0);
+      const id = $scope.id;
+      const type = $scope.type;
+      const { apiCall, _ } = informationCardService.apiCalls[type];
 
       // Initially show dive list
       vm.sectionVisibilities = {
@@ -31,49 +26,60 @@
       vm.collapseDepthChart = true;
       vm.collapseDurationHistogram = true;
 
-      // TODO: why am I wrapping this in a timeout?
-      $timeout(() => {
-        // Wire up functions
-        vm.isAuthenticated = $auth.isAuthenticated;
-        $scope.isAuthenticated = $auth.isAuthenticated;
-        vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
-        vm.toggleSectionVisibility = toggleSectionVisibility;
-        vm.toggleUploadImageForm = toggleUploadImageForm;
+      // Wire up functions
+      vm.isAuthenticated = $auth.isAuthenticated;
+      $scope.isAuthenticated = $auth.isAuthenticated;
+      vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
+      vm.toggleSectionVisibility = toggleSectionVisibility;
+      vm.toggleUploadImageForm = toggleUploadImageForm;
 
-        // Note that informationCardService.userIsOwner(site) returns a function
+      apiCall(id)
+      .then((response) => {
+        $scope.site = response.data;
+        vm.site = response.data;
+        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+        // Get the divesite's images (if they exist)
+        informationCardService.getDivesiteImages(vm.site)
+        .then((images) => {
+          vm.site.images = images;
+        });
+
+        // Get divers' profile images
+        getDiverProfileImages();
+
+        // Now we can determine whether the user owns  this site
         vm.userIsOwner = informationCardService.userIsOwner(vm.site);
-      }, 0);
 
-      // Get nearby slipways
-      informationCardService.getNearbySlipways(vm.site)
-      .then((slipways) => {
-        vm.site.nearbySlipways = slipways;
+        // Get the divesite header image (if it exists)
+        informationCardService.getDivesiteHeaderImage(vm.site)
+        .then((imageUrl) => {
+          if (imageUrl) {
+            vm.site.headerImageUrl = imageUrl;
+            vm.backgroundStyle = {
+              background: `blue url(${vm.site.headerImageUrl}) center / cover`,
+            };
+          } else {
+            console.log('no header image for this site');
+          }
+        })
+        .catch((err) => {
+          console.error('no header image');
+        });
+
+        // Get nearby slipways
+        informationCardService.getNearbySlipways(vm.site)
+        .then((slipways) => {
+          vm.site.nearbySlipways = slipways;
+        });
+
+        // Force stats charts to be rebuilt
+        $timeout(() => {
+          // Push this into the next tick so that the charts directive has linked
+          $scope.$broadcast('refresh-statistics', vm.site);
+          // We're no longer loading, so remove the modal-mask
+          vm.isLoading = false;
+        });
       });
-
-      // Get the divesite header image (if it exists)
-      informationCardService.getDivesiteHeaderImage(vm.site)
-      .then((imageUrl) => {
-        if (imageUrl) {
-          vm.site.headerImageUrl = imageUrl;
-          vm.backgroundStyle = {
-            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
-          };
-        } else {
-          console.log('no header image for this site');
-        }
-      })
-      .catch((err) => {
-        console.error('no header image');
-      });
-
-      // Get the divesite's images (if they exist)
-      informationCardService.getDivesiteImages(vm.site)
-      .then((images) => {
-        vm.site.images = images;
-      });
-
-      // Get divers' profile images
-      getDiverProfileImages();
 
       /* Listen for events emitted upwards by LogDiveController */
       $scope.$on('dive-list-updated', (event) => {

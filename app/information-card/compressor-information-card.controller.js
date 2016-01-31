@@ -1,24 +1,36 @@
 (function() {
   'use strict';
 
-  function CompressorInformationCardController($auth, $document, $location, $rootScope, $scope, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
+  function CompressorInformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
     const vm = this;
+    vm.isLoading = true;
     activate();
 
     function activate() {
       console.log('CompressorInformationCardController.activate()');
-
-      vm.site = $scope.site;
+      const type = $scope.type;
+      const id = $scope.id;
+      const { apiCall } = informationCardService.apiCalls[type];
 
       /* Wire up functions */
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.toggleSectionVisibility = toggleSectionVisibility;
-      vm.userIsOwner = informationCardService.userIsOwner(vm.site);
 
       vm.sectionVisibilities = {
         defaultSection: true,
         uploadImageForm: false,
       };
+
+      // Retrieve the site data
+      apiCall(id)
+      .then((response) => {
+        vm.site = response.data;
+        vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+      });
+
+      $timeout(() => {
+        vm.isLoading = false;
+      });
     }
 
     function toggleSectionVisibility(section) {
@@ -48,6 +60,7 @@
     '$location',
     '$rootScope',
     '$scope',
+    '$timeout',
     '$uibModal',
     'dsapi',
     'dsimg',

@@ -7,11 +7,6 @@
       scope: true,
       templateUrl: 'information-card/charts/charts.html',
       link: (scope, element, attrs, controller) => {
-        console.log('**** informationCardCharts.link()');
-        // Build charts
-        console.log('scope.site is currently');
-        console.log(scope.site);
-        buildCharts(scope.site, element);
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')
         .click(collapseBehaviour.toggleChevron);
 

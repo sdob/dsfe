@@ -19,7 +19,7 @@
         directiveString: '<slipway-information-card>',
       },
 
-      default: {
+      divesite: {
         apiCall: (id) => {
           return dsapi.getDivesite(id);
         },
