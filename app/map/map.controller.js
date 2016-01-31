@@ -302,8 +302,11 @@
         }
       }
 
-      marker.icon = selectedMarkerIcons[marker.type];
-      selectedMarkerID = marker.id;
+      if (marker) {
+        // marker may be undefined if we're dismissing an information card
+        marker.icon = selectedMarkerIcons[marker.type];
+        selectedMarkerID = marker.id;
+      }
     }
 
     /* Return a listener that will set the location path */
