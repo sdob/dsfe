@@ -20,9 +20,25 @@
     const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
     const defaultMapMarkerIcon = '/img/place_48px.svg';
     const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
+    const selectedMapMarkerIcon = '/img/place_selected_48px.svg';
+    const selectedCompressorMarkerIcon = '/img/gauge_selected_28px.svg';
+    const selectedSlipwayMarkerIcon = '/img/boatlaunch_selected_28px.svg';
+
+    const defaultMarkerIcons = {
+      compressor: defaultCompressorMarkerIcon,
+      divesite: defaultMapMarkerIcon,
+      slipway: defaultSlipwayMarkerIcon,
+    };
+    const selectedMarkerIcons = {
+      compressor: selectedCompressorMarkerIcon,
+      divesite: selectedMapMarkerIcon,
+      slipway: selectedSlipwayMarkerIcon,
+    };
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
+    // ID of the currently selected marker
+    let selectedMarkerID;
 
     activate();
 
@@ -39,16 +55,6 @@
       uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
       });
-
-      // If there's a query param in the URL when the controller
-      // is activated, then try and summon an information card
-      if ($location.$$search.divesite) {
-        summonCard($location.$$search.divesite, 'divesite');
-      } else if ($location.$$search.slipway) {
-        summonCard($location.$$search.slipway, 'slipway');
-      } else if ($location.$$search.compressor) {
-        summonCard($location.$$search.compressor, 'compressor');
-      }
 
       // Initialize markers as an empty array so that it's never undefined
       // (and angular-google-maps doesn't complain)
@@ -86,6 +92,23 @@
         // TODO: handle cluster/spiderfy events in a lovelier way
       };
 
+      /* Optionally set a selected icon and summon an information card,
+       * if the search field says we should
+       */
+
+      // If there's a query param in the URL when the controller
+      // is activated, then try and summon an information card
+
+      if ($location.$$search.divesite) {
+        summonCard($location.$$search.divesite, 'divesite');
+      } else if ($location.$$search.slipway) {
+        summonCard($location.$$search.slipway, 'slipway');
+      } else if ($location.$$search.compressor) {
+        summonCard($location.$$search.compressor, 'compressor');
+      }
+
+      console.info($location.$$search);
+
       /* Listen for events */
 
       // Listen for filter menu changes
@@ -104,7 +127,7 @@
        */
 
       // Retrieve divesites and create markers
-      dsapi.getDivesites()
+      const getDivesites = dsapi.getDivesites()
       .then((response) => {
         vm.sites = response.data; // Allow us to use the sites in other controllers
         vm.mapMarkers = vm.mapMarkers.concat(response.data.map(transformSiteToMarker));
@@ -112,7 +135,7 @@
       });
 
       // Retrieve compressors and create markers
-      dsapi.getCompressors()
+      const getCompressors = dsapi.getCompressors()
       .then((response) => {
         const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon, 'compressor'));
         vm.mapMarkers = vm.mapMarkers.concat(compressorMarkers);
@@ -120,12 +143,28 @@
       });
 
       // Retrieve slipways and createMarkers
-      dsapi.getSlipways()
+      const getSlipways = dsapi.getSlipways()
       .then((response) => {
         // vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
         const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon, 'slipway'));
         vm.mapMarkers = vm.mapMarkers.concat(slipwayMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
+      });
+
+      // When all of the map markers have been retrieved, try to find the selected marker
+      // so we can tag it visually
+      Promise.all([getDivesites, getCompressors, getSlipways])
+      .then(() => {
+        console.info('everything has been retrieved');
+        if ($location.$$search) {
+          const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
+          const id = $location.$$search[type];
+          const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
+          // Set the marker icon
+          $timeout(() => {
+            setSelectedMarker(selectedMarker);
+          });
+        }
       });
     }
 
@@ -164,6 +203,20 @@
       // only one of these three will be true, but we'll return early from
       // each case to avoid malformed queries like '?divesite=foo&compressor=bar'
 
+      console.info('handleRouteUpdate');
+      console.info(c.params);
+
+      if (c.params) {
+        console.info('doing something');
+        const type = Object.keys(c.params)[0]; // only pay attention to the first key
+        const id = c.params[type];
+        const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
+        // Set the marker icon
+        $timeout(() => {
+          setSelectedMarker(selectedMarker);
+        });
+      }
+
       if (c.params.divesite) {
         return summonCard(c.params.divesite, 'divesite');
       }
@@ -178,7 +231,8 @@
       }
 
       // If there are no search params (e.g. if the user hit the back button)
-      // then any existing information cards should be removed
+      // then any existing information cards should be removed, and all icons
+      // should be set to the default marker
       $('.information-card').remove();
     }
 
@@ -238,10 +292,25 @@
       }
     }
 
+    function setSelectedMarker(marker) {
+      console.info('setting selected marker to');
+      console.info(marker);
+      if (selectedMarkerID) {
+        const oldSelectedMarker = vm.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
+        if (oldSelectedMarker) { // Just in case it's been deleted or removed from the markers
+          oldSelectedMarker.icon = defaultMarkerIcons[oldSelectedMarker.type];
+        }
+      }
+
+      marker.icon = selectedMarkerIcons[marker.type];
+      selectedMarkerID = marker.id;
+    }
+
     /* Return a listener that will set the location path */
     function markerClick(marker, event, model, args) {
       console.log('click on model');
       console.log(model);
+      // Set a type for this marker
       const type = model.type === undefined ? 'divesite' : model.type;
       $location.search(`${type}=${model.id}`);
     }
@@ -320,6 +389,7 @@
           visible: false,
         },
         title: s.name,
+        type: 'divesite',
         shoreEntry: s.shore_entry,
       };
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
