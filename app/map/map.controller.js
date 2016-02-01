@@ -76,13 +76,8 @@
         // TODO: handle cluster/spiderfy events in a lovelier way
       };
 
-      /* Optionally set a selected icon and summon an information card,
-       * if the search field says we should
-       */
-
       // If there's a query param in the URL when the controller
       // is activated, then try and summon an information card
-
       if ($location.$$search.divesite) {
         summonCard($location.$$search.divesite, 'divesite');
       } else if ($location.$$search.slipway) {
