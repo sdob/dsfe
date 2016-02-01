@@ -180,8 +180,15 @@
 
   &__dive {
     margin-bottom: 16px;
+    position: relative; // to allow absolute child positioning
     &[editable="true"]:hover {
       background: rgba(0, 0, 0, 0.17);
+    }
+    &-actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10; // WHY?
     }
     &__dive {
       //margin-top: 16px;

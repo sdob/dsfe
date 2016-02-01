@@ -1,0 +1,21 @@
+<div class="delete-dive-confirmation-modal">
+    <modal-mask ng-show="vm.isDeleting"></modal-mask>
+    <h1>
+        Are you sure?
+    </h1>
+    <p>
+        Deleting will remove this dive forever.
+    </p>
+    <form>
+        <div class="row">
+            <div class="col-xs-12 ds-submit-row">
+                <button class="btn btn-default big-button" ng-click="vm.cancel()">
+                    Cancel
+                </button>
+                <button class="btn btn-primary big-button" ng-click="vm.delete()">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

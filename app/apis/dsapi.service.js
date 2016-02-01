@@ -83,6 +83,12 @@
         return $http.patch(`${API_URL}/users/${id}/`, data);
       },
 
+      /* DELETE methods */
+
+      deleteDive: (id) => {
+        return $http.delete(`${API_URL}/dives/${id}/`);
+      },
+
     };
   }
 

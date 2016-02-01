@@ -10,6 +10,8 @@
       vm.site = {
         images: {},
       };
+      vm.userId = localStorageService.get('user');
+      $scope.userId = vm.userId;
 
       const id = $scope.id;
       const type = $scope.type;
