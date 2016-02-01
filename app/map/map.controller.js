@@ -205,6 +205,20 @@
       if (vm.mapMarkers) {
         updateMarkerVisibility(preferences);
       }
+
+      // If there's a selected marker, we may want to close it
+      if (selectedMarkerID) {
+        console.log('should selected marker be visible?');
+        const selectedMarker = vm.mapMarkers.filter((m) => m.id === selectedMarkerID)[0];
+        console.log(shouldBeVisible(selectedMarker, preferences));
+        if (!shouldBeVisible(selectedMarker, preferences)) {
+          // Treat this as a please-kill-me event
+          $timeout(() => {
+            selectedMarkerID = undefined;
+            handlePleaseKillMe(undefined, $('.information-card'));
+          });
+        }
+      }
     }
 
     function closeContextMenu() {
