@@ -114,10 +114,22 @@
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
+    function setDivesiteHeaderImage(imageUrl) {
+      // If there's an image, dsimg will return 200 and a non-null object
+      if (imageUrl) {
+        $timeout(() => {
+          vm.site.headerImageUrl = imageUrl;
+          vm.backgroundStyle = {
+            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
+          };
+        });
+      }
+    }
+
     function summonSetDivesiteHeaderImageModal() {
       console.log('summoning divesite-header-image-modal');
       console.log(vm.site);
-      $uibModal.open({
+      const instance = $uibModal.open({
         controller: 'SetDivesiteHeaderImageModalController',
         controllerAs: 'vm',
         templateUrl: 'information-card/set-divesite-header-image-modal.html',
@@ -125,6 +137,22 @@
         resolve: {
           site: () => vm.site,
         },
+      });
+      instance.result.then((reason) => {
+        console.log('I returned from the modal with a reason');
+        console.log(reason);
+        // On successful upload of an image, load it from DSIMG
+        if (reason === 'uploaded') {
+          return informationCardService.getDivesiteHeaderImage(vm.site);
+        }
+      })
+      .then((imageUrl) => {
+        console.log('came back with imageUrl');
+        console.log(imageUrl);
+        setDivesiteHeaderImage(imageUrl);
+      })
+      .catch((err) => {
+        console.error(err);
       });
     }
 

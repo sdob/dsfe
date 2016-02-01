@@ -29,7 +29,7 @@
         $timeout(() => {
           console.log('finished uploading');
           vm.isUploading = false;
-          $uibModalInstance.close();
+          $uibModalInstance.close('uploaded');
         }, 200);
       })
       .then((response) => {

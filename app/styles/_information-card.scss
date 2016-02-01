@@ -87,8 +87,8 @@
     display: flex;
     padding-left: 16px;
     position: relative;
-    /* On large devices,the title section has a minimum width */
-    @media (min-width: $screen-lg-min) {
+    /* On large devices,the title section has a minimum height */
+    @media (min-width: $screen-sm-min) {
       cursor: inherit;
       height: 200px;
     }
