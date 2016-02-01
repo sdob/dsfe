@@ -17,12 +17,8 @@
   ) {
     const vm = this;
     const { defaultMarkerIcons, selectedMarkerIcons } = markerService;
+    const { shouldBeVisible } = markerService;
     const { transformAmenityToMarker, transformSiteToMarker } = markerService;
-
-    /*
-    const defaultMarkerIcons = mapService.defaultMarkerIcons;
-    const selectedMarkerIcons = mapService.selectedMarkerIcons;
-    */
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
@@ -91,7 +87,10 @@
         summonCard($location.$$search.compressor, 'compressor');
       }
 
-      /* Listen for events */
+      /*
+       *
+       * Listen for events
+       */
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
@@ -103,7 +102,8 @@
       // Listen for $routeUpdate events
       $scope.$on('$routeUpdate', handleRouteUpdate);
 
-      /* Make AJAX requests to DSAPI for site details. These can return in
+      /*
+       * Make AJAX requests to DSAPI for site details. These can return in
        * any order, and we don't want to wait for them all to return, so we'll
        * concatenate results to the mapMarkers array as they arrive.
        */
@@ -273,42 +273,6 @@
       // that it's a divesite
       const type = model.type === undefined ? 'divesite' : model.type;
       $location.search(`${type}=${model.id}`);
-    }
-
-    /*
-     * Check site data against filter preferences to see if it should be
-     * visible on the map
-     */
-    function shouldBeVisible(marker, preferences) {
-      // Bail out early if we were called with garbage
-      if (!marker) return false;
-
-      // If this marker is a slipway, handle visibility preferences for it
-      if (marker.type === 'slipway') {
-        return preferences.slipways;
-      }
-
-      // If this marker is a compressor, handle visibility preferences for it
-      if (marker.type === 'compressor') {
-        return preferences.compressors;
-      }
-
-      // Default case: this is a divesite marker, and things are more complex.
-      // Site depth should be less than or equal to preferred maximum depth
-      const depth = marker.depth <= preferences.maximumDepth;
-
-      // Site level should be less than or equal to preferred maximum level
-      const level = marker.level <= preferences.maximumLevel;
-
-      // A site with boat entry should be visible if preferences want it to be
-      const boatEntry = (marker.boatEntry && preferences.boatEntry);
-
-      // A site with shore entry should be visible if preferences want it to be
-      const shoreEntry = (marker.shoreEntry && preferences.shoreEntry);
-
-      // A site has to meet all of these criteria in order to be visible, except
-      // that it only has to match one entry preference
-      return depth && level && (boatEntry || shoreEntry);
     }
 
     /* Summon an information card for a site */

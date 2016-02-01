@@ -24,9 +24,46 @@
     return {
       defaultMarkerIcons,
       selectedMarkerIcons,
+      shouldBeVisible,
       transformAmenityToMarker,
       transformSiteToMarker,
     };
+
+    /*
+     * Check site data against filter preferences to see if it should be
+     * visible on the map
+     */
+    function shouldBeVisible(marker, preferences) {
+      // Bail out early if we were called with garbage
+      if (!marker) return false;
+
+      // If this marker is a slipway, handle visibility preferences for it
+      if (marker.type === 'slipway') {
+        return preferences.slipways;
+      }
+
+      // If this marker is a compressor, handle visibility preferences for it
+      if (marker.type === 'compressor') {
+        return preferences.compressors;
+      }
+
+      // Default case: this is a divesite marker, and things are more complex.
+      // Site depth should be less than or equal to preferred maximum depth
+      const depth = marker.depth <= preferences.maximumDepth;
+
+      // Site level should be less than or equal to preferred maximum level
+      const level = marker.level <= preferences.maximumLevel;
+
+      // A site with boat entry should be visible if preferences want it to be
+      const boatEntry = (marker.boatEntry && preferences.boatEntry);
+
+      // A site with shore entry should be visible if preferences want it to be
+      const shoreEntry = (marker.shoreEntry && preferences.shoreEntry);
+
+      // A site has to meet all of these criteria in order to be visible, except
+      // that it only has to match one entry preference
+      return depth && level && (boatEntry || shoreEntry);
+    }
 
     /*
      * Transform divesite data from the API to a marker object
