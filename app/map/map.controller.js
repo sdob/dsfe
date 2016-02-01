@@ -291,7 +291,6 @@
         //$scope.site = response.data;
         $scope.id = id;
         $scope.type = type;
-        console.log(`trying to compile ${directiveString}`);
         $('map').append($compile(directiveString)($scope));
       });
     }

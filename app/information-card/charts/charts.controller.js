@@ -5,8 +5,6 @@
     activate();
 
     function activate() {
-      console.log('on chart controller activation, here is my scope:');
-      console.log($scope);
       vm.site = $scope.site;
     }
   }

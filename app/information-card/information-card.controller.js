@@ -53,17 +53,13 @@
         // Get the divesite header image (if it exists)
         informationCardService.getDivesiteHeaderImage(vm.site)
         .then((imageUrl) => {
+          // If there's an image, dsimg will return 200 and a non-null object
           if (imageUrl) {
             vm.site.headerImageUrl = imageUrl;
             vm.backgroundStyle = {
               background: `blue url(${vm.site.headerImageUrl}) center / cover`,
             };
-          } else {
-            console.log('no header image for this site');
           }
-        })
-        .catch((err) => {
-          console.error('no header image');
         });
 
         // Get nearby slipways
