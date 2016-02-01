@@ -26,3 +26,6 @@ $well-border: darken($well-bg, 7%) !default;
 // Z-indices. Eventually these should have meaningful
 // names and should be the only use of z-index in the CSS
 $z-index-max: 10;
+
+// A couple of layout defaults
+$default-modal-padding: 1.5em;
