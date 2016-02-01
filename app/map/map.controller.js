@@ -11,13 +11,18 @@
     dsapi,
     filterPreferences,
     informationCardService,
+    markerService,
     mapService,
     uiGmapGoogleMapApi
   ) {
     const vm = this;
+    const { defaultMarkerIcons, selectedMarkerIcons } = markerService;
+    const { transformAmenityToMarker, transformSiteToMarker } = markerService;
 
+    /*
     const defaultMarkerIcons = mapService.defaultMarkerIcons;
     const selectedMarkerIcons = mapService.selectedMarkerIcons;
+    */
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
@@ -86,8 +91,6 @@
         summonCard($location.$$search.compressor, 'compressor');
       }
 
-      console.info($location.$$search);
-
       /* Listen for events */
 
       // Listen for filter menu changes
@@ -153,20 +156,6 @@
       });
     }
 
-    function getMarkerScreenPosition(map, marker) {
-      const overlay = new google.maps.OverlayView();
-      overlay.draw = function() {};
-
-      overlay.setMap(map);
-      const proj = overlay.getProjection();
-      if (proj) {
-        console.log(proj);
-        const pos = marker.getPosition();
-        const p = proj.fromLatLngToContainerPixel(pos);
-        return p;
-      }
-    }
-
     /* Handle requests by information cards to be removed from the DOM */
     function handlePleaseKillMe(evt, element) {
       element.remove();
@@ -179,12 +168,7 @@
       // try to summon an information card. In a well-formed search query,
       // only one of these three will be true, but we'll return early from
       // each case to avoid malformed queries like '?divesite=foo&compressor=bar'
-
-      console.info('handleRouteUpdate');
-      console.info(c.params);
-
       if (c.params) {
-        console.info('doing something');
         const type = Object.keys(c.params)[0]; // only pay attention to the first key
         const id = c.params[type];
         const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
@@ -203,7 +187,6 @@
       }
 
       if (c.params.compressor) {
-        console.log('handling compressor');
         return summonCard(c.params.compressor, 'compressor');
       }
 
@@ -286,9 +269,8 @@
 
     /* Return a listener that will set the location path */
     function markerClick(marker, event, model, args) {
-      console.log('click on model');
-      console.log(model);
-      // Set a type for this marker
+      // model.type should always be defined, but if it isn't, we'll assume
+      // that it's a divesite
       const type = model.type === undefined ? 'divesite' : model.type;
       $location.search(`${type}=${model.id}`);
     }
@@ -298,7 +280,7 @@
      * visible on the map
      */
     function shouldBeVisible(marker, preferences) {
-      // Bail out early
+      // Bail out early if we were called with garbage
       if (!marker) return false;
 
       // If this marker is a slipway, handle visibility preferences for it
@@ -311,7 +293,7 @@
         return preferences.compressors;
       }
 
-      // Default case: this is a divesite marker
+      // Default case: this is a divesite marker, and things are more complex.
       // Site depth should be less than or equal to preferred maximum depth
       const depth = marker.depth <= preferences.maximumDepth;
 
@@ -324,20 +306,21 @@
       // A site with shore entry should be visible if preferences want it to be
       const shoreEntry = (marker.shoreEntry && preferences.shoreEntry);
 
-      // A site has to meet all of these criteria in order to be visible
+      // A site has to meet all of these criteria in order to be visible, except
+      // that it only has to match one entry preference
       return depth && level && (boatEntry || shoreEntry);
     }
 
     /* Summon an information card for a site */
     function summonCard(id, type) {
-      // ID is a uuid for an object, but that doesn't tell us what the
-      // type is, so we pass that into this bit here
-      const { apiCall, directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls['default'];
-
       // Remove any existing DOM elements
       $('information-card').remove();
       $('slipway-information-card').remove();
       $('compressor-information-card').remove();
+
+      // Decide which API call to use; if we don't know that the type is, then
+      // treat it as a divesite
+      const { apiCall, directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
       apiCall(id)
       .then((response) => {
         //vm.site = response.data;
@@ -348,52 +331,6 @@
         $('map').append($compile(directiveString)($scope));
       });
     }
-
-    /*
-     * Transform divesite data from dsapi to a marker object
-     * that angular-google-maps understands. While we're at it, we'll
-     * convert snake_cased fields to camelCased properties.
-     */
-    function transformSiteToMarker(s) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      return {
-        boatEntry: s.boat_entry,
-        depth: s.depth,
-        level: s.level,
-        icon: defaultMarkerIcons.divesite,
-        id: s.id,
-        loc: {
-          latitude: s.latitude,
-          longitude: s.longitude,
-        },
-        options: {
-          visible: false,
-        },
-        title: s.name,
-        type: 'divesite',
-        shoreEntry: s.shore_entry,
-      };
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    /*
-     * Transform non-divesite (amenity) data from dsapi to a marker object
-     * that angular-google-maps understands. While we're at it, we'll
-     * convert snake_cased fields to camelCased properties.
-     */
-    function transformAmenityToMarker(s, icon, type) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      return {
-        icon,
-        id: s.id,
-        loc: {
-          latitude: s.latitude,
-          longitude: s.longitude,
-        },
-        options: {
-          visible: false,
-        },
-        title: s.name,
-        type: type,
-      };
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     /*
      * When we receive an event indicating that filter preferences have
@@ -416,6 +353,7 @@
     'dsapi',
     'filterPreferences',
     'informationCardService',
+    'markerService',
     'mapService',
     'uiGmapGoogleMapApi',
   ];
