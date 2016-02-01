@@ -39,8 +39,6 @@
 
         // Clean up
         element.on('$destroy', () => {
-          console.log('destroying information card');
-
           // Remove click listener
           element.find('.information-card__title').off('click', toggleOpened);
 

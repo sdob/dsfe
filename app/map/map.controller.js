@@ -282,17 +282,14 @@
       $('slipway-information-card').remove();
       $('compressor-information-card').remove();
 
-      // Decide which API call to use; if we don't know that the type is, then
-      // treat it as a divesite
-      const { apiCall, directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
-      apiCall(id)
-      .then((response) => {
-        //vm.site = response.data;
-        //$scope.site = response.data;
-        $scope.id = id;
-        $scope.type = type;
-        $('map').append($compile(directiveString)($scope));
-      });
+      // Get the directive that we should be adding, based on the marker's type
+      const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
+
+      // Create a new scope and compile the directive
+      const newScope = $rootScope.$new();
+      newScope.id = id;
+      newScope.type = type;
+      $('map').append($compile(directiveString)(newScope));
     }
 
     /*
