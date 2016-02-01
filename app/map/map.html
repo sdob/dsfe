@@ -1,4 +1,5 @@
 <div class="main-map">
+    <ng-include ng-if="mc.isLoading" src="'map/map-is-loading.html'"></ng-include>
     <filter-menu></filter-menu>
     <ui-gmap-google-map center='mc.map.center' zoom='mc.map.zoom'
         events='mc.mapEvents'

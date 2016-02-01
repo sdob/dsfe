@@ -31,7 +31,7 @@
     function activate() {
       // Set 'loading' state to true (so the user knows that something
       // is happening)
-      // vm.isLoading = true;
+      vm.isLoading = true;
 
       // Clean up contextMenuService
       closeContextMenu();
@@ -143,10 +143,11 @@
           const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
           const id = $location.$$search[type];
           const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
-          // Set the marker icon
+          // Set the marker icon and remove the 'loading' indicator
           $timeout(() => {
+            vm.isLoading = false;
             setSelectedMarker(selectedMarker);
-          });
+          }, 200);
         }
       });
     }
