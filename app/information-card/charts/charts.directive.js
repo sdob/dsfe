@@ -11,12 +11,10 @@
         .click(collapseBehaviour.toggleChevron);
 
         element.on('$destroy', () => {
-          console.log('**** informationCardCharts.element.on(\'$destroy\')');
           scope.$destroy();
         });
 
         scope.$on('destroy', () => {
-          console.log('**** charts scope destroy');
         });
 
         // Rebuild histograms when told to
@@ -28,6 +26,7 @@
     };
 
     function buildCharts(site, element) {
+      const avg = (l) => l.reduce((x, y) => x + y) / l.length;
           // Update site in scope to refresh average depth and duration values
           //scope.vm.site = site;
 
@@ -38,10 +37,15 @@
           element.find('#information-card-duration-histogram-container').empty();
           if (site.dives.length) {
             // Construct new histograms
-            const depths = site.dives.map((d) => d.depth);
+            const depths = site.dives.map((d) => Number(d.depth));
             const durations = site.dives.map(d => moment.duration(d.duration).minutes());
-            const depthHistogram = informationCardChartsService.createHistogram('depth', depths, 20, 512, 178, 0, 100);
-            const durationHistogram = informationCardChartsService.createHistogram('duration', durations);
+            // The end of the x-scale for depth and duration is either the maximum depth
+            // or large enough to put the mean in the middle
+            const maxDepth = Math.max(Math.max(...depths), avg(depths) * 2);
+            const maxDuration = Math.max(Math.max(...durations), avg(durations) * 2);
+            //console.log(Math.max(depths) * 2);
+            const depthHistogram = informationCardChartsService.createHistogram('depth', depths, 20, 512, 178, 0, maxDepth);
+            const durationHistogram = informationCardChartsService.createHistogram('duration', durations, 20, 512, 178, 0, maxDuration);
             element.find('#information-card-depth-histogram-container').append(depthHistogram);
 
             element.find('#information-card-duration-histogram-container').append(durationHistogram);
