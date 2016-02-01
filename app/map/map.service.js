@@ -9,6 +9,25 @@
     const DEFAULT_LONGITUDE = -8;
     const DEFAULT_ZOOM = 8;
 
+    // Default marker icons
+    const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
+    const defaultMapMarkerIcon = '/img/place_48px.svg';
+    const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
+    const selectedMapMarkerIcon = '/img/place_selected_48px.svg';
+    const selectedCompressorMarkerIcon = '/img/gauge_selected_28px.svg';
+    const selectedSlipwayMarkerIcon = '/img/boatlaunch_selected_28px.svg';
+
+    const defaultMarkerIcons = {
+      compressor: defaultCompressorMarkerIcon,
+      divesite: defaultMapMarkerIcon,
+      slipway: defaultSlipwayMarkerIcon,
+    };
+    const selectedMarkerIcons = {
+      compressor: selectedCompressorMarkerIcon,
+      divesite: selectedMapMarkerIcon,
+      slipway: selectedSlipwayMarkerIcon,
+    };
+
     // Initially, set sane defaults
     const mapObj = {
       center: {
@@ -68,9 +87,11 @@
 
     return {
       defaultMarker,
+      defaultMarkerIcons,
       defaultSite,
       get,
       maintainCoordinateMaxLength,
+      selectedMarkerIcons,
       set,
     };
 

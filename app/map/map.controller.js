@@ -16,24 +16,8 @@
   ) {
     const vm = this;
 
-    // Default marker icons
-    const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
-    const defaultMapMarkerIcon = '/img/place_48px.svg';
-    const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
-    const selectedMapMarkerIcon = '/img/place_selected_48px.svg';
-    const selectedCompressorMarkerIcon = '/img/gauge_selected_28px.svg';
-    const selectedSlipwayMarkerIcon = '/img/boatlaunch_selected_28px.svg';
-
-    const defaultMarkerIcons = {
-      compressor: defaultCompressorMarkerIcon,
-      divesite: defaultMapMarkerIcon,
-      slipway: defaultSlipwayMarkerIcon,
-    };
-    const selectedMarkerIcons = {
-      compressor: selectedCompressorMarkerIcon,
-      divesite: selectedMapMarkerIcon,
-      slipway: selectedSlipwayMarkerIcon,
-    };
+    const defaultMarkerIcons = mapService.defaultMarkerIcons;
+    const selectedMarkerIcons = mapService.selectedMarkerIcons;
 
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
@@ -137,7 +121,7 @@
       // Retrieve compressors and create markers
       const getCompressors = dsapi.getCompressors()
       .then((response) => {
-        const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultCompressorMarkerIcon, 'compressor'));
+        const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.compressor, 'compressor'));
         vm.mapMarkers = vm.mapMarkers.concat(compressorMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
@@ -145,8 +129,7 @@
       // Retrieve slipways and createMarkers
       const getSlipways = dsapi.getSlipways()
       .then((response) => {
-        // vm.slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon));
-        const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultSlipwayMarkerIcon, 'slipway'));
+        const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
         vm.mapMarkers = vm.mapMarkers.concat(slipwayMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
@@ -155,7 +138,6 @@
       // so we can tag it visually
       Promise.all([getDivesites, getCompressors, getSlipways])
       .then(() => {
-        console.info('everything has been retrieved');
         if ($location.$$search) {
           const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
           const id = $location.$$search[type];
@@ -293,8 +275,6 @@
     }
 
     function setSelectedMarker(marker) {
-      console.info('setting selected marker to');
-      console.info(marker);
       if (selectedMarkerID) {
         const oldSelectedMarker = vm.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
         if (oldSelectedMarker) { // Just in case it's been deleted or removed from the markers
@@ -384,7 +364,7 @@
         boatEntry: s.boat_entry,
         depth: s.depth,
         level: s.level,
-        icon: defaultMapMarkerIcon,
+        icon: defaultMarkerIcons.divesite,
         id: s.id,
         loc: {
           latitude: s.latitude,
