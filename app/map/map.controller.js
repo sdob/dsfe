@@ -29,6 +29,9 @@
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
+      // Set 'loading' state to true (so the user knows that something
+      // is happening)
+      // vm.isLoading = true;
 
       // Clean up contextMenuService
       closeContextMenu();
@@ -285,11 +288,10 @@
       // Get the directive that we should be adding, based on the marker's type
       const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
 
-      // Create a new scope and compile the directive
-      const newScope = $rootScope.$new();
-      newScope.id = id;
-      newScope.type = type;
-      $('map').append($compile(directiveString)(newScope));
+      // Compile the directive
+      $scope.id = id;
+      $scope.type = type;
+      $('map').append($compile(directiveString)($scope));
     }
 
     /*
