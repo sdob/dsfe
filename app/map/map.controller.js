@@ -212,7 +212,8 @@
         updateMarkerVisibility(preferences);
       }
 
-      // If there's a selected marker, we may want to close it
+      // If there's a selected marker, we may want to deselect it, make it
+      // invisible, and change the route
       if (selectedMarkerID) {
         console.log('should selected marker be visible?');
         const selectedMarker = vm.mapMarkers.filter((m) => m.id === selectedMarkerID)[0];
@@ -220,6 +221,7 @@
         if (!shouldBeVisible(selectedMarker, preferences)) {
           // Treat this as a please-kill-me event
           $timeout(() => {
+            selectedMarker.icon = defaultMarkerIcons[selectedMarker.type];
             selectedMarkerID = undefined;
             handlePleaseKillMe(undefined, $('.information-card'));
           });
