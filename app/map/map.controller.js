@@ -162,7 +162,8 @@
 
     /* Handle requests by information cards to be removed from the DOM */
     function handlePleaseKillMe(evt, element) {
-      element.remove();
+      $('.information-card').remove();
+      //element.remove();
       clearSearchPath();
     }
 
