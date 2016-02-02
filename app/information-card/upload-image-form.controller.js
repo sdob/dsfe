@@ -11,9 +11,6 @@
     }
 
     function submit(file) {
-      console.log('submitting!!!!!!!');
-      console.log($scope);
-
       // TODO: there must be a better way to get the parent scope's site prop
       // into this controller
       const siteID = $scope.$parent.site.id;
@@ -24,9 +21,7 @@
       })
       .then((response) => {
         // TODO: check everything is OK
-
-        // TODO: update the image list
-        return icvm.getDivesiteImages();
+        $scope.$emit('image-uploaded');
       })
       .then(() => {
         $timeout(() => {
