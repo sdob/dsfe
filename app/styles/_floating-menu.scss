@@ -1,0 +1,42 @@
+.floating-menu-container {
+  position: absolute;
+  top: 6em;
+  left: 2em;
+  right: 2em;
+  z-index: 1;
+  .filter-menu {
+    margin-bottom: 1em;
+  }
+  @media (min-width: $screen-sm-min) {
+    right: initial;
+  }
+}
+.floating-menu__header {
+  background: $blue-700;
+  color: #fff;
+  cursor: pointer;
+  //padding-left: 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+    color: #fff;
+    //color: darken(#fff, 15%);
+  }
+  .floating-menu__header-chevron {
+    margin-left: auto;
+    margin-right: 16px;
+    font-size: 16px;
+    transition: transform 100ms;
+    transform: rotate(180deg);
+  }
+  &.collapsed .floating-menu__header-chevron {
+    transform: rotate(0deg);
+  }
+}
+
+.floating-menu__header-text {
+  margin: 8px 16px;
+}

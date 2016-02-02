@@ -1,15 +1,15 @@
-<a href
-    class="main-map__add-site-button text-shadow-2dp"
-    data-toggle="collapse"
-    data-target="#main-map__add-something-menu"
-    >
-    <span class="fa-stack text-shadow-2dp fa-lg">
-        <i class="fa fa-fw fa-stack-2x fa-circle text-shadow-2dp"></i>
-        <i class="fa fa-fw fa-stack-1x fa-plus"></i>
-    </span>
-</a>
-<div class="add-something-menu map-context-menu collapse"
-    id="main-map__add-something-menu"
-    >
-    <ng-include src="'map/context-menu-contents.html'"></ng-include>
+<div class="floating-menu shadow-2dp">
+    <a href
+        class="floating-menu__header collapsed"
+        data-toggle="collapse"
+        data-target="#main-map__add-something-menu"
+        >
+        <h2 class="floating-menu__header-text">Add something</h2>
+        <span class="floating-menu__header-chevron fa fa-fw fa-chevron-down"></span>
+    </a>
+    <div class="add-something-menu map-context-menu collapse"
+        id="main-map__add-something-menu"
+        >
+        <ng-include src="'map/context-menu-contents.html'"></ng-include>
+    </div>
 </div>

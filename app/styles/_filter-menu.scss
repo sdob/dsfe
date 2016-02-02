@@ -1,13 +1,13 @@
 .filter-menu {
-  position: absolute;
+  // position: absolute;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  left: 2em;
+  // left: 2em;
   //right: 2em;
   max-height: calc(100% - 100px);
   overflow-y: hidden;
-  top: 6em;
+  // top: 6em;
   z-index: 4; // In front of information card and add-site button
 
   &.open {
@@ -16,8 +16,8 @@
 
   @media (min-width: 48em) {
     //top: 80px;
-    left: 80px;
-    width: 250px;
+    //left: 80px;
+    //width: 250px;
     .open {
       right: initial;
     }
