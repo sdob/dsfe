@@ -1,13 +1,19 @@
-<div class="floating-menu filter-menu shadow-2dp">
-        <a 
-            class="floating-menu__header collapsed"
-            data-toggle="collapse"
-            data-target="#js-filter-menu__collapse"
-            >
-            <h2 class="filter-menu__header-text">Filter</h2>
-            <span class="filter-menu__header-chevron fa fa-fw fa-chevron-down"></span>
-        </a>
-        <!-- </div>-->
+<div class="floating-menu filter-menu">
+    <a
+        class="floating-menu__header floating-menu__header--xs"
+        data-toggle="collapse"
+        data-target="#js-filter-menu__collapse">
+        <i class="fa fa-fw fa-filter"></i>
+        <span class="header-text">Filter</span>
+    </a>
+    <a 
+        class="floating-menu__header floating-menu__header--sm-min collapsed"
+        data-toggle="collapse"
+        data-target="#js-filter-menu__collapse"
+        >
+        <h2 class="filter-menu__header-text">Filter</h2>
+        <span class="filter-menu__header-chevron fa fa-fw fa-chevron-down"></span>
+    </a>
     <div id="js-filter-menu__collapse" class="floating-menu__content filter-menu__content collapse">
 
         <section class="filter-menu__section filter-menu__search-bar">

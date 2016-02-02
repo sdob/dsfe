@@ -2,6 +2,7 @@
 @import 'bootstrap/variables';
 @import 'variables';
 @import 'mixins';
+@import 'shadows';
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
@@ -39,7 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 @import 'set-divesite-header-image-modal';
 @import 'upload-divesite-image';
 @import 'upload-profile-image-modal';
-@import 'shadows';
 @import 'inputs';
 @import 'thumbs';
 

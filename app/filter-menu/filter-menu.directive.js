@@ -17,14 +17,15 @@
         });
         slider.slider('setValue', parseInt(ctrl.preferences.maximumDepth));
       });
-      element.find('.filter-menu__header').on('click', toggleOpened);
+      element.find('.floating-menu__header').on('click', toggleOpened);
 
       // Clean up
       element.on('$destroy', () => {
-        element.find('.filter-menu__header').off('click', toggleOpened);
+        element.find('.floating-menu__header').off('click', toggleOpened);
       });
 
       function toggleOpened(e) {
+        console.log('toggling opened state');
         $('.filter-menu').toggleClass('open');
         const slider  = angular.element('#js-information-card__depth-range-slider');
         slider.slider('relayout');
