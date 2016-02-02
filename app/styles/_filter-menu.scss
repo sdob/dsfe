@@ -9,7 +9,8 @@
     right: 2em;
   }
   z-index: 4;
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $screen-md-min) {
+    @include shadow-2dp;
     width: 24em;
     .open {
       right: initial;

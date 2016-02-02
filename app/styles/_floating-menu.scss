@@ -7,7 +7,7 @@
   .filter-menu {
     margin-bottom: 1em;
   }
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $screen-md-min) {
     right: initial;
   }
 }
@@ -44,13 +44,13 @@
     .header-text {
       display: none;
     }
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $screen-md-min) {
       display: none;
     }
   }
-  &--sm-min {
+  &--md-min {
     display: none;
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $screen-md-min) {
       display: flex;
     }
   }
