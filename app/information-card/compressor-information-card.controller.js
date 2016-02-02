@@ -7,7 +7,6 @@
     activate();
 
     function activate() {
-      console.log('CompressorInformationCardController.activate()');
       const type = $scope.type;
       const id = $scope.id;
       const { apiCall } = informationCardService.apiCalls[type];

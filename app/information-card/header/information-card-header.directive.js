@@ -29,7 +29,6 @@
 
       function removeSelf() {
         // Ask parent scope to remove us
-        console.log('sending a please kill me event');
         scope.$emit('please-kill-me');
       }
 

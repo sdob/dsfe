@@ -2,8 +2,6 @@
   'use strict';
   function InformationCardHeaderController($scope, dsapi, informationCardService) {
     const vm = this;
-    console.log($scope);
-
     activate();
 
     function activate() {
