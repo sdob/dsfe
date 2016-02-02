@@ -42,6 +42,10 @@
       // Wait for the maps API to be ready, then store a ref to it
       uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
+        // Set some of our options
+        vm.options.mapTypeControlOptions = {
+          position: maps.ControlPosition.BOTTOM_CENTER,
+        };
       });
 
       // Initialize markers as an empty array so that it's never undefined
@@ -66,8 +70,8 @@
 
       // Set map options
       vm.options = {
-        streetViewControl: false,
         minZoom: 3,
+        streetViewControl: false,
       };
 
       vm.typeOptions = {
