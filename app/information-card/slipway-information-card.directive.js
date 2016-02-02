@@ -31,6 +31,8 @@
           element.find('.information-card__title').off('click', toggleOpened);
           element.find('.information-card__dismiss-button').off('click', removeSelf);
           $document.off('keydown', keydownListener);
+          // Manually destroy scope
+          scope.$destroy();
         });
 
         function removeSelf() {

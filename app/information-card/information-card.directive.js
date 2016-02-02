@@ -47,6 +47,10 @@
 
         // Remove ESC key
         $document.off('keydown', keydownListener);
+
+        // Because we created this scope manually, we need to destroy it
+        // manually too
+        scope.$destroy();
       });
 
       function removeSelf() {

@@ -168,6 +168,7 @@
 
     /* Handle changes in the search path caused by marker clicks */
     function handleRouteUpdate(e, c) {
+      console.log('MapController.handleRouteUpdate()');
       // When the route updates (i.e., search params changes),
       // try to summon an information card. In a well-formed search query,
       // only one of these three will be true, but we'll return early from
@@ -303,10 +304,12 @@
       // Get the directive that we should be adding, based on the marker's type
       const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
 
-      // Compile the directive
-      $scope.id = id;
-      $scope.type = type;
-      $('map').append($compile(directiveString)($scope));
+      // Compile the directive. We're creating a new scope manually, which means
+      // that we'll need to destroy it manually too
+      const scope = $scope.$new();
+      scope.id = id;
+      scope.type = type;
+      $('map').append($compile(directiveString)(scope));
     }
 
     /*
