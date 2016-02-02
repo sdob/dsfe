@@ -28,7 +28,10 @@
                 <li><a href="/#/about-us/"><i class="fa fa-fw fa-info-circle"></i>About</a></li>
                 <li
                     ng-if="nbvm.isAuthenticated()"
-                    ><a href='/#/me'><i class="fa fa-fw fa-user"></i>Profile</a></li>
+                    ><a href='/#/me'>
+                        <img height="18" width="18" ng-if="nbvm.userProfileThumbnailImage" ng-src="{{nbvm.userProfileThumbnailImage}}" />
+                        <i ng-if="!nbvm.userProfileThumbnailImage" class="fa fa-fw fa-user"></i>
+                        Profile</a></li>
                 <li
                     ng-show="!nbvm.isAuthenticated()"
                     >

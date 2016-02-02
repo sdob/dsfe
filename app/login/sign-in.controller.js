@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function SignInController($auth, $location, $scope, dsapi, localStorageService) {
+  function SignInController($auth, $location, $scope,  dsapi, localStorageService) {
     const vm = this;
     activate();
 
@@ -28,11 +28,9 @@
         // Remove isLoggingIn status
         $scope.status.isLoggingIn = false;
         console.log('finished authenticating w/ facebook');
-        $scope.modalInstance.close();
       })
-      .then(() => { // Retrieve and store user ID
-        retrieveAndStoreUserID();
-      })
+      .then(retrieveAndStoreUserID())
+      .then(() => $scope.modalInstance.close('signed-in'))
       .then(goToProfile)
       .catch((err) => {
         console.error(`couldn't log in with facebook`);
@@ -48,16 +46,21 @@
         // remove isLoggingIn status
         $scope.status.isLoggingIn = false;
         console.log('finished authenticating with google');
-        $scope.modalInstance.close();
       })
       .then(retrieveAndStoreUserID)
-      .then(goToProfile);
+      .then(() => $scope.modalInstance.close('signed-in'))
+      .then(goToProfile)
+      .catch((err) => {
+        console.error(`couldn't log in with google`);
+      });
     }
 
     function retrieveAndStoreUserID() {
-      dsapi.getOwnProfile()
+      return dsapi.getOwnProfile()
       .then((response) => {
+        console.log('storing user ID');
         localStorageService.set('user', response.data.id);
+        return response.data;
       });
     }
 
@@ -77,18 +80,9 @@
       $scope.status.isLoggingIn = true;
       const user = vm.user.email;
       const password = vm.user.password;
-      console.log({ username: user, password: password });
       $auth.login({ username: user, password: password })
-      .then((response) => {
-        // Dismiss the login modal
-        $scope.modalInstance.close();
-      })
-      .then(dsapi.getOwnProfile) // Get the user's profile from the API server
-      .then((response) => {
-        // Store the user ID
-        console.log(response);
-        localStorageService.set('user', response.data.id);
-      })
+      .then(retrieveAndStoreUserID)
+      .then(() => $scope.modalInstance.close('signed-in'))
       .then(goToProfile)
       .catch((response) => {
         vm.isSubmitting = false;
