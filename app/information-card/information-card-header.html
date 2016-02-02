@@ -1,0 +1,16 @@
+<div class="information-card__title" ng-class="{'has-header-image': !!vm.site.headerImageUrl}"
+    ng-style="vm.backgroundStyle"
+    >
+    <div class="information-card__site-title">
+        <h2 class="information-card__site-name">
+            {{ vm.site.name }}
+        </h2>
+        <h3 class="information-card__site-location">
+            {{ vm.site.locData.join(', ') }}
+        </h3>
+        <h3 class="information-card__site-owner">
+            Added by <a href="/#/users/{{vm.site.owner.id}}/">{{ vm.site.owner.name }}</a>
+        </h3>
+    </div>
+    <ng-include src="'information-card/header-actions.html'"></ng-include>
+</div>

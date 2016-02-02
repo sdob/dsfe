@@ -1,3 +1,4 @@
+// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 (function() {
   'use strict';
   function informationCardService($uibModal, dsapi, dsimg, localStorageService) {
@@ -63,7 +64,7 @@
       };
     }
 
-    function formatGeocodingData(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    function formatGeocodingData(site) {
       const locData = [];
       if (site.geocoding_data) {
         const geocodingData = JSON.parse(site.geocoding_data);
@@ -90,9 +91,9 @@
       }
 
       return locData;
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+    }
 
-    function getDiverProfileImages(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    function getDiverProfileImages(site) {
       // TODO: check whether this binds properly
 
       // Contact image server for divers' profile images
@@ -131,10 +132,10 @@
       });
     }
 
-    function getDivesiteHeaderImage(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    function getDivesiteHeaderImage(id) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 
       // Contact image server for header image
-      return dsimg.getDivesiteHeaderImage(site.id)
+      return dsimg.getDivesiteHeaderImage(id)
       .then((response) => {
         if (response.data && response.data.image && response.data.image.public_id) {
           const public_id = response.data.image.public_id;
@@ -149,7 +150,6 @@
       // Contact image server for divesite images
       return dsimg.getDivesiteImages(site.id)
       .then((response) => {
-        //vm.site.images = response.data.map((item) => item.image);
         const images = response.data;
         images.forEach((image) => {
           image.transformedUrl = $.cloudinary.url(image.image.public_id, {

@@ -17,6 +17,9 @@
       const type = $scope.type;
       const { apiCall, _ } = informationCardService.apiCalls[type];
 
+      vm.siteID = id;
+      vm.siteType = type;
+
       // Initially show dive list
       vm.sectionVisibilities = {
         defaultSection: true,
@@ -51,18 +54,6 @@
 
         // Now we can determine whether the user owns  this site
         vm.userIsOwner = informationCardService.userIsOwner(vm.site);
-
-        // Get the divesite header image (if it exists)
-        informationCardService.getDivesiteHeaderImage(vm.site)
-        .then((imageUrl) => {
-          // If there's an image, dsimg will return 200 and a non-null object
-          if (imageUrl) {
-            vm.site.headerImageUrl = imageUrl;
-            vm.backgroundStyle = {
-              background: `blue url(${vm.site.headerImageUrl}) center / cover`,
-            };
-          }
-        });
 
         // Get nearby slipways
         informationCardService.getNearbySlipways(vm.site)
@@ -145,7 +136,7 @@
         console.log(reason);
         // On successful upload of an image, load it from DSIMG
         if (reason === 'uploaded') {
-          return informationCardService.getDivesiteHeaderImage(vm.site);
+          return informationCardService.getDivesiteHeaderImage(vm.site.id);
         }
       })
       .then((imageUrl) => {

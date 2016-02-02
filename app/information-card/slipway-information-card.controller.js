@@ -12,6 +12,9 @@
       const type = $scope.type;
       const { apiCall } = informationCardService.apiCalls[type];
 
+      vm.siteID = id;
+      vm.siteType = type;
+
       /* Wire up functions */
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.toggleSectionVisibility = toggleSectionVisibility;

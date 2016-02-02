@@ -1,20 +1,6 @@
 <div class="information-card shadow-2dp">
     <modal-mask ng-show="icvm.isLoading"></modal-mask>
-    <div class="information-card__title"
-        ng-style="icvm.backgroundStyle"
-        >
-        <div class="information-card__site-title">
-            <h2 class="information-card__site-name">
-                {{ icvm.site.name }}
-            </h2>
-            <h3 class="information-card__site-owner">
-                Added by <a href="/#/users/{{icvm.site.owner.id}}">{{ icvm.site.owner.name }}</a>
-            </h3>
-        </div>
-    </div>
-
-    <ng-include src="'information-card/header-actions.html'"></ng-include>
-
+    <information-card-header id="icvm.siteID" type="icvm.siteType"></information-card-header>
     <div class="information-card__body"
         id="information-card__body"
         >
