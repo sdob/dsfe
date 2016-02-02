@@ -5,7 +5,7 @@
       controller: 'InformationCardHeaderController',
       controllerAs: 'vm',
       link,
-      templateUrl: 'information-card/information-card-header.html',
+      templateUrl: 'information-card/header/information-card-header.html',
       scope: {
         id: '=',
         type: '=',
