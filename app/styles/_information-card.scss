@@ -91,6 +91,7 @@
     cursor: pointer; // on small devices, this div collapses/uncollapses the info card
     display: flex;
     padding-left: 16px;
+    min-height: 70px; // To allow for the modal-mask spinner
     position: relative;
     /* On medium devices,the title section has a minimum height */
     @media (min-width: $screen-md-min) {
