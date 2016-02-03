@@ -82,6 +82,7 @@
         resolve: {
           user: () => $scope.user,
         },
+        size: 'sm',
       });
       instance.result.then((reason) => {
         console.log(`modal dismissed with reason: ${reason}`);

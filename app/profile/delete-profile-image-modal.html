@@ -1,6 +1,15 @@
-<div>
+<div class="ds-modal delete-profile-image-modal"
+    ng-class="{'ds-modal--is-working': vm.isDeleting}"
+    >
     <modal-mask ng-if="vm.isDeleting"></modal-mask>
-    <h1>Are you sure?</h1>
-    <button ng-click="vm.cancel()">Cancel</button>
-    <button ng-click="vm.delete()">Delete</button>
+    <div class="row ds-modal__content">
+        <h1 class="ds-modal__header col-xs-12">Are you sure?</h1>
+        <p class="col-xs-12">
+            You can't undo this.
+        </p>
+        <div class="col-xs-12 ds-form__submit-row">
+            <button class="btn btn-default big-button" ng-click="vm.cancel()">Cancel</button>
+            <button class="btn btn-primary big-button" ng-click="vm.delete()">Delete</button>
+        </div>
+    </div>
 </div>
