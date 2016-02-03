@@ -25,18 +25,22 @@
       // Try and download a thumbnail
       if (localStorageService.get('user')) {
         const userID = localStorageService.get('user');
-        dsimg.getUserProfileImage(userID)
-        .then((response) => {
-          vm.userProfileThumbnailImage = $.cloudinary.url(response.data.image.url, {
-            height: 18,
-            width: 18,
-            crop: 'fill',
-            gravity: 'face',
-          });
-          console.log(vm.userProfileThumbnailImage);
+        retrieveProfileThumbnailImage(userID)
+        .then((url) => {
+          console.log(url);
+          vm.userProfileThumbnailImage = url;
         });
-
       }
+    }
+
+    function retrieveProfileThumbnailImage(id) {
+      return dsimg.getUserProfileImage(id)
+      .then((response) => $.cloudinary.url(response.data.image.public_id, {
+        height: 18,
+        width: 18,
+        crop: 'fill',
+        gravity: 'face',
+      }));
     }
 
     function toggleFullscreen() {
@@ -66,17 +70,9 @@
           // We've signed in successfully
           console.log('navigation bar controller: signed in');
           const userID = localStorageService.get('user');
-          dsimg.getUserProfileImage(userID)
-          .then((response) => {
-            console.log(response.data.image.url);
-            vm.userProfileThumbnailImage = $.cloudinary.url(response.data.image.url, {
-              height: 18,
-              width: 18,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            console.log(vm.userProfileThumbnailImage);
-            //console.log(response.data.image.url);
+          retrieveProfileThumbnailImage(userID)
+          .then((url) => {
+            vm.userProfileThumbnailImage = url;
           });
         }
       });
