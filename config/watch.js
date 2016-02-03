@@ -6,7 +6,7 @@ module.exports = {
   },
 
   sass: {
-    files: ['<%= cfg.app %>/styles/{,*/}*.{sass,scss}'], tasks: ['sass'],
+    files: ['<%= cfg.app %>/styles/{,*/}*.{sass,scss}'], tasks: ['sass', 'autoprefixer'],
   },
 
   js: {

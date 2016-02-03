@@ -25,6 +25,14 @@ module.exports = (grunt) => {
     jscs: require('./config/jscs'),
     jshint: require('./config/jshint'),
 
+    autoprefixer:{
+      dist:{
+        files:{
+          '.tmp/styles/style.css':'.tmp/styles/style.css'
+        }
+      }
+    },
+
     cdnify: {
       dist: {
         html: ['<%= cfg.dist %>/*.html'],
@@ -104,6 +112,7 @@ module.exports = (grunt) => {
     'clean:dist', // Wipe the dist directory
     'babel', // Transpile ES2015 to ES5
     'sass', // Compile SASS to CSS
+    'autoprefixer', // Autoprefix
     'wiredep', // Update Bower dependencies
     'useminPrepare', // Generate usemin configuration
     'concat', // Concatenate JS and CSS
