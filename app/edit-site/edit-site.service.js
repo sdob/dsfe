@@ -1,14 +1,53 @@
+// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 (function() {
   'use strict';
   function editSiteService($uibModal, $window, contextMenuService, dsapi) {
     return {
+      formatRequest,
+      formatResponse,
       getContextMenuCoordinates,
       selectSubmissionApiCall,
       summonCancelEditingModal,
     };
 
+    function formatRequest(data) {
+      const obj = Object.assign({}, data);
+
+      // Convert lat/lng data to a format that dsapi expects
+      obj.latitude = obj.coords.latitude;
+      obj.longitude = obj.coords.longitude;
+      delete obj.coords;
+
+      // Convert camel-cased entry types to the format dsapi expects
+      obj.boat_entry = obj.boatEntry;
+      obj.shore_entry = obj.shoreEntry;
+      delete obj.boatEntry;
+      delete obj.shoreEntry;
+
+      return obj;
+    }
+
+    function formatResponse(data) {
+      const site = Object.assign({}, data);
+
+      // Format coordinates
+      site.coords = {
+        latitude: data.latitude,
+        longitude: data.longitude,
+      };
+      delete site.latitude;
+      delete site.longitude;
+
+      // Format snake-cased fields
+      site.boatEntry = site.boat_entry;
+      site.shoreEntry = site.shore_entry;
+      delete site.shore_entry;
+      delete site.boat_entry;
+
+      return site;
+    }
+
     function getContextMenuCoordinates() {
-      console.log(contextMenuService.latLng());
       if (contextMenuService.latLng() !== undefined) {
         const coordinates = {
           latitude: contextMenuService.latLng()[0],

@@ -13,11 +13,12 @@
     editSiteService,
     mapService
   ) {
+    const { formatRequest, formatResponse } = editSiteService;
     const vm = this;
     activate();
 
     function activate() {
-      vm.siteTypeString = 'divesite';
+      console.log(formatRequest, formatResponse);
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
@@ -27,11 +28,11 @@
       vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
 
-      // By default, we're adding a new site
-      vm.title = 'Add a new divesite';
-
       // Retrieve map settings
       vm.map = mapService.get();
+      // By default, we're adding a new site
+      vm.siteTypeString = 'divesite';
+      vm.title = 'Add a new divesite';
 
       // Try to retrieve context menu coordinates and use them instead
       const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
@@ -62,10 +63,8 @@
         .then((response) => {
           // Format the site data
           vm.site = formatResponse(response.data);
-
           // Validate the entry checkboxes
           vm.checkAtLeastOneEntryIsSelected();
-
           // Set up map and marker
           vm.map.center = vm.site.coords;
           vm.marker = {
@@ -92,45 +91,6 @@
     function checkAtLeastOneEntryIsSelected() {
       vm.atLeastOneEntryIsSelected = (vm.site.boatEntry || vm.site.shoreEntry);
     }
-
-    function formatResponse(data) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      const site = Object.assign({}, data);
-
-      // Format coordinates
-      site.coords = {
-        latitude: data.latitude,
-        longitude: data.longitude,
-      };
-      delete site.latitude;
-      delete site.longitude;
-
-      // Format snake-cased fields
-      site.boatEntry = site.boat_entry;
-      site.shoreEntry = site.shore_entry;
-      delete site.shore_entry;
-      delete site.boat_entry;
-
-      return site;
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function formatRequest(data) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      const obj = Object.assign(data);
-
-      // Convert lat/lng data to a format that dsapi expects
-      obj.latitude = obj.coords.latitude;
-      obj.longitude = obj.coords.longitude;
-      delete obj.coords;
-
-      // Convert camel-cased entry types to the format dsapi expects
-      obj.boat_entry = obj.boatEntry;
-      obj.shore_entry = obj.shoreEntry;
-      delete obj.boatEntry;
-      delete obj.shoreEntry;
-
-      console.log(obj);
-      return obj;
-
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function prepareToDeleteExistingHeaderImage() {
       vm.site.headerImageUrl = null;

@@ -1,3 +1,18 @@
+.editable-site-map__centre-marker {
+  position: absolute;
+  background: url(/img/place_48px.svg) no-repeat;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  // Google Maps markers are by default aligned to
+  // the bottom centre of the icon, so we'll set
+  // some explicit margins here to achieve that with
+  // our 48px square map marker image.
+  margin-left: -24px;
+  margin-top: -48px;
+  height: 48px;
+  width: 48px;
+}
 .editable-site-map-container {
   .angular-google-map-container {
     width: 100%;

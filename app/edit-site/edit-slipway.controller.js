@@ -70,8 +70,6 @@
         // Retrieve slipway data
         dsapi.getSlipway($routeParams.id)
         .then((response) => {
-
-          // TODO: check whether the data returned are OK
           // Format site data for angular-google-maps
           vm.site = formatResponse(response);
           vm.map.center = vm.site.coords;
