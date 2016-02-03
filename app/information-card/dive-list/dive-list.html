@@ -3,7 +3,8 @@
 
     <div class="information-card__dive" ng-repeat="dive in dives | orderBy:'-'">
         <div class="information-card__dive-actions">
-            <a href ng-click="vm.summonConfirmDiveDeletionModal(dive)">
+            <a href ng-if="userID === dive.diver.id"
+                ng-click="vm.summonConfirmDiveDeletionModal(dive)">
                 <i class="fa fa-trash"></i>
             </a>
         </div>
@@ -30,13 +31,6 @@
             </div>
             <span>{{ dive.depth }} m</span>
             <span>{{ dive.duration | duration }} minutes</span>
-            <a
-                href
-                ng-if="dive.diver.id == vm.userId"
-                class="information-card__edit-this-dive"
-                >
-                <span class="fa fa-fw fa-pencil-square"></span>
-            </a>
         </div>
     </div>
     <div class="information-card__dive-comment">

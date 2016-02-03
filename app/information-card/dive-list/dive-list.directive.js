@@ -8,10 +8,10 @@
       scope: {
         dives: '=',
       },
-      templateUrl: 'information-card/dive-list.html',
+      templateUrl: 'information-card/dive-list/dive-list.html',
     };
     function link(scope, elem, attrs, ctrl) {
-      scope.userId = localStorageService.get('user');
+      scope.userID = localStorageService.get('user');
       console.log('divelist');
       console.log(scope);
     }

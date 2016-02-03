@@ -1,6 +1,6 @@
-<div class="delete-dive-confirmation-modal">
-    <modal-mask ng-show="vm.isDeleting"></modal-mask>
-    <h1>
+<div class="ds-modal">
+    <modal-mask message="Deleting..." ng-show="vm.isDeleting"></modal-mask>
+    <h1 class="ds-modal__header">
         Are you sure?
     </h1>
     <p>
@@ -8,7 +8,7 @@
     </p>
     <form>
         <div class="row">
-            <div class="col-xs-12 ds-submit-row">
+            <div class="col-xs-12 ds-form__submit-row">
                 <button class="btn btn-default big-button" ng-click="vm.cancel()">
                     Cancel
                 </button>
