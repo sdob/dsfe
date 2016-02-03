@@ -26,12 +26,15 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/#/"><i class="fa fa-fw fa-globe"></i>Home</a></li>
                 <li><a href="/#/about-us/"><i class="fa fa-fw fa-info-circle"></i>About</a></li>
-                <li
-                    ng-if="nbvm.isAuthenticated()"
-                    ><a href='/#/me'>
+                <li ng-if="nbvm.isAuthenticated()">
+                    <a href='/#/me'>
                         <img height="18" width="18" ng-if="nbvm.userProfileThumbnailImage" ng-src="{{nbvm.userProfileThumbnailImage}}" />
                         <i ng-if="!nbvm.userProfileThumbnailImage" class="fa fa-fw fa-user"></i>
-                        Profile</a></li>
+                        <span>
+                            Profile
+                        </span>
+                    </a>
+                </li>
                 <li
                     ng-show="!nbvm.isAuthenticated()"
                     >
