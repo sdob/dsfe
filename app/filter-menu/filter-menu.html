@@ -31,8 +31,18 @@
 
         <div class="filter-menu__section filter-menu__amenities">
             <h3 class="filter-menu__section-header">
-                Amenities
+                Things
             </h3>
+            <div>
+                <label for="filter-menu-divesites">
+                    <input
+                    type="checkbox" id="filter-menu-divesites"
+                    ng-model="fmvm.preferences.divesites"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Divesites</span>
+                </label>
+            </div>
             <div>
                 <label for="filter-menu-compressors">
                     <input

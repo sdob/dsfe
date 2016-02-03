@@ -12,7 +12,8 @@
       maximumDepth: MAX_DEPTH,
       maximumLevel: '2',
 
-      // Amenities
+      // Categories
+      divesites: true,
       compressors: true,
       slipways: true,
     };
@@ -27,6 +28,7 @@
       maximumDepth: defaults.maximumDepth,
       maximumLevel: defaults.maximumLevel,
       shoreEntry: defaults.shoreEntry,
+      divesites: defaults.divesites,
       compressors: defaults.compressors,
       slipways: defaults.slipways,
     };
@@ -56,6 +58,7 @@
         return value === '0' || value === '1' || value === '2';
       },
 
+      divesites: validateBoolean,
       compressors: validateBoolean,
       slipways: validateBoolean,
     };

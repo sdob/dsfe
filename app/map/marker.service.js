@@ -48,6 +48,12 @@
       }
 
       // Default case: this is a divesite marker, and things are more complex.
+
+      // First of all, if preferences.divesites is false, then that's an easy
+      // one
+      if (!preferences.divesites) {
+        return false;
+      }
       // Site depth should be less than or equal to preferred maximum depth
       const depth = marker.depth <= preferences.maximumDepth;
 
