@@ -1,7 +1,7 @@
 <div class="login-modal"
     ng-class="{'login-modal--is-logging-in': status.isLoggingIn}"
     >
-    <modal-mask ng-show="status.isLoggingIn"></modal-mask>
+    <modal-mask message="Signing in..." ng-show="status.isLoggingIn"></modal-mask>
 
     <div class="login-modal__form">
         <h1 class="login-modal__title">
