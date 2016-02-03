@@ -3,9 +3,11 @@
   padding-left: 16px;
   padding-bottom: 16px;
   &--is-saving {
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-    -moz-filter: blur(2px);
+    .upload-profile-image-modal__content {
+      filter: blur(2px);
+      -webkit-filter: blur(2px);
+      -moz-filter: blur(2px);
+    }
   }
   .compare-images {
     h2 {

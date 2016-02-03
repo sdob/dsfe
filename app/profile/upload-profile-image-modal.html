@@ -2,40 +2,42 @@
     ng-class="{'upload-profile-image-modal--is-saving': vm.isSaving}"
     >
     <modal-mask ng-show="vm.isSaving"></modal-mask>
-    <div class="row">
-        <h1 class="col-xs-12">Upload image</h1>
-    </div>
-    <div class="row compare-images">
-        <form name="uploadForm">
-            <div class="col-xs-12">
-                <input type="file"
-                ngf-select
-                ng-model="vm.imgFile"
-                name="file"
-                accept="image/*"
-                required
-                >
-            </div>
-            <div class="col-xs-12 thumb-preview-container">
-                <img
-                ngf-thumbnail="vm.imgFile"
-                class="thumb-preview"
-                >
-            </div>
-            <div class="col-xs-12 ds-form__submit-row">
-                <button type="button"
-                    ng-click="vm.cancelUpload()"
-                    class="btn btn-default big-button">
-                    Cancel
-                </button>
-                <button type="submit"
-                    class="btn btn-primary big-button"
-                    ng-disabled="!uploadForm.$valid"
-                    ng-click="vm.submit(vm.imgFile)"
+    <div class="upload-profile-image-modal__content">
+        <div class="row">
+            <h1 class="col-xs-12">Upload image</h1>
+        </div>
+        <div class="row compare-images">
+            <form name="uploadForm">
+                <div class="col-xs-12">
+                    <input type="file"
+                    ngf-select
+                    ng-model="vm.imgFile"
+                    name="file"
+                    accept="image/*"
+                    required
                     >
-                <span>Upload</span>
-                </button>
-            </div>
-        </form>
+                </div>
+                <div class="col-xs-12 thumb-preview-container">
+                    <img
+                    ngf-thumbnail="vm.imgFile"
+                    class="thumb-preview"
+                    >
+                </div>
+                <div class="col-xs-12 ds-form__submit-row">
+                    <button type="button"
+                        ng-click="vm.cancelUpload()"
+                        class="btn btn-default big-button">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="btn btn-primary big-button"
+                        ng-disabled="!uploadForm.$valid"
+                        ng-click="vm.submit(vm.imgFile)"
+                        >
+                        <span>Upload</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

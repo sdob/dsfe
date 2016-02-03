@@ -16,8 +16,14 @@
   width: 100%;
 
   // While loading, hide the scrollbars
+  // and blur content
   &--is-loading {
     overflow: hidden;
+    .information-card__title,
+    .information-card__body {
+      filter: blur(2px);
+      -webkit-filter: blur(2px);
+    }
   }
 
 
