@@ -10,18 +10,10 @@
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
 
-      $timeout(() => {
-        console.log('editable?');
-        console.log($scope);
-        console.log($scope.editable);
-      });
-
       const userId = $scope.userId;
-      console.log(userId);
       // Retrieve the user profile
       profileService.getUserProfile(userId)
       .then((profile) => {
-        console.log('profileheadercontroller got user profile');
         // Put profile data into scope
         $scope.user = profileService.formatResponseData(profile);
         // Look for a profile image
@@ -29,7 +21,6 @@
       })
       .then((response) => {
         // If we get a successful response, use it
-        console.log('then from dsimg');
         const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
           width: 318,
           height: 318,

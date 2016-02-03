@@ -1,7 +1,7 @@
 <div class="ds-modal upload-profile-image-modal"
     ng-class="{'ds-modal--is-working': vm.isSaving}"
     >
-    <modal-mask ng-show="vm.isSaving"></modal-mask>
+    <modal-mask message="Uploading..." ng-show="vm.isSaving"></modal-mask>
     <div class="row ds-modal__content">
         <h1 class="ds-modal__header col-xs-12">Upload image</h1>
         <form name="uploadForm">

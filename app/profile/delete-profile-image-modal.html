@@ -1,7 +1,7 @@
 <div class="ds-modal delete-profile-image-modal"
     ng-class="{'ds-modal--is-working': vm.isDeleting}"
     >
-    <modal-mask ng-if="vm.isDeleting"></modal-mask>
+    <modal-mask message="Deleting..." ng-if="vm.isDeleting"></modal-mask>
     <div class="row ds-modal__content">
         <h1 class="ds-modal__header col-xs-12">Are you sure?</h1>
         <p class="col-xs-12">
