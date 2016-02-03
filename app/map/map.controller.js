@@ -20,10 +20,16 @@
     const { shouldBeVisible } = markerService;
     const { transformAmenityToMarker, transformSiteToMarker } = markerService;
 
+    // Wait time between mousedown and mouseup to trigger a longpress event
+    // (in milliseconds)
+    const LONG_PRESS_WAIT_TIME_MS = 750;
+
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
     // ID of the currently selected marker
     let selectedMarkerID;
+
+    $scope.control = {};
 
     activate();
 
@@ -32,6 +38,10 @@
       // Set 'loading' state to true (so the user knows that something
       // is happening)
       vm.isLoading = true;
+
+      // Retrieve stored map settings
+      vm.map = mapService.get();
+      vm.map.control = vm.map.control || {};
 
       // Clean up contextMenuService
       closeContextMenu();
@@ -46,14 +56,74 @@
         vm.options.mapTypeControlOptions = {
           position: maps.ControlPosition.BOTTOM_CENTER,
         };
+
+        // Implement a long-press listener
+        function LongPress(map, length) {
+          this.length_ = length;
+          const vm = this;
+          vm.map_ = map;
+          vm.timeoutId_ = null;
+          maps.event.addListener(map, 'mousedown', function(e) {
+            vm.onMouseDown_(e);
+          });
+
+          maps.event.addListener(map, 'mouseup', function(e) {
+            vm.onMouseUp_(e);
+          });
+
+          maps.event.addListener(map, 'drag', function(e) {
+            vm.onMapDrag_(e);
+          });
+        }
+
+        LongPress.prototype.onMouseUp_ = function(e) {
+          clearTimeout(this.timeoutId_);
+        };
+
+        LongPress.prototype.onMouseDown_ = function(e) {
+          clearTimeout(this.timeoutId_);
+          const map = this.map_;
+          const event = e;
+          this.timeoutId_ = setTimeout(function() {
+            vm.maps.event.trigger(map, 'longpress', event);
+          }, this.length_);
+        };
+
+        LongPress.prototype.onMapDrag_ = function(e) {
+          clearTimeout(this.timeoutId_);
+        };
+
+        // Until I can figure out how to get the control object working,
+        // this has to be assigned after the maps API has loaded
+        vm.mapEvents.tilesloaded = (map) => {
+          if (!vm.tilesHaveLoaded) {
+            vm.tilesHaveLoaded = true;
+            new LongPress(map, LONG_PRESS_WAIT_TIME_MS);
+            vm.maps.event.addListener(map, 'longpress', (event) => {
+              console.log('long press');
+              const { x, y } = event.pixel;
+              console.log(x, y);
+              console.log(event);
+              const args = [event];
+              // TODO: summon context menu
+              if ($auth.isAuthenticated()) {
+                contextMenuService.latLng([args[0].latLng.lat(), args[0].latLng.lng()]);
+                contextMenuService.pixel(args[0].pixel);
+                if (contextMenuIsOpen) {
+                  $('map-context-menu').remove();
+                }
+
+                $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
+                contextMenuIsOpen = true;
+              }
+            });
+          }
+        };
       });
 
       // Initialize markers as an empty array so that it's never undefined
       // (and angular-google-maps doesn't complain)
       vm.mapMarkers = [];
-
-      // Retrieve stored map settings
-      vm.map = mapService.get();
 
       // Set map event listeners
       vm.mapEvents =  {
@@ -328,6 +398,7 @@
         m.options.visible = shouldBeVisible(m, preferences);
       });
     }
+
   }
 
   MapController.$inject = ['$auth',
