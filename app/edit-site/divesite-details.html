@@ -3,7 +3,7 @@
     <section class="row">
         <section class="site-details__entries col-sm-6">
             <div class="form-group"
-                ng-class="{'has-error': (siteForm.boatEntry.$error.required && siteForm.shoreEntry.$error.required)}"
+                ng-class="{'has-error': (siteForm.$submitted || siteForm.boatEntry.$dirty || siteForm.shoreEntry.$dirty) && (siteForm.boatEntry.$error.required && siteForm.shoreEntry.$error.required)}"
                 >
                 <h2>Entry types</h2>
                 <div>
