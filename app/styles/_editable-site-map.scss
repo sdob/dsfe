@@ -4,3 +4,15 @@
     height: 400px;
   }
 }
+.editable-site-map__coordinates {
+  align-items: baseline;
+  display: flex;
+}
+.editable-site-map__coordinate-input {
+  width: 40%;
+}
+.editable-site-map__coordinate-axis {
+  margin-left: 0.5em;
+  font-size: 150%;
+  width: 10%;
+}

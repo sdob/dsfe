@@ -19,22 +19,24 @@
         and the marker will move automatically.
     </span>
     <div 
-        style="display: flex;"
+        class="editable-site-map__coordinates"
         >
         <input
         type="text"
-        class="form-control"
-        style="width:30%"
+        class="editable-site-map__coordinate-input form-control"
         ng-model="vm.site.coords.latitude"
         ng-change="vm.maintainCoordinateMaxLength()"
         >
-        <span style="width: 20%"> ° N</span>
+
+        <span class="editable-site-map__coordinate-axis" >
+            ° N
+        </span>
+
         <input type="text"
-        class="form-control"
-        style="width:30%"
+        class="editable-site-map__coordinate-input form-control"
         ng-model="vm.site.coords.longitude"
         ng-change="vm.maintainCoordinateMaxLength()"
         >
-        <span style="width: 20%"> ° E</span>
+        <span class="editable-site-map__coordinate-axis"> ° E</span>
     </div>
 </div>
