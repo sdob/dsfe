@@ -21,6 +21,12 @@
         <!-- endbuild -->
     </head>
     <body ng-app="divesites">
+        <div class="pre-bootstrap-loading-screen" ng-if="false">
+            <p>
+                Loading divesit.es...
+                <i class="fa fa-spinner fa-spin"></i>
+            </p>
+        </div>
         <navigation-bar></navigation-bar>
         <div ng-view></div>
         <!-- build:js(.) /scripts/vendor.js -->
