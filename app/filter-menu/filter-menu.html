@@ -34,16 +34,14 @@
                 Categories
             </h3>
             <div class="media filter-menu__category">
-                <div class="media-body media-middle">
-                    <label for="filter-menu-divesites">
-                        <input
-                        type="checkbox" id="filter-menu-divesites"
-                        ng-model="fmvm.preferences.divesites"
-                        ng-change="fmvm.updatePreferences()"
-                        />
-                        <span>Divesites</span>
-                    </label>
-                </div>
+                <label class="media-body media-middle" for="filter-menu-divesites">
+                    <input
+                    type="checkbox" id="filter-menu-divesites"
+                    ng-model="fmvm.preferences.divesites"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Divesites</span>
+                </label>
                 <div class="media-right">
                     <label for="filter-menu-divesites">
                         <img class="filter-menu__category-icon" ng-src="/img/place_{{ fmvm.preferences.divesites ? '' : 'hidden_'}}48px.svg" />
@@ -51,16 +49,14 @@
                 </div>
             </div>
             <div class="media filter-menu__category">
-                <div class="media-body media-middle">
-                    <label for="filter-menu-compressors">
-                        <input
-                        type="checkbox" id="filter-menu-compressors"
-                        ng-model="fmvm.preferences.compressors"
-                        ng-change="fmvm.updatePreferences()"
-                        />
-                        <span>Compressors</span>
-                    </label>
-                </div>
+                <label class="media-body media-middle" for="filter-menu-compressors">
+                    <input
+                    type="checkbox" id="filter-menu-compressors"
+                    ng-model="fmvm.preferences.compressors"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Compressors</span>
+                </label>
                 <div class="media-right">
                     <label for="filter-menu-compressors">
                         <img class="filter-menu__category-icon" ng-src="/img/gauge_{{ fmvm.preferences.compressors ? '' : 'hidden_'}}28px.svg" />
@@ -68,16 +64,14 @@
                 </div>
             </div>
             <div class="media filter-menu__category">
-                <div class="media-body media-middle">
-                    <label for="filter-menu-slipways">
-                        <input
-                        type="checkbox" id="filter-menu-slipways"
-                        ng-model="fmvm.preferences.slipways"
-                        ng-change="fmvm.updatePreferences()"
-                        />
-                        <span>Slipways</span>
-                    </label>
-                </div>
+                <label class="media-body media-middle" for="filter-menu-slipways">
+                    <input
+                    type="checkbox" id="filter-menu-slipways"
+                    ng-model="fmvm.preferences.slipways"
+                    ng-change="fmvm.updatePreferences()"
+                    />
+                    <span>Slipways</span>
+                </label>
                 <div class="media-right">
                     <label for="filter-menu-slipways">
                         <img class="filter-menu__category-icon" ng-src="/img/boatlaunch_{{ fmvm.preferences.slipways ? '' : 'hidden_'}}28px.svg" />
