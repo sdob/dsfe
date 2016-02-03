@@ -25,3 +25,17 @@
 .lightbox-modal {
   @extend .modal-center;
 }
+
+.ds-modal {
+  // default settings
+  padding: 16px;
+}
+.ds-modal--is-working {
+  .ds-modal__content {
+    filter: blur(2px);
+  }
+}
+.ds-modal__header {
+  margin-top: 0;
+  margin-bottom: 16px;
+}

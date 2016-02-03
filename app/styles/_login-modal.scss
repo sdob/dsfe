@@ -7,8 +7,6 @@
   &--is-logging-in {
     & .login-modal__form {
       filter: blur(2px);
-      -moz-filter: blur(2px);
-      -webkit-filter: blur(2px);
     }
     /*
     display: flex;
