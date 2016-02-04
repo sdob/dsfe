@@ -21,6 +21,7 @@
     'divesites.navigationBar',
     'divesites.aboutUs',
     'divesites.profile',
+    'divesites.services',
     'divesites.widgets',
   ])
   .run(($rootScope) => {

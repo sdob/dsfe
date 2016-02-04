@@ -11,5 +11,5 @@
   }
 
   collapseBehaviour.$inject = [];
-  angular.module('divesites').factory('collapseBehaviour', collapseBehaviour);
+  angular.module('divesites.services').factory('collapseBehaviour', collapseBehaviour);
 })();
