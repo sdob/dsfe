@@ -12,8 +12,8 @@
       element.on('$destroy', () => {
         element.find('floating-menu__header').off('click', toggleOpened);
       });
+
       function toggleOpened() {
-        console.log('toggling open state');
         element.find('.add-something-menu').toggleClass('open');
       }
     }

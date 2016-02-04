@@ -25,7 +25,6 @@
       });
 
       function toggleOpened(e) {
-        console.log('toggling opened state');
         $('.filter-menu').toggleClass('open');
         const slider  = angular.element('#js-information-card__depth-range-slider');
         slider.slider('relayout');
