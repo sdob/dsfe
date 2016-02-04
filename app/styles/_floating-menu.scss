@@ -1,3 +1,27 @@
+.floating-menu {
+  // Shared by filter and add-something menus
+  left: 2em;
+  position: absolute;
+  // right: 2em;
+  &.open {
+    @include shadow-2dp;
+    overflow-y: hidden;
+    right: 2em;
+  }
+  z-index: 4;
+  @media (min-width: $screen-md-min) {
+    @include shadow-2dp;
+    width: 24em;
+    .open {
+      right: initial;
+    }
+  }
+  &__content {
+    background: #fff;
+    z-index: 4; // in front of anything other than other floating menus
+  }
+}
+
 .floating-menu-container {
   position: absolute;
   top: 6em;
@@ -11,6 +35,7 @@
     right: initial;
   }
 }
+
 .floating-menu.open {
   .floating-menu__header--xs {
     box-shadow: none;
@@ -22,13 +47,14 @@
     }
   }
 }
+
 .floating-menu__header {
   background: $blue-700;
   color: #fff;
   cursor: pointer;
   //padding-left: 16px;
-  display: flex;
-  align-items: center;
+  //display: flex;
+  //align-items: center;
   text-decoration: none;
 
   &--xs {

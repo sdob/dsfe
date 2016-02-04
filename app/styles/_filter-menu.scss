@@ -1,27 +1,3 @@
-.floating-menu {
-  // Shared by filter and add-something menus
-  left: 2em;
-  position: absolute;
-  // right: 2em;
-  &.open {
-    @include shadow-2dp;
-    overflow-y: hidden;
-    right: 2em;
-  }
-  z-index: 4;
-  @media (min-width: $screen-md-min) {
-    @include shadow-2dp;
-    width: 24em;
-    .open {
-      right: initial;
-    }
-  }
-  &__content {
-    background: #fff;
-    z-index: 4; // in front of anything other than other floating menus
-  }
-}
-
 .add-something-menu {
   top: 10em;
   left: 2em;
