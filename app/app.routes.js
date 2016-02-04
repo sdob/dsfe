@@ -22,7 +22,7 @@
       controllerAs: 'vm',
     })
     .when('/add-slipway/', {
-      template: '<edit-slipway></edit-slipway',
+      template: '<edit-slipway></edit-slipway>',
       controller: 'EditSlipwayController',
       controllerAs: 'vm',
     })

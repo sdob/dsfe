@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
+  /* Main app module. */
   angular.module('divesites', [
+    /* Third-party dependencies */
     'LocalStorageModule',
     'bootstrapLightbox',
     'ngFileUpload',

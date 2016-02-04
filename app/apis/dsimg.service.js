@@ -1,5 +1,9 @@
 (function() {
   'use strict';
+
+  /*
+   * Service wrapping HTTP calls to the back-end image server.
+   */
   function dsimgService($http, IMG_API_URL) {
     return {
       IMG_API_URL,
@@ -18,7 +22,10 @@
         return $http.delete(`${IMG_API_URL}/divesite-images/${id}`);
       },
 
-      /* Upload, retrieve, and delete divesite header images */
+      /*
+       * Retrieve and delete divesite header images. Uploading is performed
+       * by ng-file-upload.
+      */
 
       getDivesiteHeaderImage: (divesiteID) => {
         return $http.get(`${IMG_API_URL}/divesites/${divesiteID}/header`);
@@ -27,8 +34,6 @@
       deleteDivesiteHeaderImage: (divesiteID) => {
         return $http.delete(`${IMG_API_URL}/divesites/${divesiteID}/header`);
       },
-
-      // TODO: upload divesite header image
 
       /* Upload, retrieve, and delete profile images */
 
