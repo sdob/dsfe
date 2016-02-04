@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function OwnProfileController($rootScope, $scope, $uibModal, cloudinaryTransformation, dsapi, dsimg, localStorageService, profileService) {
+  function OwnProfileController($rootScope, $scope, $uibModal,  dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
@@ -23,7 +23,6 @@
     '$rootScope',
     '$scope',
     '$uibModal',
-    'cloudinaryTransformation',
     'dsapi',
     'dsimg',
     'localStorageService',
