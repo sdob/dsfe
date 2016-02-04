@@ -10,6 +10,7 @@
   max-height: calc(100% - 100px);
   // overflow-y: hidden;
   top: 6em;
+  left: 2em;
   z-index: 5;
 }
 
@@ -26,16 +27,6 @@
     text-decoration: none;
     color: #fff;
     //color: darken(#fff, 15%);
-  }
-  .filter-menu__header-chevron {
-    margin-left: auto;
-    margin-right: 16px;
-    font-size: 16px;
-    transition: transform 100ms;
-    transform: rotate(180deg);
-  }
-  &.collapsed .filter-menu__header-chevron {
-    transform: rotate(0deg);
   }
 }
 

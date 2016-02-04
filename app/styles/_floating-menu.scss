@@ -1,14 +1,13 @@
 .floating-menu {
-  // Shared by filter and add-something menus
-  left: 2em;
+  /* Shared by filter and add-something menus */
+
   position: absolute;
-  // right: 2em;
+
   &.open {
     @include shadow-2dp;
     overflow-y: hidden;
     right: 2em;
   }
-  z-index: 4;
   @media (min-width: $screen-md-min) {
     @include shadow-2dp;
     width: 24em;
@@ -18,7 +17,9 @@
   }
   &__content {
     background: #fff;
-    z-index: 4; // in front of anything other than other floating menus
+  }
+  &__content.in {
+    overflow-y: auto;
   }
 }
 
@@ -37,6 +38,12 @@
 }
 
 .floating-menu.open {
+  .floating-menu__icon--when-open {
+    display: initial;
+  }
+  .floating-menu__icon--when-closed {
+    display: none;
+  }
   .floating-menu__header--xs {
     box-shadow: none;
     border-radius: 0;
@@ -48,13 +55,18 @@
   }
 }
 
+.floating-menu__icon--when-open {
+  display: none;
+}
+
+.floating-menu__icon--when-closed {
+  display: initial;
+}
+
 .floating-menu__header {
   background: $blue-700;
   color: #fff;
   cursor: pointer;
-  //padding-left: 16px;
-  //display: flex;
-  //align-items: center;
   text-decoration: none;
 
   &--xs {
@@ -84,7 +96,6 @@
   &:hover, &:active, &:focus {
     text-decoration: none;
     color: #fff;
-    //color: darken(#fff, 15%);
   }
 
   .floating-menu__header-chevron {
