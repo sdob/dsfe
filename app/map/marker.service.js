@@ -2,12 +2,12 @@
 (function() {
   function markerService() {
     // Default marker icons
-    const defaultCompressorMarkerIcon = '/img/gauge_28px.svg';
-    const defaultMapMarkerIcon = '/img/place_48px.svg';
-    const defaultSlipwayMarkerIcon = '/img/boatlaunch_28px.svg';
-    const selectedMapMarkerIcon = '/img/place_selected_48px.svg';
-    const selectedCompressorMarkerIcon = '/img/gauge_selected_28px.svg';
-    const selectedSlipwayMarkerIcon = '/img/boatlaunch_selected_28px.svg';
+    const defaultCompressorMarkerIcon = '/img/compressor_28px.svg';
+    const defaultMapMarkerIcon = '/img/divesite.svg';
+    const defaultSlipwayMarkerIcon = '/img/slipway_28px.svg';
+    const selectedMapMarkerIcon = '/img/divesite_selected.svg';
+    const selectedCompressorMarkerIcon = '/img/compressor_28px_selected.svg';
+    const selectedSlipwayMarkerIcon = '/img/slipway_28px_selected.svg';
 
     const defaultMarkerIcons = {
       compressor: defaultCompressorMarkerIcon,
