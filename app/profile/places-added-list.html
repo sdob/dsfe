@@ -4,9 +4,14 @@
         <img ng-switch-when="compressor" ng-src="/img/compressor.svg" />
         <img ng-switch-when="slipway" ng-src="/img/slipway.svg" />
     </div>
-    <h3 class="col-xs-8 places-added__name">
-        <a href="/#/?{{place.type}}={{place.id}}">
-            {{ place.name }}
-        </a>
-    </h3>
+    <div class="col-xs-8">
+        <h3 class="places-added__name">
+            <a href="/#/?{{place.type}}={{place.id}}">
+                {{ place.name }}
+            </a>
+        </h3>
+        <p>
+            {{ place.description }}
+        </p>
+    </div>
 </div>
