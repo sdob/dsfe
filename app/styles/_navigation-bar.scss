@@ -1,3 +1,13 @@
+.ds-brand {
+  display: flex;
+}
+.ds-brand__icon {
+}
+.ds-brand__text {
+  font-size: 150%;
+  font-weight: 500;
+  margin-left: 4px;
+}
 .navigation-bar__main {
   z-index: 6; // in front of filter menu and add button
   border-radius: 0;
