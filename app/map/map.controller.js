@@ -50,74 +50,13 @@
       vm.isAuthenticated = $auth.isAuthenticated;
 
       // Wait for the maps API to be ready, then store a ref to it
+      // and use the built-in constants to configure the map
       uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
+
         // Set some of our options
         vm.options.mapTypeControlOptions = {
           position: maps.ControlPosition.BOTTOM_CENTER,
-        };
-
-        // Implement a long-press listener
-        function LongPress(map, length) {
-          this.length_ = length;
-          const vm = this;
-          vm.map_ = map;
-          vm.timeoutId_ = null;
-          maps.event.addListener(map, 'mousedown', function(e) {
-            vm.onMouseDown_(e);
-          });
-
-          maps.event.addListener(map, 'mouseup', function(e) {
-            vm.onMouseUp_(e);
-          });
-
-          maps.event.addListener(map, 'drag', function(e) {
-            vm.onMapDrag_(e);
-          });
-        }
-
-        LongPress.prototype.onMouseUp_ = function(e) {
-          clearTimeout(this.timeoutId_);
-        };
-
-        LongPress.prototype.onMouseDown_ = function(e) {
-          clearTimeout(this.timeoutId_);
-          const map = this.map_;
-          const event = e;
-          this.timeoutId_ = setTimeout(function() {
-            vm.maps.event.trigger(map, 'longpress', event);
-          }, this.length_);
-        };
-
-        LongPress.prototype.onMapDrag_ = function(e) {
-          clearTimeout(this.timeoutId_);
-        };
-
-        // Until I can figure out how to get the control object working,
-        // this has to be assigned after the maps API has loaded
-        vm.mapEvents.tilesloaded = (map) => {
-          if (!vm.tilesHaveLoaded) {
-            vm.tilesHaveLoaded = true;
-            new LongPress(map, LONG_PRESS_WAIT_TIME_MS);
-            vm.maps.event.addListener(map, 'longpress', (event) => {
-              console.log('long press');
-              const { x, y } = event.pixel;
-              console.log(x, y);
-              console.log(event);
-              const args = [event];
-              // TODO: summon context menu
-              if ($auth.isAuthenticated()) {
-                contextMenuService.latLng([args[0].latLng.lat(), args[0].latLng.lng()]);
-                contextMenuService.pixel(args[0].pixel);
-                if (contextMenuIsOpen) {
-                  $('map-context-menu').remove();
-                }
-
-                $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
-                contextMenuIsOpen = true;
-              }
-            });
-          }
         };
       });
 
@@ -304,6 +243,31 @@
       if (contextMenuIsOpen) {
         $('map-context-menu').remove();
         contextMenuIsOpen = false;
+      }
+    }
+
+    function listenForLongClick(map) {
+      // TODO: this code works fine on desktop browsers, but
+      // something about how Android Chrome handles long presses
+      // is causing the context menu to be removed when the press
+      // event ends. When I feel like looking into it, I'll fix it.
+      if (!vm.tilesHaveLoaded) {
+        vm.tilesHaveLoaded = true;
+        new LongPress(map, LONG_PRESS_WAIT_TIME_MS);
+        vm.maps.event.addListener(map, 'longpress', (event) => {
+          const { x, y } = event.pixel;
+          const args = [event];
+          if ($auth.isAuthenticated()) {
+            contextMenuService.latLng([args[0].latLng.lat(), args[0].latLng.lng()]);
+            contextMenuService.pixel(args[0].pixel);
+            if (contextMenuIsOpen) {
+              $('map-context-menu').remove();
+            }
+
+            $('map').append($compile('<map-context-menu></map-context-menu>')($scope));
+            contextMenuIsOpen = true;
+          }
+        });
       }
     }
 
