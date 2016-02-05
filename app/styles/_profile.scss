@@ -178,6 +178,8 @@
 
 .profile__tab-menu {
   display: flex;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 .profile__tab-menu-item {
   text-align: center;
@@ -186,4 +188,14 @@
 .profile__tab-menu-text {
   margin-top: 0;
   margin-bottom: 0;
+}
+.profile__no-dives,
+.profile__no-places-added
+{
+  align-items: center;
+  color: #777;
+  font-size: 30px;
+  display: flex;
+  margin-top: 64px;
+  flex-direction: column;
 }

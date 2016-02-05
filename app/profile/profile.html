@@ -15,10 +15,18 @@
 
     <section class="tab-content">
         <section id="js-dive-log" class="tab-pane active profile__dive-log">
-            <dive-log-list dives="vm.user.dives"></dive-log-list>
+            <dive-log-list ng-if="user.dives.length" dives="vm.user.dives"></dive-log-list>
+            <div ng-if="!user.dives.length" class="profile__no-dives">
+                <i class="fa fa-fw fa-frown-o"></i>
+                Nothing yet!
+            </div>
         </section>
         <section role="tabpanel" id="js-places-added" class="tab-pane profile__places-added">
-            <places-added-list></places-added-list>
+            <places-added-list ng-if="user.placesAdded.length"></places-added-list>
+            <div ng-if="!user.placesAdded.length" class="profile__no-places-added">
+                <i class="fa fa-fw fa-frown-o"></i>
+                Nothing yet!
+            </div>
         </section>
     </section>
 

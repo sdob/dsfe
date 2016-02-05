@@ -31,8 +31,17 @@ label {
   transform: translate(0, 0);
 }
 
+.nav-tabs {
+  border: 0;
+}
+
 .nav-tabs > li {
-  margin-bottom: 0;
+  margin-bottom: -1px;
+}
+
+.nav-tabs > li.active {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.17);
+  margin-bottom: -1px;
 }
 
 .nav-tabs > li > a,
