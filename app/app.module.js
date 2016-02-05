@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
+  /* Main app module. */
   angular.module('divesites', [
+    /* Third-party dependencies */
     'LocalStorageModule',
     'bootstrapLightbox',
     'ngFileUpload',
@@ -19,6 +21,7 @@
     'divesites.navigationBar',
     'divesites.aboutUs',
     'divesites.profile',
+    'divesites.services',
     'divesites.widgets',
   ])
   .run(($rootScope) => {

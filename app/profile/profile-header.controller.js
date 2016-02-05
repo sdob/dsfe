@@ -16,6 +16,16 @@
       .then((profile) => {
         // Put profile data into scope
         $scope.user = profileService.formatResponseData(profile);
+
+        // Build a 'contributions' list
+        $scope.user.placesAdded = [].concat(
+          $scope.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
+          $scope.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x)),
+          $scope.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
+        );
+
+        console.log($scope.user.placesAdded);
+
         // Look for a profile image
         return dsimg.getUserProfileImage(profile.id);
       })
@@ -35,8 +45,7 @@
       .catch((err) => {
         // On failure (including 404) jus tmake sure that
         // the UI is clean
-        console.log('catch from dsimg');
-        console.log(err);
+        console.error(err);
         $timeout(() => {
           vm.dsimgHasResponded = true;
         }, 0);

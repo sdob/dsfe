@@ -22,7 +22,7 @@
       controllerAs: 'vm',
     })
     .when('/add-slipway/', {
-      template: '<edit-slipway></edit-slipway',
+      template: '<edit-slipway></edit-slipway>',
       controller: 'EditSlipwayController',
       controllerAs: 'vm',
     })
@@ -51,11 +51,6 @@
     })
     .when('/log-dive/:divesiteId', {
       template: '<log-dive></log-dive>',
-    })
-    .when('/upload-divesite-image/:id', {
-      template: '<upload-divesite-image></upload-divesite-image>',
-      controller: 'UploadDivesiteImageController',
-      controllerAs: 'vm',
     })
     .when('/me', {
       template: '<profile></profile>',

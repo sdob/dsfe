@@ -1,11 +1,25 @@
 <div class="profile container">
     <profile-header userId="userId" user="vm.user" editable="vm.editable"></profile-header>
-    <section class="profile__dive-log">
-        <div class="row">
-            <h2 class="col-xs-8 col-sm-offset-4">Dive log</h2>
-        </div>
-        {{ vm.user }}
-        <dive-log-list dives="vm.user.dives"></dive-log-list>
-        <!-- <dive-log-list dives="vm.user.dives"></dive-log-list> -->
+    <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
+        <li role="presentation" class="active profile__tab-menu-item">
+            <a href aria-controls="dive-log" role="tab" data-toggle="tab" data-target="#js-dive-log">
+                <h2 class="profile__tab-menu-text">Dive log</h2>
+            </a>
+        </li>
+        <li role="presentation" class="profile__tab-menu-item">
+            <a href aria-controls="places-added" role="tab" data-toggle="tab" data-target="#js-places-added">
+                <h2 class="profile__tab-menu-text">Places added</h2>
+            </a>
+        </li>
+    </ul>
+
+    <section class="tab-content">
+        <section id="js-dive-log" class="tab-pane active profile__dive-log">
+            <dive-log-list dives="vm.user.dives"></dive-log-list>
+        </section>
+        <section role="tabpanel" id="js-places-added" class="tab-pane profile__places-added">
+            <places-added-list></places-added-list>
+        </section>
     </section>
+
 </div>

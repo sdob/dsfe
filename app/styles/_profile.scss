@@ -48,6 +48,7 @@
   }
   &__dive-stats {
     border-top: solid 1px rgba(0, 0, 0, 0.17);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.17);
     display: flex;
     justify-content: space-around;
     padding: 0;
@@ -173,4 +174,16 @@
 }
 .profile__activity-details {
   padding: 8px;
+}
+
+.profile__tab-menu {
+  display: flex;
+}
+.profile__tab-menu-item {
+  text-align: center;
+  width: 100%;
+}
+.profile__tab-menu-text {
+  margin-top: 0;
+  margin-bottom: 0;
 }

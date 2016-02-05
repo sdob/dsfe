@@ -30,3 +30,7 @@ $z-index-max: 10;
 
 // A couple of layout defaults
 $default-modal-padding: 1.5em;
+
+// These magic numbers are based on the size of the default map icon
+$map-marker-width: 29px;
+$map-marker-height: 41px;

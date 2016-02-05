@@ -1,5 +1,10 @@
 (function() {
   'use strict';
+
+  /*
+   * Service wrapping HTTP calls to the main REST API. Everything returns
+   * a Promise.
+   */
   function dsapiService($auth, $http, API_URL) {
     return {
       getCompressor: (id) => {
@@ -37,11 +42,17 @@
         return $http.get(`${API_URL}/slipways/`);
       },
 
-      getUserDives: (id) => $http.get(`${API_URL}/users/${id}/dives/`),
+      getUserDives: (id) => {
+        return $http.get(`${API_URL}/users/${id}/dives/`);
+      },
 
-      getUserDivesites: (id) => $http.get(`${API_URL}/users/${id}/divesites/`),
+      getUserDivesites: (id) => {
+        return $http.get(`${API_URL}/users/${id}/divesites/`);
+      },
 
-      getUserRecentActivity: (id) => $http.get(`${API_URL}/users/${id}/recent_activity/`),
+      getUserRecentActivity: (id) => {
+        return $http.get(`${API_URL}/users/${id}/recent_activity/`);
+      },
 
       getUser: (id) => {
         return $http.get(`${API_URL}/users/${id}/`);

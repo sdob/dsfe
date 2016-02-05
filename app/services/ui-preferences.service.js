@@ -18,5 +18,5 @@
   uiPreferencesService.$inject = [
     'localStorageService',
   ];
-  angular.module('divesites').factory('uiPreferencesService', uiPreferencesService);
+  angular.module('divesites.services').factory('uiPreferencesService', uiPreferencesService);
 })();

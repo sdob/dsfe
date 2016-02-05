@@ -1,3 +1,28 @@
+.floating-menu {
+  /* Shared by filter and add-something menus */
+
+  position: absolute;
+
+  &.open {
+    @include shadow-2dp;
+    overflow-y: hidden;
+    right: 2em;
+  }
+  @media (min-width: $screen-md-min) {
+    @include shadow-2dp;
+    width: 24em;
+    .open {
+      right: initial;
+    }
+  }
+  &__content {
+    background: #fff;
+  }
+  &__content.in {
+    overflow-y: auto;
+  }
+}
+
 .floating-menu-container {
   position: absolute;
   top: 6em;
@@ -11,7 +36,14 @@
     right: initial;
   }
 }
+
 .floating-menu.open {
+  .floating-menu__icon--when-open {
+    display: initial;
+  }
+  .floating-menu__icon--when-closed {
+    display: none;
+  }
   .floating-menu__header--xs {
     box-shadow: none;
     border-radius: 0;
@@ -22,13 +54,19 @@
     }
   }
 }
+
+.floating-menu__icon--when-open {
+  display: none;
+}
+
+.floating-menu__icon--when-closed {
+  display: initial;
+}
+
 .floating-menu__header {
   background: $blue-700;
   color: #fff;
   cursor: pointer;
-  //padding-left: 16px;
-  display: flex;
-  align-items: center;
   text-decoration: none;
 
   &--xs {
@@ -58,7 +96,6 @@
   &:hover, &:active, &:focus {
     text-decoration: none;
     color: #fff;
-    //color: darken(#fff, 15%);
   }
 
   .floating-menu__header-chevron {
