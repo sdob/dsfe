@@ -87,6 +87,14 @@ module.exports = (grunt) => {
       }
     },
 
+    uglify: {
+      options: {
+        compress: {
+          drop_console: true,
+        },
+      },
+    },
+
     useminPrepare: require('./config/usemin-prepare'),
     usemin: require('./config/usemin'),
     watch: require('./config/watch'),
