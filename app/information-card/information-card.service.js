@@ -151,14 +151,18 @@
       return dsimg.getDivesiteImages(site.id)
       .then((response) => {
         const images = response.data;
-        images.forEach((image) => {
-          image.transformedUrl = $.cloudinary.url(image.image.public_id, {
-            height: 60,
-            width: 60,
-            crop: 'fill',
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          images.forEach((image) => {
+            image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 60,
+              width: 60,
+              crop: 'fill',
+            });
           });
-        });
-        return images;
+          return images;
+        }
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
