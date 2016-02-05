@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function mapService(ls) {
+  function mapService(informationCardService, ls) {
     // jshint validthis:true
     // jscs: disable safeContextKeyword
     const self = this;
@@ -70,6 +70,7 @@
       defaultMarker,
       defaultSite,
       get,
+      getSiteCoordinates,
       maintainCoordinateMaxLength,
       set,
     };
@@ -100,6 +101,17 @@
 
     function get() {
       return self.map;
+    }
+
+    function getSiteCoordinates(id, type) {
+      const { apiCall } = informationCardService.apiCalls[type];
+      return apiCall(id)
+      .then((response) => {
+        return {
+          latitude: response.data.latitude,
+          longitude: response.data.longitude,
+        };
+      });
     }
 
     function maintainCoordinateMaxLength(site) {
@@ -135,6 +147,6 @@
     }
   }
 
-  mapService.$inject = ['localStorageService'];
+  mapService.$inject = ['informationCardService', 'localStorageService'];
   angular.module('divesites.map').factory('mapService', mapService);
 })();

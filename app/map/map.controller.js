@@ -94,12 +94,18 @@
       };
 
       // If there's a query param in the URL when the controller
-      // is activated, then try and summon an information card
+      // is activated, then try and summon an information card,
+      // and (because we're activating the controller, thus arriving
+      // here for the first time from elsewhere) get the site's
+      // coordinates and put the map's centre there
       if ($location.$$search.divesite) {
+        setMapCentre($location.$$search.divesite, 'divesite');
         summonCard($location.$$search.divesite, 'divesite');
       } else if ($location.$$search.slipway) {
+        setMapCentre($location.$$search.slipway, 'slipway');
         summonCard($location.$$search.slipway, 'slipway');
       } else if ($location.$$search.compressor) {
+        setMapCentre($location.$$search.compressor, 'compressor');
         summonCard($location.$$search.compressor, 'compressor');
       }
 
@@ -333,6 +339,17 @@
       // that it's a divesite
       const type = model.type === undefined ? 'divesite' : model.type;
       $location.search(`${type}=${model.id}`);
+    }
+
+    /* Given an ID and a type, retrieve the site info and set the map centre */
+    function setMapCentre(id, type) {
+      mapService.getSiteCoordinates(id, type)
+      .then((latLng) => {
+        vm.map.center = {
+          latitude: latLng.latitude,
+          longitude: latLng.longitude,
+        };
+      });
     }
 
     /* Summon an information card for a site */
