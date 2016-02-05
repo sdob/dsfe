@@ -9,6 +9,11 @@
     };
 
     function link(scope, elem, attrs, controller) {
+      // Enable tab functionality
+      $('#js-tab-menu a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+      });
     }
   }
 

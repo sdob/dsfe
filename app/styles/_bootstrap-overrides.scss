@@ -30,3 +30,21 @@ label {
   /* Stop Bootstrap modals from sliding */
   transform: translate(0, 0);
 }
+
+.nav-tabs > li {
+  margin-bottom: 0;
+}
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+  border: 0;
+  border-radius: 0;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border: 0;
+  border-radius: 0;
+}
