@@ -17,6 +17,11 @@
         // Put profile data into scope
         $scope.user = profileService.formatResponseData(profile);
 
+        // Ensure that nothing is undefined
+        $scope.user.compressors = $scope.user.compressors || [];
+        $scope.user.divesites = $scope.user.divesites || [];
+        $scope.user.slipways = $scope.user.slipways || [];
+
         // Build a 'contributions' list
         $scope.user.placesAdded = [].concat(
           $scope.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
@@ -36,6 +41,8 @@
           height: 318,
           crop: 'fill',
         });
+        console.log('**** got a url for ya');
+        console.log(url);
         // Push this into the next tick
         $timeout(() => {
           vm.profileImageUrl = url;
