@@ -1,10 +1,11 @@
 (function() {
   'use strict';
-  function EditProfileController($location, dsapi, dsimg, localStorageService, profileService) {
+  function EditProfileController($location, $scope, $uibModal, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.cancel = cancel;
       vm.saveNewPassword = saveNewPassword;
       vm.saveProfile = saveProfile;
       vm.cancelEditingPassword = cancelEditingPassword;
@@ -16,6 +17,23 @@
         vm.user = profileService.formatResponseData(response.data);
         console.log(vm.user);
       });
+    }
+
+    function cancel() {
+      if ($scope.editForm.$dirty) {
+        const instance = $uibModal.open({
+          templateUrl: 'profile/cancel-edit-profile-modal.html',
+          controller: 'CancelEditProfileModalController',
+          controllerAs: 'vm',
+        });
+        instance.result.then((reason) => {
+          if (reason === 'perform-cancel') {
+            $location.path('/me');
+          }
+        });
+      } else {
+        $location.path('/me');
+      }
     }
 
     function cancelEditingPassword() {
@@ -34,7 +52,7 @@
       dsapi.updateProfile(profileService.formatRequestData(vm.user))
       .then((response) => {
         console.log(response.data);
-        $location.path('/users/me');
+        $location.path('/me');
       })
       .catch((err) => {
         console.error(err);
@@ -48,6 +66,8 @@
 
   EditProfileController.$inject = [
     '$location',
+    '$scope',
+    '$uibModal',
     'dsapi',
     'dsimg',
     'localStorageService',

@@ -2,7 +2,7 @@
     <div class="row">
         <h1 class="col-sm-10 col-sm-offset-2">Edit profile</h1>
     </div>
-    <form>
+    <form name="editForm">
         <section class="form-horizontal">
             <div class="form-group ds-form-group-lg">
                 <label class="col-sm-2 control-label" for="edit-profile__name">Name</label>
@@ -57,6 +57,9 @@
         </section>
         <section>
             <div class="ds-form__submit-row">
+                <button ng-click="vm.cancel()" class="btn btn-default big-button">
+                    Cancel
+                </button>
                 <button ng-click="vm.saveProfile()" class="btn btn-primary big-button">
                     Save
                 </button>
