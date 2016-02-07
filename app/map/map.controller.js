@@ -61,8 +61,9 @@
       });
 
       // Initialize markers as an empty array so that it's never undefined
-      // (and angular-google-maps doesn't complain)
-      vm.mapMarkers = [];
+      // (and angular-google-maps doesn't complain). We're putting this
+      // onto the scope so that nested controllers can access it.
+      $scope.mapMarkers = [];
 
       // Set map event listeners
       vm.mapEvents =  {
@@ -134,7 +135,7 @@
       const getDivesites = dsapi.getDivesites()
       .then((response) => {
         vm.sites = response.data; // Allow us to use the sites in other controllers
-        vm.mapMarkers = vm.mapMarkers.concat(response.data.map(transformSiteToMarker));
+        $scope.mapMarkers = $scope.mapMarkers.concat(response.data.map(transformSiteToMarker));
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -142,7 +143,7 @@
       const getCompressors = dsapi.getCompressors()
       .then((response) => {
         const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.compressor, 'compressor'));
-        vm.mapMarkers = vm.mapMarkers.concat(compressorMarkers);
+        $scope.mapMarkers = $scope.mapMarkers.concat(compressorMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -150,7 +151,7 @@
       const getSlipways = dsapi.getSlipways()
       .then((response) => {
         const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
-        vm.mapMarkers = vm.mapMarkers.concat(slipwayMarkers);
+        $scope.mapMarkers = $scope.mapMarkers.concat(slipwayMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -161,7 +162,7 @@
         if ($location.$$search) {
           const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
           const id = $location.$$search[type];
-          const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
+          const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
           // Set the marker icon and remove the 'loading' indicator
           $timeout(() => {
             vm.isLoading = false;
@@ -196,7 +197,7 @@
       if (c.params) {
         const type = Object.keys(c.params)[0]; // only pay attention to the first key
         const id = c.params[type];
-        const selectedMarker = vm.mapMarkers.filter((m) => m.id === id)[0];
+        const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
         // Set the marker icon
         $timeout(() => {
           setSelectedMarker(selectedMarker);
@@ -223,7 +224,7 @@
 
     // Update marker visibility when new filter preference information arrives
     function listenForPreferenceChanges(e, preferences) {
-      if (vm.mapMarkers) {
+      if ($scope.mapMarkers) {
         updateMarkerVisibility(preferences);
       }
 
@@ -231,7 +232,7 @@
       // invisible, and change the route
       if (selectedMarkerID) {
         console.log('should selected marker be visible?');
-        const selectedMarker = vm.mapMarkers.filter((m) => m.id === selectedMarkerID)[0];
+        const selectedMarker = $scope.mapMarkers.filter((m) => m.id === selectedMarkerID)[0];
         console.log(shouldBeVisible(selectedMarker, preferences));
         if (!shouldBeVisible(selectedMarker, preferences)) {
           // Treat this as a please-kill-me event
@@ -320,7 +321,7 @@
 
     function setSelectedMarker(marker) {
       if (selectedMarkerID) {
-        const oldSelectedMarker = vm.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
+        const oldSelectedMarker = $scope.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
         if (oldSelectedMarker) { // Just in case it's been deleted or removed from the markers
           oldSelectedMarker.icon = defaultMarkerIcons[oldSelectedMarker.type];
         }
@@ -375,7 +376,7 @@
      * changed, iterate over the map markers and set each one's visibility.
      */
     function updateMarkerVisibility(preferences) {
-      vm.mapMarkers.forEach((m) => {
+      $scope.mapMarkers.forEach((m) => {
         m.options.visible = shouldBeVisible(m, preferences);
       });
     }
