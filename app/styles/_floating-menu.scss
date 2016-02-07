@@ -1,3 +1,32 @@
+.add-something-menu {
+  top: 14em;
+  left: 2em;
+  z-index: 4;
+}
+
+.filter-menu {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 100px);
+  // overflow-y: hidden;
+  top: 10em;
+  left: 2em;
+  z-index: 5;
+}
+
+.search-menu {
+  top: 6em;
+  left: 2em;
+  z-index: 6;
+}
+.search-menu__dropdown-menu {
+  border: 0;
+  margin-top: 0;
+  padding-top: 0;
+  position: initial;
+  width: 100%;
+}
+
 .floating-menu {
   /* Shared by filter and add-something menus */
 
@@ -35,6 +64,12 @@
   @media (min-width: $screen-md-min) {
     right: initial;
   }
+}
+
+.floating-menu__icon {
+  font-size: initial;
+  margin-left: calc(1.28571429em / 2);
+  margin-right: calc(1.28571429em / 2);
 }
 
 .floating-menu.open {
@@ -112,4 +147,12 @@
 
 .floating-menu__header-text {
   margin: 8px 16px;
+}
+
+.search-result__icon {
+  width: 20px;
+}
+
+.search-result__text {
+  margin-left: 8px;
 }

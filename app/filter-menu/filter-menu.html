@@ -3,8 +3,8 @@
         class="floating-menu__header floating-menu__header--xs"
         data-toggle="collapse"
         data-target="#js-filter-menu__collapse">
-        <i class="floating-menu__icon--when-open fa fa-fw fa-minus"></i>
-        <i class="floating-menu__icon--when-closed fa fa-fw fa-filter"></i>
+        <i class="floating-menu__icon floating-menu__icon--when-open fa fa-fw fa-minus"></i>
+        <i class="floating-menu__icon floating-menu__icon--when-closed fa fa-fw fa-filter"></i>
         <span class="header-text">Filter</span>
     </a>
     <a 
@@ -17,18 +17,6 @@
     </a>
     <div id="js-filter-menu__collapse" class="floating-menu__content filter-menu__content collapse">
 
-        <section class="filter-menu__section filter-menu__search-bar">
-            <h3 class="filter-menu__section-header">
-                Search
-            </h3>
-            <form novalidate>
-                <input class="form-control" type="text"
-                ng-model="fmvm.selectedSite"
-                uib-typeahead="divesite.name for divesite in mc.sites | filter:$viewValue"
-                typeahead-on-select="fmvm.handleSearchSelect($item)"
-                />
-            </form>
-        </section>
 
         <div class="filter-menu__section filter-menu__amenities">
             <h3 class="filter-menu__section-header">

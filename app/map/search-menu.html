@@ -1,0 +1,41 @@
+<div class="search-menu floating-menu">
+    <script type="text/ng-template" id="searchResultTemplate.html">
+        <a>
+            <img ng-src="{{ match.model.icon }}" class="search-result__icon" />
+            <span class="search-result__text" ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+        </a>
+    </script>
+
+    <a href
+        class="floating-menu__header floating-menu__header--xs"
+        data-toggle="collapse"
+        data-target="#main-map__search-menu"
+        >
+        <i class="floating-menu__icon floating-menu__icon--when-open fa fa-fw fa-minus"></i>
+        <i class="floating-menu__icon floating-menu__icon--when-closed fa fa-fw fa-search"></i>
+        <span class="header-text">Search</span>
+    </a>
+    <a href
+        class="floating-menu__header floating-menu__header--md-min collapsed"
+        data-toggle="collapse"
+        data-target="#main-map__search-menu"
+        >
+        <h2 class="floating-menu__header-text">Search</h2>
+        <span class="floating-menu__header-chevron fa fa-fw fa-chevron-down"></span>
+    </a>
+    <div class="floating-menu__content collapse"
+        id="main-map__search-menu"
+        >
+        <section>
+            <form novalidate>
+                <input class="form-control" type="text"
+                ng-model="smvm.selectedSite"
+                typeahead-template-url="searchResultTemplate.html"
+                uib-typeahead="marker as marker.title for marker in mapMarkers | filter:$viewValue"
+                typeahead-on-select="vm.handleSearchSelect($item)"
+                typeahead-popup-template-url="map/typeahead-custom-popup.html"
+                />
+            </form>
+        </section>
+    </div>
+</div>

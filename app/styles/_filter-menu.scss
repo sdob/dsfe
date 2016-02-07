@@ -1,18 +1,3 @@
-.add-something-menu {
-  top: 10em;
-  left: 2em;
-  z-index: 4;
-}
-
-.filter-menu {
-  display: flex;
-  flex-direction: column;
-  max-height: calc(100% - 100px);
-  // overflow-y: hidden;
-  top: 6em;
-  left: 2em;
-  z-index: 5;
-}
 
 .floating-menu__header {
   background: $blue-700;

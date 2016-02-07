@@ -1,0 +1,55 @@
+<!--
+
+<div class="login-modal__sign-in-separator">
+    <div class="text">
+        or
+    </div>
+</div>
+
+<div class="form-group ds-form-group-lg"
+    ng-class="{'has-error': signInForm.email.$invalid && signInForm.$submitted}"
+    >
+    <label class="control-label" for="signIn__username">
+        Email address
+    </label>
+    <input ng-required="true" name="email" class="form-control"
+    id="signIn__username"
+    ng-model="vm.user.email"
+    />
+    <span class="help-block"
+        ng-show="signInForm.email.$invalid && signInForm.$submitted"
+        >
+        Enter a valid email address
+    </span>
+</div>
+<div>
+    <div class="form-group ds-form-group-lg"
+        ng-class="{'has-error': signInForm.$submitted && (signInForm.password.$error.required || signInForm.passwordConfirm.$error.compareTo)}"
+        >
+        <label for="signIn__password">Password</label>
+        <input required name="password" class="form-control"
+        type="password"
+        ng-model="vm.user.password"
+        id="signIn__password" />
+        <span class="help-block"
+            ng-show="signInForm.$submitted && signInForm.password.$error.required"
+            >
+            Enter a password
+        </span>
+    </div>
+</div>
+<div class="ds-form__submit-row">
+    <button type="submit"
+        ng-switch="vm.isSubmitting"
+        ng-click="vm.submit()"
+        class="btn btn-primary big-button">
+        <span
+            class="fa fa-spinner fa-spin"
+            ng-switch-when="true"
+            >
+        </span>
+        <span ng-switch-default>
+            Sign in</span>
+    </button>
+</div>
+-->

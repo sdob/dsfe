@@ -117,6 +117,8 @@
 
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
+      // Listen for item selections in the search menu
+      $scope.$on('search-selection', listenForSearchSelection);
 
       // Listen for an information card declaring that it wants to be removed.
       // In this case, we remove the element *and* clear the search path.
@@ -243,6 +245,18 @@
           });
         }
       }
+    }
+
+    function listenForSearchSelection(e, item) {
+      console.log('received search-selection event');
+      console.log(item);
+      // Set map center
+      vm.map.center = {
+        latitude: item.loc.latitude,
+        longitude: item.loc.longitude,
+      };
+      // Do a routeUpdate
+      $location.search(`${item.type}=${item.id}`);
     }
 
     function closeContextMenu() {
