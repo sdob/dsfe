@@ -1,0 +1,4 @@
+<a class="search-menu__result">
+    <img ng-src="{{ match.model.icon }}" class="search-result__icon" />
+    <span class="search-result__text" ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+</a>
