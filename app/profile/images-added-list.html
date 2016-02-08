@@ -1,0 +1,9 @@
+<div ng-repeat="image in vm.user.imagesAdded">
+    <div class="profile-image-list__container">
+        <img ng-src="{{ image.image.url }}" class="profile-image-list__image" />
+        <div class="profile-image-list__bumf">
+            <p class="profile-image-list__bumf-divesite">{{ image.divesiteName }}</p>
+            <p class="profile-image-list__bumf-date">{{ image.createdAt | date }} </p>
+        </div>
+    </div>
+</div>

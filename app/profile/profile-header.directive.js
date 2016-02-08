@@ -5,11 +5,11 @@
       controller: 'ProfileHeaderController',
       controllerAs: 'vm',
       link,
+      scope: true,
       templateUrl: 'profile/profile-header.html',
     };
 
     function link(scope, element, attrs, controller) {
-      console.log('profileHeader.link()');
     }
   }
 

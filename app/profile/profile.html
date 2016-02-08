@@ -1,5 +1,5 @@
 <div class="profile container">
-    <profile-header userId="userId" user="vm.user" editable="vm.editable"></profile-header>
+    <profile-header user="vm.user" editable="vm.editable"></profile-header>
     <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
         <li role="presentation" class="active profile__tab-menu-item">
             <a class="profile__tab-link" href aria-controls="dive-log" role="tab" data-toggle="tab" data-target="#js-dive-log">
@@ -20,25 +20,25 @@
 
     <section class="tab-content">
         <section id="js-dive-log" class="tab-pane active profile__dive-log">
-            <dive-log-list ng-if="user.dives.length" dives="vm.user.dives"></dive-log-list>
-            <div ng-if="!user.dives.length" class="profile__no-dives">
+            <dive-log-list ng-if="vm.user.dives.length"></dive-log-list>
+            <div ng-if="!vm.user.dives.length" class="profile__no-dives">
                 <i class="fa fa-fw fa-frown-o"></i>
                 Nothing yet!
             </div>
         </section>
         <section role="tabpanel" id="js-places-added" class="tab-pane profile__places-added">
-            <places-added-list ng-if="user.placesAdded.length"></places-added-list>
-            <div ng-if="!user.placesAdded.length" class="profile__no-places-added">
+            <places-added-list ng-if="vm.user.placesAdded.length"></places-added-list>
+            <div ng-if="!vm.user.placesAdded.length" class="profile__no-places-added">
                 <i class="fa fa-fw fa-frown-o"></i>
                 Nothing yet!
             </div>
         </section>
         <section role="tabpanel" id="js-images-added" class="tab-pane profile__images-added">
-            <div ng-if="!user.imagesAdded.length" class="profile__no-images-added">
+            <images-added-list ng-if="vm.user.imagesAdded.length"></images-added-list>
+            <div ng-show="!vm.user.imagesAdded.length" class="profile__no-images-added">
                 <i class="fa fa-fw fa-frown-o"></i>
                 Nothing yet!
             </div>
         </section>
     </section>
-
 </div>

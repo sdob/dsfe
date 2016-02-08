@@ -4,7 +4,6 @@
     return {
       templateUrl: 'profile/profile.html',
       restrict: 'E',
-      controllerAs: 'vm',
       link,
     };
 

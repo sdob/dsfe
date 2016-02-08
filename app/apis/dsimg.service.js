@@ -48,6 +48,12 @@
       deleteProfileImage: () => {
         return $http.delete(`${IMG_API_URL}/profile_image/`);
       },
+
+      /* Retrieve user images */
+
+      getUserImages: (userID) => {
+        return $http.get(`${IMG_API_URL}/users/${userID}/images`);
+      },
     };
   }
 

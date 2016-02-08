@@ -53,9 +53,7 @@
       template: '<log-dive></log-dive>',
     })
     .when('/me', {
-      template: '<profile></profile>',
-      controller: 'OwnProfileController',
-      controllerAs: 'vm',
+      template: '<own-profile></own-profile>',
     })
     .when('/me/edit', {
       template: '<edit-profile></edit-profile>',

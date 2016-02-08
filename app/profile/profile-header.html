@@ -26,7 +26,7 @@
                             ng-click="vm.summonProfileImageUploadModal()">
                             <span class="fa fa-stack">
                                 <i class="fa fa-stack-2x fa-circle"></i>
-                                    <i class="fa fa-inverse fa-stack-1x fa-edit"></i>
+                                <i class="fa fa-inverse fa-stack-1x fa-edit"></i>
                             </span>
                         </a>
                     </div>
@@ -55,14 +55,14 @@
     <div class="profile-header__details col-sm-8">
         <h1 class="profile-header__name">
             <span>
-                {{ user.name }}
+                {{ vm.user.name }}
             </span>
         </h1>
         <div class="profile-header__member-since">
-            Member since {{ user.date_joined | date:'MMMM yyyy' }}
+            Member since {{ vm.user.date_joined | date:'MMMM yyyy' }}
         </div>
         <div class="profile-header__about-me">
-            {{ user.aboutMe }}
+            {{ vm.user.aboutMe }}
         </div>
         <ul ng-if="editable" class="list-unstyled action-menu">
             <li class="action-menu__action-item">
@@ -72,6 +72,6 @@
                 </a>
             </li>
         </ul>
-        <profile-stats class="profile-header__stats" user="user"></profile-stats>
+        <profile-stats class="profile-header__stats" user="vm.user"></profile-stats>
     </div>
 </div>

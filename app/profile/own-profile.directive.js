@@ -2,7 +2,9 @@
   'use strict';
   function ownProfile() {
     return {
-      templateUrl: 'views/own-profile.html',
+      controller: 'OwnProfileController',
+      controllerAs: 'vm',
+      templateUrl: 'profile/profile.html',
       restrict: 'E',
     };
   }

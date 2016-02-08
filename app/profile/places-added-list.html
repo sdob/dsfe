@@ -1,4 +1,4 @@
-<div ng-repeat="place in user.placesAdded" class="row places-added__item">
+<div ng-repeat="place in vm.user.placesAdded" class="row places-added__item">
     <div class="col-xs-4 places-added__icon" ng-switch="place.type">
         <img ng-switch-when="divesite" ng-src="/img/divesite_square.svg" />
         <img ng-switch-when="compressor" ng-src="/img/compressor.svg" />

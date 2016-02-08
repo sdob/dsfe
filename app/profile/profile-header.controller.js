@@ -6,56 +6,62 @@
     activate();
 
     function activate() {
+      console.log('ProfileHeaderController.activate()');
       vm.dsimgHasResponded = false;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
 
-      const userId = $scope.userId;
-      // Retrieve the user profile
-      profileService.getUserProfile(userId)
-      .then((profile) => {
-        // Put profile data into scope
-        $scope.user = profileService.formatResponseData(profile);
+      // Wait for profile controller to receive the user data before updating
+      $scope.$on('user-loaded', (e, user) => {
+        vm.user = user;
+        console.log($scope);
+        const userId = vm.user.id;
 
-        // Ensure that nothing is undefined
-        $scope.user.compressors = $scope.user.compressors || [];
-        $scope.user.divesites = $scope.user.divesites || [];
-        $scope.user.slipways = $scope.user.slipways || [];
+        // Retrieve the user profile
+        profileService.getUserProfile(userId)
+        .then((profile) => {
+          // Put profile data into scope
+          vm.user = profileService.formatResponseData(profile);
 
-        // Build a 'contributions' list
-        $scope.user.placesAdded = [].concat(
-          $scope.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
-          $scope.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x)),
-          $scope.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
-        );
+          // Ensure that nothing is undefined
+          vm.user.compressors = vm.user.compressors || [];
+          vm.user.divesites = vm.user.divesites || [];
+          vm.user.slipways = vm.user.slipways || [];
 
-        console.log($scope.user.placesAdded);
+          // Build a 'contributions' list
+          vm.user.placesAdded = [].concat(
+            vm.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
+              vm.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x)),
+                vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
+          );
 
-        // Look for a profile image
-        return dsimg.getUserProfileImage(profile.id);
-      })
-      .then((response) => {
-        // If we get a successful response, use it
-        const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
-          width: 318,
-          height: 318,
-          crop: 'fill',
+          //console.log(vm.user.placesAdded);
+          console.log($scope);
+
+          // Look for a profile image
+          return dsimg.getUserProfileImage(profile.id);
+        })
+        .then((response) => {
+          // If we get a successful response, use it
+          const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
+            width: 318,
+            height: 318,
+            crop: 'fill',
+          });
+          // Push this into the next tick
+          $timeout(() => {
+            vm.profileImageUrl = url;
+            vm.dsimgHasResponded = true;
+          }, 0);
+        })
+        .catch((err) => {
+          // On failure (including 404) jus tmake sure that
+          // the UI is clean
+          console.error(err);
+          $timeout(() => {
+            vm.dsimgHasResponded = true;
+          }, 0);
         });
-        console.log('**** got a url for ya');
-        console.log(url);
-        // Push this into the next tick
-        $timeout(() => {
-          vm.profileImageUrl = url;
-          vm.dsimgHasResponded = true;
-        }, 0);
-      })
-      .catch((err) => {
-        // On failure (including 404) jus tmake sure that
-        // the UI is clean
-        console.error(err);
-        $timeout(() => {
-          vm.dsimgHasResponded = true;
-        }, 0);
       });
     }
 
@@ -66,7 +72,7 @@
         controller: 'DeleteProfileImageModalController',
         controllerAs: 'vm',
         resolve: {
-          user: () => $scope.user,
+          user: () => vm.user,
         },
         size: 'sm',
       });
@@ -87,14 +93,14 @@
         controller: 'ProfileImageUploadController',
         controllerAs: 'vm',
         resolve: {
-          user: () => $scope.user,
+          user: () => vm.user,
         },
         size: 'sm',
       });
       instance.result.then((reason) => {
         console.log(`modal dismissed with reason: ${reason}`);
         if (reason === 'uploaded') {
-          dsimg.getUserProfileImage($scope.user.id)
+          dsimg.getUserProfileImage(vm.user.id)
           .then((response) => {
             console.log('received response from dsimg');
             console.log(response.data);
