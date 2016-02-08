@@ -13,7 +13,16 @@ module.exports = {
         '*.html',
         'img/**/*',
       ],
-    }],
+    },
+    {
+      expand: true,
+      cwd: 'bower_components/bootstrap/fonts',
+      dest: '<%= cfg.dist %>/fonts',
+      src: [
+        '*.{eot,ttf,woff,woff2}',
+      ],
+    }
+    ],
   },
   styles: {
     expand: true,

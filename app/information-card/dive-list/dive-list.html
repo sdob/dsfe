@@ -25,7 +25,10 @@
                 <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
             </div>
             <div>
-                {{ dive.start_time | date:'d MMM yyyy' }}
+                {{ dive.date | date:'d MMM yyyy' }}
+                <span ng-if="dive.time">
+                    at {{ dive.time | date:'HH:mm' }}
+                </span>
             </div>
             <span>{{ dive.depth }} m</span>
             <span>{{ dive.duration | duration }} minutes</span>
