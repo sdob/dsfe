@@ -2,6 +2,8 @@
   'use strict';
   function profileDirective() {
     return {
+      controller: 'ProfileController',
+      controllerAs: 'vm',
       templateUrl: 'profile/profile.html',
       restrict: 'E',
       link,

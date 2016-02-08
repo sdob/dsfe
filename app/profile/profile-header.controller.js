@@ -13,8 +13,8 @@
 
       // Wait for profile controller to receive the user data before updating
       $scope.$on('user-loaded', (e, user) => {
+        console.log('profile header heard user-loaded');
         vm.user = user;
-        console.log($scope);
         const userId = vm.user.id;
 
         // Retrieve the user profile

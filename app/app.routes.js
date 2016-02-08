@@ -43,8 +43,6 @@
     })
     .when('/users/:userId', {
       template: '<profile></profile>',
-      controller: 'ProfileController',
-      controllerAs: 'vm',
     })
     .when('/divesites/:divesiteId', {
       templateUrl: 'views/divesite.html',
