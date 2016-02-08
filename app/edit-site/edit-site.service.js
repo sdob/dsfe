@@ -2,7 +2,23 @@
 (function() {
   'use strict';
   function editSiteService($uibModal, $window, contextMenuService, dsapi) {
+
+    const apiCalls = {
+      compressor: (id) => {
+        return id ? dsapi.updateCompressor : dsapi.postCompressor;
+      },
+
+      divesite: (id) => {
+        return id ? dsapi.updateDivesite : dsapi.postDivesite;
+      },
+
+      slipway: (id) => {
+        return id ? dsapi.updateSlipway : dsapi.postSlipway;
+      },
+    };
+
     return {
+      apiCalls,
       formatRequest,
       formatResponse,
       getContextMenuCoordinates,

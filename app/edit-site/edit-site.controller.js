@@ -18,7 +18,7 @@
     activate();
 
     function activate() {
-      console.log(formatRequest, formatResponse);
+      console.log('EditSiteController.activate()');
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
@@ -27,12 +27,21 @@
       vm.submit = submit;
       vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
+      vm.updateMap = updateMap;
 
       // Retrieve map settings
       vm.map = mapService.get();
       // By default, we're adding a new site
       vm.siteTypeString = 'divesite';
       vm.title = 'Add a new divesite';
+
+      vm.mapEvents = {
+        center_changed: (evt) => {
+          // When the map center changes, update the site coords
+          vm.site.coords.latitude = evt.center.lat();
+          vm.site.coords.longitude = evt.center.lng();
+        },
+      };
 
       // Try to retrieve context menu coordinates and use them instead
       const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
@@ -45,10 +54,6 @@
 
       // Create a default site
       vm.site = mapService.defaultSite(vm.map);
-
-      // Create a default marker from the map
-      vm.marker = mapService.defaultMarker(vm.map);
-      vm.marker.events = { };
 
       // Pre-validate checkboxes (XXX: why?)
       vm.checkAtLeastOneEntryIsSelected();
@@ -65,15 +70,8 @@
           vm.site = formatResponse(response.data);
           // Validate the entry checkboxes
           vm.checkAtLeastOneEntryIsSelected();
-          // Set up map and marker
+          // Set up map
           vm.map.center = vm.site.coords;
-          vm.marker = {
-            id: vm.site.id,
-            coords: vm.site.coords,
-            options: {
-              draggable: true,
-            },
-          };
         })
         .then(() => dsimg.getDivesiteHeaderImage(vm.site.id))
         .then((response) => {
@@ -83,7 +81,6 @@
             console.log(vm.site.headerImageUrl);
           }
         });
-
         // TODO: handle invalid/missing divesite IDs
       }
     }
@@ -119,37 +116,25 @@
 
       // Re-format site data
       const data = formatRequest(vm.site);
-      console.log(data);
 
       // Based on whether $routeParams.id is defined, decide which
       // API call to use (create/update)
       const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
-      // Upload a header image.
-      // TODO: allow user to delete header image --- have this as a separate action
-      let imgServerCall = () => Promise.resolve(); // nop (default)
-      if (vm.imgFile) { // creating or replacing
-        imgServerCall = () => uploadHeaderImage(vm.imgFile);
-      }
-
       apiCall(data)
       .then((response) => {
         vm.site.id = response.data.id; // This is the edited/created site's ID
-        return imgServerCall();
       })
       .then((response) => {
-        console.log('return from api');
-        console.log(response);
+        // Save was successful
         vm.isSaving = false;
-
-        // TODO: summon a modal offering to take the user back
         vm.handleSuccessfulSave();
       })
       .catch((err) => {
+        // Problem with saving
         vm.isSaving = false;
         console.log('I GOT AN ERROR');
         console.log(err);
-
         // TODO: handle 4xx and 5xx errors
       });
     }
@@ -160,6 +145,14 @@
 
     function truncateCoordinate(n) {
       return Math.round(n * 10e6) / 10e6;
+    }
+
+    function updateMap() {
+      // When the site coordinates change, update the map
+      $timeout(() => {
+        vm.map.center.latitude = vm.site.coords.latitude;
+        vm.map.center.longitude = vm.site.coords.longitude;
+      });
     }
 
     function uploadHeaderImage(file) {

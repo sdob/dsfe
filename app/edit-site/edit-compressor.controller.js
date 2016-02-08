@@ -41,6 +41,7 @@
       // Wire up functions
       vm.submit = submit;
       vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
+      vm.updateMap = updateMap;
 
       // Initialize
       vm.siteTypeString = 'compressor';
@@ -175,6 +176,14 @@
         });
       }
 
+    }
+
+    function updateMap() {
+      // When the site coordinates change, update the map
+      $timeout(() => {
+        vm.map.center.latitude = vm.site.coords.latitude;
+        vm.map.center.longitude = vm.site.coords.longitude;
+      });
     }
   }
 

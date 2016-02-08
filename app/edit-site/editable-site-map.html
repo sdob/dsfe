@@ -2,7 +2,11 @@
     <span class="help-block">
         Drag the map under the marker.
     </span>
-    <ui-gmap-google-map center='vm.map.center' zoom='vm.map.zoom'>
+    <ui-gmap-google-map
+        center='vm.map.center'
+        zoom='vm.map.zoom'
+        events='vm.mapEvents'
+        >
     </ui-gmap-google-map>
 </div>
 <div class="form-group"
@@ -17,8 +21,9 @@
         <input
         type="text"
         class="editable-site-map__coordinate-input form-control ds-form-control"
-        ng-model="vm.map.center.latitude"
-        ng-change="vm.maintainCoordinateMaxLength()"
+        ng-model="vm.site.coords.latitude"
+        ng-model-options="{debounce: {'default': 200}}"
+        ng-change="vm.updateMap()"
         >
 
         <span class="editable-site-map__coordinate-axis" >
@@ -27,8 +32,9 @@
 
         <input type="text"
         class="editable-site-map__coordinate-input form-control ds-form-control"
-        ng-model="vm.map.center.longitude"
-        ng-change="vm.maintainCoordinateMaxLength()"
+        ng-model="vm.site.coords.longitude"
+        ng-model-options="{debounce: {'default': 200}}"
+        ng-change="vm.updateMap()"
         >
         <span class="editable-site-map__coordinate-axis"> ° E</span>
     </div>
