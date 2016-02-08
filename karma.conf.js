@@ -24,7 +24,6 @@ module.exports = function(config) {
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/angular-google-chart/ng-google-chart.js',
       'bower_components/d3/d3.js',
-      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/moment/moment.js',
       'bower_components/d3.chart/d3.chart.js',
       'bower_components/d3.compose/dist/d3.compose-all.js',
@@ -37,6 +36,7 @@ module.exports = function(config) {
       'bower_components/angular-simple-logger/dist/angular-simple-logger.js',
       'bower_components/lodash/lodash.js',
       'bower_components/angular-google-maps/dist/angular-google-maps.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower

@@ -21,7 +21,6 @@
       const dt = logDiveService.defaultDateAndTime();
       vm.dive = {
         date: dt.date,
-        time: dt.time,
         site: vm.site,
       };
       vm.options = {
@@ -32,14 +31,21 @@
     function formatRequest(dive) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       // Build the object that DSAPI expects
       const combinedDateAndTime = logDiveService.combineDateAndTime(dive.date, dive.time);
+      console.log('date');
+      console.log(dive.date);
+      console.log('time');
+      console.log(dive.time);
       const request = {
-        start_time: combinedDateAndTime.toISOString(),
+        date: moment(dive.date).format('YYYY-MM-DD'),
+        time: dive.time ? moment(dive.time).format('HH:mm') : undefined,
         duration: moment.duration(dive.duration, 'minutes'),
         depth: dive.maximumDepth,
         average_depth: dive.averageDepth,
         comment: dive.comment,
         divesite: dive.site.id,
       };
+      console.log('request');
+      console.log(request);
       return request;
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 

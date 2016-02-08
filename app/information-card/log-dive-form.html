@@ -28,7 +28,8 @@
             <div class="col-sm-6"> <!-- Time in -->
                 <div class="form-group ds-form-group-lg">
                     <label for="log-dive-time">Time in
-                        (<a href ng-click="vm.options.showMeridian = !vm.options.showMeridian">
+                        (<a href class="link--undecorated" ng-click="vm.options.showMeridian = !vm.options.showMeridian">
+                            <i class="fa fa-clock-o"></i>
                             {{ vm.options.showMeridian ? '12hr' : '24hr' }}
                         </a>)
                     </label>
@@ -37,6 +38,9 @@
                         ng-model="vm.dive.time"
                         show-meridian="vm.options.showMeridian"
                         ></uib-timepicker>
+                    <span class="help-block">
+                        Optional: add the dive's start time.
+                    </span>
                 </div>
             </div> <!-- Time in --> 
         </div> <!-- Date and time -->

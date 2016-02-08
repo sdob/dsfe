@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function logDiveForm() {
+  function logDiveForm($timeout) {
     return {
       controller: 'InformationCardLogDiveFormController',
       controllerAs: 'vm',
@@ -9,6 +9,7 @@
   }
 
   logDiveForm.$inject = [
+    '$timeout',
   ];
   angular.module('divesites.informationCard').directive('logDiveForm', logDiveForm);
 })();
