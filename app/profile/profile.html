@@ -2,13 +2,18 @@
     <profile-header userId="userId" user="vm.user" editable="vm.editable"></profile-header>
     <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
         <li role="presentation" class="active profile__tab-menu-item">
-            <a href aria-controls="dive-log" role="tab" data-toggle="tab" data-target="#js-dive-log">
-                <h2 class="profile__tab-menu-text">Dive log</h2>
+            <a class="profile__tab-link" href aria-controls="dive-log" role="tab" data-toggle="tab" data-target="#js-dive-log">
+                <h2 class="profile__tab-menu-text">Dives</h2>
             </a>
         </li>
         <li role="presentation" class="profile__tab-menu-item">
-            <a href aria-controls="places-added" role="tab" data-toggle="tab" data-target="#js-places-added">
-                <h2 class="profile__tab-menu-text">Places added</h2>
+            <a class="profile__tab-link" href aria-controls="places-added" role="tab" data-toggle="tab" data-target="#js-places-added">
+                <h2 class="profile__tab-menu-text">Places</h2>
+            </a>
+        </li>
+        <li role="presentation" class="profile__tab-menu-item">
+            <a class="profile__tab-link" href aria-control="images-added" role="tab" data-toggle="tab" data-target="#js-images-added">
+                <h2 class="profile__tab-menu-text">Images</h2>
             </a>
         </li>
     </ul>
@@ -24,6 +29,12 @@
         <section role="tabpanel" id="js-places-added" class="tab-pane profile__places-added">
             <places-added-list ng-if="user.placesAdded.length"></places-added-list>
             <div ng-if="!user.placesAdded.length" class="profile__no-places-added">
+                <i class="fa fa-fw fa-frown-o"></i>
+                Nothing yet!
+            </div>
+        </section>
+        <section role="tabpanel" id="js-images-added" class="tab-pane profile__images-added">
+            <div ng-if="!user.imagesAdded.length" class="profile__no-images-added">
                 <i class="fa fa-fw fa-frown-o"></i>
                 Nothing yet!
             </div>

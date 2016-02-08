@@ -184,6 +184,7 @@
   margin-bottom: 0;
 }
 .profile__no-dives,
+.profile__no-images-added,
 .profile__no-places-added
 {
   align-items: center;
@@ -192,4 +193,8 @@
   display: flex;
   margin-top: 64px;
   flex-direction: column;
+}
+.nav-tabs > li.active > a.profile__tab-link {
+  background: rgba(0, 0, 0, 0.17);
+  background: rgba(0, 0, 0, 0.17);
 }
