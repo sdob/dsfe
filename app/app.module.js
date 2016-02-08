@@ -24,11 +24,22 @@
     'divesites.services',
     'divesites.widgets',
   ])
-  .run(($rootScope) => {
+  .run(($rootScope, $uibModalStack) => {
     const cloudName = 'cloud_name';
     $.cloudinary.config()[cloudName] = 'divesites';
     $rootScope.$on('$routeChangeStart', (event, next, current) => {
       console.log('$routeChangeStart');
+    });
+
+    // Intercept $locationChangeStart events and close an existing modal instead
+    $rootScope.$on('$locationChangeStart', (event) => {
+      event.preventDefault();
+      const top = $uibModalStack.getTop();
+      if (top) {
+        $uibModalStack.dismiss(top.key);
+      } else {
+        event.defaultPrevented = false;
+      }
     });
 
     // angular-google-maps installs lodash 4.x but uses '_.contains' and
