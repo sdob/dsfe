@@ -136,16 +136,16 @@
         console.log(reason);
         // On successful upload of an image, load it from DSIMG
         if (reason === 'uploaded') {
-          return informationCardService.getDivesiteHeaderImage(vm.site.id);
+          informationCardService.getDivesiteHeaderImage(vm.site.id)
+          .then((imageUrl) => {
+            console.log('came back with imageUrl');
+            console.log(imageUrl);
+            setDivesiteHeaderImage(imageUrl);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         }
-      })
-      .then((imageUrl) => {
-        console.log('came back with imageUrl');
-        console.log(imageUrl);
-        setDivesiteHeaderImage(imageUrl);
-      })
-      .catch((err) => {
-        console.error(err);
       });
     }
 
