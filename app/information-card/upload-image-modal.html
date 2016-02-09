@@ -1,0 +1,29 @@
+<div class="ds-modal">
+    <div class="ds-modal__header">
+        <h3 class="ds-modal__title">Add an image for <strong>{{ vm.site.name }}</strong></h3>
+    </div>
+    <button type="button"
+        ngf-select
+        ng-model="vm.imageFile">
+        Select Image
+    </button>
+    <div class="information-card__upload-thumbnail-container">
+        <img
+        ngf-thumbnail="vm.imageFile"
+        style="height: 200px; max-width: 100%"
+        />
+    </div>
+    <div class="ds-form__submit-row">
+        <button type="submit"
+            ng-click="vm.submit(vm.imageFile)"
+            class="btn btn-primary big-button">
+            <span
+                class="fa fa-spinner fa-spin"
+                ng-show="vm.isSaving">
+            </span>
+            <span ng-show="!vm.isSaving">
+                Upload
+            </span>
+        </button>
+    </div>
+</div>

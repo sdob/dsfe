@@ -36,6 +36,7 @@
       $scope.isAuthenticated = $auth.isAuthenticated;
       vm.summonLogDiveModal = summonLogDiveModal;
       vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
+      vm.summonUploadImageModal = summonUploadImageModal;
       vm.toggleSectionVisibility = toggleSectionVisibility;
       vm.toggleUploadImageForm = toggleUploadImageForm;
 
@@ -112,6 +113,7 @@
       // If there's an image, dsimg will return 200 and a non-null object
       if (imageUrl) {
         $timeout(() => {
+          console.log('setting divesite header image');
           vm.site.headerImageUrl = imageUrl;
           vm.backgroundStyle = {
             background: `blue url(${vm.site.headerImageUrl}) center / cover`,
@@ -141,7 +143,6 @@
         controller: 'SetDivesiteHeaderImageModalController',
         controllerAs: 'vm',
         templateUrl: 'information-card/set-divesite-header-image-modal.html',
-        windowClass: 'modal-center',
         resolve: {
           site: () => vm.site,
         },
@@ -161,6 +162,17 @@
             console.error(err);
           });
         }
+      });
+    }
+
+    function summonUploadImageModal() {
+      const instance = $uibModal.open({
+        controller: 'UploadImageModalController',
+        controllerAs: 'vm',
+        templateUrl: 'information-card/upload-image-modal.html',
+        resolve: {
+          site: () => vm.site,
+        },
       });
     }
 
