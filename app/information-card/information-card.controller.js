@@ -91,6 +91,9 @@
         console.log(response);
         $timeout(() => {
           vm.site.comments = response.data;
+        })
+        .then(() => {
+          getCommenterProfileImages();
         });
       });
 
@@ -113,6 +116,9 @@
           $timeout(() => {
             vm.site.comments = response.data;
           });
+        })
+        .then(() => {
+          getCommenterProfileImages();
         });
       });
     }
@@ -140,6 +146,28 @@
         });
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+
+    function getCommenterProfileImages() {
+      const ids = new Set(vm.site.comments.map(c => c.owner.id));
+      ids.forEach((id) => {
+        dsimg.getUserProfileImage(id)
+        .then((response) => {
+          if (response.data && response.data.image && response.data.image.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+              height: 60,
+              width: 60,
+              crop: 'fill',
+              gravity: 'face',
+            });
+            $timeout(() => {
+              vm.site.comments.filter(c => c.owner.id === id).forEach((c) => {
+                c.owner.profileImageUrl = profileImageUrl;
+              });
+            }, 0);
+          }
+        });
+      });
+    }
 
     function setDivesiteHeaderImage(imageUrl) {
       // If there's an image, dsimg will return 200 and a non-null object
