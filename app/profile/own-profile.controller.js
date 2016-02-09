@@ -66,8 +66,6 @@
             console.log(response.data);
           });
         }
-
-        console.log('deletion cancelled');
       });
     }
   }
