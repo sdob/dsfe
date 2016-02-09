@@ -148,8 +148,6 @@
         },
       });
       instance.result.then((reason) => {
-        console.log('I returned from the modal with a reason');
-        console.log(reason);
         // On successful upload of an image, load it from DSIMG
         if (reason === 'uploaded') {
           informationCardService.getDivesiteHeaderImage(vm.site.id)
