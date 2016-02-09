@@ -46,9 +46,8 @@
         vm.site = response.data;
         vm.site.locData = informationCardService.formatGeocodingData(vm.site);
         // Get the divesite's images (if they exist)
-        informationCardService.getDivesiteImages(vm.site)
-        .then((images) => {
-          vm.site.images = images;
+        $timeout(() => {
+          loadDivesiteImages();
         });
 
         // Get divers' profile images
@@ -172,6 +171,12 @@
           site: () => vm.site,
         },
       });
+      instance.result.then((reason) => {
+        if (reason === 'image-uploaded') {
+          console.log('image was uploaded successfully');
+          loadDivesiteImages();
+        }
+      });
     }
 
     function toggleUploadImageForm() {
@@ -208,6 +213,16 @@
         });
         vm.sectionVisibilities[section] = true;
       }
+    }
+
+    function loadDivesiteImages() {
+      console.log('(re)loading divesite images');
+      informationCardService.getDivesiteImages(vm.site)
+      .then((images) => {
+        console.log('images retrieved from dsimg');
+        console.log(images);
+        $scope.images = images.map(i => i.image);
+      });
     }
   }
 

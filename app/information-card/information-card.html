@@ -21,14 +21,14 @@
         <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
 
         <div ng-show="icvm.sectionVisibilities.defaultSection">
-            <div ng-if="icvm.site.images.length"
+            <div ng-if="images.length"
                 class="information-card__divesite-image-section"
                 >
                 <h3 class="information-card__section-title">Images</h3>
                 <ul class="list-unstyled information-card__divesite-image-container" ng-controller="GalleryController as gc">
-                    <li class="information-card__divesite-image" ng-repeat="image in icvm.site.images">
+                    <li class="information-card__divesite-image" ng-repeat="image in images">
                         <a ng-click="gc.openLightboxModal($index)">
-                            <img ng-src="{{image.transformedUrl}}" />
+                            <img ng-src="{{ image.transformedUrl }}" />
                         </a>
                     </li>
                 </ul>

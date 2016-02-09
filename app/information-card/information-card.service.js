@@ -155,9 +155,9 @@
         // that there's content in the response body
         if (images) {
           images.forEach((image) => {
-            image.transformedUrl = $.cloudinary.url(image.image.public_id, {
-              height: 60,
-              width: 60,
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
               crop: 'fill',
             });
           });

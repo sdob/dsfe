@@ -9,12 +9,12 @@
       console.log($scope);
 
       // We're just looking for the object that contains the url property
-      vm.images = $scope.site.images.map(i => i.image);
+      // vm.images = $scope.site.images.map(i => i.image);
       vm.openLightboxModal = openLightboxModal;
     }
 
     function openLightboxModal(index) {
-      Lightbox.openModal(vm.images, index);
+      Lightbox.openModal($scope.images, index);
     }
   }
 
