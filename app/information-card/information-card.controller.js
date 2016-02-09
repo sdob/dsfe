@@ -13,6 +13,7 @@
       vm.site.images = {};
       // If we have geocoding data, then format it
       if (vm.site.geocoding_data) {
+        console.log('i have GEOCODING DATA');
         vm.site.locData = informationCardService.formatGeocodingData(vm.site);
       }
 
@@ -47,38 +48,40 @@
       vm.toggleSectionVisibility = toggleSectionVisibility;
       vm.toggleUploadImageForm = toggleUploadImageForm;
 
-      apiCall(id)
-      .then((response) => {
-        // Overwrite whatever site data we had at activation
-        $scope.site = response.data;
-        vm.site = response.data;
-        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+      $timeout(() => {
+        apiCall(id)
+        .then((response) => {
+          // Overwrite whatever site data we had at activation
+          $scope.site = response.data;
+          vm.site = response.data;
+          vm.site.locData = informationCardService.formatGeocodingData(vm.site);
 
-        // Get the divesite's images (if they exist)
-        $timeout(() => {
-          loadDivesiteImages();
+          // Get the divesite's images (if they exist)
+          $timeout(() => {
+            loadDivesiteImages();
+          });
+
+          // Get divers' profile images
+          getDiverProfileImages();
+
+          // Now we can determine whether the user owns this site
+          vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+
+          // Get nearby slipways
+          informationCardService.getNearbySlipways(vm.site)
+          .then((slipways) => {
+            vm.site.nearbySlipways = slipways;
+          });
+
+          // Force stats charts to be rebuilt
+          $timeout(() => {
+            // Push this into the next tick so that the charts directive has linked
+            $scope.$broadcast('refresh-statistics', vm.site);
+            // We're no longer loading, so remove the modal-mask
+            vm.isLoading = false;
+          });
         });
-
-        // Get divers' profile images
-        getDiverProfileImages();
-
-        // Now we can determine whether the user owns this site
-        vm.userIsOwner = informationCardService.userIsOwner(vm.site);
-
-        // Get nearby slipways
-        informationCardService.getNearbySlipways(vm.site)
-        .then((slipways) => {
-          vm.site.nearbySlipways = slipways;
-        });
-
-        // Force stats charts to be rebuilt
-        $timeout(() => {
-          // Push this into the next tick so that the charts directive has linked
-          $scope.$broadcast('refresh-statistics', vm.site);
-          // We're no longer loading, so remove the modal-mask
-          vm.isLoading = false;
-        });
-      });
+      }, 1000);
 
       /* Listen for events emitted upwards by LogDiveController */
       $scope.$on('dive-list-updated', (event) => {
@@ -225,12 +228,9 @@
     }
 
     function loadDivesiteImages() {
-      console.log('(re)loading divesite images');
       informationCardService.getDivesiteImages(vm.site)
       .then((images) => {
         if (images) {
-          console.log('images retrieved from dsimg');
-          console.log(images);
           $scope.images = images.map(i => {
             const image = Object.assign({}, i.image);
             image.ownerID = i.ownerID;

@@ -80,6 +80,7 @@
       return {
         boatEntry: s.boat_entry,
         depth: s.depth,
+        geocoding_data: s.geocoding_data,
         level: s.level,
         icon: defaultMarkerIcons.divesite,
         id: s.id,
@@ -104,6 +105,7 @@
      */
     function transformAmenityToMarker(s, icon, type) {
       return {
+        geocoding_data: s.geocoding_data,
         icon,
         id: s.id,
         loc: {

@@ -6,10 +6,6 @@
       controllerAs: 'vm',
       link,
       templateUrl: 'information-card/header/information-card-header.html',
-      scope: {
-        id: '=',
-        type: '=',
-      },
     };
 
     function link(scope, element, attrs, controller) {

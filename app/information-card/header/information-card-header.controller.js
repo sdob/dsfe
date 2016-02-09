@@ -7,8 +7,13 @@
     function activate() {
       const id = $scope.id;
       const type = $scope.type;
+      // If we know anything about this site, then we can
+      // preload
+      console.log('information card header');
+      // vm.site = $scope.site;
 
       // Retrieve divesite information
+      /*
       const { apiCall } = informationCardService.apiCalls[type];
       apiCall(id)
       .then((response) => {
@@ -16,6 +21,7 @@
         vm.site.locData = informationCardService.formatGeocodingData(vm.site);
         vm.userIsOwner = informationCardService.userIsOwner(vm.site);
       });
+      */
 
       // Get the divesite header image (if it exists)
       informationCardService.getDivesiteHeaderImage(id)

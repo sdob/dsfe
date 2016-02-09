@@ -397,6 +397,7 @@
           scope.site = {
             name: marker.title,
             owner: marker.owner,
+            geocoding_data: marker.geocoding_data,
           };
         }
       }
