@@ -24,7 +24,7 @@
                     <a href="/#/users/{{comment.owner.id}}/">{{ comment.owner.name }}</a>
                 </div>
                 <div>
-                    {{ comment.creation_date }}
+                    {{ comment.creation_date | date:'d MMM yyyy HH:mm' }}
                 </div>
             </div>
         </div>
