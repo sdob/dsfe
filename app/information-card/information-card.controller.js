@@ -34,6 +34,7 @@
       // Wire up functions
       vm.isAuthenticated = $auth.isAuthenticated;
       $scope.isAuthenticated = $auth.isAuthenticated;
+      vm.summonLogDiveModal = summonLogDiveModal;
       vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
       vm.toggleSectionVisibility = toggleSectionVisibility;
       vm.toggleUploadImageForm = toggleUploadImageForm;
@@ -119,9 +120,23 @@
       }
     }
 
+    function summonLogDiveModal() {
+      const instance = $uibModal.open({
+        controller: 'LogDiveModalController',
+        controllerAs: 'vm',
+        templateUrl: 'information-card/log-dive-modal.html',
+        resolve: {
+          site: () => vm.site,
+        },
+      });
+      instance.result.then((reason) => {
+        if (reason === 'logged') {
+          console.log('new dive logged');
+        }
+      });
+    }
+
     function summonSetDivesiteHeaderImageModal() {
-      console.log('summoning divesite-header-image-modal');
-      console.log(vm.site);
       const instance = $uibModal.open({
         controller: 'SetDivesiteHeaderImageModalController',
         controllerAs: 'vm',
