@@ -219,9 +219,15 @@
       console.log('(re)loading divesite images');
       informationCardService.getDivesiteImages(vm.site)
       .then((images) => {
-        console.log('images retrieved from dsimg');
-        console.log(images);
-        $scope.images = images.map(i => i.image);
+          if (images) {
+          console.log('images retrieved from dsimg');
+          console.log(images);
+          $scope.images = images.map(i => {
+            const image = Object.assign({}, i.image);
+            image.ownerID = i.ownerID;
+            return image;
+          });
+        }
       });
     }
   }

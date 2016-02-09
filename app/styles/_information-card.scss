@@ -109,6 +109,7 @@
     &:not(:last-child) {
       margin-right: 8px;
     }
+    position: relative;
   }
 }
 
@@ -197,6 +198,12 @@
   cursor: pointer;
   color: #fff !important;
   transition: transform 100ms;
+}
+
+.information-card__divesite-image-delete-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .information-card__dismiss-button {
