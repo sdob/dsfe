@@ -4,6 +4,7 @@
   /* Main app module. */
   angular.module('divesites', [
     /* Third-party dependencies */
+    'ngAnimate',
     'LocalStorageModule',
     'bootstrapLightbox',
     'ngFileUpload',

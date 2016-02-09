@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, informationCardService, localStorageService) {
+  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
@@ -49,11 +49,12 @@
       vm.toggleUploadImageForm = toggleUploadImageForm;
 
       $timeout(() => {
+        // Retrieve as much data as we can
         apiCall(id)
         .then((response) => {
           // Overwrite whatever site data we had at activation
           $scope.site = response.data;
-          vm.site = response.data;
+          vm.site = Object.assign(vm.site, response.data);
           vm.site.locData = informationCardService.formatGeocodingData(vm.site);
 
           // Get the divesite's images (if they exist)
@@ -83,7 +84,17 @@
         });
       }, 1000);
 
-      /* Listen for events emitted upwards by LogDiveController */
+      // Retrieve comments
+      dscomments.getDivesiteComments(id)
+      .then((response) => {
+        console.log('response from dscomments');
+        console.log(response);
+        $timeout(() => {
+          vm.site.comments = response.data;
+        });
+      });
+
+      /* Listen for events emitted upwards by child controllers */
       $scope.$on('dive-list-updated', (event) => {
         console.log('InformationController received "dive-list-updated"...');
         dsapi.getDivesite(vm.site.id)
@@ -92,6 +103,16 @@
 
           // Broadcast a refresh-histogram event to child scopes
           $scope.$broadcast('refresh-statistics', vm.site);
+        });
+      });
+
+      $scope.$on('comment-added', (event) => {
+        console.log('heard comment-added');
+        dscomments.getDivesiteComments(vm.site.id)
+        .then((response) => {
+          $timeout(() => {
+            vm.site.comments = response.data;
+          });
         });
       });
     }
@@ -249,6 +270,7 @@
     '$timeout',
     '$uibModal',
     'dsapi',
+    'dscomments',
     'dsimg',
     'informationCardService',
     'localStorageService',

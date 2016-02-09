@@ -1,0 +1,37 @@
+<div class="information-card__body-section">
+    <h3 class="information-card__section-title">Comments</h3>
+    <div ng-if="vm.isAuthenticated()" class="information-card__comment-form">
+        <form name="vm.commentForm" novalidate>
+            <textarea name="comentText" class="form-control"
+                ng-model="vm.comment.text"
+                ></textarea>
+            <div class="ds-form__submit-row">
+                <button ng-click="vm.submit()" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="information-card__comment" ng-repeat="comment in comments | orderBy:'-'">
+        <div class="information-card__dive-header">
+            <div class="information-card__dive-image" ng-show="comment.owner.profileImageUrl">
+                <!-- width and height seem to need hard-coding -->
+                <img height="60" width="60" ng-src="{{ comment.owner.profileImageUrl }}" />
+            </div>
+            <div class="information-card__dive-image--none" ng-show="!comment.owner.profileImageUrl">
+                <i class="fa fa-fw fa-user fa-3x"></i>
+            </div>
+            <div class="information-card__dive-details">
+                <div>
+                    <a href="/#/users/{{comment.owner.id}}/">{{ comment.owner.name }}</a>
+                </div>
+                <div>
+                    {{ comment.creation_date }}
+                </div>
+            </div>
+        </div>
+
+        <div class="information-card__dive-comment">
+            {{ comment.text }}
+        </div>
+
+    </div>
+</div>

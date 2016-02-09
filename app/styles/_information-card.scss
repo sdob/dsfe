@@ -148,6 +148,8 @@
   margin-bottom: 0px;
 }
 
+.information-card__comment,
+.information-card__comment-form,
 .information-card__dive {
   margin-bottom: 16px;
   margin-left: 4px;
@@ -155,6 +157,13 @@
   margin-bottom: 16px;
   padding: 4px;
   position: relative; // to allow absolute child positioning
+}
+
+.information-card__comment.ng-enter {
+  transition: 0.5s linear all;
+}
+.information-card__comment.ng-enter-active {
+  opacity: 1;
 }
 
 .information-card__dive-actions {

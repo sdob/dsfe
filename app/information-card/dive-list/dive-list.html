@@ -1,6 +1,5 @@
 <div class="information-card__body-section">
     <h3 class="information-card__section-title">Dives</h3>
-
     <div class="information-card__dive" ng-repeat="dive in dives | orderBy:'-'">
         <div class="information-card__dive-actions">
             <a href ng-if="userID === dive.diver.id"
@@ -19,22 +18,22 @@
             <div class="information-card__dive-image--none" ng-show="!dive.diver.profileImageUrl">
                 <i class="fa fa-fw fa-user fa-3x"></i>
             </div>
-            <!-- </div> -->
-        <div class="information-card__dive-details">
-            <div>
-                <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
+            <div class="information-card__dive-details">
+                <div>
+                    <a href="/#/users/{{dive.diver.id}}/">{{ dive.diver.name }}</a>
+                </div>
+                <div>
+                    {{ dive.date | date:'d MMM yyyy' }}
+                    <span ng-if="dive.time">
+                        at {{ dive.time | date:'HH:mm' }}
+                    </span>
+                </div>
+                <span>{{ dive.depth }} m</span>
+                <span>{{ dive.duration | duration }} minutes</span>
             </div>
-            <div>
-                {{ dive.date | date:'d MMM yyyy' }}
-                <span ng-if="dive.time">
-                    at {{ dive.time | date:'HH:mm' }}
-                </span>
-            </div>
-            <span>{{ dive.depth }} m</span>
-            <span>{{ dive.duration | duration }} minutes</span>
         </div>
-    </div>
-    <div class="information-card__dive-comment">
-        {{ dive.comment }}
+        <div class="information-card__dive-comment">
+            {{ dive.comment }}
+        </div>
     </div>
 </div>

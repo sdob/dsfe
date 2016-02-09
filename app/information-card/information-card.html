@@ -33,7 +33,28 @@
                     </li>
                 </ul>
             </div>
-            <dive-list dives="icvm.site.dives"></dive-list>
+
+            <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
+                <li role="presentation" class="active profile__tab-menu-item">
+                    <a class="profile__tab-link" href aria-controls="dive-list" role="tab" data-toggle="tab" data-target="#js-dive-list">
+                        Dives
+                    </a>
+                </li>
+                <li role="presentation" class="profile__tab-menu-item">
+                    <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
+                        Comments
+                    </a>
+                </li>
+            </ul>
+
+            <section class="tab-content">
+                <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
+                    <dive-list dives="icvm.site.dives"></dive-list>
+                </section>
+                <section id="js-comment-list" role="tabpanel" class="tab-pane information-card__dive-list">
+                    <comment-list site="icvm.site" comments="icvm.site.comments"></comment-list>
+                </section>
+            </section>
         </div>
     </div>
 </div>
