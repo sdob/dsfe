@@ -2,7 +2,11 @@
     <div class="profile-image-list__container">
         <img ng-src="{{ image.image.url }}" class="profile-image-list__image" />
         <div class="profile-image-list__actions">
-            <a href class="overlay-action-item link--undecorated">
+            <a href
+                class="overlay-action-item link--undecorated"
+                ng-click="vm.summonConfirmDeleteImageModal(image, $index)"
+                ng-if="editable"
+                >
                 <span class="fa-stack fa-2x">
                     <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
                     <i class="fa fa-fw fa-trash fa-stack-1x"></i>

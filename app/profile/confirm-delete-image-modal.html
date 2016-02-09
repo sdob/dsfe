@@ -1,0 +1,24 @@
+<div class="ds-modal">
+    <div class="ds-modal__header">
+        <h3 class="ds-modal__title">
+            Are you sure?
+        </h3>
+    </div>
+    <div class="ds-modal__body">
+        <p>
+            Deleting is permanent.
+        </p>
+        <div class="ds-form__submit-row">
+            <button
+                ng-click="vm.cancel()"
+                class="btn btn-default big-button">
+                No
+            </button>
+            <button
+                ng-click="vm.confirm()"
+                class="btn btn-primary big-button">
+                Yes
+            </button>
+        </div>
+    </div>
+</div>

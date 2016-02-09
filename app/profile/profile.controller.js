@@ -38,7 +38,6 @@
           vm.user.imagesAdded.forEach((i) => {
             dsapi.getDivesite(i.divesiteID)
             .then((response) => {
-              console.log('boom', i, response.data);
               i.divesiteName = response.data.name;
             });
           });

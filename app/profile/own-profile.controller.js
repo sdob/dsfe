@@ -1,12 +1,13 @@
 (function() {
   'use strict';
-  function OwnProfileController($rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, localStorageService, profileService) {
+  function OwnProfileController($element, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
     function activate() {
       console.log('OwnProfileController.activate()');
       vm.editable = true;
+      vm.summonConfirmDeleteImageModal = summonConfirmDeleteImageModal;
       $scope.editable = true;
       dsapi.getOwnProfile()
       .then((response) => {
@@ -33,7 +34,6 @@
           vm.user.imagesAdded.forEach((i) => {
             dsapi.getDivesite(i.divesiteID)
             .then((response) => {
-              console.log('boom', i, response.data);
               i.divesiteName = response.data.name;
             });
           });
@@ -43,9 +43,37 @@
         console.error(err);
       });
     }
+
+    function summonConfirmDeleteImageModal(image, $index) {
+      console.log('summoning delete image modal');
+      console.log($index);
+      const instance = $uibModal.open({
+        controller: 'ConfirmDeleteImageModalController',
+        controllerAs: 'vm',
+        templateUrl: 'profile/confirm-delete-image-modal.html',
+      });
+      instance.result.then((reason) => {
+        // Easier for us to handle deletion here
+        if (reason === 'confirmed') {
+          // We can give the user immediate feedback by removing
+          // the element from the DOM while we contact DSIMG in the
+          // background.
+          vm.user.imagesAdded.splice($index, 1);
+          // Now contact DSIMG to perform the deletion
+          const id = image._id;
+          return dsimg.deleteDivesiteImage(id)
+          .then((response) => {
+            console.log(response.data);
+          });
+        }
+
+        console.log('deletion cancelled');
+      });
+    }
   }
 
   OwnProfileController.$inject = [
+    '$element',
     '$rootScope',
     '$scope',
     '$timeout',
