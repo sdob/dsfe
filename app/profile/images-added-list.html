@@ -1,6 +1,14 @@
 <div ng-repeat="image in vm.user.imagesAdded">
     <div class="profile-image-list__container">
         <img ng-src="{{ image.image.url }}" class="profile-image-list__image" />
+        <div class="profile-image-list__actions">
+            <a href class="overlay-action-item link--undecorated">
+                <span class="fa-stack fa-2x">
+                    <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
+                    <i class="fa fa-fw fa-trash fa-stack-1x"></i>
+                </span>
+            </a>
+        </div>
         <div class="profile-image-list__bumf">
             <p class="profile-image-list__bumf-divesite">{{ image.divesiteName }}</p>
             <p class="profile-image-list__bumf-date">{{ image.createdAt | date }} </p>
