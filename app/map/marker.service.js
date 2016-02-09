@@ -90,6 +90,7 @@
         options: {
           visible: false,
         },
+        owner: s.owner,
         title: s.name,
         type: 'divesite',
         shoreEntry: s.shore_entry,
@@ -112,6 +113,7 @@
         options: {
           visible: false,
         },
+        owner: s.owner,
         title: s.name,
         type: type,
       };

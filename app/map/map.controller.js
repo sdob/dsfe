@@ -377,11 +377,31 @@
       // Get the directive that we should be adding, based on the marker's type
       const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
 
-      // Compile the directive. We're creating a new scope manually, which means
+      // Create a new scope for the card directive; doing this means
       // that we'll need to destroy it manually too
       const scope = $scope.$new();
+
+      // Give the information card the type and id
       scope.id = id;
       scope.type = type;
+
+      // If we already have the site list in memory (which we should
+      // in most circumstances), then pre-load the information card scope
+      // with details
+      if ($scope.mapMarkers) {
+        console.log(`looking for map marker with id ${scope.id}`);
+        const marker = $scope.mapMarkers.filter((m) => m.id === scope.id)[0];
+        if (marker) {
+          console.log('**** PRELOADING: found marker');
+          console.log(marker);
+          scope.site = {
+            name: marker.title,
+            owner: marker.owner,
+          };
+        }
+      }
+
+      // Compile the directive and add it to the DOM
       $('map').append($compile(directiveString)(scope));
     }
 

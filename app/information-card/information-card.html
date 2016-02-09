@@ -1,12 +1,12 @@
 <div class="information-card shadow-2dp"
     ng-class="{'information-card--is-loading': icvm.isLoading}">
-    <modal-mask ng-show="icvm.isLoading"></modal-mask>
     <information-card-header id="icvm.siteID" type="icvm.siteType"></information-card-header>
 
 
     <div class="information-card__body"
         id="information-card__body"
         >
+        <modal-mask ng-show="icvm.isLoading"></modal-mask>
         <ng-include src="'information-card/description.html'"></ng-include>
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>

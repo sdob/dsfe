@@ -115,7 +115,6 @@
 
 // While the information card is loading, hide the scrollbars and blur content
 .information-card--is-loading {
-  .information-card__title,
   .information-card__body {
     filter: blur(2px);
   }
@@ -125,6 +124,7 @@
   display: none;
   overflow-y: auto;
   padding: $information-card-body-padding;
+  position: relative;  // Allows us to absolute position inside it
 
   @media (min-width: $screen-lg-min) {
     display: block;

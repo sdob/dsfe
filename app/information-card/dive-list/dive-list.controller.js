@@ -5,13 +5,10 @@
     activate();
 
     function activate() {
-      console.log('DiveListController.activate()');
       vm.summonConfirmDiveDeletionModal = summonConfirmDiveDeletionModal;
-      console.log(vm);
     }
 
     function summonConfirmDiveDeletionModal(dive) {
-      console.log('summoning delete confirmation');
       const instance = $uibModal.open({
         controller: 'ConfirmDiveDeletionModalController',
         controllerAs: 'vm',

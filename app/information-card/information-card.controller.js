@@ -7,9 +7,16 @@
 
     function activate() {
       vm.isLoading = true; // We're waiting for the site to load
-      vm.site = {
-        images: {},
-      };
+      console.log('on activation, my scope site is');
+      console.log($scope.site);
+      vm.site = $scope.site || {};
+      vm.site.images = {};
+      // If we have geocoding data, then format it
+      if (vm.site.geocoding_data) {
+        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+      }
+
+      // This is the logged-in user's ID
       vm.userId = localStorageService.get('user');
       $scope.userId = vm.userId;
 
@@ -42,9 +49,11 @@
 
       apiCall(id)
       .then((response) => {
+        // Overwrite whatever site data we had at activation
         $scope.site = response.data;
         vm.site = response.data;
         vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+
         // Get the divesite's images (if they exist)
         $timeout(() => {
           loadDivesiteImages();
@@ -53,7 +62,7 @@
         // Get divers' profile images
         getDiverProfileImages();
 
-        // Now we can determine whether the user owns  this site
+        // Now we can determine whether the user owns this site
         vm.userIsOwner = informationCardService.userIsOwner(vm.site);
 
         // Get nearby slipways
@@ -219,7 +228,7 @@
       console.log('(re)loading divesite images');
       informationCardService.getDivesiteImages(vm.site)
       .then((images) => {
-          if (images) {
+        if (images) {
           console.log('images retrieved from dsimg');
           console.log(images);
           $scope.images = images.map(i => {
