@@ -34,7 +34,8 @@
     "angular-bootstrap-lightbox": "~0.10.0",
     "jquery-fullscreen": "~1.1.4",
     "bootstrap-social": "~4.12.0",
-    "angular-bootstrap": "~1.1.2"
+    "angular-bootstrap": "~1.1.2",
+    "angular-sanitize": "1.4.9"
   },
   "overrides": {
     "bootstrap": {

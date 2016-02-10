@@ -9,6 +9,7 @@
     'bootstrapLightbox',
     'ngFileUpload',
     'ngRoute',
+    'ngSanitize',
     'satellizer',
     'uiGmapgoogle-maps',
     'ui.bootstrap',

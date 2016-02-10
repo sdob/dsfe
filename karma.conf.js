@@ -40,6 +40,7 @@ module.exports = function(config) {
       'bower_components/angular-google-maps/dist/angular-google-maps.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js',
+      'bower_components/angular-sanitize/angular-sanitize.js',
       // endbower
       // Load main app module and constants first
       'app/app.module.js',
