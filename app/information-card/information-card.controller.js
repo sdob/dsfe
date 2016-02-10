@@ -82,7 +82,7 @@
             vm.isLoading = false;
           });
         });
-      }, 1000);
+      });
 
       // Retrieve comments
       dscomments.getDivesiteComments(id)

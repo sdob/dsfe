@@ -10,6 +10,10 @@
       postDivesiteComment: (data) => {
         return $http.post(`${API_URL}/comments/divesites/`, data);
       },
+
+      updateDivesiteComment: (id, data) => {
+        return $http.patch(`${API_URL}/comments/divesites/${id}/`, data);
+      },
     };
   }
 
