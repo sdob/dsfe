@@ -12,7 +12,7 @@
     }
 
     function cancel() {
-      $uibModal.close('cancelled');
+      $uibModalInstance.close('cancelled');
     }
 
     function submit() {
