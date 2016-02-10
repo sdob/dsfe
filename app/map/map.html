@@ -1,8 +1,6 @@
 <div class="main-map">
     <ng-include ng-if="mc.isLoading" src="'map/map-is-loading.html'"></ng-include>
-    <search-menu></search-menu>
-    <filter-menu></filter-menu>
-    <add-something-menu ng-show="mc.isAuthenticated()"></add-something-menu>
+    <hamburger-menu></hamburger-menu>
     <ui-gmap-google-map
         center='mc.map.center'
         control="control"

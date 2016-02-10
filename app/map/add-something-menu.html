@@ -1,25 +1,17 @@
-<div class="floating-menu add-something-menu">
+<div class="hamburger-menu__submenu-header">
     <a href
-        class="floating-menu__header floating-menu__header--xs"
-        data-toggle="collapse"
-        data-target="#main-map__add-something-menu"
+        class="hamburger-menu__icon hamburger-submenu__icon"
+        ng-click="hamburgerVM.selectSubmenu('#js-add-something-menu')"
         >
-        <i class="floating-menu__icon floating-menu__icon--when-open fa fa-fw fa-minus"></i>
-        <i class="floating-menu__icon floating-menu__icon--when-closed fa fa-fw fa-pencil"></i>
-        <span class="header-text">Add something</span>
+        <span class="fa fa-stack fa-2x">
+            <i class="fa fa-stack-2x fa-circle background"></i>
+            <i class="fa fa-stack-1x fa-pencil"></i>
+        </span>
     </a>
-    <a href
-        class="floating-menu__header floating-menu__header--md-min collapsed"
-        data-toggle="collapse"
-        data-target="#main-map__add-something-menu"
-        >
-        <h2 class="floating-menu__header-text">Add something</h2>
-        <span class="floating-menu__header-chevron fa fa-fw fa-chevron-down"></span>
-    </a>
-    <div
-        class="floating-menu__content collapse"
-        id="main-map__add-something-menu"
-        >
+    <h3 class="hamburger-menu__submenu-title">Add something</h3>
+</div>
+<div class="hamburger-submenu__content">
+    <div class="floating-menu__content map-context-menu">
         <ng-include src="'map/context-menu-contents.html'"></ng-include>
     </div>
 </div>

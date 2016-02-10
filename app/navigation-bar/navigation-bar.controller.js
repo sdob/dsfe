@@ -27,7 +27,6 @@
         const userID = localStorageService.get('user');
         retrieveProfileThumbnailImage(userID)
         .then((url) => {
-          console.log(url);
           vm.userProfileThumbnailImage = url;
         });
       }

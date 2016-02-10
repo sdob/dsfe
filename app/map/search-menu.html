@@ -1,29 +1,24 @@
-<div class="floating-menu search-menu">
-    <a
-        class="floating-menu__header floating-menu__header--xs"
-        data-toggle="collapse"
-        data-target="#js-search-menu__collapse">
-        <i class="floating-menu__icon floating-menu__icon--when-open fa fa-fw fa-minus"></i>
-        <i class="floating-menu__icon floating-menu__icon--when-closed fa fa-fw fa-search"></i>
-        <span class="header-text">Search</span>
-    </a>
-    <a
-        class="floating-menu__header floating-menu__header--md-min collapsed"
-        data-toggle="collapse"
-        data-target="#js-search-menu__collapse"
-        >
-        <h2 class="floating-menu__header-text">Search</h2>
-        <span class="floating-menu__header-chevron fa fa-fw fa-chevron-down"></span>
-    </a>
-    <div id="js-search-menu__collapse" class="floating-menu__content collapse">
-        <input class="form-control ds-form-control" type="text"
-        ng-model="smvm.selectedSite"
-        style="font-family: 'Source Sans Pro', FontAwesome"
-        placeholder="&#xF002;"
-        typeahead-template-url="map/typeahead-template.html"
-        uib-typeahead="marker as marker.title for marker in mapMarkers | filter:$viewValue"
-        typeahead-on-select="vm.handleSearchSelect($item)"
-        typeahead-popup-template-url="map/typeahead-popup-template.html"
-        />
-    </div>
+<div class="hamburger-menu__submenu-header">
+<a
+    href
+    class="hamburger-menu__icon hamburger-submenu__icon"
+    ng-click="hamburgerVM.selectSubmenu('#js-search-menu')"
+    >
+    <span class="fa fa-stack fa-2x">
+        <i class="fa fa-stack-2x fa-circle background"></i>
+        <i class="fa fa-stack-1x fa-search"></i>
+    </span>
+</a>
+<h3 class="hamburger-menu__submenu-title">Search</h3>
+</div>
+<div id="js-search-menu__collapse" class="hamburger-submenu__content">
+    <input class="form-control ds-form-control" type="text"
+    ng-model="smvm.selectedSite"
+    style="font-family: 'Source Sans Pro', FontAwesome"
+    placeholder="&#xF002;"
+    typeahead-template-url="map/typeahead-template.html"
+    uib-typeahead="marker as marker.title for marker in mapMarkers | filter:$viewValue"
+    typeahead-on-select="vm.handleSearchSelect($item)"
+    typeahead-popup-template-url="map/typeahead-popup-template.html"
+    />
 </div>

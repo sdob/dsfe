@@ -2,7 +2,7 @@
   'use strict';
   function FilterMenu() {
     return {
-      templateUrl: 'filter-menu/filter-menu.html',
+      templateUrl: 'map/filter-menu/filter-menu.html',
       restrict: 'EA',
       controller: 'FilterMenuController',
       controllerAs: 'fmvm',

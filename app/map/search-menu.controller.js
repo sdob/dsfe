@@ -6,9 +6,7 @@
     activate();
 
     function activate() {
-      console.log('SearchMenuController.activate()');
       vm.handleSearchSelect = handleSearchSelect;
-      //$scope.defaultMarkerIcons = markerService.defaultMarkerIcons;
     }
 
     function handleSearchSelect(item) {

@@ -9,7 +9,6 @@
       templateUrl: 'map/search-menu.html',
     };
     function link(scope, element) {
-      console.log(scope);
       // Set up event listeners
       element.find('.floating-menu__header').on('click', toggleOpened);
 

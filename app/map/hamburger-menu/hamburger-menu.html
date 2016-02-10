@@ -1,0 +1,38 @@
+<section class="hamburger-menu__container">
+    <section class="hamburger-menu__menu">
+        <section class="hamburger-menu__menu-expander">
+            <a class="hamburger-menu__icon hamburger-menu__icon" href
+                ng-click="hamburgerVM.toggleOpened()"
+                >
+                <span class="fa fa-stack fa-2x">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="fa fa-stack-1x fa-chevron-down"></i>
+                </span>
+            </a>
+        </section>
+        <section id="js-hamburger-collapsible-menu" class="hamburger-menu__collapsible-menu">
+            <a id="js-search-menu" class="hamburger-menu__icon" href
+                ng-click="hamburgerVM.selectSubmenu('#js-search-menu')"
+                ><span class="fa fa-stack fa-2x"><i class="fa fa-stack-2x fa-circle background"></i><i class="fa fa-stack-1x fa-search"></i></span></a>
+            <a id="js-filter-menu" class="hamburger-menu__icon" href
+                ng-click="hamburgerVM.selectSubmenu('#js-filter-menu')"
+                ><span class="fa fa-stack fa-2x"><i class="fa fa-stack-2x fa-circle background"></i><i class="fa fa-stack-1x fa-filter"></i></span></a>
+            <a id="js-add-something-menu" class="hamburger-menu__icon" href
+                ng-click="hamburgerVM.selectSubmenu('#js-add-something-menu')"
+                ><span class="fa fa-stack fa-2x"><i class="fa fa-stack-2x fa-circle background"></i><i class="fa fa-stack-1x fa-pencil"></i></span></a>
+        </section>
+    </section>
+
+    <section class="hamburger-menu__menu-content">
+        <section id="js-search-menu__content" class="hamburger-menu__submenu">
+            <search-menu></search-menu>
+        </section>
+        <section id="js-filter-menu__content" class="hamburger-menu__submenu">
+            <filter-menu></filter-menu>
+        </section>
+        <section id="js-add-something-menu__content" class="hamburger-menu__submenu">
+            <add-something-menu></add-something-menu>
+        </section>
+    </section>
+
+</section>

@@ -1,0 +1,17 @@
+<div class="hamburger-menu" id="js-hamburger-menu">
+    <a href id="js-hamburger-menu__expand-button" class="hamburger-menu__icon" ng-click="hamburgerVM.toggleOpened()">
+        <span class="fa fa-stack fa-2x hamburger-menu__expand-icon">
+            <i class="fa fa fa-stack-2x fa-circle background"></i>
+            <i class="fa fa fa-stack-1x fa-ellipsis-h"></i>
+        </span>
+        <span class="fa fa-stack fa-2x hamburger-menu__contract-icon">
+            <i class="fa fa fa-stack-2x fa-circle background"></i>
+            <i class="fa fa fa-stack-1x fa-square dot"></i>
+        </span>
+    </a>
+    <div class="hamburger-menu__submenu-list">
+        <search-menu id="js-search-menu" class="hamburger-submenu"></search-menu>
+        <filter-menu id="js-filter-menu" class="hamburger-submenu"></filter-menu>
+        <add-something-menu id="js-add-something-menu" class="hamburger-submenu" ng-if="hamburgerVM.isAuthenticated()"></add-something-menu>
+    </div>
+</div>
