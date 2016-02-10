@@ -1,17 +1,22 @@
 .editable-site-map__centre-marker {
   position: absolute;
-  background: url(/img/place_48px.svg) no-repeat;
+  &.divesite {
+    background: url(/img/divesite.svg) no-repeat;
+  }
+  &.compressor {
+    background: url(/img/compressor.svg) no-repeat;
+  }
+  &.slipway {
+    background: url(/img/slipway.svg) no-repeat;
+  }
   top: 50%;
   left: 50%;
   z-index: 1;
-  // Google Maps markers are by default aligned to
-  // the bottom centre of the icon, so we'll set
-  // some explicit margins here to achieve that with
-  // our 48px square map marker image.
-  margin-left: -24px;
-  margin-top: -48px;
-  height: 48px;
-  width: 48px;
+  // These are magic numbers based on the size of the SVGs
+  margin-left: calc(-29px / 2);
+  margin-top: -41.25px;
+  height: 41.25px;
+  width: 29px;
 }
 .editable-site-map-container {
   .angular-google-map-container {

@@ -4,11 +4,12 @@
     return {
       restrict: 'E',
       templateUrl: 'edit-site/editable-site-map.html',
-      link: (elem, scope, attrs, ctrl) => {
+      link: (scope, elem, attrs, ctrl) => {
+        console.log(scope);
         uiGmapGoogleMapApi
         .then((maps) => {
           const mapContainer = $('.angular-google-map-container')[0];
-          $('<div/>').addClass('editable-site-map__centre-marker')
+          $('<div/>').addClass(`editable-site-map__centre-marker ${scope.vm.siteTypeString}`)
           .appendTo(mapContainer);
         });
       },
