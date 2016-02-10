@@ -194,6 +194,20 @@
       instance.result.then((reason) => {
         if (reason === 'logged') {
           console.log('new dive logged');
+          // TODO: We're completely rebuilding the list of dives and profile
+          // images, which could get *expensive*. A better idea would be to
+          // cache profile images and update the DOM, but this is getting
+          // clever and can wait for another day.
+
+          // Reload dives for this site
+          dsapi.getDivesiteDives(vm.site.id)
+          .then((response) => {
+            $timeout(() => {
+              vm.site.dives = response.data;
+              // Reload diver profile images
+              getDiverProfileImages();
+            });
+          });
         }
       });
     }
