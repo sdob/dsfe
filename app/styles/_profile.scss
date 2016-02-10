@@ -227,6 +227,11 @@
   margin-top: 64px;
   flex-direction: column;
 }
+.nav-tabs > li.profile__tab-menu-item.active {
+  // Bootstrap overrides
+  border-bottom: 0;
+  margin-bottom: 0;
+}
 .nav-tabs > li.active > a.profile__tab-link {
   background: rgba(0, 0, 0, 0.17);
   background: rgba(0, 0, 0, 0.17);
