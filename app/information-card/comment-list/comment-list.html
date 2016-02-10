@@ -52,8 +52,7 @@
             </div>
         </div>
 
-        <div class="information-card__dive-comment">
-            {{ comment.text }}
+        <div class="information-card__dive-comment" ng-bind-html="comment.text | markdown">
         </div>
 
     </div>

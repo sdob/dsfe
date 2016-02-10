@@ -41,6 +41,8 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/showdown/dist/showdown.js',
+      'bower_components/angular-markdown-filter/markdown.js',
       // endbower
       // Load main app module and constants first
       'app/app.module.js',

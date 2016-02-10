@@ -7,6 +7,7 @@
     'ngAnimate',
     'LocalStorageModule',
     'bootstrapLightbox',
+    'markdown',
     'ngFileUpload',
     'ngRoute',
     'ngSanitize',
