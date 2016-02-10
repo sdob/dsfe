@@ -6,7 +6,9 @@
                 ng-model="vm.comment.text"
                 ></textarea>
             <div class="ds-form__submit-row">
-                <button ng-click="vm.submit()" class="btn btn-primary">Submit</button>
+                <button ng-click="vm.submit()" class="btn btn-primary"
+                ng-disabled="!vm.comment.text || vm.isSubmitting"
+                    >Submit</button>
             </div>
         </form>
     </div>

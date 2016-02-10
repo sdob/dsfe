@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function CommentListController($auth, $scope, dscomments) {
+  function CommentListController($auth, $scope, $timeout, dscomments) {
     const vm = this;
     activate();
 
@@ -14,6 +14,7 @@
     }
 
     function submit() {
+      vm.isSubmitting = true;
       console.log('submitting!');
       const request = {
         text: vm.comment.text,
@@ -24,6 +25,13 @@
       .then((response) => {
         console.log(response.data);
         $scope.$emit('comment-added');
+        // Clear the model
+        vm.comment = {};
+        // Delay the timeout for a while so that users don't
+        // repeatedly re-comment
+        $timeout(() => {
+          vm.isSubmitting = false;
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -36,6 +44,7 @@
   CommentListController.$inject = [
     '$auth',
     '$scope',
+    '$timeout',
     'dscomments',
   ];
   angular.module('divesites.informationCard').controller('CommentListController', CommentListController);
