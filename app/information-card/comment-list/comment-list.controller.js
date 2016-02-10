@@ -12,6 +12,7 @@
       };
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.submit = submit;
+      vm.summonEditCommentModal = summonEditCommentModal;
       vm.summonConfirmCommentDeletionModal = summonConfirmCommentDeletionModal;
     }
 
@@ -43,8 +44,6 @@
     }
 
     function summonConfirmCommentDeletionModal(comment) {
-      console.log('summoning with');
-      console.log(comment);
       const instance = $uibModal.open({
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
@@ -58,6 +57,23 @@
       instance.result.then((reason) => {
         if (reason === 'deleted') {
           // Tell our parent controller that we've deleted a dive
+          $scope.$emit('comment-list-updated');
+        }
+      });
+    }
+
+    function summonEditCommentModal(comment) {
+      const instance = $uibModal.open({
+        controller: 'EditCommentModalController',
+        controllerAs: 'vm',
+        resolve: {
+          comment: () => comment,
+        },
+        size: 'lg',
+        templateUrl: 'information-card/comment-list/edit-comment-modal.html',
+      });
+      instance.result.then((reason) => {
+        if (reason === 'edited') {
           $scope.$emit('comment-list-updated');
         }
       });

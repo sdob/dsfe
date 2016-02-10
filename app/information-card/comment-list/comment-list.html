@@ -14,9 +14,23 @@
     </div>
     <div class="information-card__comment" ng-repeat="comment in comments | orderBy:'-'">
         <div class="information-card__dive-actions">
-            <a href ng-if="userID === comment.owner.id"
+            <a href
+                class="overlay-action-item"
+                ng-if="userID === comment.owner.id"
+                ng-click="vm.summonEditCommentModal(comment)">
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="fa fa-stack-1x fa-edit"></i>
+                </span>
+            </a>
+            <a href
+                class="overlay-action-item"
+                ng-if="userID === comment.owner.id"
                 ng-click="vm.summonConfirmCommentDeletionModal(comment)">
-                <i class="fa fa-trash"></i>
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="fa fa-stack-1x fa-trash"></i>
+                </span>
             </a>
         </div>
 
