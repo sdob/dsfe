@@ -28,7 +28,7 @@
       const request = {
         date: moment(dive.date).format('YYYY-MM-DD'),
         time: dive.time ? moment(dive.time).format('HH:mm') : undefined,
-        duration: moment.duration(dive.duration, 'minutes').asMinutes(),
+        duration: moment.duration(dive.duration, 'minutes'),
         depth: dive.maximumDepth,
         average_depth: dive.averageDepth,
         comment: dive.comment,
