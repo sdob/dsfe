@@ -81,6 +81,7 @@
       // Set map options
       vm.options = {
         minZoom: 3,
+        streetViewControl: false,
       };
 
       vm.typeOptions = {
