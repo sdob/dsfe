@@ -52,6 +52,8 @@
       vm.userProfileThumbnailImage = undefined;
       $auth.logout()
       .then(() => {
+        // Clear search path if it's not empty, and take us to the front page
+        $location.search('');
         $location.path('/');
       });
     }
