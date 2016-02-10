@@ -23,6 +23,10 @@
         return $http.get(`${API_URL}/divesites/`);
       },
 
+      getDivesiteComments: (id) => {
+        return $http.get(`${API_URL}/divesites/${id}/comments/`);
+      },
+
       getDivesiteDives: (id) => {
         return $http.get(`${API_URL}/divesites/${id}/dives/`);
       },
@@ -104,6 +108,10 @@
 
       deleteDive: (id) => {
         return $http.delete(`${API_URL}/dives/${id}/`);
+      },
+
+      deleteDivesiteComment: (id) => {
+        return $http.delete(`${API_URL}/comments/divesites/${id}/`);
       },
 
     };

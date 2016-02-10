@@ -5,12 +5,16 @@
     return {
       controller: 'CommentListController',
       controllerAs: 'vm',
+      link,
       scope: {
         comments: '=',
         site: '=',
       },
       templateUrl: 'information-card/comment-list/comment-list.html',
     };
+
+    function link(scope, element) {
+    }
   }
 
   commentList.$inject = [

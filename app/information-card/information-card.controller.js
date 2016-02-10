@@ -111,15 +111,24 @@
 
       $scope.$on('comment-added', (event) => {
         console.log('heard comment-added');
-        dscomments.getDivesiteComments(vm.site.id)
-        .then((response) => {
-          $timeout(() => {
-            vm.site.comments = response.data;
-          });
-        })
-        .then(() => {
-          getCommenterProfileImages();
+        updateCommentList();
+      });
+
+      $scope.$on('comment-list-updated', (event) => {
+        console.log('heard comment-list-updated');
+        updateCommentList();
+      });
+    }
+
+    function updateCommentList() {
+      dscomments.getDivesiteComments(vm.site.id)
+      .then((response) => {
+        $timeout(() => {
+          vm.site.comments = response.data;
         });
+      })
+      .then(() => {
+        getCommenterProfileImages();
       });
     }
 

@@ -1,0 +1,21 @@
+<div class="ds-modal">
+    <modal-mask message="Deleting..." ng-show="vm.isDeleting"></modal-mask>
+    <h1 class="ds-modal__header">
+        Are you sure?
+    </h1>
+    <p>
+        Deleting will remove this comment forever.
+    </p>
+    <form>
+        <div class="row">
+            <div class="col-xs-12 ds-form__submit-row">
+                <button class="btn btn-default big-button" ng-click="vm.cancel()">
+                    Cancel
+                </button>
+                <button class="btn btn-primary big-button" ng-click="vm.delete()">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
