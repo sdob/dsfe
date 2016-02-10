@@ -52,10 +52,15 @@
         // Retrieve as much data as we can
         apiCall(id)
         .then((response) => {
-          // Overwrite whatever site data we had at activation
-          $scope.site = response.data;
+          // TODO: setting $scope.site at the end of all this prevents
+          // geocoding data from being clobbered, but there's probably
+          // a more elegant way of achieving it.
           vm.site = Object.assign(vm.site, response.data);
-          vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+          vm.site.locData = vm.site.locData || informationCardService.formatGeocodingData(vm.site);
+          console.log('vm.site.locData');
+          console.log(vm.site.locData);
+          console.log(vm.site);
+          $scope.site = vm.site;
 
           // Get the divesite's images (if they exist)
           $timeout(() => {
