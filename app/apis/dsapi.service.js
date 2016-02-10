@@ -19,7 +19,13 @@
         return $http.get(`${API_URL}/divesites/${id}/`);
       },
 
-      getDivesites: () => $http.get(`${API_URL}/divesites/`),
+      getDivesites: () => {
+        return $http.get(`${API_URL}/divesites/`);
+      },
+
+      getDivesiteDives: (id) => {
+        return $http.get(`${API_URL}/divesites/${id}/dives/`);
+      },
 
       getNearbySlipways: (id) => {
         return $http.get(`${API_URL}/divesites/${id}/nearby_slipways/`);
