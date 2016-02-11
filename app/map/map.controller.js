@@ -390,11 +390,8 @@
       // in most circumstances), then pre-load the information card scope
       // with details
       if ($scope.mapMarkers) {
-        console.log(`looking for map marker with id ${scope.id}`);
         const marker = $scope.mapMarkers.filter((m) => m.id === scope.id)[0];
         if (marker) {
-          console.log('**** PRELOADING: found marker');
-          console.log(marker);
           scope.site = {
             name: marker.title,
             owner: marker.owner,
