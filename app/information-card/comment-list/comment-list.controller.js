@@ -6,6 +6,7 @@
     activate();
 
     function activate() {
+      vm.isSubmitting = false;
       console.log($scope);
       $scope.userID = localStorageService.get('user');
       vm.comment = {
@@ -26,7 +27,6 @@
       console.log(request);
       dscomments.postDivesiteComment(request)
       .then((response) => {
-        console.log(response.data);
         $scope.$emit('comment-added');
         // Clear the model
         vm.comment = {};
@@ -34,7 +34,7 @@
         // repeatedly re-comment
         $timeout(() => {
           vm.isSubmitting = false;
-        });
+        }, 1000);
       })
       .catch((err) => {
         console.error(err);

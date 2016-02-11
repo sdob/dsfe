@@ -52,7 +52,14 @@
             <div class="ds-form__submit-row">
                 <button ng-click="vm.submit()" class="btn btn-primary"
                     ng-disabled="!vm.comment.text || vm.isSubmitting"
-                    >Submit</button>
+                    >
+                    <span ng-cloak ng-if="vm.isSubmitting">
+                        <i class="fa fa-spin fa-spinner"></i>
+                    </span>
+                    <span ng-cloak ng-if="!vm.isSubmitting">
+                        Submit
+                    </span>
+                </button>
             </div>
         </form>
     </div>
