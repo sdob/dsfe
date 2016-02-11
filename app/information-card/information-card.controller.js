@@ -11,6 +11,7 @@
       // Make sure that $scope.site is defined
       $scope.site = $scope.site || {};
       $scope.site.images = {};
+      $scope.site.id = $scope.id;
       $scope.site.type = $scope.type;
       // If we have geocoding data, then format it
       if ($scope.site.geocoding_data) {
