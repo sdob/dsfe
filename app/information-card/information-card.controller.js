@@ -2,21 +2,23 @@
   'use strict';
 
   function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
+    const { formatGeocodingData } = informationCardService;
     const vm = this;
     activate();
 
     function activate() {
       vm.isLoading = true; // We're waiting for the site to load
-      vm.site = $scope.site || {};
-      vm.site.images = {};
+      // Make sure that $scope.site is defined
+      $scope.site = $scope.site || {};
+      $scope.site.images = {};
       // If we have geocoding data, then format it
-      if (vm.site.geocoding_data) {
-        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+      if ($scope.site.geocoding_data) {
+        $scope.site.locData = informationCardService.formatGeocodingData($scope.site);
       }
 
       // This is the logged-in user's ID
       vm.userId = localStorageService.get('user');
-      $scope.userId = vm.userId;
+      $scope.userId = localStorageService.get('user');
 
       const id = $scope.id;
       const type = $scope.type;
@@ -48,16 +50,8 @@
       $timeout(() => {
         // Retrieve as much data as we can
         apiCall(id)
-        .then((response) => {
-          // TODO: setting $scope.site at the end of all this prevents
-          // geocoding data from being clobbered, but there's probably
-          // a more elegant way of achieving it.
-          vm.site = Object.assign(vm.site, response.data);
-          vm.site.locData = vm.site.locData || informationCardService.formatGeocodingData(vm.site);
-          console.log('vm.site.locData');
-          console.log(vm.site.locData);
-          console.log(vm.site);
-          $scope.site = vm.site;
+          $scope.site = Object.assign($scope.site, response.data);
+          $scope.site.locData = $scope.site.locData || formatGeocodingData($scope.site);
 
           // Get the divesite's images (if they exist)
           $timeout(() => {
@@ -68,18 +62,18 @@
           getDiverProfileImages();
 
           // Now we can determine whether the user owns this site
-          vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+          vm.userIsOwner = informationCardService.userIsOwner($scope.site);
 
           // Get nearby slipways
-          informationCardService.getNearbySlipways(vm.site)
+          informationCardService.getNearbySlipways($scope.site)
           .then((slipways) => {
-            vm.site.nearbySlipways = slipways;
+            $scope.site.nearbySlipways = slipways;
           });
 
           // Force stats charts to be rebuilt
           $timeout(() => {
             // Push this into the next tick so that the charts directive has linked
-            $scope.$broadcast('refresh-statistics', vm.site);
+            $scope.$broadcast('refresh-statistics', $scope.site);
             // We're no longer loading, so remove the modal-mask
             vm.isLoading = false;
           });
@@ -92,7 +86,8 @@
         console.log('response from dscomments');
         console.log(response);
         $timeout(() => {
-          vm.site.comments = response.data;
+          $scope.site.comments = response.data;
+          $scope.site.comments = response.data;
         })
         .then(() => {
           getCommenterProfileImages();
@@ -102,12 +97,12 @@
       /* Listen for events emitted upwards by child controllers */
       $scope.$on('dive-list-updated', (event) => {
         console.log('InformationController received "dive-list-updated"...');
-        dsapi.getDivesite(vm.site.id)
+        dsapi.getDivesite($scope.site.id)
         .then((response) => {
-          vm.site = response.data;
+          $scope.site = response.data;
 
           // Broadcast a refresh-histogram event to child scopes
-          $scope.$broadcast('refresh-statistics', vm.site);
+          $scope.$broadcast('refresh-statistics', $scope.site);
         });
       });
 
@@ -123,10 +118,10 @@
     }
 
     function updateCommentList() {
-      dscomments.getDivesiteComments(vm.site.id)
+      dscomments.getDivesiteComments($scope.site.id)
       .then((response) => {
         $timeout(() => {
-          vm.site.comments = response.data;
+          $scope.site.comments = response.data;
         });
       })
       .then(() => {
@@ -137,7 +132,7 @@
     function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
       // Create a set of user IDs --- no need to ping the image server
       // repeatedly for the same diver's profile image
-      const ids = new Set(vm.site.dives.map(d => d.diver.id));
+      const ids = new Set($scope.site.dives.map(d => d.diver.id));
       ids.forEach((id) => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
@@ -149,7 +144,7 @@
               gravity: 'face',
             });
             $timeout(() => {
-              vm.site.dives.filter(d => d.diver.id === id).forEach((d) => {
+              $scope.site.dives.filter(d => d.diver.id === id).forEach((d) => {
                 d.diver.profileImageUrl = profileImageUrl;
               });
             }, 0);
@@ -159,7 +154,7 @@
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
     function getCommenterProfileImages() {
-      const ids = new Set(vm.site.comments.map(c => c.owner.id));
+      const ids = new Set($scope.site.comments.map(c => c.owner.id));
       ids.forEach((id) => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
@@ -171,7 +166,7 @@
               gravity: 'face',
             });
             $timeout(() => {
-              vm.site.comments.filter(c => c.owner.id === id).forEach((c) => {
+              $scope.site.comments.filter(c => c.owner.id === id).forEach((c) => {
                 c.owner.profileImageUrl = profileImageUrl;
               });
             }, 0);
@@ -185,9 +180,9 @@
       if (imageUrl) {
         $timeout(() => {
           console.log('setting divesite header image');
-          vm.site.headerImageUrl = imageUrl;
+          $scope.site.headerImageUrl = imageUrl;
           vm.backgroundStyle = {
-            background: `blue url(${vm.site.headerImageUrl}) center / cover`,
+            background: `blue url(${$scope.site.headerImageUrl}) center / cover`,
           };
         });
       }
@@ -199,7 +194,7 @@
         controllerAs: 'vm',
         templateUrl: 'information-card/log-dive-modal.html',
         resolve: {
-          site: () => vm.site,
+          site: () => $scope.site,
         },
       });
       instance.result.then((reason) => {
@@ -211,10 +206,10 @@
           // clever and can wait for another day.
 
           // Reload dives for this site
-          dsapi.getDivesiteDives(vm.site.id)
+          dsapi.getDivesiteDives($scope.site.id)
           .then((response) => {
             $timeout(() => {
-              vm.site.dives = response.data;
+              $scope.site.dives = response.data;
               // Reload diver profile images
               getDiverProfileImages();
             });
@@ -229,13 +224,13 @@
         controllerAs: 'vm',
         templateUrl: 'information-card/set-divesite-header-image-modal.html',
         resolve: {
-          site: () => vm.site,
+          site: () => $scope.site,
         },
       });
       instance.result.then((reason) => {
         // On successful upload of an image, load it from DSIMG
         if (reason === 'uploaded') {
-          informationCardService.getDivesiteHeaderImage(vm.site.id)
+          informationCardService.getDivesiteHeaderImage($scope.site.id)
           .then((imageUrl) => {
             console.log('came back with imageUrl');
             console.log(imageUrl);
@@ -254,7 +249,7 @@
         controllerAs: 'vm',
         templateUrl: 'information-card/upload-image-modal.html',
         resolve: {
-          site: () => vm.site,
+          site: () => $scope.site,
         },
       });
       instance.result.then((reason) => {
@@ -302,7 +297,7 @@
     }
 
     function loadDivesiteImages() {
-      informationCardService.getDivesiteImages(vm.site)
+      informationCardService.getDivesiteImages($scope.site)
       .then((images) => {
         if (images) {
           $scope.images = images.map(i => {

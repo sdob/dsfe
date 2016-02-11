@@ -13,14 +13,11 @@
             <ng-include src="'information-card/site-level.html'"></ng-include>
             <ng-include src="'information-card/site-entries.html'"></ng-include>
             <information-card-charts></information-card-charts>
-            <nearby-slipways slipways="icvm.site.nearbySlipways"></nearby-slipways>
+            <nearby-slipways slipways="site.nearbySlipways"></nearby-slipways>
         </div>
         <ng-include src="'information-card/actions.html'"></ng-include>
 
-        <log-dive-form ng-if="icvm.sectionVisibilities.logDiveForm"></log-dive-form>
-        <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
-
-        <div ng-show="icvm.sectionVisibilities.defaultSection">
+        <div>
             <div ng-if="images.length"
                 class="information-card__divesite-image-section"
                 >
@@ -43,7 +40,7 @@
                 <li role="presentation" class="profile__tab-menu-item">
                     <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
                         <h3 class="information-card__tab-title">
-                            Comments ({{ icvm.site.comments.length }})
+                            Comments ({{ site.comments.length }})
                         </h3>
                     </a>
                 </li>
@@ -51,10 +48,10 @@
 
             <section class="tab-content">
                 <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
-                    <dive-list dives="icvm.site.dives"></dive-list>
+                    <dive-list dives="site.dives"></dive-list>
                 </section>
                 <section id="js-comment-list" role="tabpanel" class="tab-pane information-card__dive-list">
-                    <comment-list site="icvm.site" comments="icvm.site.comments"></comment-list>
+                    <comment-list site="site" comments="site.comments"></comment-list>
                 </section>
             </section>
         </div>
