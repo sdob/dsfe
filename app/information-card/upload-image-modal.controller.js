@@ -6,6 +6,7 @@
     activate();
 
     function activate() {
+      vm.isUploading = false;
       vm.site = site;
       vm.submit = submit;
     }
