@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function EditCommentModalController($scope, $timeout, $uibModalInstance, comment, dscomments) {
+  function EditCommentModalController($scope, $timeout, $uibModal, $uibModalInstance, comment, dscomments) {
     const vm = this;
     activate();
 
@@ -18,17 +18,47 @@
     }
 
     function submit() {
-      // Dismiss the modal immediately
-      $uibModalInstance.close({
-        edited: true,
-        text: vm.newText,
-      });
+      if (!vm.newText) {
+        // If comment text is empty, then make sure we confirm it
+        const instance = $uibModal.open({
+          // Ugly hack to inline the controller, but we don't seem to be
+          // able to get a ConfirmCommentDeletionController here
+          controller: function ($uibModalInstance) {
+            const vm = this;
+            vm.cancel = () => {
+              $uibModalInstance.close();
+            };
+            vm.delete = () => {
+              $uibModalInstance.close('confirmed');
+            };
+          },
+          controllerAs: 'vm',
+          size: 'sm',
+          templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
+          windowClass: 'modal-center',
+        });
+        instance.result.then((reason) => {
+          if (reason === 'confirmed') {
+            $uibModalInstance.close({
+              edited: true,
+              text: vm.newText,
+            });
+          }
+        });
+      } else {
+        // Dismiss the modal immediately
+        $uibModalInstance.close({
+          edited: true,
+          text: vm.newText,
+        });
+      }
     }
   }
 
   EditCommentModalController.$inject = [
     '$scope',
     '$timeout',
+    '$uibModal',
     '$uibModalInstance',
     'comment',
     'dscomments',
