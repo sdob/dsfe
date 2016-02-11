@@ -4,6 +4,7 @@
     activate();
 
     function activate() {
+      vm.isUploading = false;
       console.log(site);
       console.log(IMG_API_URL);
       vm.setDivesiteHeaderImage = setDivesiteHeaderImage;
