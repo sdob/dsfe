@@ -68,6 +68,10 @@
         return $http.get(`${API_URL}/users/${id}/`);
       },
 
+      getUserMinimal: (id) => {
+        return $http.get(`${API_URL}/users/${id}/minimal/`);
+      },
+
       /* POST methods */
 
       postCompressor: (data) => {
