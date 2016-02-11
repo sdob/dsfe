@@ -12,6 +12,11 @@
       const type = $scope.type;
       const { apiCall } = informationCardService.apiCalls[type];
 
+      vm.site = $scope.site || {};
+      if (vm.site.geocoding_data) {
+        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+      }
+
       vm.siteID = id;
       vm.siteType = type;
 
@@ -21,7 +26,10 @@
 
       apiCall(id)
       .then((response) => {
-        vm.site = response.data;
+        vm.site = Object.assign(vm.site, response.data);
+        vm.site.locData = vm.site.locData || informationCardService.formatGeocodingData(vm.site);
+        $scope.site = vm.site;
+
         vm.userIsOwner = informationCardService.userIsOwner(vm.site);
         $timeout(() => {
           vm.isLoading = false;
