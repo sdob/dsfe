@@ -1,18 +1,6 @@
 <div class="information-card__body-section">
     <h3 class="information-card__section-title">Comments</h3>
-    <div ng-if="vm.isAuthenticated()" class="information-card__comment-form">
-        <form name="vm.commentForm" novalidate>
-            <textarea name="comentText" class="form-control"
-                ng-model="vm.comment.text"
-                ></textarea>
-            <div class="ds-form__submit-row">
-                <button ng-click="vm.submit()" class="btn btn-primary"
-                    ng-disabled="!vm.comment.text || vm.isSubmitting"
-                    >Submit</button>
-            </div>
-        </form>
-    </div>
-    <div class="information-card__comment" ng-repeat="comment in comments | orderBy:'-'">
+    <div class="information-card__comment" ng-repeat="comment in comments">
         <div class="information-card__dive-actions">
             <a href
                 class="overlay-action-item"
@@ -55,5 +43,17 @@
         <div class="information-card__dive-comment" ng-bind-html="comment.text | markdown">
         </div>
 
+    </div>
+    <div ng-if="vm.isAuthenticated()" class="information-card__comment-form">
+        <form name="vm.commentForm" novalidate>
+            <textarea name="comentText" class="form-control"
+                ng-model="vm.comment.text"
+                ></textarea>
+            <div class="ds-form__submit-row">
+                <button ng-click="vm.submit()" class="btn btn-primary"
+                    ng-disabled="!vm.comment.text || vm.isSubmitting"
+                    >Submit</button>
+            </div>
+        </form>
     </div>
 </div>
