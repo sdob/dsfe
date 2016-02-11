@@ -7,13 +7,10 @@
 
     function activate() {
       vm.isLoading = true; // We're waiting for the site to load
-      console.log('on activation, my scope site is');
-      console.log($scope.site);
       vm.site = $scope.site || {};
       vm.site.images = {};
       // If we have geocoding data, then format it
       if (vm.site.geocoding_data) {
-        console.log('i have GEOCODING DATA');
         vm.site.locData = informationCardService.formatGeocodingData(vm.site);
       }
 
