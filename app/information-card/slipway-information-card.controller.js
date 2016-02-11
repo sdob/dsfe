@@ -40,16 +40,7 @@
       });
 
       // Retrieve comments
-      /*
-      dscomments.getSlipwayComments(id)
-      .then((response) => {
-        $timeout(() => {
-          $scope.site.comments = response.data;
-        });
-      });
-      */
-
-     updateCommentList();
+      updateCommentList();
 
       // Listen for comment-added events
       $scope.$on('comment-added', (event) => {
@@ -94,8 +85,6 @@
           $scope.site.comments = response.data;
           getCommenterProfileImages();
         });
-      })
-      .then(() => {
       });
     }
   }

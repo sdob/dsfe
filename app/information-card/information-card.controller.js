@@ -113,9 +113,9 @@
       .then((response) => {
         $timeout(() => {
           $scope.site.comments = response.data;
-        getCommenterProfileImages();
+          getCommenterProfileImages();
         });
-      })
+      });
     }
 
     function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
