@@ -12,35 +12,29 @@
       const { apiCall } = informationCardService.apiCalls[type];
 
       // Retrieve site information from scope if we've got it
-      vm.site = $scope.site || {};
-      if (vm.site.geocoding_data) {
-        vm.site.locData = informationCardService.formatGeocodingData(vm.site);
+      $scope.site = $scope.site || {};
+      if ($scope.site.geocoding_data) {
+        $scope.site.locData = informationCardService.formatGeocodingData($scope.site);
       }
 
-      vm.site.images = {};
+      $scope.site.images = {};
       vm.siteType = type;
       vm.siteID = id;
 
       /* Wire up functions */
       vm.isAuthenticated = $auth.isAuthenticated;
 
-      vm.sectionVisibilities = {
-        defaultSection: true,
-        uploadImageForm: false,
-      };
-
       // Retrieve the site data
       apiCall(id)
       .then((response) => {
-        vm.site = Object.assign(vm.site, response.data);
-        vm.site.locData = vm.site.locData ||  informationCardService.formatGeocodingData(vm.site);
-        $scope.site = vm.site;
+        vm.isLoading = false;
+        $scope.site = Object.assign($scope.site, response.data);
+        $scope.site.locData = $scope.site.locData ||  informationCardService.formatGeocodingData($scope.site);
 
-        vm.userIsOwner = informationCardService.userIsOwner(vm.site);
+        vm.userIsOwner = informationCardService.userIsOwner($scope.site);
       });
 
       $timeout(() => {
-        vm.isLoading = false;
       });
     }
   }
