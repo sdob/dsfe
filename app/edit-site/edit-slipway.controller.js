@@ -70,7 +70,9 @@
         dsapi.getSlipway($routeParams.id)
         .then((response) => {
           // Format site data for angular-google-maps
-          vm.site = formatResponse(response);
+          vm.site = formatResponse(response.data);
+          console.log('loaded in stuff');
+          console.log(vm.site);
           vm.map.center = vm.site.coords;
           vm.marker = {
             id: vm.site.id,

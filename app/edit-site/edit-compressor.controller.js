@@ -34,6 +34,7 @@
       },
     };
 
+    const { formatRequest, formatResponse } = editSiteService;
     const vm = this;
     activate();
 
@@ -74,7 +75,7 @@
 
           // TODO: check whether the data returned are OK
           // Format site data for angular-google-maps
-          vm.site = formatResponse(response);
+          vm.site = formatResponse(response.data);
           vm.map.center = vm.site.coords;
           vm.marker = {
             id: vm.site.id,
@@ -97,30 +98,6 @@
         vm.title = 'Add a compressor';
         vm.templateStrings = TEMPLATE_STRINGS.add;
       }
-    }
-
-    function formatResponse(response) {
-
-      // Convert DSAPI response data to a format that angular-google-maps
-      // understands.
-      const site = Object.assign({}, response.data);
-      site.coords = {
-        latitude: response.data.latitude,
-        longitude: response.data.longitude,
-      };
-      delete site.latitude;
-      delete site.longitude;
-      return site;
-    }
-
-    function formatRequest(site) {
-
-      // Convert Angular model to a format that DSAPI understands.
-      const requestData = Object.assign({}, site);
-      requestData.latitude = site.coords.latitude;
-      requestData.longitude = site.coords.longitude;
-      delete requestData.coords;
-      return requestData;
     }
 
     function submit() {

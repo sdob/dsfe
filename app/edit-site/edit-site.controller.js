@@ -68,6 +68,8 @@
         .then((response) => {
           // Format the site data
           vm.site = formatResponse(response.data);
+          console.log('loaded site data');
+          console.log(vm.site);
           // Validate the entry checkboxes
           vm.checkAtLeastOneEntryIsSelected();
           // Set up map
