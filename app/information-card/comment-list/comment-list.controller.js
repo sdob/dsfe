@@ -40,15 +40,13 @@
         console.error(err);
       });
       // console.log($scope);
-      //dscomments.postDivesiteComment($scope.commentForm);
     }
 
     function summonConfirmCommentDeletionModal(comment, $index) {
       const instance = $uibModal.open({
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
-        resolve: {
-          comment: () => comment,
+        scope: {
         },
         size: 'sm',
         templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
@@ -65,7 +63,7 @@
       });
     }
 
-    function summonEditCommentModal(comment) {
+    function summonEditCommentModal(comment, $index) {
       const instance = $uibModal.open({
         controller: 'EditCommentModalController',
         controllerAs: 'vm',
@@ -75,9 +73,22 @@
         size: 'lg',
         templateUrl: 'information-card/comment-list/edit-comment-modal.html',
       });
-      instance.result.then((reason) => {
-        if (reason === 'edited') {
-          $scope.$emit('comment-list-updated');
+      instance.result.then((result) => {
+        // If the edit was submitted, then update the DOM optimistically
+        // and fire off a server request
+        if (result.edited) {
+          const { text } = result;
+          if (text) {
+            // Non-empty comments are edited
+            comment.text = text; // update in the DOM
+            // Make server request in the background
+            dscomments.updateDivesiteComment(comment.id, { text });
+          } else {
+            // Empty comments are deleted
+            $scope.comments.splice($index, 1);
+            dscomments.deleteDivesiteComment(comment.id);
+          }
+          // $scope.$emit('comment-list-updated');
         }
       });
     }

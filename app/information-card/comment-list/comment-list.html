@@ -5,7 +5,7 @@
             <a href
                 class="overlay-action-item"
                 ng-if="userID === comment.owner.id"
-                ng-click="vm.summonEditCommentModal(comment)">
+                ng-click="vm.summonEditCommentModal(comment, $index)">
                 <span class="fa fa-stack">
                     <i class="fa fa-stack-2x fa-circle background"></i>
                     <i class="fa fa-stack-1x fa-edit"></i>

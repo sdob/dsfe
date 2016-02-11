@@ -1,14 +1,16 @@
 (function() {
   'use strict';
 
-  function EditCommentModalController($timeout, $uibModalInstance, comment, dscomments) {
+  function EditCommentModalController($scope, $timeout, $uibModalInstance, comment, dscomments) {
     const vm = this;
     activate();
 
     function activate() {
+      console.log($scope);
       vm.cancel = cancel;
       vm.comment = comment;
       vm.submit = submit;
+      vm.newText = comment.text;
     }
 
     function cancel() {
@@ -16,21 +18,16 @@
     }
 
     function submit() {
-      console.log('SUBMITTING');
-      vm.isSubmitting = true;
-      dscomments.updateDivesiteComment(vm.comment.id, vm.comment)
-      .then((response) => {
-        $timeout(() => {
-          $uibModalInstance.close('edited');
-        }, 1000);
-      })
-      .catch((err) => {
-        $uibModalInstance.close(err);
+      // Dismiss the modal immediately
+      $uibModalInstance.close({
+        edited: true,
+        text: vm.newText,
       });
     }
   }
 
   EditCommentModalController.$inject = [
+    '$scope',
     '$timeout',
     '$uibModalInstance',
     'comment',
