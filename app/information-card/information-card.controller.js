@@ -50,6 +50,7 @@
       $timeout(() => {
         // Retrieve as much data as we can
         apiCall(id)
+        .then((response) => {
           $scope.site = Object.assign($scope.site, response.data);
           $scope.site.locData = $scope.site.locData || formatGeocodingData($scope.site);
 
