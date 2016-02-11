@@ -46,7 +46,8 @@
       const instance = $uibModal.open({
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
-        scope: {
+        resolve: {
+          comment: () => comment,
         },
         size: 'sm',
         templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
