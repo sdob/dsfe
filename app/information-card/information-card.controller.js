@@ -308,7 +308,18 @@
           $scope.images = images.map(i => {
             const image = Object.assign({}, i.image);
             image.ownerID = i.ownerID;
+            image.createdAt = i.createdAt;
+            console.log(image.createdAt);
             return image;
+          });
+
+          // Load image owner data
+          $scope.images.forEach((image) => {
+            dsapi.getUserMinimal(image.ownerID)
+            .then((response) => {
+              image.ownerName = response.data.name;
+              image.caption = `${image.ownerName}`;
+            });
           });
         }
       });
