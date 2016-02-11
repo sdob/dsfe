@@ -14,6 +14,10 @@
       updateDivesiteComment: (id, data) => {
         return $http.patch(`${API_URL}/comments/divesites/${id}/`, data);
       },
+
+      deleteDivesiteComment: (id) => {
+        return $http.delete(`${API_URL}/comments/divesites/${id}/`);
+      },
     };
   }
 

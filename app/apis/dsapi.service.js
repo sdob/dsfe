@@ -114,10 +114,6 @@
         return $http.delete(`${API_URL}/dives/${id}/`);
       },
 
-      deleteDivesiteComment: (id) => {
-        return $http.delete(`${API_URL}/comments/divesites/${id}/`);
-      },
-
     };
   }
 
