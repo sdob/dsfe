@@ -4,7 +4,6 @@
     'LocalStorageModule',
     'divesites.constants',
     'divesites.services',
-    'markdown',
     'satellizer',
     'ui.bootstrap',
   ]);
