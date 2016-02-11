@@ -42,6 +42,15 @@ module.exports = (grunt) => {
       },
     },
 
+    favicons: {
+      options: {
+      },
+      icons: {
+        src: '<%= cfg.app %>/img/logo.svg',
+        dest: '<%= cfg.dist %>/',
+      },
+    },
+
     sass: {
       options: {
         sourceMap: true,
@@ -131,6 +140,7 @@ module.exports = (grunt) => {
     'uglify', // Minify JS
     'filerev', // Generate file versions to bust caches
     'usemin', // Run usemin
+    'favicons', // generate favicons
   ]);
 
   grunt.registerTask('test', [
