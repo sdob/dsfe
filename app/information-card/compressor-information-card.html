@@ -9,6 +9,22 @@
             <information-card-coordinates></information-card-coordinates>
         </div>
         <ng-include src="'information-card/compressor-actions.html'"></ng-include>
+
+        <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
+            <li role="presentation" class="active profile__tab-menu-item">
+                <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
+                    <h3 class="information-card__tab-title">
+                        Comments ({{ site.comments.length | number }})
+                    </h3>
+                </a>
+            </li>
+        </ul>
+
+        <section class="tab-content">
+            <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
+                <comment-list site="site" comments="site.comments"></comment-list>
+            </section>
+        </section>
     </div>
 
 </div>

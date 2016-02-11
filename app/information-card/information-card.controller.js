@@ -11,6 +11,7 @@
       // Make sure that $scope.site is defined
       $scope.site = $scope.site || {};
       $scope.site.images = {};
+      $scope.site.type = $scope.type;
       // If we have geocoding data, then format it
       if ($scope.site.geocoding_data) {
         $scope.site.locData = informationCardService.formatGeocodingData($scope.site);
@@ -82,17 +83,7 @@
       });
 
       // Retrieve comments
-      dscomments.getDivesiteComments(id)
-      .then((response) => {
-        console.log('response from dscomments');
-        console.log(response);
-        $timeout(() => {
-          $scope.site.comments = response.data;
-        })
-        .then(() => {
-          getCommenterProfileImages();
-        });
-      });
+      updateCommentList();
 
       /* Listen for events emitted upwards by child controllers */
       $scope.$on('dive-list-updated', (event) => {
@@ -122,11 +113,9 @@
       .then((response) => {
         $timeout(() => {
           $scope.site.comments = response.data;
+        getCommenterProfileImages();
         });
       })
-      .then(() => {
-        getCommenterProfileImages();
-      });
     }
 
     function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers

@@ -39,6 +39,24 @@
       deleteSlipwayComment: (id) => {
         return $http.delete(`${API_URL}/comments/slipways/${id}/`);
       },
+
+      /* Compressor comments */
+
+      getCompressorComments: (id) => {
+        return $http.get(`${API_URL}/compressors/${id}/comments/`);
+      },
+
+      postCompressorComment: (data) => {
+        return $http.post(`${API_URL}/comments/compressors/`, data);
+      },
+
+      updateCompressorComment: (id, data) => {
+        return $http.patch(`${API_URL}/comments/compressors/${id}/`, data);
+      },
+
+      deleteCompressorComment: (id) => {
+        return $http.delete(`${API_URL}/comments/compressors/${id}/`);
+      },
     };
   }
 

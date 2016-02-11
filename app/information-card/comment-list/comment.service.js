@@ -5,16 +5,19 @@
     const apiCalls = {
       compressor: {
         create: dscomments.postCompressorComment,
+        retrieve: dscomments.getCompressorComments,
         update: dscomments.updateCompressorComment,
         delete: dscomments.deleteCompressorComment,
       },
       divesite: {
         create: dscomments.postDivesiteComment,
+        retrieve: dscomments.getDivesiteComments,
         update: dscomments.updateDivesiteComment,
         delete: dscomments.deleteDivesiteComment,
       },
       slipway: {
         create: dscomments.postSlipwayComment,
+        retrieve: dscomments.getSlipwayComments,
         update: dscomments.updateSlipwayComment,
         delete: dscomments.deleteSlipwayComment,
       },

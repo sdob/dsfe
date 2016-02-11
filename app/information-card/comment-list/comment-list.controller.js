@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function CommentListController($auth, $scope, $timeout, $uibModal, dscomments, localStorageService) {
+  function CommentListController($auth, $scope, $timeout, $uibModal, commentService, dscomments, localStorageService) {
     const vm = this;
     activate();
 
@@ -12,20 +12,25 @@
       vm.comment = {
       };
       vm.isAuthenticated = $auth.isAuthenticated;
+      console.log($scope);
+      vm.siteType = $scope.site.type;
       vm.submit = submit;
       vm.summonEditCommentModal = summonEditCommentModal;
       vm.summonConfirmCommentDeletionModal = summonConfirmCommentDeletionModal;
+
+      vm.apiCalls = commentService.apiCalls[vm.siteType];
+      console.log(vm.apiCalls);
     }
 
     function submit() {
-      vm.isSubmitting = true;
-      console.log('submitting!');
       const request = {
         text: vm.comment.text,
-        divesite: $scope.site.id,
+        [vm.siteType]: $scope.site.id,
       };
-      console.log(request);
-      dscomments.postDivesiteComment(request)
+
+      vm.isSubmitting = true;
+
+      vm.apiCalls.create(request)
       .then((response) => {
         $scope.$emit('comment-added');
         // Clear the model
@@ -47,7 +52,12 @@
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
         resolve: {
-          comment: () => comment,
+          comment: () => {
+            return comment;
+          },
+          type: () => {
+            return vm.siteType;
+          },
         },
         size: 'sm',
         templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
@@ -59,7 +69,7 @@
           // We can remove the comment from the DOM immediately
           $scope.comments.splice($index, 1);
           // Delete the comment in the background
-          dscomments.deleteDivesiteComment(comment.id);
+          vm.apiCalls.delete(comment.id);
         }
       });
     }
@@ -83,11 +93,12 @@
             // Non-empty comments are edited
             comment.text = text; // update in the DOM
             // Make server request in the background
-            dscomments.updateDivesiteComment(comment.id, { text });
+            vm.apiCalls.update(comment.id);
           } else {
-            // Empty comments are deleted
+            // Empty comments are deleted, optimistically in the DOM and
+            // then server-side in the background
             $scope.comments.splice($index, 1);
-            dscomments.deleteDivesiteComment(comment.id);
+            vm.apiCalls.delete(comment.id);
           }
           // $scope.$emit('comment-list-updated');
         }
@@ -100,6 +111,7 @@
     '$scope',
     '$timeout',
     '$uibModal',
+    'commentService',
     'dscomments',
     'localStorageService',
   ];
