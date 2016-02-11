@@ -21,6 +21,9 @@
     function performDelete() {
       vm.isDeleting = true;
       console.log('deleting');
+      $uibModalInstance.close('confirmed');
+      // We'll move comment deletion functionality to the main comment list controller
+      /*
       dsapi.deleteDivesiteComment(vm.comment.id)
       .then((response) => {
         $timeout(() => {
@@ -31,6 +34,9 @@
       .catch((err) => {
         console.error(err);
       });
+      console.log('$scope.site');
+      console.log($scope.site);
+      */
     }
   }
 

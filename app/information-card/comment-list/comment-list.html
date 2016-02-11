@@ -14,7 +14,7 @@
             <a href
                 class="overlay-action-item"
                 ng-if="userID === comment.owner.id"
-                ng-click="vm.summonConfirmCommentDeletionModal(comment)">
+                ng-click="vm.summonConfirmCommentDeletionModal(comment, $index)">
                 <span class="fa fa-stack">
                     <i class="fa fa-stack-2x fa-circle background"></i>
                     <i class="fa fa-stack-1x fa-trash"></i>

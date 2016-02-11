@@ -43,7 +43,7 @@
       //dscomments.postDivesiteComment($scope.commentForm);
     }
 
-    function summonConfirmCommentDeletionModal(comment) {
+    function summonConfirmCommentDeletionModal(comment, $index) {
       const instance = $uibModal.open({
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
@@ -55,9 +55,12 @@
         windowClass: 'modal-center',
       });
       instance.result.then((reason) => {
-        if (reason === 'deleted') {
-          // Tell our parent controller that we've deleted a dive
-          $scope.$emit('comment-list-updated');
+        console.log('confirm modal closed');
+        if (reason === 'confirmed') {
+          // We can remove the comment from the DOM immediately
+          $scope.comments.splice($index, 1);
+          // Delete the comment in the background
+          dscomments.deleteDivesiteComment(comment.id);
         }
       });
     }
