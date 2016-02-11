@@ -18,7 +18,11 @@
       url: `${API_URL}/auth/google/`,
     });
 
-    // Configure Bootstrap lightbox
+    /* Configure Bootstrap lightbox */
+
+    // scale all images up
+    LightboxProvider.fullScreenMode = true;
+    // use custom template
     LightboxProvider.templateUrl = 'templates/lightbox.html';
   });
 })();
