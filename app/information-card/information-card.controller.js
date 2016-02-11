@@ -88,7 +88,6 @@
         console.log(response);
         $timeout(() => {
           $scope.site.comments = response.data;
-          $scope.site.comments = response.data;
         })
         .then(() => {
           getCommenterProfileImages();
