@@ -3,7 +3,7 @@
   function addSomethingMenu() {
     return {
       link,
-      templateUrl: 'map/add-something-menu.html',
+      templateUrl: 'map/add-something-menu.template.html',
     };
     function link(scope, element) {
       // Set up event listeners

@@ -6,7 +6,7 @@
       controller: 'SearchMenuController',
       controllerAs: 'vm',
       link,
-      templateUrl: 'map/search-menu.html',
+      templateUrl: 'map/search-menu.template.html',
     };
     function link(scope, element) {
       // Set up event listeners

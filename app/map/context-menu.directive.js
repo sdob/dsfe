@@ -2,7 +2,7 @@
   'use strict';
   function mapContextMenu(contextMenuService) {
     return {
-      templateUrl: 'map/map-context-menu.html',
+      templateUrl: 'map/map-context-menu.template.html',
       link: (scope, element, attrs, controller) => {
         const { x, y } = contextMenuService.pixel();
         element.find('.map-context-menu').css({ top: y, left: x });

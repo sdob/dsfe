@@ -16,9 +16,9 @@
     ng-model="smvm.selectedSite"
     style="font-family: 'Source Sans Pro', FontAwesome"
     placeholder="&#xF002;"
-    typeahead-template-url="map/typeahead-template.html"
+    typeahead-template-url="map/typeahead.template.html"
     uib-typeahead="marker as marker.title for marker in mapMarkers | filter:$viewValue"
     typeahead-on-select="vm.handleSearchSelect($item)"
-    typeahead-popup-template-url="map/typeahead-popup-template.html"
+    typeahead-popup-template-url="map/typeahead-popup.template.html"
     />
 </div>

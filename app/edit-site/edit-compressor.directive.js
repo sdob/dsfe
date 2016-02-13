@@ -2,7 +2,7 @@
   'use strict';
   function editCompressor() {
     return {
-      templateUrl: 'edit-site/edit-compressor.html',
+      templateUrl: 'edit-site/edit-compressor.template.html',
     };
   }
 

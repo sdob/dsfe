@@ -3,7 +3,7 @@
   function EditableSiteMap(uiGmapGoogleMapApi) {
     return {
       restrict: 'E',
-      templateUrl: 'edit-site/editable-site-map.html',
+      templateUrl: 'edit-site/editable-site-map.template.html',
       link: (scope, elem, attrs, ctrl) => {
         console.log(scope);
         uiGmapGoogleMapApi
