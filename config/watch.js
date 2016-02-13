@@ -22,7 +22,10 @@ module.exports = {
       livereload: '<%= connect.options.livereload %>'
     },
     files: [
-      '<%= cfg.app %>/{,*/}*.html', '.tmp/styles{,*/}*.css', '<%= cfg.app %>/{,*/}*.js',
+      '<%= cfg.app %>/*.html',
+      '<%= cfg.app %>/**/*.html',
+      '.tmp/styles{,*/}*.css',
+      '<%= cfg.app %>/{,*/}*.js',
     ],
   },
 };

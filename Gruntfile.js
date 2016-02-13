@@ -89,6 +89,19 @@ module.exports = (grunt) => {
       },
     },
 
+    ngtemplates: {
+      options: {
+        htmlmin: { collapseWhitespace: true, },
+        module: 'divesites',
+        usemin: 'scripts/scripts.js',
+      },
+      dist: {
+        cwd: '<%= cfg.app %>',
+        src: ['**/*.template.html',],
+        dest: '<%= cfg.dist %>/scripts/templates.js',
+      },
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -132,6 +145,7 @@ module.exports = (grunt) => {
     'autoprefixer', // Autoprefix
     'wiredep', // Update Bower dependencies
     'useminPrepare', // Generate usemin configuration
+    'ngtemplates', // compile templates
     'concat', // Concatenate JS and CSS
     'ngAnnotate',
     'copy:dist', // Move files across to the dist/ directory
