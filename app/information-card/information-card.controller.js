@@ -182,7 +182,7 @@
       const instance = $uibModal.open({
         controller: 'LogDiveModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/log-dive-modal.html',
+        templateUrl: 'information-card/log-dive-modal.template.html',
         resolve: {
           site: () => $scope.site,
         },

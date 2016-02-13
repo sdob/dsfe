@@ -2,7 +2,7 @@
   'use strict';
   function informationCardCoordinates() {
     return {
-      templateUrl: 'information-card/coordinates.html',
+      templateUrl: 'information-card/coordinates.template.html',
       link: (scope, elem, attrs, ctrl) => {
       },
     };

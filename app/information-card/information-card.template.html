@@ -7,7 +7,7 @@
         id="information-card__body"
         >
         <modal-mask ng-show="icvm.isLoading"></modal-mask>
-        <ng-include src="'information-card/description.html'"></ng-include>
+        <ng-include src="'information-card/description.template.html'"></ng-include>
         <div class="information-card__site-statistics">
             <information-card-coordinates></information-card-coordinates>
             <ng-include src="'information-card/site-level.html'"></ng-include>
@@ -15,7 +15,7 @@
             <information-card-charts></information-card-charts>
             <nearby-slipways slipways="site.nearbySlipways"></nearby-slipways>
         </div>
-        <ng-include src="'information-card/actions.html'"></ng-include>
+        <ng-include src="'information-card/actions.template.html'"></ng-include>
 
         <div>
             <div ng-if="images.length"
