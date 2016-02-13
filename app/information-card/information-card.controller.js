@@ -237,7 +237,7 @@
       const instance = $uibModal.open({
         controller: 'UploadImageModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/upload-image-modal.html',
+        templateUrl: 'information-card/upload-image-modal.template.html',
         resolve: {
           site: () => $scope.site,
         },

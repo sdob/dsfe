@@ -5,7 +5,7 @@
       controller: 'InformationCardChartsController',
       controllerAs: 'vm',
       scope: true,
-      templateUrl: 'information-card/charts/charts.html',
+      templateUrl: 'information-card/charts/charts.template.html',
       link: (scope, element, attrs, controller) => {
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')
         .click(collapseBehaviour.toggleChevron);

@@ -50,7 +50,7 @@
       const instance = $uibModal.open({
         controller: 'ConfirmDeleteImageModalController',
         controllerAs: 'vm',
-        templateUrl: 'profile/confirm-delete-image-modal.html',
+        templateUrl: 'profile/confirm-delete-image-modal.template.html',
       });
       instance.result.then((reason) => {
         // Easier for us to handle deletion here

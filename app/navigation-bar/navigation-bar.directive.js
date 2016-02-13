@@ -2,7 +2,7 @@
   'use strict';
   function NavigationBar() {
     return {
-      templateUrl: 'navigation-bar/navigation-bar.html',
+      templateUrl: 'navigation-bar/navigation-bar.template.html',
       controller: 'NavigationBarController',
       controllerAs: 'nbvm',
       link: () => {

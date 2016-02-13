@@ -68,7 +68,7 @@
     function summonDeleteProfileImageModal() {
       console.log('summoning delete profile image modal');
       const instance = $uibModal.open({
-        templateUrl: 'profile/delete-profile-image-modal.html',
+        templateUrl: 'profile/delete-profile-image-modal.template.html',
         controller: 'DeleteProfileImageModalController',
         controllerAs: 'vm',
         resolve: {

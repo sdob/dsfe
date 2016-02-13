@@ -3,7 +3,7 @@
   function modalMask() {
     return {
       link,
-      templateUrl: 'widgets/modal-mask.html',
+      templateUrl: 'widgets/modal-mask.template.html',
     };
 
     function link(scope, element, attrs) {

@@ -22,7 +22,7 @@
     function cancel() {
       if ($scope.editForm.$dirty) {
         const instance = $uibModal.open({
-          templateUrl: 'profile/cancel-edit-profile-modal.html',
+          templateUrl: 'profile/cancel-edit-profile-modal.template.html',
           controller: 'CancelEditProfileModalController',
           controllerAs: 'vm',
         });

@@ -2,7 +2,7 @@
   'use strict';
   function loginModal() {
     return {
-      templateUrl: 'login/login-modal.html',
+      templateUrl: 'login/login-modal.template.html',
       controller: 'LoginModalController',
       controllerAs: 'lmvm',
       restrict: 'E',

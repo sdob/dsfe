@@ -60,7 +60,7 @@
 
     function summonLoginModal() {
       const modalInstance = $uibModal.open({
-        templateUrl: 'login/login-modal.html',
+        templateUrl: 'login/login-modal.template.html',
         controller: 'LoginModalController',
         controllerAs: 'lmvm',
         size: 'sm',

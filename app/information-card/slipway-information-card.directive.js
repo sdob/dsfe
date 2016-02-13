@@ -3,7 +3,7 @@
 
   function slipwayInformationCard() {
     return {
-      templateUrl: 'information-card/slipway-information-card.html',
+      templateUrl: 'information-card/slipway-information-card.template.html',
       controller: 'SlipwayInformationCardController',
       controllerAs: 'icvm',
       link,

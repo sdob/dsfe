@@ -4,7 +4,7 @@
     return {
       controller: 'SignInController',
       controllerAs: 'vm',
-      templateUrl: 'login/sign-in-template.html',
+      templateUrl: 'login/sign-in.template.html',
     };
   }
 
