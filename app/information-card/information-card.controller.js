@@ -172,7 +172,7 @@
           console.log('setting divesite header image');
           $scope.site.headerImageUrl = imageUrl;
           vm.backgroundStyle = {
-            background: `blue url(${$scope.site.headerImageUrl}) center / cover`,
+            background: `url(${$scope.site.headerImageUrl}) center / cover`,
           };
         });
       }
