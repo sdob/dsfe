@@ -3,7 +3,7 @@
 
   function compressorInformationCard() {
     return {
-      templateUrl: 'information-card/compressor-information-card.html',
+      templateUrl: 'information-card/compressor-information-card.template.html',
       controller: 'CompressorInformationCardController',
       controllerAs: 'icvm',
       link,

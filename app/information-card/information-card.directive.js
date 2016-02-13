@@ -3,7 +3,7 @@
 
   function informationCard() {
     return {
-      templateUrl: 'information-card/information-card.html',
+      templateUrl: 'information-card/information-card.template.html',
       controller: 'InformationCardController',
       controllerAs: 'icvm',
       link,
