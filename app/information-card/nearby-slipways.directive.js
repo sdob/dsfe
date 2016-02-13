@@ -5,7 +5,7 @@
       scope: {
         slipways: '=',
       },
-      templateUrl: 'information-card/nearby-slipways.html',
+      templateUrl: 'information-card/nearby-slipways.template.html',
       link: () => {
         $('#js-information-card__nearby-slipways-toggle')
         .click(collapseBehaviour.toggleChevron);

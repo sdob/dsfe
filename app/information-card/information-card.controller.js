@@ -212,7 +212,7 @@
       const instance = $uibModal.open({
         controller: 'SetDivesiteHeaderImageModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/set-divesite-header-image-modal.html',
+        templateUrl: 'information-card/set-divesite-header-image-modal.template.html',
         resolve: {
           site: () => $scope.site,
         },
