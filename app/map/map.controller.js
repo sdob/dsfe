@@ -295,7 +295,13 @@
 
     // handle map click events
     function mapClick(map, evt, args) {
+      // When the user clicks on the map, we should do two things:
+      // (1) close the right-click context menu (which this controller
+      // can do), and
+      // (2) close any open filter/search/add menus.
+      // To achieve (2), we'll broadcast a scope event.
       closeContextMenu();
+      $scope.$broadcast('map-click');
     }
 
     function mapDragStart(map, evt, args) {

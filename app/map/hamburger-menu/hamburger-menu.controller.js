@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function HamburgerMenuController($auth, $element) {
+  function HamburgerMenuController($auth, $element, $scope) {
     const vm = this;
     activate();
 
@@ -10,6 +10,13 @@
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.selectSubmenu = selectSubmenu;
       vm.toggleOpened = toggleOpened;
+
+      // Event listeners
+
+      $scope.$on('map-click', () => {
+        // when the map is clicked, any burger menu should get out of the way
+        deselectAll();
+      });
     }
 
     function deselectAll() {
@@ -43,6 +50,7 @@
   HamburgerMenuController.$inject = [
     '$auth',
     '$element',
+    '$scope',
   ];
   angular.module('divesites.hamburgerMenu').controller('HamburgerMenuController', HamburgerMenuController);
 })();
