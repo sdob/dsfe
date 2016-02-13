@@ -12,11 +12,10 @@
             <div class="collapse-header__value">
                 {{ vm.site.depth | number:0 }} m
             </div>
-            <div class="collapse-header__chevron-container"
-                >
-                <span
-                    ng-if="vm.site.depth"
-                    class="collapse-header__chevron fa fa-chevron-down">
+            <div class="collapse-header__chevron-container overlay-action-item" ng-if="vm.site.depth">
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="collapse-header__chevron fa fa-stack-1x fa-chevron-down"></i>
                 </span>
             </div>
         </a>
@@ -45,10 +44,13 @@
             <div class="collapse-header__value">
                 {{ vm.site.duration }} min.
             </div>
-            <div class="collapse-header__chevron-container">
-                <span
-                    ng-if="vm.site.duration"
-                    class="collapse-header__chevron fa fa-chevron-down"></span>
+            <div class="collapse-header__chevron-container overlay-action-item"
+                ng-if="vm.site.duration"
+                >
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="collapse-header__chevron fa fa-stack-1x fa-chevron-down"></i>
+                </span>
             </div>
         </a>
         <div
