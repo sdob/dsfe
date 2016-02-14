@@ -8,3 +8,5 @@ dist/
 .env
 # Ignore Grunt-generated app.constants.js file
 app.constants.js
+# Ignore npm debug logs
+npm-debug.log
