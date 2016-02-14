@@ -10,3 +10,16 @@
     }
   }
 }
+
+.overlay-action-item--blue {
+  color: #fff;
+  .background {
+    color: $blue-700;
+    
+  }
+  &:hover {
+    .background {
+      color: darken($blue-700, 25%);
+    }
+  }
+}
