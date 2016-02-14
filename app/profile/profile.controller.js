@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsapi, dsimg, profileService) {
+  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsapi, dsimg, profileService, userSettingsService) {
     const vm = this;
     activate();
 
@@ -54,6 +54,7 @@
     'dsapi',
     'dsimg',
     'profileService',
+    'userSettingsService',
   ];
   angular.module('divesites.profile').controller('ProfileController', ProfileController);
 })();

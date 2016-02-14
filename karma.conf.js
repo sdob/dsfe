@@ -48,8 +48,9 @@ module.exports = function(config) {
       // Load main app module and constants first
       'app/app.module.js',
       'app/app.constants.js',
-      // Then all other modules
+      // Then all other modules and constants
       'app/**/*.module.js',
+      'app/**/*.constants.js',
       // Then everything else
       'app/**/*.js',
     ],

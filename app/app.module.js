@@ -25,6 +25,7 @@
     'divesites.aboutUs',
     'divesites.profile',
     'divesites.services',
+    'divesites.userSettings',
     'divesites.widgets',
   ])
   .run(($rootScope, $uibModalStack) => {
