@@ -88,6 +88,7 @@
         keepSpiderfied: true, // keep markers spiderfied when clicked
         minimumClusterSize: 6, // prefer larger clusters
         nearbyDistance: 48, // Increase pixel radius
+        imagePath: '/img/m',
       };
 
       // Set cluster/spiderfy events
