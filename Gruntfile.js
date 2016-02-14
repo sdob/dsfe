@@ -151,7 +151,7 @@ module.exports = (grunt) => {
     'copy:dist', // Move files across to the dist/ directory
     //'cdnify',
     'cssmin', // Minify CSS
-    'uglify', // Minify JS
+    // 'uglify', // Minify JS
     'filerev', // Generate file versions to bust caches
     'usemin', // Run usemin
     'favicons', // generate favicons
