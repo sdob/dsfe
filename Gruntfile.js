@@ -114,7 +114,6 @@ module.exports = (grunt) => {
         compress: {
           drop_console: true,
         },
-        sourceMap: true,
       },
     },
 
