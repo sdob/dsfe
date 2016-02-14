@@ -3,7 +3,7 @@
     <div class="information-card__comment" ng-repeat="comment in comments">
         <div class="information-card__dive-actions">
             <a href
-                class="overlay-action-item"
+                class="overlay-action-item--blue"
                 ng-if="userID === comment.owner.id"
                 ng-click="vm.summonEditCommentModal(comment, $index)">
                 <span class="fa fa-stack">
@@ -12,7 +12,7 @@
                 </span>
             </a>
             <a href
-                class="overlay-action-item"
+                class="overlay-action-item--blue"
                 ng-if="userID === comment.owner.id"
                 ng-click="vm.summonConfirmCommentDeletionModal(comment, $index)">
                 <span class="fa fa-stack">

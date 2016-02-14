@@ -2,9 +2,14 @@
     <h3 class="information-card__section-title">Dives</h3>
     <div class="information-card__dive" ng-repeat="dive in dives | orderBy:'-'">
         <div class="information-card__dive-actions">
-            <a href ng-if="userID === dive.diver.id"
+            <a href
+                class="overlay-action-item--blue"
+                ng-if="userID === dive.diver.id"
                 ng-click="vm.summonConfirmDiveDeletionModal(dive)">
-                <i class="fa fa-trash"></i>
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="fa fa-stack-1x fa-trash"></i>
+                </span>
             </a>
         </div>
         <div class="information-card__dive-header">
