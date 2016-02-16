@@ -23,16 +23,16 @@
     function loadFeed() {
       vm.apiCall(vm.offset)
       .then((response) => {
-        $timeout(() => {
-          vm.next = !!response.data.next;
-          console.log(`vm.next? ${vm.next}`);
-          vm.offset += response.data.results.length;
-          vm.feed.results.push(...response.data.results);
-        });
+        vm.next = !!response.data.next;
+        console.log(`vm.next? ${vm.next}`);
+        vm.offset += response.data.results.length;
+        vm.feed.results.push(...response.data.results);
+        console.log('feed length: ' + vm.feed.results.length);
         // console.log(vm.feed);
         vm.feed.results.forEach((i) => {
           const id = i.actor.id;
           if (vm.userProfileImageURLs.hasOwnProperty(id)) {
+            console.log('already got profile image url');
             vm.feed.results.filter(i => i.actor.id === id).forEach((i) => {
               i.actor.profileImageUrl = vm.userProfileImageURLs[id];
             });
@@ -47,6 +47,7 @@
               });
               vm.userProfileImageURLs[id] = profileImageUrl;
               $timeout(() => {
+                console.log('updating profile image url');
                 vm.feed.results.filter(i => i.actor.id === id).forEach((i) => {
                   i.actor.profileImageUrl = profileImageUrl;
                 });
