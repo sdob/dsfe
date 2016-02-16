@@ -4,7 +4,7 @@
     return {
       controller: 'OwnProfileController',
       controllerAs: 'vm',
-      templateUrl: 'profile/profile.html',
+      templateUrl: 'profile/profile.template.html',
       restrict: 'E',
     };
   }
