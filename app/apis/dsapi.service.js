@@ -9,7 +9,7 @@
     return {
 
       getOwnActivity: (offset) => {
-        return $http.get(`${API_URL}/users/feed/?offset=${offset}`);
+        return $http.get(`${API_URL}/users/my_feed/?offset=${offset}`);
       },
 
       getCompressor: (id) => {
@@ -65,8 +65,8 @@
         return $http.get(`${API_URL}/users/${id}/divesites/`);
       },
 
-      getUserRecentActivity: (id) => {
-        return $http.get(`${API_URL}/users/${id}/recent_activity/`);
+      getUserActivity: (id, offset) => {
+        return $http.get(`${API_URL}/users/${id}/feed/?offset=${offset}`);
       },
 
       getUser: (id) => {
