@@ -7,8 +7,13 @@
     function activate() {
       console.log('OwnProfileController.activate()');
       vm.editable = true;
+      vm.user = vm.user || {
+        id: localStorageService.get('user'),
+      };
       vm.summonConfirmDeleteImageModal = summonConfirmDeleteImageModal;
       $scope.editable = true;
+
+      // Retrieve profile info
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
