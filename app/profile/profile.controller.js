@@ -12,6 +12,9 @@
       console.log(`loading user ${userId}`);
       vm.userId = userId;
       $scope.userId = userId;
+      vm.user = {
+        id: userId,
+      };
 
       // Get this user's profile information from the API server
       dsapi.getUser(userId)

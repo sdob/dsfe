@@ -15,7 +15,11 @@
       // We'll maintain a set of user profile image URLs
       vm.userProfileImageURLs = {};
 
-      vm.apiCall = $scope.user.id === localStorageService.get('user') ? dsapi.getOwnActivity : dsapi.getUserActivity;
+      if ($scope.user.id === localStorageService.get('user')) {
+        vm.apiCall = (offset) => dsapi.getOwnActivity(offset);
+      } else {
+        vm.apiCall = (offset) => dsapi.getUserActivity($scope.user.id, offset);
+      }
 
       vm.loadFeed();
     }
