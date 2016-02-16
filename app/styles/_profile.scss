@@ -236,3 +236,31 @@
   background: rgba(0, 0, 0, 0.17);
   background: rgba(0, 0, 0, 0.17);
 }
+
+.profile-feed__actor {
+  font-weight: 500;
+}
+
+.profile-feed__target {
+  font-weight: 500;
+}
+
+.profile-feed__comment-date {
+  margin-top: auto;
+}
+
+.profile-feed__comment-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-feed__comment-image {
+  padding-right: 0;
+  text-align: right;
+}
+
+.profile-feed__comment-summary {
+}
+
+.profile-feed__comment-text {
+}
