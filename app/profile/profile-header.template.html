@@ -1,77 +1,82 @@
 <div class="row profile-header">
-    <div class="profile-header__image col-xs-12 col-sm-4">
-        <div ng-show="!vm.dsimgHasResponded">
-            <div class="profile-header--no-image-outer">
-                <div
-                    class="profile-header--no-image-inner">
-                    <i class="fa fa-fw fa-spin fa-spinner fa-3x"></i>
-                </div>
-            </div>
-        </div>
-        <div ng-show="vm.dsimgHasResponded">
-            <div ng-if="vm.profileImageUrl">
-                <img ng-src="{{vm.profileImageUrl}}" />
-                <div ng-if="editable" class="profile-header-image__action-menu">
-                    <div>
-                        <a href
-                            ng-click="vm.summonDeleteProfileImageModal()"
-                            class="profile-header-image__action-item">
-                            <span class="fa fa-stack">
-                                <i class="fa fa-stack-2x fa-circle"></i>
-                                <i class="fa fa-inverse fa-stack-1x fa-trash"></i>
-                            </span>
-                        </a>
-                        <a href
-                            class="profile-header-image__action-item"
-                            ng-click="vm.summonProfileImageUploadModal()">
-                            <span class="fa fa-stack">
-                                <i class="fa fa-stack-2x fa-circle"></i>
-                                <i class="fa fa-inverse fa-stack-1x fa-edit"></i>
-                            </span>
-                        </a>
+    <div class="col-xs-12 col-sm-4">
+        <div class="profile-header__image">
+            <div ng-show="!vm.dsimgHasResponded">
+                <div class="profile-header--no-image-outer">
+                    <div
+                        class="profile-header--no-image-inner">
+                        <i class="fa fa-fw fa-spin fa-spinner fa-3x"></i>
                     </div>
                 </div>
             </div>
-            <div ng-if="!vm.profileImageUrl"
-                class="profile-header--no-image-outer"
-                >
-                <div
-                    ng-if="editable"
-                    class="profile-header--no-image-inner">
-                    <a href
-                        ng-click="vm.summonProfileImageUploadModal()"
-                        class="profile-header--no-image__link">
-                        <i class="fa fa-fw fa-user fa-3x"></i>
-                        <div>Add a profile image!</div>
-                    </a>
+            <div ng-show="vm.dsimgHasResponded">
+                <div ng-if="vm.profileImageUrl">
+                    <img ng-src="{{vm.profileImageUrl}}" />
+                    <div ng-if="editable" class="profile-header-image__action-menu">
+                        <div>
+                            <a href
+                                ng-click="vm.summonDeleteProfileImageModal()"
+                                class="profile-header-image__action-item">
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-stack-2x fa-circle"></i>
+                                    <i class="fa fa-inverse fa-stack-1x fa-trash"></i>
+                                </span>
+                            </a>
+                            <a href
+                                class="profile-header-image__action-item"
+                                ng-click="vm.summonProfileImageUploadModal()">
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-stack-2x fa-circle"></i>
+                                    <i class="fa fa-inverse fa-stack-1x fa-edit"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div ng-if="!editable"
-                    class="profile-header--no-image-inner">
-                    <i class="fa fa-fw fa-user fa-3x"></i>
+                <div ng-if="!vm.profileImageUrl"
+                    class="profile-header--no-image-outer"
+                    >
+                    <div
+                        ng-if="editable"
+                        class="profile-header--no-image-inner">
+                        <a href
+                            ng-click="vm.summonProfileImageUploadModal()"
+                            class="profile-header--no-image__link">
+                            <i class="fa fa-fw fa-user fa-3x"></i>
+                            <div>Add a profile image!</div>
+                        </a>
+                    </div>
+                    <div ng-if="!editable"
+                        class="profile-header--no-image-inner">
+                        <i class="fa fa-fw fa-user fa-3x"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="profile-header__details col-xs-12 col-sm-8">
-        <h1 class="profile-header__name">
-            <span>
-                {{ vm.user.name }}
-            </span>
-        </h1>
-        <div class="profile-header__member-since">
-            Member since {{ vm.user.date_joined | date:'MMMM yyyy' }}
+
+    <div class="col-xs-12 col-sm-8">
+        <div class="profile-header__details">
+            <h1 class="profile-header__name">
+                <span>
+                    {{ vm.user.name }}
+                </span>
+            </h1>
+            <div class="profile-header__member-since">
+                Member since {{ vm.user.date_joined | date:'MMMM yyyy' }}
+            </div>
+            <div class="profile-header__about-me">
+                {{ vm.user.aboutMe }}
+            </div>
+            <ul ng-if="editable" class="list-unstyled action-menu">
+                <li class="action-menu__action-item">
+                    <a href="/#/me/edit" class="action-menu__link link--undecorated">
+                        <i class="action-menu__icon fa fa-edit"></i>
+                        <span class="action-menu__text"> Edit </span>
+                    </a>
+                </li>
+            </ul>
+            <profile-stats class="profile-header__stats" user="vm.user"></profile-stats>
         </div>
-        <div class="profile-header__about-me">
-            {{ vm.user.aboutMe }}
-        </div>
-        <ul ng-if="editable" class="list-unstyled action-menu">
-            <li class="action-menu__action-item">
-                <a href="/#/me/edit" class="action-menu__link link--undecorated">
-                    <i class="action-menu__icon fa fa-edit"></i>
-                    <span class="action-menu__text"> Edit </span>
-                </a>
-            </li>
-        </ul>
-        <profile-stats class="profile-header__stats" user="vm.user"></profile-stats>
     </div>
 </div>

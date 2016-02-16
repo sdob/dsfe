@@ -1,17 +1,25 @@
-<div ng-repeat="place in vm.user.placesAdded" class="row places-added__item">
-    <div class="col-xs-4 places-added__icon" ng-switch="place.type">
-        <img ng-switch-when="divesite" ng-src="/img/divesite.svg" />
-        <img ng-switch-when="compressor" ng-src="/img/compressor.svg" />
-        <img ng-switch-when="slipway" ng-src="/img/boatlaunch.svg" />
+<section class="profile-places-added">
+    <div ng-repeat="place in vm.user.placesAdded" class="row">
+        <div class="col-xs-12">
+            <div class="profile-feed__item">
+                <div class="profile-feed__comment-header">
+                    <div class="places-added__icon" ng-switch="place.type">
+                        <img ng-switch-when="divesite" ng-src="/img/divesite_circular.svg" />
+                        <img ng-switch-when="compressor" ng-src="/img/compressor_circular.svg" />
+                        <img ng-switch-when="slipway" ng-src="/img/slipway_circular.svg" />
+                    </div>
+                    <div class="profile-feed__comment-summary">
+                        <span class="places-added__name">
+                            <a href="/#/?{{place.type}}={{place.id}}">
+                                {{ place.name }}
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <p class="comment__text">
+                    {{ place.description }}
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="col-xs-8">
-        <h3 class="places-added__name">
-            <a href="/#/?{{place.type}}={{place.id}}">
-                {{ place.name }}
-            </a>
-        </h3>
-        <p>
-            {{ place.description }}
-        </p>
-    </div>
-</div>
+</section>

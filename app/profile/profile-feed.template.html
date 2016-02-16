@@ -1,49 +1,55 @@
 <section class="profile-feed">
-    <div class="row">
-        <h3 class="col-xs-8 col-xs-offset-4">Feed</h3>
-    </div>
     <div class="row comment" ng-repeat="item in vm.feed.results">
-        <div>
-            <div class="col-xs-4 profile-feed__comment-image" ng-show="item.actor.profileImageUrl">
-                <!-- width and height seem to need hard-coding -->
-                <img height="60" width="60"
-                ng-src="{{ item.actor.profileImageUrl }}"
-                />
-            </div>
-            <div class="col-xs-4 profile-feed__comment-image comment__image--none"  ng-show="!item.actor.profileImageUrl">
-                <i class="fa fa-fw fa-user fa-3x"></i>
-            </div>
-            <div class="col-xs-8 profile-feed__comment-details">
-                <div class="profile-feed__comment-summary">
-                    <span class="profile-feed__actor" ng-switch="item.actor.id === vm.user.id">
-                        <span ng-switch-when="true">You</span>
-                        <span ng-switch-when="false">
-                            <a href="/#/users/{{ item.actor.id }}">{{ item.actor.name }}</a>
+        <div class="col-xs-12">
+            <div class="profile-feed__item">
+                <div class="profile-feed__comment-header">
+                    <div ng-show="item.actor.profileImageUrl">
+                        <div class="profile-feed__comment-image">
+                            <!-- width and height seem to need hard-coding -->
+                            <img style="width: 100%; height: auto; max-width: 60px;"
+                            ng-src="{{ item.actor.profileImageUrl }}"
+                            />
+                        </div>
+                    </div>
+                    <div ng-show="!item.actor.profileImageUrl">
+                        <div class="profile-feed__comment-image comment__image--none">
+                            <i class="fa fa-fw fa-user fa-3x"></i>
+                        </div>
+                    </div>
+                    <div class="profile-feed__comment-summary">
+                        <span class="profile-feed__actor" ng-switch="item.actor.id === vm.user.id">
+                            <span ng-switch-when="true">You</span>
+                            <span ng-switch-when="false">
+                                <a href="/#/users/{{ item.actor.id }}">{{ item.actor.name }}</a>
+                            </span>
                         </span>
-                    </span>
-                    <span class="profile-feed__verb">{{ item.verb }}</span>
-                    <a href='/#/?{{ item.target_type }}={{ item.target.id }}'
-                        class="profile-feed__target">
-                        {{ item.target.name }}
-                    </a>
+                        <span class="profile-feed__verb">{{ item.verb }}</span>
+                        <a href='/#/?{{ item.target_type }}={{ item.target.id }}'
+                            class="profile-feed__target">
+                            {{ item.target.name }}
+                        </a>
+                        <div class="profile-feed__comment-date">
+                            {{ item.timestamp | date }}
+                        </div>
+                        <div ng-if="item.action_object.depth && item.action_object.duration">
+                            <span>{{ item.action_object.depth }} m</span>
+                            <span>{{ item.action_object.duration | duration }} min.</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="profile-feed__comment-date">
-                    {{ item.timestamp | date }}
+
+                <div class="comment__text profile-feed__comment-text" ng-if="item.verb === 'commented on'">
+                    {{ item.action_object.text }}
                 </div>
-                <div ng-if="item.action_object.depth && item.action_object.duration">
-                    <span>{{ item.action_object.depth }} m</span>
-                    <span>{{ item.action_object.duration | duration }} min.</span>
+                <div class="comment__text profile-feed__comment-text" ng-if="item.verb === 'logged a dive at'">
+                    {{ item.action_object.comment }}
                 </div>
             </div>
         </div>
 
-        <div class="col-xs-8 col-xs-offset-4 comment__text profile-feed__comment-text" ng-if="item.verb === 'commented on'">
-            {{ item.action_object.text }}
-        </div>
-        <div class="col-xs-8 col-xs-offset-4 comment__text profile-feed__comment-text" ng-if="item.verb === 'logged a dive at'">
-            {{ item.action_object.comment }}
-        </div>
     </div>
+
+    <!-- 'load more' button -->
     <div class="row" ng-if="vm.feed && vm.next">
         <div class="col-xs-8 col-xs-offset-4">
             <button
