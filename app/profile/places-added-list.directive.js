@@ -3,7 +3,7 @@
 
   function placesAddedList() {
     return {
-      templateUrl: 'profile/places-added-list.html',
+      templateUrl: 'profile/places-added-list.template.html',
     };
   }
 

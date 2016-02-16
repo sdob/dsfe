@@ -5,7 +5,7 @@
       scope: {
         user: '=',
       },
-      templateUrl: 'profile/profile-stats.html',
+      templateUrl: 'profile/profile-stats.directive.html',
     };
   }
 

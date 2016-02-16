@@ -6,7 +6,7 @@
       controllerAs: 'vm',
       link,
       scope: true,
-      templateUrl: 'profile/profile-header.html',
+      templateUrl: 'profile/profile-header.template.html',
     };
 
     function link(scope, element, attrs, controller) {

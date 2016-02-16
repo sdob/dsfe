@@ -10,7 +10,7 @@
         comments: '=',
         site: '=',
       },
-      templateUrl: 'information-card/comment-list/comment-list.html',
+      templateUrl: 'information-card/comment-list/comment-list.template.html',
     };
 
     function link(scope, element) {

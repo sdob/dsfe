@@ -3,7 +3,7 @@
 
   function imagesAddedList() {
     return {
-      templateUrl: 'profile/images-added-list.html',
+      templateUrl: 'profile/images-added-list.template.html',
     };
   }
 

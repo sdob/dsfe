@@ -2,7 +2,7 @@
   'use strict';
   function editProfile() {
     return {
-      templateUrl: 'profile/edit-profile.html',
+      templateUrl: 'profile/edit-profile.template.html',
     };
   }
 

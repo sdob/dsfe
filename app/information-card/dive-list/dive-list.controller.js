@@ -16,7 +16,7 @@
           dive: () => dive,
         },
         size: 'sm',
-        templateUrl: 'information-card/dive-list/confirm-dive-deletion-modal.html',
+        templateUrl: 'information-card/dive-list/confirm-dive-deletion-modal.template.html',
         windowClass: 'modal-center',
       });
       instance.result.then((reason) => {

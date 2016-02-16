@@ -60,7 +60,7 @@
           },
         },
         size: 'sm',
-        templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
+        templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
         windowClass: 'modal-center',
       });
       instance.result.then((reason) => {
@@ -82,7 +82,7 @@
           comment: () => comment,
         },
         size: 'lg',
-        templateUrl: 'information-card/comment-list/edit-comment-modal.html',
+        templateUrl: 'information-card/comment-list/edit-comment-modal.template.html',
       });
       instance.result.then((result) => {
         // If the edit was submitted, then update the DOM optimistically
