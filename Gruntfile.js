@@ -46,7 +46,7 @@ module.exports = (grunt) => {
       options: {
       },
       icons: {
-        src: '<%= cfg.app %>/img/logo.svg',
+        src: '<%= cfg.app %>/img/logo.png',
         dest: '<%= cfg.dist %>/',
       },
     },
