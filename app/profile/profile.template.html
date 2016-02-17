@@ -4,16 +4,16 @@
     <div class="row">
         <div class="col-xs-12 col-sm-4" role="navigation">
             <ul id="js-tab-menu" class="list-unstyled profile__sidebar">
-                <li class="profile__sidebar-item"><a href data-target="#js-profile-feed-tab" data-toggle="tab">Feed</a></li>
+                <li class="profile__sidebar-item active"><a href data-target="#js-profile-feed-tab" data-toggle="tab">Feed</a></li>
                 <li class="profile__sidebar-item"><a href class="profile__sidebar-link" data-target="#js-profile-dives-tab" data-toggle="tab">Dives</a></li>
-                <li class="profile__sidebar-item active"><a href class="profile__sidebar-link" data-target="#js-profile-places-tab" data-toggle="tab">Places</a></li>
+                <li class="profile__sidebar-item"><a href class="profile__sidebar-link" data-target="#js-profile-places-tab" data-toggle="tab">Places</a></li>
                 <li class="profile__sidebar-item"><a href class="profile__sidebar-link" data-target="#js-profile-images-tab" data-toggle="tab">Images</a></li>
             </ul>
         </div>
 
         <div class="col-xs-12 col-sm-8">
             <section class="tab-content">
-                <div role="tabpanel" class="tab-pane" id="js-profile-feed-tab">
+                <div role="tabpanel" class="tab-pane active" id="js-profile-feed-tab">
                     <profile-feed user="vm.user"></profile-feed>
                 </div>
 
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane active" id="js-profile-places-tab">
+                <div role="tabpanel" class="tab-pane" id="js-profile-places-tab">
                     <places-added-list ng-if="vm.user.placesAdded.length"></places-added-list>
                     <div ng-if="!vm.user.placesAdded.length" class="profile__no-places-added">
                         <i class="fa fa-fw fa-frown-o"></i>
