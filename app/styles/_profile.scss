@@ -269,6 +269,13 @@
   padding: 12px;
 }
 
+.profile-feed__item-type {
+  color: rgba(0, 0, 0, 0.32);
+  position: absolute;
+  top: 8px;
+  right: calc(16px + 8px);
+}
+
 .profile__sidebar {
   display: flex;
   flex-direction: row;
