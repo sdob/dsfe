@@ -24,6 +24,9 @@
     // (in milliseconds)
     const LONG_PRESS_WAIT_TIME_MS = 750;
 
+    // Minimum number of nearby markers before we cluster them
+    const MINIMUM_CLUSTER_SIZE = 4;
+
     // Flag to tell us whether the right-click menu is open
     let contextMenuIsOpen = false;
     // ID of the currently selected marker
@@ -86,7 +89,7 @@
 
       vm.typeOptions = {
         keepSpiderfied: true, // keep markers spiderfied when clicked
-        minimumClusterSize: 6, // prefer larger clusters
+        minimumClusterSize: MINIMUM_CLUSTER_SIZE, // prefer larger clusters
         nearbyDistance: 48, // Increase pixel radius
         imagePath: '/img/m',
       };
