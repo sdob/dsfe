@@ -9,14 +9,19 @@
       vm.feed = {
         results: [],
       };
+      vm.isAuthenticated = $auth.isAuthenticated;
       vm.loadFeed = loadFeed;
       vm.next = true;
       vm.offset = 0;
       // We'll maintain a set of user profile image URLs
       vm.userProfileImageURLs = {};
 
+      if (vm.isAuthenticated()) {
+        vm.ownID = localStorageService.get('user');
+      }
+
       // Decide whether we're retrieving our own feed or another user's
-      if ($scope.user.id === localStorageService.get('user')) {
+      if (vm.ownID && $scope.user.id === vm.ownID) {
         vm.apiCall = (offset) => dsactivity.getOwnActivity(offset);
       } else {
         vm.apiCall = (offset) => dsactivity.getUserActivity($scope.user.id, offset);
