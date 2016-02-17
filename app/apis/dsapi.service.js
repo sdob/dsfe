@@ -8,10 +8,6 @@
   function dsapiService($auth, $http, API_URL) {
     return {
 
-      getOwnActivity: (offset) => {
-        return $http.get(`${API_URL}/users/my_feed/?offset=${offset}`);
-      },
-
       getCompressor: (id) => {
         return $http.get(`${API_URL}/compressors/${id}/`);
       },
@@ -63,10 +59,6 @@
 
       getUserDivesites: (id) => {
         return $http.get(`${API_URL}/users/${id}/divesites/`);
-      },
-
-      getUserActivity: (id, offset) => {
-        return $http.get(`${API_URL}/users/${id}/feed/?offset=${offset}`);
       },
 
       getUser: (id) => {
