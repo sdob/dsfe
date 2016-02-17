@@ -26,7 +26,8 @@
       return dsactivity.getOwnFollows()
       .then((response) => {
         console.log(response.data);
-        return response.data.indexOf(otherUser.id) > -1;
+        const ids = response.data.map(u => u.id);
+        return ids.indexOf(otherUser.id) > -1;
       });
     }
   }
