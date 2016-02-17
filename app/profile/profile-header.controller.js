@@ -12,6 +12,7 @@
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
+      vm.unfollow = unfollow;
 
       if (vm.isAuthenticated()) {
         vm.ownID = localStorageService.get('user');
@@ -29,11 +30,12 @@
           // TODO: check whether this user is being followed by the viewer
           followService.userIsFollowing(vm.user)
           .then((result) => {
+            console.log(result);
             isFollowing = result;
+            // Then set a flag
+            vm.userIsFollowing = isFollowing;
+            console.log('is the user following? ' + vm.userIsFollowing);
           });
-          // Then set a flag
-          vm.userIsFollowing = isFollowing;
-          console.log('is the user following? ' + vm.userIsFollowing);
         }
 
         // Retrieve the user profile
@@ -88,6 +90,7 @@
       dsactivity.followUser(vm.user.id)
       .then((response) => {
         console.log(response.data);
+        vm.userIsFollowing = true; // User can't follow any more
       })
       .catch((err) => {
         console.error(err);
@@ -112,6 +115,16 @@
             vm.profileImageUrl = undefined;
           });
         }
+      });
+    }
+
+    function unfollow() {
+      dsactivity.unfollowUser(vm.user.id)
+      .then((response) => {
+        vm.userIsFollowing = false;
+      })
+      .catch((err) => {
+        console.error(err);
       });
     }
 
