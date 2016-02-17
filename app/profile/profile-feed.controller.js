@@ -10,23 +10,33 @@
         results: [],
       };
       vm.loadFeed = loadFeed;
-      vm.next = false;
+      vm.next = true;
       vm.offset = 0;
       // We'll maintain a set of user profile image URLs
       vm.userProfileImageURLs = {};
 
+      // Decide whether we're retrieving our own feed or another user's
       if ($scope.user.id === localStorageService.get('user')) {
         vm.apiCall = (offset) => dsactivity.getOwnActivity(offset);
       } else {
         vm.apiCall = (offset) => dsactivity.getUserActivity($scope.user.id, offset);
       }
 
+      // Kick things off by making an initial call
       vm.loadFeed();
     }
 
     function loadFeed() {
+      // If we know that there's nothing left, then bail out
+      if (!vm.next) {
+        console.log('bailing');
+        return;
+      }
+      console.log('loading feed!');
+      vm.isLoading = true;
       vm.apiCall(vm.offset)
       .then((response) => {
+        vm.isLoading = false;
         vm.next = !!response.data.next;
         console.log(`vm.next? ${vm.next}`);
         vm.offset += response.data.results.length;

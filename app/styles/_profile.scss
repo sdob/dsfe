@@ -276,6 +276,11 @@
   right: calc(16px + 8px);
 }
 
+.profile-feed__loading-indicator {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
 .profile__sidebar {
   display: flex;
   flex-direction: row;
