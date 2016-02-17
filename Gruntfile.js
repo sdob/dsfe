@@ -33,15 +33,6 @@ module.exports = (grunt) => {
       }
     },
 
-    cdnify: {
-      dist: {
-        html: ['<%= cfg.dist %>/*.html'],
-      },
-      options: {
-        cdn: require('google-cdn-data'),
-      },
-    },
-
     favicons: {
       options: {
       },
