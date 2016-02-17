@@ -44,6 +44,7 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/showdown/dist/showdown.js',
       'bower_components/angular-markdown-filter/markdown.js',
+      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       // endbower
       // Load main app module and constants first
       'app/app.module.js',
