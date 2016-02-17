@@ -41,6 +41,7 @@
 
                             <span ng-switch="item.target_type">
                                 <a ng-switch-when="user"
+                                    class="profile-feed__target"
                                     href="/#/users/{{ item.target.id}}"
                                     >
                                     {{ item.target.name }}
