@@ -32,6 +32,7 @@
         console.log('bailing');
         return;
       }
+
       console.log('loading feed!');
       vm.isLoading = true;
       vm.apiCall(vm.offset)
