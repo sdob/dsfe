@@ -1,5 +1,5 @@
 <section class="profile-feed">
-    <div infinite-scroll="vm.loadFeed()" infinite-scroll-disabled="vm.isLoading">
+    <div infinite-scroll="vm.loadFeed()" infinite-scroll-disabled="vm.isLoading || !vm.next">
         <div class="row comment" ng-repeat="item in vm.feed.results">
             <div class="col-xs-12">
                 <div class="profile-feed__item">
