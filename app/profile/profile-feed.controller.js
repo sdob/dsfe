@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ProfileFeedController($auth, $scope, $timeout, dsapi, dsimg, localStorageService) {
+  function ProfileFeedController($auth, $scope, $timeout, dsactivity, dsimg, localStorageService) {
     const vm = this;
     activate();
 
@@ -16,9 +16,9 @@
       vm.userProfileImageURLs = {};
 
       if ($scope.user.id === localStorageService.get('user')) {
-        vm.apiCall = (offset) => dsapi.getOwnActivity(offset);
+        vm.apiCall = (offset) => dsactivity.getOwnActivity(offset);
       } else {
-        vm.apiCall = (offset) => dsapi.getUserActivity($scope.user.id, offset);
+        vm.apiCall = (offset) => dsactivity.getUserActivity($scope.user.id, offset);
       }
 
       vm.loadFeed();
@@ -68,7 +68,7 @@
     '$auth',
     '$scope',
     '$timeout',
-    'dsapi',
+    'dsactivity',
     'dsimg',
     'localStorageService',
   ];

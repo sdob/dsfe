@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileHeaderController($scope, $timeout, $uibModal, dsapi, dsimg, profileService) {
+  function ProfileHeaderController($auth, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
     const cloudinaryIdKey = 'public_id';
     const vm = this;
     activate();
@@ -8,6 +8,7 @@
     function activate() {
       console.log('ProfileHeaderController.activate()');
       vm.dsimgHasResponded = false;
+      vm.follow = follow;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
 
@@ -16,6 +17,20 @@
         console.log('profile header heard user-loaded');
         vm.user = user;
         const userId = vm.user.id;
+
+        // Check whether the viewer is logged in
+        vm.isAuthenticated = $auth.isAuthenticated;
+        if (vm.isAuthenticated()) {
+          let isFollowing = false;
+          // TODO: check whether this user is being followed by the viewer
+          followService.userIsFollowing(vm.user)
+          .then((result) => {
+            isFollowing = result;
+          });
+          // Then set a flag
+          vm.userIsFollowing = isFollowing;
+          console.log('is the user following? ' + vm.userIsFollowing);
+        }
 
         // Retrieve the user profile
         profileService.getUserProfile(userId)
@@ -62,6 +77,16 @@
             vm.dsimgHasResponded = true;
           }, 0);
         });
+      });
+    }
+
+    function follow() {
+      dsactivity.followUser(vm.user.id)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
     }
 
@@ -131,11 +156,15 @@
   }
 
   ProfileHeaderController.$inject = [
+    '$auth',
     '$scope',
     '$timeout',
     '$uibModal',
+    'dsactivity',
     'dsapi',
     'dsimg',
+    'followService',
+    'localStorageService',
     'profileService',
   ];
   angular.module('divesites.profile').controller('ProfileHeaderController', ProfileHeaderController);
