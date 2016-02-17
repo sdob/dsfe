@@ -297,7 +297,7 @@
 .profile__sidebar {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   @media (min-width: $screen-sm-min) {
     flex-direction: column;
     font-size: 30px;

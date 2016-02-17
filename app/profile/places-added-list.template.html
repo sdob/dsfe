@@ -1,9 +1,9 @@
 <section class="profile-places-added">
-    <div ng-repeat="place in vm.user.placesAdded" class="row">
+    <div ng-repeat="place in vm.user.placesAdded | orderBy:'-creation_date'" class="row">
         <div class="col-xs-12">
             <div class="profile-feed__item">
                 <div class="profile-feed__comment-header">
-                    <div class="places-added__icon" ng-switch="place.type">
+                    <div class="profile-feed__comment-image places-added__icon" ng-switch="place.type">
                         <img ng-switch-when="divesite" ng-src="/img/divesite_circular.svg" />
                         <img ng-switch-when="compressor" ng-src="/img/compressor_circular.svg" />
                         <img ng-switch-when="slipway" ng-src="/img/slipway_circular.svg" />
@@ -14,6 +14,9 @@
                                 {{ place.name }}
                             </a>
                         </span>
+                        <div class="places-added__creation-date">
+                            Added on {{ place.creation_date | date }}
+                        </div>
                     </div>
                 </div>
                 <p class="comment__text">
