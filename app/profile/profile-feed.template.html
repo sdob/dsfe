@@ -3,13 +3,15 @@
         <div class="row comment" ng-repeat="item in vm.feed.results">
             <div class="col-xs-12">
                 <div class="profile-feed__item">
-                    <div class="profile-feed__item-type"><!-- item type -->
+                    <!--
+                    <div class="profile-feed__item-type">
                         <div ng-switch="item.verb">
                             <i ng-switch-when="commented" class="fa fa-lg fa-fw fa-comment"></i>
                             <i ng-switch-when="created" class="fa fa-lg fa-fw fa-pencil"></i>
                             <i ng-switch-when="logged a dive at" class="fa fa-lg fa-fw fa-book"></i>
                         </div>
                     </div>
+                    -->
 
                     <div class="profile-feed__comment-header">
                         <div ng-show="item.actor.profileImageUrl">
@@ -26,7 +28,7 @@
                             </div>
                         </div>
                         <div class="profile-feed__comment-summary">
-                            <span class="profile-feed__actor" ng-switch="item.actor.id === vm.user.id">
+                            <span class="profile-feed__actor" ng-switch="item.actor.id === vm.ownID">
                                 <span ng-switch-when="true">You</span>
                                 <span ng-switch-when="false">
                                     <a href="/#/users/{{ item.actor.id }}">{{ item.actor.name }}</a>
@@ -36,10 +38,19 @@
                                 {{ item.verb }}
                                 {{ item.verb === 'commented' ? 'on' : '' }}
                             </span>
-                            <a href='/#/?{{ item.target_type }}={{ item.target_object_id }}'
-                                class="profile-feed__target">
-                                {{ item.target.name }}
-                            </a>
+
+                            <span ng-switch="item.target_type">
+                                <a ng-switch-when="user"
+                                    href="/#/users/{{ item.target_object_id}}"
+                                    >
+                                    {{ item.target.name }}
+                                </a>
+                                <a ng-switch-default href='/#/?{{ item.target_type }}={{ item.target_object_id }}'
+                                    class="profile-feed__target">
+                                    {{ item.target.name }}
+                                </a>
+                            </span>
+
                             <div class="profile-feed__comment-date">
                                 {{ item.timestamp | date }}
                             </div>
