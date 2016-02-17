@@ -148,12 +148,6 @@
       font-size: 24px;
       font-weight: 300;
     }
-    .dive__divesite-name {
-      font-size: 24px;
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 1.42857143;
-    }
     .dive__bumf {
       padding-left: 16px;
     }
@@ -172,6 +166,17 @@
 }
 .profile__activity-details {
   padding: 8px;
+}
+
+.profile-dive__depth-and-time {
+  display: flex;
+}
+
+.profile-dive__divesite-name {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.42857143;
 }
 
 .profile-image-list__actions {
@@ -258,12 +263,12 @@
 }
 
 .profile-feed__comment-image {
+  margin-right: 8px;
   padding-right: 0;
   text-align: right;
 }
 
 .profile-feed__comment-summary {
-  margin-left: 8px;
 }
 
 .profile-feed__comment-text {

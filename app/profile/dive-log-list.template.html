@@ -1,27 +1,36 @@
-<div ng-repeat="dive in vm.user.dives | orderBy:'-' "
-    class="dive-log__item">
-    <div class="col-xs-4 dive__details">
-        <div class="dive__start-time">
-            {{ dive.date | date }}
-            <span ng-if="dive.time">
-                {{ dive.time | date:'HH:mm' }}
-            </span>
-        </div>
-        <div class="dive__depth">
-            <span> {{ dive.depth }} m </span>
-        </div>
-        <div class="dive__duration">
-            <span> {{ dive.duration | duration }} min.  </span>
+<section class="profile-dive-log">
+    <div class="row comment" ng-repeat="dive in vm.user.dives | orderBy:'-'">
+        <div class="col-xs-12">
+            <div class="profile-feed__item">
+                <div class="profile-feed__comment-header">
+                    <div class="profile-feed__comment-summary">
+                        <div class="profile-dive__divesite-name">
+                            {{ dive.divesite.name }}
+                        </div>
+                        <div class="dive__details">
+                            <div class="dive__start-time">
+                                {{ dive.date | date }}
+                                <span ng-if="dive.time">
+                                    {{ dive.time | date:'HH:mm' }}
+                                </span>
+                            </div>
+                            <div class="profile-dive__depth-and-time">
+                                <div class="profile-dive__max-depth">
+                                    <i class="fa fa-fw fa-clock-o"></i>
+                                    <span> {{ dive.depth }} m </span>
+                                </div>
+                                <div class="profile-dive__duration">
+                                    <i class="fa fa-fw fa-arrow-down"></i>
+                                    <span> {{ dive.duration | duration }} min.  </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="dive.comment" class="comment__text profile-feed__comment-text">
+                    {{ dive.comment }}
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-xs-8 dive__bumf">
-        <h3 class="dive__divesite-name">
-            <a href="/#/?divesite={{ dive.divesite.id }}">
-                {{ dive.divesite.name }}
-            </a>
-        </h3>
-        <div>
-            {{ dive.comment }}
-        </div>
-    </div>
-</div>
+</section>
