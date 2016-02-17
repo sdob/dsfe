@@ -33,6 +33,14 @@
                     </div>
                 </div>
 
+                <div role="tabpanel" class="tab-pane" id="js-profile-images-tab">
+                    <images-added-list ng-if="vm.user.imagesAdded.length"></images-added-list>
+                    <div ng-if="!vm.user.placesAdded.length" class="profile__no-places-added">
+                        <i class="fa fa-fw fa-frown-o"></i>
+                        Nothing yet!
+                    </div>
+                </div>
+
             </section>
         </div>
     </div>
