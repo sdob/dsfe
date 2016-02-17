@@ -76,7 +76,7 @@
                     </a>
                 </li>
             </ul>
-            <ul ng-if="vm.isAuthenticated()" class="list-unstyled action-menu">
+            <ul ng-if="vm.isAuthenticated() && vm.user.id != vm.ownID" class="list-unstyled action-menu">
                 <li class="action-menu__action-item">
                     <a href class="action-menu__link link--undecorated"
                         ng-click="vm.follow()"

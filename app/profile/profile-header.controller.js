@@ -9,8 +9,13 @@
       console.log('ProfileHeaderController.activate()');
       vm.dsimgHasResponded = false;
       vm.follow = follow;
+      vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
+
+      if (vm.isAuthenticated()) {
+        vm.ownID = localStorageService.get('user');
+      }
 
       // Wait for profile controller to receive the user data before updating
       $scope.$on('user-loaded', (e, user) => {
@@ -19,7 +24,6 @@
         const userId = vm.user.id;
 
         // Check whether the viewer is logged in
-        vm.isAuthenticated = $auth.isAuthenticated;
         if (vm.isAuthenticated()) {
           let isFollowing = false;
           // TODO: check whether this user is being followed by the viewer
