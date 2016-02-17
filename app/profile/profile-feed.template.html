@@ -62,11 +62,15 @@
                         </div>
                     </div>
 
-                    <div class="comment__text profile-feed__comment-text" ng-if="item.verb === 'commented' && item.action_object.text">
-                        {{ item.action_object.text }}
+                    <div class="comment__text profile-feed__comment-text"
+                        ng-bind-html="item.action_object.text | markdown"
+                        ng-if="item.verb === 'commented' && item.action_object.text"
+                        >
                     </div>
-                    <div class="comment__text profile-feed__comment-text" ng-if="item.verb === 'logged a dive at' && item.action_object.comment">
-                        {{ item.action_object.comment }}
+                    <div
+                        class="comment__text profile-feed__comment-text"
+                        ng-bind-html="item.action-object.text | markdown"
+                        ng-if="item.verb === 'logged a dive at' && item.action_object.comment">
                     </div>
                 </div>
             </div>
