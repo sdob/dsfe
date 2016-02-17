@@ -77,7 +77,7 @@
                 </li>
             </ul>
             <ul ng-if="vm.isAuthenticated() && vm.user.id != vm.ownID" class="list-unstyled action-menu">
-                <li class="action-menu__action-item">
+                <li ng-if="!vm.userIsFollowing" class="action-menu__action-item">
                     <a href class="action-menu__link link--undecorated"
                         ng-click="vm.follow()"
                         >
@@ -85,6 +85,16 @@
                         <span class="action-menu__text">Follow</span>
                     </a>
                 </li>
+
+                <li ng-if="vm.userIsFollowing" class="action-menu__action-item">
+                    <a href class="action-menu__link link--undecorated"
+                        ng-click="vm.unfollow()"
+                        >
+                        <i class="action-menu__icon fa fa-minus"></i>
+                        <span class="action-menu__text">Unfollow</span>
+                    </a>
+                </li>
+
             </ul>
             <profile-stats class="profile-header__stats" user="vm.user"></profile-stats>
         </div>
