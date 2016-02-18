@@ -18,7 +18,7 @@
     const vm = this;
     const { defaultMarkerIcons, selectedMarkerIcons } = markerService;
     const { shouldBeVisible } = markerService;
-    const { transformAmenityToMarker, transformSiteToMarker } = markerService;
+    const { DEFAULT_DIVESITE_Z_INDEX, DEFAULT_SITE_Z_INDEX, SELECTED_SITE_Z_INDEX, transformAmenityToMarker, transformSiteToMarker } = markerService;
 
     // Wait time between mousedown and mouseup to trigger a longpress event
     // (in milliseconds)
@@ -32,7 +32,10 @@
     // ID of the currently selected marker
     let selectedMarkerID;
 
+    // angular-google-maps doesn't seem to be happy if these are attached to
+    // $scope.vm
     $scope.control = {};
+    $scope.markerControl = {};
 
     activate();
 
@@ -90,7 +93,7 @@
 
       // Map 'control' object with which to manipulate the
       // Google map object directly
-      vm.map.control = vm.map.control || {};
+      $scope.control = {};
 
       // Set map event listeners
       vm.mapEvents =  {
@@ -205,9 +208,7 @@
       // If there's a selected marker, we may want to deselect it, make it
       // invisible, and change the route
       if (selectedMarkerID) {
-        console.log('should selected marker be visible?');
         const selectedMarker = $scope.mapMarkers.filter((m) => m.id === selectedMarkerID)[0];
-        console.log(shouldBeVisible(selectedMarker, preferences));
         if (!shouldBeVisible(selectedMarker, preferences)) {
           // Treat this as a please-kill-me event
           $timeout(() => {
@@ -220,8 +221,6 @@
     }
 
     function listenForSearchSelection(e, item) {
-      console.log('received search-selection event');
-      console.log(item);
       // Set map center
       vm.map.center = {
         latitude: item.loc.latitude,
@@ -362,14 +361,21 @@
     function setSelectedMarker(marker) {
       if (selectedMarkerID) {
         const oldSelectedMarker = $scope.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
-        if (oldSelectedMarker) { // Just in case it's been deleted or removed from the markers
+        // oldSelectedMarker may have been deleted or removed from the markers
+        if (oldSelectedMarker) {
+          // Set the marker's icon to 'default'
           oldSelectedMarker.icon = defaultMarkerIcons[oldSelectedMarker.type];
+          // Set z-index to its default
+          oldSelectedMarker.options.zIndex = oldSelectedMarker.type === 'divesite' ? DEFAULT_DIVESITE_Z_INDEX : DEFAULT_SITE_Z_INDEX;
         }
       }
 
+      // marker may be undefined if we're dismissing an information card
       if (marker) {
-        // marker may be undefined if we're dismissing an information card
+        // Set the marker's icon to 'selected'
         marker.icon = selectedMarkerIcons[marker.type];
+        // Set z-index
+        marker.options.zIndex = SELECTED_SITE_Z_INDEX;
         selectedMarkerID = marker.id;
       }
     }

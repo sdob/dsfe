@@ -3,12 +3,13 @@
     <hamburger-menu></hamburger-menu>
     <ui-gmap-google-map
         center="mc.map.center"
-        control="mc.mapControl"
+        control="control"
         zoom='mc.map.zoom'
         events='mc.mapEvents'
         options='mc.options'
         >
         <ui-gmap-markers
+            control="markerControl"
             coords="'loc'"
             events="mc.markerEvents"
             models="mapMarkers"

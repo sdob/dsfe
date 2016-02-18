@@ -23,11 +23,14 @@
 
     // Selected sites of any types sit in front of unselected divesites,
     // which sit in front of unselected non-divesites
-    const DEFAULT_SITE_INDEX = 0;
+    const DEFAULT_SITE_Z_INDEX = 0;
     const DEFAULT_DIVESITE_Z_INDEX = 1;
     const SELECTED_SITE_Z_INDEX = 2;
 
     return {
+      DEFAULT_SITE_Z_INDEX,
+      DEFAULT_DIVESITE_Z_INDEX,
+      SELECTED_SITE_Z_INDEX,
       defaultMarkerIcons,
       selectedMarkerIcons,
       shouldBeVisible,
@@ -96,6 +99,7 @@
         },
         options: {
           visible: false,
+          zIndex: DEFAULT_DIVESITE_Z_INDEX,
         },
         owner: s.owner,
         title: s.name,
@@ -127,7 +131,7 @@
            * To future-proof this (if we decide to get rid of transformSitetoMarker)
            * we'll do a check against the type and assign a z-index accordingly.
           */
-          zIndex: type === 'divesite' ? 1 : 0,
+          zIndex: type === 'divesite' ? DEFAULT_DIVESITE_Z_INDEX : DEFAULT_SITE_Z_INDEX,
         },
         owner: s.owner,
         title: s.name,
