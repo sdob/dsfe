@@ -7,7 +7,6 @@
       controllerAs: 'hamburgerVM',
       templateUrl: 'map/hamburger-menu/hamburger-menu.template.html',
       link: function(scope, element) {
-        console.log(scope);
       }
     };
   }

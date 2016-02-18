@@ -6,7 +6,6 @@
     activate();
 
     function activate() {
-      console.log('hmc activate');
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.selectSubmenu = selectSubmenu;
       vm.toggleOpened = toggleOpened;
@@ -33,14 +32,12 @@
       // If the submenu *wasn't* selected when it was clicked on,
       // it should be selected
       if (!submenuWasSelected) {
-        console.log(`selecting ${submenuID}`);
         $element.find(submenuID).addClass('selected');
         $element.find(`${submenuID}__content`).addClass('selected');
       }
     }
 
     function toggleOpened() {
-      console.log('hamburger menu toggling');
       $element.find('#js-hamburger-collapsible-menu').toggleClass('opened');
       $element.find('.hamburger-menu__menu-expander').toggleClass('opened');
       deselectAll();
