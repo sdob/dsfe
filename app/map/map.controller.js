@@ -38,35 +38,59 @@
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
-      // Set 'loading' state to true (so the user knows that something
-      // is happening)
-      vm.isLoading = true;
+      // Bind values to $scope.vm
+      bindValues();
 
-      // Retrieve stored map settings
-      vm.map = mapService.get();
-      vm.map.control = vm.map.control || {};
+      // Wait for Google API to load and then do whatever depends on it
+      awaitGoogleApi();
 
       // Clean up contextMenuService
       closeContextMenu();
 
-      // Wire up functions
-      vm.isAuthenticated = $auth.isAuthenticated;
+      // Handle search path parameters
+      checkSearchPath();
 
-      // Wait for the maps API to be ready, then store a ref to it
-      // and use the built-in constants to configure the map
+      // Set up event listeners
+      setEventListeners();
+
+      // Retrieve site information
+      retrieveSites();
+    }
+
+    // Wait for the maps API to be ready, then store a ref to it
+    // and use the built-in constants to configure the map
+    function awaitGoogleApi() {
       uiGmapGoogleMapApi.then((maps) => {
         vm.maps = maps;
 
-        // Set some of our options
+        // Set some of our options that use Google-defined constants
         vm.options.mapTypeControlOptions = {
           position: maps.ControlPosition.BOTTOM_CENTER,
         };
       });
+    }
+
+    // Bind any values to $scope.vm that don't require HTTP calls to
+    // populate them
+    function bindValues() {
+      // 'Loading' state, initially true (so the user knows that something
+      // is happening)
+      vm.isLoading = true;
+
+      // Authentication check
+      vm.isAuthenticated = $auth.isAuthenticated;
 
       // Initialize markers as an empty array so that it's never undefined
-      // (and angular-google-maps doesn't complain). We're putting this
-      // onto the scope so that nested controllers can access it.
+      // (and angular-google-maps doesn't complain). This lives in
+      // $scope so that nested controllers can access it.
       $scope.mapMarkers = [];
+
+      // Retrieve stored map settings
+      vm.map = mapService.get();
+
+      // Map 'control' object with which to manipulate the
+      // Google map object directly
+      vm.map.control = vm.map.control || {};
 
       // Set map event listeners
       vm.mapEvents =  {
@@ -81,12 +105,17 @@
         click: markerClick,
       };
 
-      // Set map options
+      // Marker options
+      vm.markerOptions = {
+      };
+
+      // Map options
       vm.options = {
         minZoom: 3,
         streetViewControl: false,
       };
 
+      // Cluster/spiderfy options
       vm.typeOptions = {
         keepSpiderfied: true, // keep markers spiderfied when clicked
         minimumClusterSize: MINIMUM_CLUSTER_SIZE, // prefer larger clusters
@@ -94,11 +123,12 @@
         imagePath: '/img/m',
       };
 
-      // Set cluster/spiderfy events
+      // Cluster/spiderfy events
       vm.typeEvents = {
-        // TODO: handle cluster/spiderfy events in a lovelier way
       };
+    }
 
+    function checkSearchPath() {
       // If there's a query param in the URL when the controller
       // is activated, then try and summon an information card,
       // and (because we're activating the controller, thus arriving
@@ -114,69 +144,6 @@
         setMapCentre($location.$$search.compressor, 'compressor');
         summonCard($location.$$search.compressor, 'compressor');
       }
-
-      /*
-       *
-       * Listen for events
-       */
-
-      // Listen for filter menu changes
-      $scope.$on('filter-preferences', listenForPreferenceChanges);
-      // Listen for item selections in the search menu
-      $scope.$on('search-selection', listenForSearchSelection);
-
-      // Listen for an information card declaring that it wants to be removed.
-      // In this case, we remove the element *and* clear the search path.
-      $scope.$on('please-kill-me', handlePleaseKillMe);
-
-      // Listen for $routeUpdate events
-      $scope.$on('$routeUpdate', handleRouteUpdate);
-
-      /*
-       * Make AJAX requests to DSAPI for site details. These can return in
-       * any order, and we don't want to wait for them all to return, so we'll
-       * concatenate results to the mapMarkers array as they arrive.
-       */
-
-      // Retrieve divesites and create markers
-      const getDivesites = dsapi.getDivesites()
-      .then((response) => {
-        vm.sites = response.data; // Allow us to use the sites in other controllers
-        $scope.mapMarkers = $scope.mapMarkers.concat(response.data.map(transformSiteToMarker));
-        updateMarkerVisibility(filterPreferences.preferences);
-      });
-
-      // Retrieve compressors and create markers
-      const getCompressors = dsapi.getCompressors()
-      .then((response) => {
-        const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.compressor, 'compressor'));
-        $scope.mapMarkers = $scope.mapMarkers.concat(compressorMarkers);
-        updateMarkerVisibility(filterPreferences.preferences);
-      });
-
-      // Retrieve slipways and createMarkers
-      const getSlipways = dsapi.getSlipways()
-      .then((response) => {
-        const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
-        $scope.mapMarkers = $scope.mapMarkers.concat(slipwayMarkers);
-        updateMarkerVisibility(filterPreferences.preferences);
-      });
-
-      // When all of the map markers have been retrieved, try to find the selected marker
-      // so we can tag it visually
-      Promise.all([getDivesites, getCompressors, getSlipways])
-      .then(() => {
-        if ($location.$$search) {
-          const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
-          const id = $location.$$search[type];
-          const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
-          // Set the marker icon and remove the 'loading' indicator
-          $timeout(() => {
-            vm.isLoading = false;
-            setSelectedMarker(selectedMarker);
-          }, 200);
-        }
-      });
     }
 
     /* Clear the search path */
@@ -344,6 +311,54 @@
       }
     }
 
+    function retrieveSites() {
+      /*
+       * Make AJAX requests to DSAPI for site details. These can return in
+       * any order, and we don't want to wait for them all to return, so we'll
+       * concatenate results to the mapMarkers array as they arrive.
+       */
+
+      // Retrieve divesites and create markers
+      const getDivesites = dsapi.getDivesites()
+      .then((response) => {
+        vm.sites = response.data; // Allow us to use the sites in other controllers
+        $scope.mapMarkers = $scope.mapMarkers.concat(response.data.map(transformSiteToMarker));
+        updateMarkerVisibility(filterPreferences.preferences);
+      });
+
+      // Retrieve compressors and create markers
+      const getCompressors = dsapi.getCompressors()
+      .then((response) => {
+        const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.compressor, 'compressor'));
+        $scope.mapMarkers = $scope.mapMarkers.concat(compressorMarkers);
+        updateMarkerVisibility(filterPreferences.preferences);
+      });
+
+      // Retrieve slipways and createMarkers
+      const getSlipways = dsapi.getSlipways()
+      .then((response) => {
+        const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
+        $scope.mapMarkers = $scope.mapMarkers.concat(slipwayMarkers);
+        updateMarkerVisibility(filterPreferences.preferences);
+      });
+
+      // When all of the map markers have been retrieved, try to find the selected marker
+      // so we can tag it visually
+      Promise.all([getDivesites, getCompressors, getSlipways])
+      .then(() => {
+        if ($location.$$search) {
+          const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
+          const id = $location.$$search[type];
+          const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
+          // Set the marker icon and remove the 'loading' indicator
+          $timeout(() => {
+            vm.isLoading = false;
+            setSelectedMarker(selectedMarker);
+          }, 200);
+        }
+      });
+    }
+
     function setSelectedMarker(marker) {
       if (selectedMarkerID) {
         const oldSelectedMarker = $scope.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
@@ -365,6 +380,20 @@
       // that it's a divesite
       const type = model.type === undefined ? 'divesite' : model.type;
       $location.search(`${type}=${model.id}`);
+    }
+
+    function setEventListeners() {
+      // Listen for filter menu changes
+      $scope.$on('filter-preferences', listenForPreferenceChanges);
+      // Listen for item selections in the search menu
+      $scope.$on('search-selection', listenForSearchSelection);
+
+      // Listen for an information card declaring that it wants to be removed.
+      // In this case, we remove the element *and* clear the search path.
+      $scope.$on('please-kill-me', handlePleaseKillMe);
+
+      // Listen for $routeUpdate events
+      $scope.$on('$routeUpdate', handleRouteUpdate);
     }
 
     /* Given an ID and a type, retrieve the site info and set the map centre */
