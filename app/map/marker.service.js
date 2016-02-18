@@ -114,6 +114,14 @@
         },
         options: {
           visible: false,
+          /*
+           * Set z-index of the marker to ensure that divesites appear in front
+           * of non-divesites.
+           *
+           * To future-proof this (if we decide to get rid of transformSitetoMarker)
+           * we'll do a check against the type and assign a z-index accordingly.
+          */
+          zIndex: type === 'divesite' ? 1 : 0,
         },
         owner: s.owner,
         title: s.name,
