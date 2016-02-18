@@ -7,19 +7,16 @@
 
     function activate() {
       vm.isSubmitting = false;
-      console.log($scope);
       $scope.userID = localStorageService.get('user');
       vm.comment = {
       };
       vm.isAuthenticated = $auth.isAuthenticated;
-      console.log($scope);
       vm.siteType = $scope.site.type;
       vm.submit = submit;
       vm.summonEditCommentModal = summonEditCommentModal;
       vm.summonConfirmCommentDeletionModal = summonConfirmCommentDeletionModal;
 
       vm.apiCalls = commentService.apiCalls[vm.siteType];
-      console.log(vm.apiCalls);
     }
 
     function submit() {
@@ -44,7 +41,6 @@
       .catch((err) => {
         console.error(err);
       });
-      // console.log($scope);
     }
 
     function summonConfirmCommentDeletionModal(comment, $index) {
@@ -64,7 +60,6 @@
         windowClass: 'modal-center',
       });
       instance.result.then((reason) => {
-        console.log('confirm modal closed');
         if (reason === 'confirmed') {
           // We can remove the comment from the DOM immediately
           $scope.comments.splice($index, 1);
