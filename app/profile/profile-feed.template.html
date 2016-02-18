@@ -44,7 +44,7 @@
                                     you
                                 </span>
                                 <a ng-switch-when="user"
-                                    ng-if="item.target_object_id !== vm.ownID"
+                                    ng-if="item.target.id !== vm.ownID"
                                     class="profile-feed__target"
                                     href="/#/users/{{ item.target.id}}"
                                     >
