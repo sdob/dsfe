@@ -2,8 +2,8 @@
     <ng-include ng-if="mc.isLoading" src="'map/map-is-loading.template.html'"></ng-include>
     <hamburger-menu></hamburger-menu>
     <ui-gmap-google-map
-        center='mc.map.center'
-        control="control"
+        center="mc.map.center"
+        control="mc.mapControl"
         zoom='mc.map.zoom'
         events='mc.mapEvents'
         options='mc.options'
