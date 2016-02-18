@@ -21,6 +21,12 @@
       slipway: selectedSlipwayMarkerIcon,
     };
 
+    // Selected sites of any types sit in front of unselected divesites,
+    // which sit in front of unselected non-divesites
+    const DEFAULT_SITE_INDEX = 0;
+    const DEFAULT_DIVESITE_Z_INDEX = 1;
+    const SELECTED_SITE_Z_INDEX = 2;
+
     return {
       defaultMarkerIcons,
       selectedMarkerIcons,
