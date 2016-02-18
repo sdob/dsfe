@@ -63,7 +63,7 @@
                         {{ vm.user.name }}
                     </span>
                 </h1>
-                <div ng-if="vm.isAuthenticated() && vm.user.id != vm.ownID" class="profile-header__follow">
+                <div ng-if="vm.hasLoadedFollowStatus && vm.isAuthenticated() && vm.user.id != vm.ownID" class="profile-header__follow">
                     <button ng-if="!vm.userIsFollowing" class="btn btn-primary"
                         ng-click="vm.follow()">
                         <i class="fa fa-fw fa-plus"></i>

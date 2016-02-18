@@ -9,6 +9,7 @@
       console.log('ProfileHeaderController.activate()');
       vm.dsimgHasResponded = false;
       vm.follow = follow;
+      vm.hasLoadedFollowStatus = false;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
@@ -27,7 +28,7 @@
         // Check whether the viewer is logged in
         if (vm.isAuthenticated()) {
           let isFollowing = false;
-          // TODO: check whether this user is being followed by the viewer
+          // Check whether this user is being followed by the viewer
           followService.userIsFollowing(vm.user)
           .then((result) => {
             console.log(result);
@@ -35,6 +36,8 @@
             // Then set a flag
             vm.userIsFollowing = isFollowing;
             console.log('is the user following? ' + vm.userIsFollowing);
+            // Display the follow/unfollow button
+            vm.hasLoadedFollowStatus = true;
           });
         }
 
