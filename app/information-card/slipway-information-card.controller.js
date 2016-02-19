@@ -7,7 +7,6 @@
 
     function activate() {
       vm.isLoading = true;
-      console.log('SlipwayInformationCardController.activate()');
       const id = $scope.id;
       const type = $scope.type;
       const { apiCall } = informationCardService.apiCalls[type];
@@ -50,9 +49,7 @@
     }
 
     function getCommenterProfileImages() {
-      console.log('getting commenter profile images');
       const ids = new Set($scope.site.comments.map(c => c.owner.id));
-      console.log(ids);
       ids.forEach((id) => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
@@ -65,8 +62,6 @@
             });
             $timeout(() => {
               $scope.site.comments.filter(c => c.owner.id === id).forEach((c) => {
-                console.log('setting commenter profile image');
-                console.log(c);
                 c.owner.profileImageUrl = profileImageUrl;
               });
             }, 0);
@@ -76,8 +71,6 @@
     }
 
     function updateCommentList() {
-      console.log($scope.site.type);
-      console.log(commentService);
       const apiCall = commentService.apiCalls[$scope.site.type].retrieve;
       apiCall($scope.site.id)
       .then((response) => {
