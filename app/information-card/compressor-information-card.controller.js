@@ -4,6 +4,7 @@
   function CompressorInformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, commentService, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
     const vm = this;
     vm.isLoading = true;
+    vm.summonUploadImageModal = summonUploadImageModal;
     activate();
 
     function activate() {
@@ -35,6 +36,9 @@
         $scope.site.locData = $scope.site.locData ||  informationCardService.formatGeocodingData($scope.site);
 
         vm.userIsOwner = informationCardService.userIsOwner($scope.site);
+        $timeout(() => {
+          loadCompressorImages();
+        });
       });
 
       // Retrieve comments
@@ -66,6 +70,47 @@
             }, 0);
           }
         });
+      });
+    }
+
+    function loadCompressorImages() {
+      informationCardService.getCompressorImages($scope.site)
+      .then((images) => {
+        if (images) {
+          $scope.images = images.map(i => {
+            const image = Object.assign({}, i.image);
+            image.ownerID = i.ownerID;
+            image.createdAt = i.createdAt;
+            console.log(image.createdAt);
+            return image;
+          });
+
+          // Load image owner data
+          $scope.images.forEach((image) => {
+            dsapi.getUserMinimal(image.ownerID)
+            .then((response) => {
+              image.ownerName = response.data.name;
+              image.caption = `${image.ownerName}`;
+            });
+          });
+        }
+      });
+    }
+
+    function summonUploadImageModal() {
+      const instance = $uibModal.open({
+        controller: 'UploadImageModalController',
+        controllerAs: 'vm',
+        templateUrl: 'information-card/upload-image-modal.template.html',
+        resolve: {
+          site: () => $scope.site,
+        },
+      });
+      instance.result.then((reason) => {
+        if (reason === 'image-uploaded') {
+          console.log('image was uploaded successfully');
+          loadCompressorImages();
+        }
       });
     }
 
