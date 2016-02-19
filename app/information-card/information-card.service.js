@@ -33,8 +33,10 @@
       apiCalls,
       escapeKeydownListener,
       formatGeocodingData,
+      getCompressorImages,
       getDivesiteHeaderImage,
       getDivesiteImages,
+      getSlipwayImages,
       getNearbySlipways,
       toggleOpened,
       userIsOwner,
@@ -146,7 +148,27 @@
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-    function getDivesiteImages(site) { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+    function getCompressorImages(site) {
+      // Contact image server for compressor images
+      return dsimg.getCompressorImages(site.id)
+      .then((response) => {
+        const images = response.data;
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          images.forEach((image) => {
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
+              crop: 'fill',
+            });
+          });
+          return images;
+        }
+      });
+    }
+
+    function getDivesiteImages(site) {
       // Contact image server for divesite images
       return dsimg.getDivesiteImages(site.id)
       .then((response) => {
@@ -164,7 +186,27 @@
           return images;
         }
       });
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+    }
+
+    function getSlipwayImages(site) {
+      // Contact image server for slipway images
+      return dsimg.getSlipwayImages(site.id)
+      .then((response) => {
+        const images = response.data;
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          images.forEach((image) => {
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
+              crop: 'fill',
+            });
+          });
+          return images;
+        }
+      });
+    }
 
     function toggleOpened(element) {
       return (e) => {
