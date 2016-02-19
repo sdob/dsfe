@@ -84,6 +84,19 @@
           vm.user.imagesAdded.splice($index, 1);
           // Now contact DSIMG to perform the deletion
           const id = image._id;
+          console.log('deleting image');
+          console.log(image);
+          // FIXME: ugly hack to get around the fact that dsimg doesn't
+          // return a site type (yet)
+          let apiCall;
+          if (image.hasOwnProperty('divesiteID')) {
+            apiCall = dsimg.deleteDivesiteImage;
+          } else if (image.hasOwnProperty('slipwayID')) {
+            apiCall = dsimg.deleteSlipwayImage;
+          } else if (image.hasOwnProperty('compressorID')) {
+            apiCall = dsimg.deleteCompressorImage;
+          }
+
           return dsimg.deleteDivesiteImage(id)
           .then((response) => {
             console.log(response.data);
