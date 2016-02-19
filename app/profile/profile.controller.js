@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsapi, dsimg, profileService, userSettingsService) {
+  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsapi, dsimg, informationCardService, profileService, userSettingsService) {
     const vm = this;
     activate();
 
@@ -56,6 +56,7 @@
     '$timeout',
     'dsapi',
     'dsimg',
+    'informationCardService',
     'profileService',
     'userSettingsService',
   ];

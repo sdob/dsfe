@@ -3,6 +3,7 @@
   angular.module('divesites.profile', [
     'LocalStorageModule',
     'divesites.activity',
+    'divesites.informationCard',
     'divesites.userSettings',
   ]);
 })();
