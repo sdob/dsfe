@@ -8,6 +8,20 @@
     return {
       IMG_API_URL,
 
+      /* Upload, retrieve, and delete compressor images */
+
+      getCompressorImages: (compressorID) => {
+        return $http.get(`${IMG_API_URL}/compressors/${compressorID}/`);
+      },
+
+      uploadCompressorImage: (compressorID, imgFile) => {
+        return $http.post(`${IMG_API_URL}/compressors/${compressorID}/`);
+      },
+
+      deleteCompressorImage: (id) => {
+        return $http.delete(`${IMG_API_URL}/compressor-images/${id}`);
+      },
+
       /* Upload, retrieve, and delete divesite images */
 
       getDivesiteImages: (divesiteID) => {
@@ -20,6 +34,20 @@
 
       deleteDivesiteImage: (id) => {
         return $http.delete(`${IMG_API_URL}/divesite-images/${id}`);
+      },
+
+      /* Upload, retrieve, and delete slipway images */
+
+      getSlipwayImages: (slipwayID) => {
+        return $http.get(`${IMG_API_URL}/slipways/${slipwayID}/`);
+      },
+
+      uploadSlipwayImage: (slipwayID, imgFile) => {
+        return $http.post(`${IMG_API_URL}/slipways/${slipwayID}/`);
+      },
+
+      deleteSlipwayImage: (id) => {
+        return $http.delete(`${IMG_API_URL}/slipway-images/${id}`);
       },
 
       /*
