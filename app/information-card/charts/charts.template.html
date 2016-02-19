@@ -10,7 +10,12 @@
                 Average depth
             </div>
             <div class="collapse-header__value">
-                {{ vm.site.depth | depth:vm.units | number:0 }} m
+                <span ng-if="vm.site.dives.length">
+                    {{ vm.site.depth | depth:vm.units | number:0 }} m
+                </span>
+                <span ng-if="!vm.site.dives.length">
+                    No dives logged here yet
+                </span>
             </div>
             <div class="collapse-header__chevron-container overlay-action-item--blue" ng-if="vm.site.depth">
                 <span class="fa fa-stack">
@@ -42,7 +47,12 @@
                 Average duration
             </div>
             <div class="collapse-header__value">
-                {{ vm.site.duration }} min.
+                <span ng-if="vm.site.dives.length">
+                    {{ vm.site.duration }} min.
+                </span>
+                <span ng-if="!vm.site.dives.length">
+                    No dives logged here yet
+                </span>
             </div>
             <div class="collapse-header__chevron-container overlay-action-item--blue"
                 ng-if="vm.site.duration"
