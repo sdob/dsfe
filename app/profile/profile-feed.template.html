@@ -37,6 +37,7 @@
                             <span class="profile-feed__verb">
                                 {{ item.verb }}
                                 {{ item.verb === 'commented' ? 'on' : '' }}
+                                {{ item.verb === 'logged a dive' ? 'at' : '' }}
                             </span>
 
                             <span ng-switch="item.target_type">
