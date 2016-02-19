@@ -39,7 +39,24 @@
         $timeout(() => {
           vm.user.imagesAdded = response.data;
           vm.user.imagesAdded.forEach((i) => {
-            dsapi.getDivesite(i.divesiteID)
+            let apiCall;
+            let id;
+            // FIXME: ugly hack because dsimg doesn't return a site type
+            if (i.hasOwnProperty('divesiteID')) {
+              console.log(`looking at a divesite with id ${i.divesiteID}`);
+              apiCall = dsapi.getDivesite;
+              id = i.divesiteID;
+            } else if (i.hasOwnProperty('slipwayID')) {
+              console.log(`looking at a slipway with id ${i.slipwayID}`);
+              apiCall = dsapi.getSlipway;
+              id = i.slipwayID;
+            } else if (i.hasOwnProperty('compressorID')) {
+              console.log(`looking at a compressor with id ${i.compressorID}`);
+              apiCall = dsapi.getCompressor;
+              id = i.compressorID;
+            }
+            //dsapi.getDivesite(i.divesiteID)
+            apiCall(id)
             .then((response) => {
               i.divesiteName = response.data.name;
             });
