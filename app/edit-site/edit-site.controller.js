@@ -1,6 +1,7 @@
 (function() {
   'use strict';
   function EditSiteController(
+    $location,
     $routeParams,
     $scope,
     $timeout,
@@ -123,6 +124,9 @@
       // API call to use (create/update)
       const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
+      console.log(vm.siteTypeString);
+      console.log(vm.site);
+
       apiCall(data)
       .then((response) => {
         vm.site.id = response.data.id; // This is the edited/created site's ID
@@ -142,7 +146,10 @@
     }
 
     function handleSuccessfulSave() {
-      $window.history.back();
+      // On successful save, bring the user back to the map with a search string
+      // pointing to this site
+      // $window.history.back();
+      $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
     }
 
     function truncateCoordinate(n) {
@@ -166,6 +173,7 @@
   }
 
   EditSiteController.$inject = [
+    '$location',
     '$routeParams',
     '$scope',
     '$timeout',
