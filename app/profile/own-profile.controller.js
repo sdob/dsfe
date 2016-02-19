@@ -52,8 +52,6 @@
               id = i.compressorID;
             }
 
-            console.log(`im calling...`);
-            console.log(apiCall);
             apiCall(id)
             .then((response) => {
               i.divesiteName = response.data.name;
