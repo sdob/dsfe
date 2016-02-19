@@ -42,19 +42,18 @@
             let id;
             // FIXME: ugly hack because dsimg doesn't return a site type
             if (i.hasOwnProperty('divesiteID')) {
-              console.log(`looking at a divesite with id ${i.divesiteID}`);
               apiCall = dsapi.getDivesite;
               id = i.divesiteID;
             } else if (i.hasOwnProperty('slipwayID')) {
-              console.log(`looking at a slipway with id ${i.slipwayID}`);
               apiCall = dsapi.getSlipway;
               id = i.slipwayID;
             } else if (i.hasOwnProperty('compressorID')) {
-              console.log(`looking at a compressor with id ${i.compressorID}`);
               apiCall = dsapi.getCompressor;
               id = i.compressorID;
             }
-            //dsapi.getDivesite(i.divesiteID)
+
+            console.log(`im calling...`);
+            console.log(apiCall);
             apiCall(id)
             .then((response) => {
               i.divesiteName = response.data.name;
@@ -81,7 +80,7 @@
           // We can give the user immediate feedback by removing
           // the element from the DOM while we contact DSIMG in the
           // background.
-          vm.user.imagesAdded.splice($index, 1);
+          vm.user.imagesAdded.splice(vm.user.imagesAdded.indexOf(image), 1);
           // Now contact DSIMG to perform the deletion
           const id = image._id;
           console.log('deleting image');
@@ -97,7 +96,7 @@
             apiCall = dsimg.deleteCompressorImage;
           }
 
-          return dsimg.deleteDivesiteImage(id)
+          return apiCall(id)
           .then((response) => {
             console.log(response.data);
           });
