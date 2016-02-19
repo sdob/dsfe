@@ -115,7 +115,7 @@
 
 // While the information card is loading, hide the scrollbars and blur content
 .information-card--is-loading {
-  .information-card__body {
+  .information-card__content {
     filter: blur(2px);
   }
 }

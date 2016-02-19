@@ -1,47 +1,51 @@
 <div class="information-card shadow-2dp">
     <information-card-header id="icvm.siteID" type="icvm.siteType"></information-card-header>
-    <div class="information-card__body"
-        id="information-card__body"
-        >
-        <modal-mask ng-show="icvm.isLoading"></modal-mask>
-        <ng-include src="'information-card/description.template.html'"></ng-include>
-        <div class="information-card__site-statistics">
-            <information-card-coordinates></information-card-coordinates>
-        </div>
-        <ng-include src="'information-card/slipway-actions.template.html'"></ng-include>
+    <div>
+        <div class="information-card__body"
+            id="information-card__body"
+            >
+            <modal-mask ng-show="icvm.isLoading"></modal-mask>
+            <div class="information-card__content">
+                <ng-include src="'information-card/description.template.html'"></ng-include>
+                <div class="information-card__site-statistics">
+                    <information-card-coordinates></information-card-coordinates>
+                </div>
+                <ng-include src="'information-card/slipway-actions.template.html'"></ng-include>
 
-        <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
+                <upload-image-form ng-if="icvm.sectionVisibilities.uploadImageForm"></upload-image-form>
 
-        <div>
-            <div ng-if="images.length"
-                class="information-card__divesite-image-section"
-                >
-                <h3 class="information-card__section-title">Images</h3>
-                <ul class="list-unstyled information-card__divesite-image-container" ng-controller="GalleryController as gc">
-                    <li class="information-card__divesite-image" ng-repeat="image in images">
-                        <a ng-click="gc.openLightboxModal($index)">
-                            <img ng-src="{{ image.transformedUrl }}" />
-                        </a>
-                    </li>
-                </ul>
+                <div>
+                    <div ng-if="images.length"
+                        class="information-card__divesite-image-section"
+                        >
+                        <h3 class="information-card__section-title">Images</h3>
+                        <ul class="list-unstyled information-card__divesite-image-container" ng-controller="GalleryController as gc">
+                            <li class="information-card__divesite-image" ng-repeat="image in images">
+                                <a ng-click="gc.openLightboxModal($index)">
+                                    <img ng-src="{{ image.transformedUrl }}" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
+                        <li role="presentation" class="active profile__tab-menu-item">
+                            <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
+                                <h3 class="information-card__tab-title">
+                                    Comments ({{ site.comments.length }})
+                                </h3>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <section class="tab-content">
+                    <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
+                        <comment-list site="site" comments="site.comments"></comment-list>
+                    </section>
+                </section>
             </div>
-
-            <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
-                <li role="presentation" class="active profile__tab-menu-item">
-                    <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
-                        <h3 class="information-card__tab-title">
-                            Comments ({{ site.comments.length }})
-                        </h3>
-                    </a>
-                </li>
-            </ul>
         </div>
-
-        <section class="tab-content">
-            <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
-                <comment-list site="site" comments="site.comments"></comment-list>
-            </section>
-        </section>
     </div>
 
 </div>
