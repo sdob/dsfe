@@ -16,6 +16,10 @@
         // when the map is clicked, any burger menu should get out of the way
         deselectAll();
       });
+
+      $scope.$on('search-selection', () => {
+        deselectAll();
+      });
     }
 
     function deselectAll() {
