@@ -14,10 +14,11 @@
     function submit(file) {
       vm.isUploading = true;
       const siteID = vm.site.id;
+      const type = vm.site.type ? vm.site.type : 'divesite';
       console.log(`uploading for site ${siteID}`);
       file.upload = Upload.upload({
         data: { image: file },
-        url: `${dsimg.IMG_API_URL}/divesites/${siteID}`,
+        url: `${dsimg.IMG_API_URL}/${type}s/${siteID}`,
       })
       .then(() => {
         $uibModalInstance.close('image-uploaded');
