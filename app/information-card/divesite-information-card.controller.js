@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
+  function DivesiteInformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
     const { formatGeocodingData } = informationCardService;
     const vm = this;
     activate();
@@ -311,7 +311,7 @@
     }
   }
 
-  InformationCardController.$inject = ['$auth',
+  DivesiteInformationCardController.$inject = ['$auth',
     '$document',
     '$location',
     '$rootScope',
@@ -324,5 +324,5 @@
     'informationCardService',
     'localStorageService',
   ];
-  angular.module('divesites.informationCard').controller('InformationCardController', InformationCardController);
+  angular.module('divesites.informationCard').controller('DivesiteInformationCardController', DivesiteInformationCardController);
 })();

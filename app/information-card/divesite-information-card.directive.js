@@ -3,8 +3,8 @@
 
   function informationCard() {
     return {
-      templateUrl: 'information-card/information-card.template.html',
-      controller: 'InformationCardController',
+      templateUrl: 'information-card/divesite-information-card.template.html',
+      controller: 'DivesiteInformationCardController',
       controllerAs: 'icvm',
       link,
     };
