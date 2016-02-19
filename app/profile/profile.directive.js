@@ -10,10 +10,16 @@
     };
 
     function link(scope, elem, attrs, controller) {
-      // Enable tab functionality
-      $('#js-tab-menu a').click(function(e) {
-        e.preventDefault();
-        $(this).tab('show');
+      // Handle whether the user is viewing the feed tab
+      // or not
+      const selector = 'a[data-target="#js-profile-feed-tab"]';
+      $(selector).on('show.bs.tab', () => {
+        console.log('showing profile feed');
+        scope.$broadcast('show-feed');
+      });
+      $(selector).on('hide.bs.tab', () => {
+        console.log('hiding profile feed');
+        scope.$broadcast('hide-feed');
       });
     }
   }

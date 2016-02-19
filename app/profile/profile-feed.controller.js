@@ -15,6 +15,8 @@
       vm.offset = 0;
       // We'll maintain a set of user profile image URLs
       vm.userProfileImageURLs = {};
+      // Are we viewing the tab? Initially, yes
+      vm.viewing = true;
 
       if (vm.isAuthenticated()) {
         vm.ownID = localStorageService.get('user');
@@ -27,8 +29,23 @@
         vm.apiCall = (offset) => dsactivity.getUserActivity($scope.user.id, offset);
       }
 
+      // Listen for show/hide feed events from parent
+      $scope.$on('hide-feed', () => {
+        $timeout(() => {
+          console.log('heard hide-feed event');
+          vm.viewing = false;
+        });
+      });
+
+      $scope.$on('show-feed', () => {
+        $timeout(() => {
+          console.log('heard show-feed event');
+          vm.viewing = true;
+        });
+      });
+
       // Kick things off by making an initial call
-      vm.loadFeed();
+      // vm.loadFeed();
     }
 
     function loadFeed() {

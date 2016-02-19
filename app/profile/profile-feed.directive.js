@@ -8,6 +8,7 @@
       link,
       scope: {
         user: '=',
+        viewing: '=',
       },
       templateUrl: 'profile/profile-feed.template.html',
     };
