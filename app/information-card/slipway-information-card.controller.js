@@ -11,6 +11,8 @@
       const type = $scope.type;
       const { apiCall } = informationCardService.apiCalls[type];
 
+      vm.summonUploadImageModal = summonUploadImageModal;
+
       //vm.site = $scope.site || {};
       $scope.site = $scope.site || {};
       $scope.site.comments = [];
@@ -35,6 +37,7 @@
         vm.userIsOwner = informationCardService.userIsOwner($scope.site);
         $timeout(() => {
           vm.isLoading = false;
+          loadSlipwayImages();
         });
       });
 
@@ -67,6 +70,47 @@
             }, 0);
           }
         });
+      });
+    }
+
+    function loadSlipwayImages() {
+      informationCardService.getSlipwayImages($scope.site)
+      .then((images) => {
+        if (images) {
+          $scope.images = images.map(i => {
+            const image = Object.assign({}, i.image);
+            image.ownerID = i.ownerID;
+            image.createdAt = i.createdAt;
+            console.log(image.createdAt);
+            return image;
+          });
+
+          // Load image owner data
+          $scope.images.forEach((image) => {
+            dsapi.getUserMinimal(image.ownerID)
+            .then((response) => {
+              image.ownerName = response.data.name;
+              image.caption = `${image.ownerName}`;
+            });
+          });
+        }
+      });
+    }
+
+    function summonUploadImageModal() {
+      const instance = $uibModal.open({
+        controller: 'UploadImageModalController',
+        controllerAs: 'vm',
+        templateUrl: 'information-card/upload-image-modal.template.html',
+        resolve: {
+          site: () => $scope.site,
+        },
+      });
+      instance.result.then((reason) => {
+        if (reason === 'image-uploaded') {
+          console.log('image was uploaded successfully');
+          loadSlipwayImages();
+        }
       });
     }
 
