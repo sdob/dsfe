@@ -6,12 +6,6 @@
 
     function activate() {
       vm.site = $scope.site;
-      vm.units = userSettingsService.getUserSettings().units;
-      if (vm.units === 'si') {
-        console.log('units are SI');
-      } else {
-        // Units are imperial
-      }
     }
   }
 

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function informationCard() {
+  function divesiteInformationCard() {
     return {
       templateUrl: 'information-card/divesite-information-card.template.html',
       controller: 'DivesiteInformationCardController',
@@ -20,7 +20,7 @@
     }
   }
 
-  informationCard.$inject = [
+  divesiteInformationCard.$inject = [
   ];
-  angular.module('divesites.informationCard').directive('informationCard', informationCard);
+  angular.module('divesites.informationCard').directive('divesiteInformationCard', divesiteInformationCard);
 })();

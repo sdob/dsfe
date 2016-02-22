@@ -4,7 +4,10 @@
     return {
       controller: 'InformationCardChartsController',
       controllerAs: 'vm',
-      scope: true,
+      // scope: true,
+      scope: {
+        site: '=',
+      },
       templateUrl: 'information-card/charts/charts.template.html',
       link: (scope, element, attrs, controller) => {
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')

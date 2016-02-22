@@ -11,7 +11,7 @@
             </div>
             <div class="collapse-header__value">
                 <span ng-if="vm.site.dives.length">
-                    {{ vm.site.depth | depth:vm.units | number:0 }} m
+                    {{ vm.site.depth | number:0 }} m
                 </span>
                 <span ng-if="!vm.site.dives.length">
                     No dives logged here yet
