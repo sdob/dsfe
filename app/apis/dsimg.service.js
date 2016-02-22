@@ -8,6 +8,11 @@
     return {
       IMG_API_URL,
 
+      /* Generic site image retrieval stuff */
+      getSiteImages: (site) => {
+        return $http.get(`${IMG_API_URL}/${site.type}s/${site.id}/`);
+      },
+
       /* Upload, retrieve, and delete compressor images */
 
       getCompressorImages: (compressorID) => {
