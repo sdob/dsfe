@@ -1,0 +1,19 @@
+<ul class="list-unstyled action-menu">
+    <li class="action-menu__action-item"
+        ng-if="vm.userIsOwner()"
+        ng-include="'information-card/actions/edit.template.html'"
+        >
+    </li>
+    <li class="action-menu__action-item"
+        ng-if="vm.userIsOwner()"
+        ng-include="'information-card/actions/set-header-image.template.html'">
+    </li>
+    <li class="action-menu__action-item"
+        ng-if="vm.isAuthenticated() && vm.site.type === 'divesite'"
+        ng-include="'information-card/actions/log-dive.template.html'">
+    </li>
+    <li class="action-menu__action-item"
+        ng-if="vm.isAuthenticated()"
+        ng-include="'information-card/actions/report-problem.template.html'">
+    </li>
+</ul>

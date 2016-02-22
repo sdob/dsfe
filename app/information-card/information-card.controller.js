@@ -22,7 +22,6 @@
         // Update our bound values with data from the API
         vm.site = Object.assign(vm.site, response.data);
         vm.site.locData = formatGeocodingData(vm.site);
-        vm.userIsOwner = userIsOwner(vm.site);
 
         // Retrieve site images
         getSiteImages();
@@ -47,8 +46,10 @@
           });
         }
 
-        // On the next tick, remove the isLoading flag
+        // Remove the isLoading flag
         vm.isLoading = false;
+        // Check whether the user owns this site
+        vm.userIsOwner = userIsOwner(vm.site);
       });
     }
 
@@ -58,8 +59,6 @@
       vm.site = $scope.site || {};
       vm.site.images = [];
       vm.summonUploadImageModal = summonUploadImageModal;
-      // Ownership defaults to 'false' until the API responds
-      vm.userIsOwner = false;
 
       // Depending on the site type, we may offer different functionality
       if (vm.site.type === 'divesite') {

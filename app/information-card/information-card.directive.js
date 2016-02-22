@@ -25,7 +25,6 @@
         selector = '#js-comment-list-tab';
       }
 
-      console.log($(selector));
       $(selector).tab('show');
 
       // Clean up

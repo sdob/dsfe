@@ -31,7 +31,7 @@
       controller: 'EditCompressorController',
       controllerAs: 'vm',
     })
-    .when('/edit-site/:id', {
+    .when('/edit-divesite/:id', {
       template: '<edit-site></edit-site>',
       controller: 'EditSiteController',
       controllerAs: 'vm',
