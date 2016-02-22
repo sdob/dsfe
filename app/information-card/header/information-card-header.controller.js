@@ -7,12 +7,12 @@
     function activate() {
       console.log('InformationCardHeadercontroller.activate()');
       console.log($scope);
-      vm.site = $scope.site;
+      //$scope.site = $scope.site;
       {
-        const apiCall = getApiCallByType(vm.site.type);
+        const apiCall = getApiCallByType($scope.site.type);
         // Get the divesite header image (if it exists)
-        //informationCardService.getDivesiteHeaderImage(vm.site.id)
-        apiCall(vm.site.id)
+        //informationCardService.getDivesiteHeaderImage($scope.site.id)
+        apiCall($scope.site.id)
         .then((imageUrl) => {
           // If there's an image, dsimg will return 200 and a non-null object
           if (imageUrl) {

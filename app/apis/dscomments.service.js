@@ -14,11 +14,11 @@
         return $http.post(`${API_URL}/comments/${site.type}s/`, data);
       },
 
-      updateSiteComment: (site, data) => {
-        return $http.patch(`${API_URL}/comments/${site.type}s/${site.id}/`, data);
+      updateSiteComment: (site, id, data) => {
+        return $http.patch(`${API_URL}/comments/${site.type}s/${id}/`, data);
       },
 
-      deleteSiteComment: (id, site) => {
+      deleteSiteComment: (site, id) => {
         return $http.delete(`${API_URL}/comments/${site.type}s/${id}/`);
       },
 

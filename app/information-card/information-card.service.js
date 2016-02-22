@@ -33,9 +33,10 @@
       apiCalls,
       escapeKeydownListener,
       formatGeocodingData,
-      getCompressorImages,
+      getSiteImages,
       getDivesiteHeaderImage,
       getDivesiteImages,
+      getCompressorImages,
       getSlipwayImages,
       getNearbySlipways,
       toggleOpened,
@@ -171,6 +172,25 @@
     function getDivesiteImages(site) {
       // Contact image server for divesite images
       return dsimg.getDivesiteImages(site.id)
+      .then((response) => {
+        const images = response.data;
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          images.forEach((image) => {
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
+              crop: 'fill',
+            });
+          });
+          return images;
+        }
+      });
+    }
+
+    function getSiteImages(site) {
+      return dsimg.getSiteImages(site)
       .then((response) => {
         const images = response.data;
         // This could be an empty response with a 204, so we need to check

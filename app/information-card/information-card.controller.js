@@ -19,12 +19,16 @@
       const { apiCall } = informationCardService.apiCalls[vm.site.type];
       apiCall(vm.site.id)
       .then((response) => {
+        // Update our bound values with data from the API
         vm.site = Object.assign(vm.site, response.data);
         vm.site.locData = formatGeocodingData(vm.site);
         vm.userIsOwner = userIsOwner(vm.site);
 
         // Retrieve site images
         getSiteImages();
+
+        // Set up event listeners
+        listenForChildEvents();
 
         // Depending on the site, we may want to grab more information
         if (vm.site.type === 'divesite') {
@@ -122,14 +126,16 @@
               crop: 'fill',
             });
           });
-          // Merge data together so that we only have one 'image' object
-          vm.site.images = images.map(i => {
+          // Merge data together so that we only have one 'image' object for
+          // each image. These have to sit in $scope so that the gallery controller
+          // can access them.
+          $scope.images = images.map(i => {
             const image = Object.assign({}, i.image);
             image.ownerID = i.ownerID;
             image.createdAt = i.createdAt;
             return image;
           });
-          vm.site.images.forEach((image) => {
+          $scope.images.forEach((image) => {
             dsapi.getUserMinimal(image.ownerID)
             .then((response) => {
               image.ownerName = response.data.name;
@@ -137,6 +143,31 @@
             });
           });
         }
+      });
+    }
+
+    function listenForChildEvents() {
+
+      /* Listen for changes to the comments */
+      $scope.$on('comment-added', (event) => {
+        console.log('heard comment-added');
+        updateCommentList();
+      });
+
+      $scope.$on('comment-list-updated', (event) => {
+        console.log('heard comment-list-updated');
+        updateCommentList();
+      });
+
+      /* Listen for changes to the list of logged dives */
+      $scope.$on('dive-list-updated', (event) => {
+        dsapi.getDivesite(vm.site.id)
+        .then((response) => {
+          // Update our knowledge of the site
+          vm.site = response.data;
+          // Broadcast a refresh-statistics event to child scopes
+          $scope.$broadcast('refresh-statistics', vm.site);
+        });
       });
     }
 
@@ -172,8 +203,10 @@
     function updateCommentList() {
       dscomments.getSiteComments(vm.site)
       .then((response) => {
-        vm.site.comments = response.data;
-        getCommenterProfileImages();
+        $timeout(() => {
+          vm.site.comments = response.data;
+          getCommenterProfileImages();
+        });
       });
     }
   }

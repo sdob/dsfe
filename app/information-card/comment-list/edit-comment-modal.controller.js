@@ -34,7 +34,7 @@
           },
           controllerAs: 'vm',
           size: 'sm',
-          templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.html',
+          templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
           windowClass: 'modal-center',
         });
         instance.result.then((reason) => {

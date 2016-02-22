@@ -3,6 +3,11 @@
 
   function commentService(dscomments) {
     const apiCalls = {
+      create: dscomments.postSiteComment,
+      retrieve: dscomments.getSiteComments,
+      update: dscomments.updateSiteComment,
+      delete: dscomments.deleteSiteComment,
+      /*
       compressor: {
         create: dscomments.postCompressorComment,
         retrieve: dscomments.getCompressorComments,
@@ -21,6 +26,7 @@
         update: dscomments.updateSlipwayComment,
         delete: dscomments.deleteSlipwayComment,
       },
+      */
     };
 
     return {
