@@ -14,6 +14,10 @@
     </li>
     <li class="action-menu__action-item"
         ng-if="vm.isAuthenticated()"
+        ng-include="'information-card/actions/upload-image.template.html'">
+    </li>
+    <li class="action-menu__action-item"
+        ng-if="vm.isAuthenticated()"
         ng-include="'information-card/actions/report-problem.template.html'">
     </li>
 </ul>
