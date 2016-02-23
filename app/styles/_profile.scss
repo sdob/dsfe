@@ -306,8 +306,14 @@
 .profile__sidebar-item {
   background: $blue-700;
   display: flex;
-  // font-size: 30px;
   margin-bottom: 16px;
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+  width: 100%;
   a {
     color: #fff;
     font-weight: 300;
@@ -321,12 +327,14 @@
       background: darken($blue-700, 30%);
       text-decoration: none;
     }
+    text-align: center;
     transition: color 200ms, background 200ms;
     @media (min-width: $screen-md-min) {
       padding: 0px 16px;
     }
   }
 }
+
 .profile__sidebar-item.active {
   background: #fff;
   color: $blue-700;
