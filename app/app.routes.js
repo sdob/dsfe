@@ -21,7 +21,7 @@
       controller: 'EditSiteController',
       controllerAs: 'vm',
     })
-    .when('/add-slipway/', {
+    .when('/add-slipway', {
       template: '<edit-slipway></edit-slipway>',
       controller: 'EditSlipwayController',
       controllerAs: 'vm',
