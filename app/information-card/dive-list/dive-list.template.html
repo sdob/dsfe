@@ -1,6 +1,5 @@
 <div class="information-card__body-section">
-    <h3 class="information-card__section-title">Dives</h3>
-    <div class="information-card__dive" ng-repeat="dive in dives | orderBy:'-'">
+    <div class="profile-feed__item" ng-repeat="dive in dives | orderBy:'-'">
         <div class="information-card__dive-actions">
             <a href
                 class="overlay-action-item--blue"
@@ -33,7 +32,9 @@
                         at {{ dive.time | date:'HH:mm' }}
                     </span>
                 </div>
+                <i class="fa fa-fw fa-clock-o"></i>
                 <span>{{ dive.depth }} m</span>
+                <i class="fa fa-fw fa-arrow-down"></i>
                 <span>{{ dive.duration | duration }} minutes</span>
             </div>
         </div>
