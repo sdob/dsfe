@@ -14,14 +14,14 @@ $ds-feedback-width: 2em;
 $font-weight--default: 300;
 
 // Bootstrap breakpoints
-// $screen-sm-min: 768px !default;
-// $screen-md-min: 992px !default;
-// $screen-lg-min: 1200px !default;
+$screen-sm-min: 768px !default;
+$screen-md-min: 992px !default;
+$screen-lg-min: 1200px !default;
 
-$screen-sm-min: 34em;
-$screen-md-min: 48em;
-$screen-lg-min: 62em;
-$screen-xl-min: 75em;
+// $screen-sm-min: 34em;
+// $screen-md-min: 48em;
+// $screen-lg-min: 62em;
+// $screen-xl-min: 75em;
 
 $well-bg: #f5f5f5 !default;
 $well-border: darken($well-bg, 7%) !default;
