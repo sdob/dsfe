@@ -58,6 +58,7 @@
       vm.isLoading = true;
       vm.site = $scope.site || {};
       vm.site.images = [];
+      vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
       vm.summonUploadImageModal = summonUploadImageModal;
 
       // Depending on the site type, we may offer different functionality
@@ -146,7 +147,6 @@
     }
 
     function listenForChildEvents() {
-
       /* Listen for changes to the comments */
       $scope.$on('comment-added', (event) => {
         console.log('heard comment-added');
@@ -164,6 +164,15 @@
       });
     }
 
+    function setSiteHeaderImage(imageUrl) {
+      $timeout(() => {
+        vm.site.headerImageUrl = imageUrl;
+        vm.backgroundStyle = {
+          background: `url(${vm.site.headerImageUrl}) center / cover`,
+        };
+      });
+    }
+
     function summonLogDiveModal() {
       const instance = $uibModal.open({
         controller: 'LogDiveModalController',
@@ -176,6 +185,32 @@
       instance.result.then((reason) => {
         if (reason === 'logged') {
           updateDiveListAndStatistics();
+        }
+      });
+    }
+
+    function summonSetSiteHeaderImageModal() {
+      const instance = $uibModal.open({
+        controller: 'SetSiteHeaderImageModalController',
+        controllerAs: 'vm',
+        resolve: {
+          site: () => vm.site,
+        },
+        templateUrl: 'information-card/set-site-header-image-modal.template.html',
+      });
+      instance.result.then((reason) => {
+        if (reason === 'uploaded') {
+          informationCardService.getSiteHeaderImage(vm.site)
+          .then((imageUrl) => {
+            if (imageUrl) {
+              setSiteHeaderImage(imageUrl);
+              // Tell header to refresh header image
+              $scope.$broadcast('header-image-changed');
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         }
       });
     }

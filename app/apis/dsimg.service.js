@@ -13,6 +13,10 @@
         return $http.get(`${IMG_API_URL}/${site.type}s/${site.id}/`);
       },
 
+      getSiteHeaderImage: (site) => {
+        return $http.get(`${IMG_API_URL}/${site.type}s/${site.id}/header`);
+      },
+
       /* Upload, retrieve, and delete compressor images */
 
       getCompressorImages: (compressorID) => {

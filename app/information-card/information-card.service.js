@@ -34,6 +34,7 @@
       escapeKeydownListener,
       formatGeocodingData,
       getSiteImages,
+      getSiteHeaderImage,
       getDivesiteHeaderImage,
       getDivesiteImages,
       getCompressorImages,
@@ -148,6 +149,22 @@
         }
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+
+    function getSiteHeaderImage(site) {
+      return dsimg.getSiteHeaderImage(site)
+      .then((response) => {
+        console.log('getSiteHeaderImage returns');
+        console.log(response.data);
+        if (response.data && response.data.image && response.data.image.public_id) {
+          const public_id = response.data.image.public_id;
+          const headerImageUrl = $.cloudinary.url(public_id, {
+          });
+          console.log('headerImageUrl: ');
+          console.log(headerImageUrl);
+          return headerImageUrl;
+        }
+      });
+    }
 
     function getCompressorImages(site) {
       // Contact image server for compressor images
