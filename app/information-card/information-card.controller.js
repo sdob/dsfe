@@ -2,7 +2,7 @@
   'use strict';
 
   function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService) {
-    const { formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
+    const { apiCalls, formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
     const vm = this;
 
     activate();
@@ -16,7 +16,7 @@
       // Retrieve comments for this site
       updateCommentList();
 
-      const { apiCall } = informationCardService.apiCalls[vm.site.type];
+      const { apiCall } = apiCalls[vm.site.type];
       apiCall(vm.site.id)
       .then((response) => {
         // Update our bound values with data from the API
@@ -160,13 +160,7 @@
 
       /* Listen for changes to the list of logged dives */
       $scope.$on('dive-list-updated', (event) => {
-        dsapi.getDivesite(vm.site.id)
-        .then((response) => {
-          // Update our knowledge of the site
-          vm.site = response.data;
-          // Broadcast a refresh-statistics event to child scopes
-          $scope.$broadcast('refresh-statistics', vm.site);
-        });
+        updateDiveListAndStatistics();
       });
     }
 
@@ -178,6 +172,11 @@
           site: () => vm.site,
         },
         templateUrl: 'information-card/log-dive-modal.template.html',
+      });
+      instance.result.then((reason) => {
+        if (reason === 'logged') {
+          updateDiveListAndStatistics();
+        }
       });
     }
 
@@ -206,6 +205,17 @@
           vm.site.comments = response.data;
           getCommenterProfileImages();
         });
+      });
+    }
+
+    function updateDiveListAndStatistics() {
+      dsapi.getDivesite(vm.site.id)
+      .then((response) => {
+        vm.site.dives = response.data.dives;
+        vm.site.depth = response.data.depth;
+        vm.site.duration = response.data.duration;
+        getDiverProfileImages();
+        $scope.$broadcast('refresh-statistics', vm.site);
       });
     }
   }

@@ -22,6 +22,7 @@
 
         // Rebuild histograms when told to
         scope.$on('refresh-statistics', (evt, site) => {
+          console.log('receiving refresh-statistics event');
           scope.vm.site = site;
           buildCharts(site, element);
         });
