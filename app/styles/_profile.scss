@@ -306,12 +306,17 @@
 .profile__sidebar-item {
   background: $blue-700;
   display: flex;
-  margin-bottom: 16px;
-  &:not(:first-child) {
-    margin-left: 8px;
+  // margin-bottom: 16px;
+  margin: 0px 8px 16px;
+  &:first-child {
+    margin-left: 0px;
   }
-  &:not(:last-child) {
-    margin-right: 8px;
+  &:last-child {
+    margin-right: 0px;
+  }
+  @media (min-width: $screen-sm-min) {
+    margin-left: 0px;
+    margin-right: 0px;
   }
   width: 100%;
   a {
@@ -331,6 +336,7 @@
     transition: color 200ms, background 200ms;
     @media (min-width: $screen-md-min) {
       padding: 0px 16px;
+      text-align: left;
     }
   }
 }

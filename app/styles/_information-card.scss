@@ -140,9 +140,7 @@
 }
 
 .information-card__body-section {
-    border-top: solid 1px rgba(0, 0, 0, 0.16);
-    margin-top: 16px;
-  }
+}
 
 .information-card__chart {
   margin-bottom: 0px;
@@ -274,16 +272,21 @@
   z-index: 1; 
 }
 
+.information-card__tab-body {
+  border-top: solid 1px rgba(0, 0, 0, 0.17);
+  padding-top: 32px;
+}
+
 .information-card__tab-menu {
   display: flex;
   flex-direction: row;
+  font-size: 20px;
+  font-weight: 500;
   justify-content: space-between;
-}
 
-.information-card__tab-menu-item {
+& > .information-card__tab-menu-item {
   background: $blue-700;
   display: flex;
-  margin-bottom: 16px;
   &:not(:first-child) {
     margin-left: 16px;
   }
@@ -291,9 +294,9 @@
     margin-right: 16px;
   }
   width: 100%;
-  a {
+  & > a {
     color: #fff;
-    font-weight: 300;
+    margin-right: 0;
     padding: 8px 16px;
     width: 100%;
     text-align: center;
@@ -318,10 +321,12 @@
     &:active,
     &:hover,
     &:focus {
-      background: #fff;
-      color: $blue-700;
+      // We're overriding our own !important...
+      background: #fff !important;
+      color: $blue-700 !important;
     }
   }
+}
 }
 
 .information-card__title {
