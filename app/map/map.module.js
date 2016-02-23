@@ -5,6 +5,5 @@
     'divesites.filterMenu',
     'divesites.hamburgerMenu',
     'divesites.informationCard',
-    'uiGmapgoogle-maps',
   ]);
 })();
