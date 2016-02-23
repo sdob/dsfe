@@ -311,8 +311,7 @@
   a {
     color: #fff;
     font-weight: 300;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 8px 16px;
     text-decoration: none;
     width: 100%;
     &:active,
@@ -323,6 +322,9 @@
       text-decoration: none;
     }
     transition: color 200ms, background 200ms;
+    @media (min-width: $screen-md-min) {
+      padding: 0px 16px;
+    }
   }
 }
 .profile__sidebar-item.active {
