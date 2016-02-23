@@ -4,7 +4,10 @@
     return {
       controller: 'InformationCardChartsController',
       controllerAs: 'vm',
-      scope: true,
+      // scope: true,
+      scope: {
+        site: '=',
+      },
       templateUrl: 'information-card/charts/charts.template.html',
       link: (scope, element, attrs, controller) => {
         $('#js-information-card__depth-chart-toggle, #js-information-card__duration-chart-toggle')
@@ -19,6 +22,7 @@
 
         // Rebuild histograms when told to
         scope.$on('refresh-statistics', (evt, site) => {
+          console.log('receiving refresh-statistics event');
           scope.vm.site = site;
           buildCharts(site, element);
         });

@@ -1,103 +1,153 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $document, $location, $rootScope, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService, localStorageService) {
-    const { formatGeocodingData } = informationCardService;
+  function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService) {
+    const { apiCalls, formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
     const vm = this;
+
     activate();
 
     function activate() {
-      vm.isLoading = true; // We're waiting for the site to load
-      // Make sure that $scope.site is defined
-      $scope.site = $scope.site || {};
-      $scope.site.images = {};
-      $scope.site.id = $scope.id;
-      $scope.site.type = $scope.type;
-      // If we have geocoding data, then format it
-      if ($scope.site.geocoding_data) {
-        $scope.site.locData = informationCardService.formatGeocodingData($scope.site);
-      }
+      console.log('InformationCardController.activate()');
 
-      // This is the logged-in user's ID
-      vm.userId = localStorageService.get('user');
-      $scope.userId = localStorageService.get('user');
+      // Bind values to 'vm' that don't require a call to dsapi
+      bindValues();
 
-      const id = $scope.id;
-      const type = $scope.type;
-      const { apiCall, _ } = informationCardService.apiCalls[type];
+      // Retrieve comments for this site
+      updateCommentList();
 
-      vm.siteID = id;
-      vm.siteType = type;
+      const { apiCall } = apiCalls[vm.site.type];
+      apiCall(vm.site.id)
+      .then((response) => {
+        // Update our bound values with data from the API
+        vm.site = Object.assign(vm.site, response.data);
+        vm.site.locData = formatGeocodingData(vm.site);
 
-      // Initially show dive list
-      vm.sectionVisibilities = {
-        defaultSection: true,
-        uploadImageForm: false,
-        logDiveForm: false,
-      };
+        // Retrieve site images
+        getSiteImages();
 
-      // Initially collapse histograms
-      vm.collapseDepthChart = true;
-      vm.collapseDurationHistogram = true;
+        // Set up event listeners
+        listenForChildEvents();
 
-      // Wire up functions
-      vm.isAuthenticated = $auth.isAuthenticated;
-      $scope.isAuthenticated = $auth.isAuthenticated;
-      vm.summonLogDiveModal = summonLogDiveModal;
-      vm.summonSetDivesiteHeaderImageModal = summonSetDivesiteHeaderImageModal;
-      vm.summonUploadImageModal = summonUploadImageModal;
-      vm.toggleSectionVisibility = toggleSectionVisibility;
-      vm.toggleUploadImageForm = toggleUploadImageForm;
-
-      $timeout(() => {
-        // Retrieve as much data as we can
-        apiCall(id)
-        .then((response) => {
-          $scope.site = Object.assign($scope.site, response.data);
-          $scope.site.locData = $scope.site.locData || formatGeocodingData($scope.site);
-
-          // Get the divesite's images (if they exist)
-          $timeout(() => {
-            loadDivesiteImages();
-          });
-
-          // Get divers' profile images
-          getDiverProfileImages();
-
-          // Now we can determine whether the user owns this site
-          vm.userIsOwner = informationCardService.userIsOwner($scope.site);
-
-          // Get nearby slipways
-          informationCardService.getNearbySlipways($scope.site)
+        // Depending on the site, we may want to grab more information
+        if (vm.site.type === 'divesite') {
+          // Retrieve nearby slipways
+          getNearbySlipways(vm.site)
           .then((slipways) => {
-            $scope.site.nearbySlipways = slipways;
+            vm.site.nearbySlipways = slipways;
           });
+
+          // Divesites can have dive lists, which need profiles
+          getDiverProfileImages();
 
           // Force stats charts to be rebuilt
           $timeout(() => {
-            // Push this into the next tick so that the charts directive has linked
-            $scope.$broadcast('refresh-statistics', $scope.site);
-            // We're no longer loading, so remove the modal-mask
-            vm.isLoading = false;
+            $scope.$broadcast('refresh-statistics', vm.site);
           });
-        });
+        }
+
+        // Remove the isLoading flag
+        vm.isLoading = false;
+        // Check whether the user owns this site
+        vm.userIsOwner = userIsOwner(vm.site);
       });
+    }
 
-      // Retrieve comments
-      updateCommentList();
+    function bindValues() {
+      vm.isAuthenticated = $auth.isAuthenticated;
+      vm.isLoading = true;
+      vm.site = $scope.site || {};
+      vm.site.images = [];
+      vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
+      vm.summonUploadImageModal = summonUploadImageModal;
 
-      /* Listen for events emitted upwards by child controllers */
-      $scope.$on('dive-list-updated', (event) => {
-        console.log('InformationController received "dive-list-updated"...');
-        dsapi.getDivesite($scope.site.id)
+      // Depending on the site type, we may offer different functionality
+      if (vm.site.type === 'divesite') {
+        vm.summonLogDiveModal = summonLogDiveModal;
+      }
+    }
+
+    function getCommenterProfileImages() {
+      const ids = new Set(vm.site.comments.map(c => c.owner.id));
+      ids.forEach((id) => {
+        dsimg.getUserProfileImage(id)
         .then((response) => {
-          $scope.site = response.data;
-
-          // Broadcast a refresh-histogram event to child scopes
-          $scope.$broadcast('refresh-statistics', $scope.site);
+          if (response && response.data.image && response.data.image.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+              height: 60,
+              width: 60,
+              crop: 'fill',
+              gravity: 'face',
+            });
+            $timeout(() => {
+              vm.site.comments.filter(c => c.owner.id === id).forEach(c => {
+                c.owner.profileImageUrl = profileImageUrl;
+              });
+            });
+          }
         });
       });
+    }
 
+    function getDiverProfileImages() {
+      const ids = new Set(vm.site.dives.map(d => d.diver.id));
+      ids.forEach(id => {
+        dsimg.getUserProfileImage(id)
+        .then((response) => {
+          if (response.data && response.data.image && response.data.image.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+              height: 60,
+              width: 60,
+              crop: 'fill',
+              gravity: 'face',
+            });
+            $timeout(() => {
+              vm.site.dives.filter(d => d.diver.id === id).forEach(d => {
+                d.diver.profileImageUrl = profileImageUrl;
+              });
+            });
+          }
+        });
+      });
+    }
+
+    function getSiteImages() {
+      dsimg.getSiteImages(vm.site)
+      .then((response) => {
+        const images = response.data;
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          // Give each image a transformed URL
+          images.forEach((image) => {
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
+              crop: 'fill',
+            });
+          });
+          // Merge data together so that we only have one 'image' object for
+          // each image. These have to sit in $scope so that the gallery controller
+          // can access them.
+          $scope.images = images.map(i => {
+            const image = Object.assign({}, i.image);
+            image.ownerID = i.ownerID;
+            image.createdAt = i.createdAt;
+            return image;
+          });
+          $scope.images.forEach((image) => {
+            dsapi.getUserMinimal(image.ownerID)
+            .then((response) => {
+              image.ownerName = response.data.name;
+              image.caption = `${image.ownerName}`;
+            });
+          });
+        }
+      });
+    }
+
+    function listenForChildEvents() {
+      /* Listen for changes to the comments */
       $scope.$on('comment-added', (event) => {
         console.log('heard comment-added');
         updateCommentList();
@@ -107,124 +157,56 @@
         console.log('heard comment-list-updated');
         updateCommentList();
       });
-    }
 
-    function updateCommentList() {
-      dscomments.getDivesiteComments($scope.site.id)
-      .then((response) => {
-        $timeout(() => {
-          $scope.site.comments = response.data;
-          getCommenterProfileImages();
-        });
+      /* Listen for changes to the list of logged dives */
+      $scope.$on('dive-list-updated', (event) => {
+        updateDiveListAndStatistics();
       });
     }
 
-    function getDiverProfileImages() { // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-      // Create a set of user IDs --- no need to ping the image server
-      // repeatedly for the same diver's profile image
-      const ids = new Set($scope.site.dives.map(d => d.diver.id));
-      ids.forEach((id) => {
-        dsimg.getUserProfileImage(id)
-        .then((response) => {
-          if (response.data && response.data.image && response.data.image.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
-              height: 60,
-              width: 60,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            $timeout(() => {
-              $scope.site.dives.filter(d => d.diver.id === id).forEach((d) => {
-                d.diver.profileImageUrl = profileImageUrl;
-              });
-            }, 0);
-          }
-        });
+    function setSiteHeaderImage(imageUrl) {
+      $timeout(() => {
+        vm.site.headerImageUrl = imageUrl;
+        vm.backgroundStyle = {
+          background: `url(${vm.site.headerImageUrl}) center / cover`,
+        };
       });
-    } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
-
-    function getCommenterProfileImages() {
-      const ids = new Set($scope.site.comments.map(c => c.owner.id));
-      ids.forEach((id) => {
-        dsimg.getUserProfileImage(id)
-        .then((response) => {
-          if (response.data && response.data.image && response.data.image.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
-              height: 60,
-              width: 60,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            $timeout(() => {
-              $scope.site.comments.filter(c => c.owner.id === id).forEach((c) => {
-                c.owner.profileImageUrl = profileImageUrl;
-              });
-            }, 0);
-          }
-        });
-      });
-    }
-
-    function setDivesiteHeaderImage(imageUrl) {
-      // If there's an image, dsimg will return 200 and a non-null object
-      if (imageUrl) {
-        $timeout(() => {
-          console.log('setting divesite header image');
-          $scope.site.headerImageUrl = imageUrl;
-          vm.backgroundStyle = {
-            background: `url(${$scope.site.headerImageUrl}) center / cover`,
-          };
-        });
-      }
     }
 
     function summonLogDiveModal() {
       const instance = $uibModal.open({
         controller: 'LogDiveModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/log-dive-modal.template.html',
         resolve: {
-          site: () => $scope.site,
+          site: () => vm.site,
         },
+        templateUrl: 'information-card/log-dive-modal.template.html',
       });
       instance.result.then((reason) => {
         if (reason === 'logged') {
-          console.log('new dive logged');
-          // TODO: We're completely rebuilding the list of dives and profile
-          // images, which could get *expensive*. A better idea would be to
-          // cache profile images and update the DOM, but this is getting
-          // clever and can wait for another day.
-
-          // Reload dives for this site
-          dsapi.getDivesiteDives($scope.site.id)
-          .then((response) => {
-            $timeout(() => {
-              $scope.site.dives = response.data;
-              // Reload diver profile images
-              getDiverProfileImages();
-            });
-          });
+          updateDiveListAndStatistics();
         }
       });
     }
 
-    function summonSetDivesiteHeaderImageModal() {
+    function summonSetSiteHeaderImageModal() {
       const instance = $uibModal.open({
-        controller: 'SetDivesiteHeaderImageModalController',
+        controller: 'SetSiteHeaderImageModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/set-divesite-header-image-modal.template.html',
         resolve: {
-          site: () => $scope.site,
+          site: () => vm.site,
         },
+        templateUrl: 'information-card/set-site-header-image-modal.template.html',
       });
       instance.result.then((reason) => {
-        // On successful upload of an image, load it from DSIMG
         if (reason === 'uploaded') {
-          informationCardService.getDivesiteHeaderImage($scope.site.id)
+          informationCardService.getSiteHeaderImage(vm.site)
           .then((imageUrl) => {
-            console.log('came back with imageUrl');
-            console.log(imageUrl);
-            setDivesiteHeaderImage(imageUrl);
+            if (imageUrl) {
+              setSiteHeaderImage(imageUrl);
+              // Tell header to refresh header image
+              $scope.$broadcast('header-image-changed');
+            }
           })
           .catch((err) => {
             console.error(err);
@@ -237,84 +219,44 @@
       const instance = $uibModal.open({
         controller: 'UploadImageModalController',
         controllerAs: 'vm',
-        templateUrl: 'information-card/upload-image-modal.template.html',
         resolve: {
-          site: () => $scope.site,
+          site: () => vm.site,
         },
+        templateUrl: 'information-card/upload-image-modal.template.html',
       });
       instance.result.then((reason) => {
+        // If the modal closed because we uploaded an image, then reload
+        // the image list
         if (reason === 'image-uploaded') {
-          console.log('image was uploaded successfully');
-          loadDivesiteImages();
+          getSiteImages();
         }
       });
     }
 
-    function toggleUploadImageForm() {
-      // If the upload image form is currently visible, hide it and
-      // show the dive list (the default view)
-      if (vm.sectionVisibilities.uploadImageForm) {
-        vm.sectionVisibilities.uploadImageForm = false;
-        vm.sectionVisibilities.diveList = true;
-      } else {
-        // If the upload image form is currently invisible, set
-        // all other section visibilities to false and the upload image
-        // form's visibility to true
-        Object.keys(vm.sectionVisibilities).forEach((k) => {
-          vm.sectionVisibilities[k] = false;
+    function updateCommentList() {
+      dscomments.getSiteComments(vm.site)
+      .then((response) => {
+        $timeout(() => {
+          vm.site.comments = response.data;
+          getCommenterProfileImages();
         });
-        vm.sectionVisibilities.uploadImageForm = true;
-      }
+      });
     }
 
-    function toggleSectionVisibility(section) {
-      // If we've been passed garbage, just return
-      if (!vm.sectionVisibilities.hasOwnProperty(section)) return;
-      if (vm.sectionVisibilities[section]) {
-        // If the section is currently visible, hide it, then
-        // show the dive list (the default view)
-        vm.sectionVisibilities[section] = false;
-        vm.sectionVisibilities.defaultSection = true;
-      } else {
-        // If the section is currently invisible, set
-        // all other section visibilities to false and the upload image
-        // form's visibility to true
-        Object.keys(vm.sectionVisibilities).forEach((k) => {
-          vm.sectionVisibilities[k] = false;
-        });
-        vm.sectionVisibilities[section] = true;
-      }
-    }
-
-    function loadDivesiteImages() {
-      informationCardService.getDivesiteImages($scope.site)
-      .then((images) => {
-        if (images) {
-          $scope.images = images.map(i => {
-            const image = Object.assign({}, i.image);
-            image.ownerID = i.ownerID;
-            image.createdAt = i.createdAt;
-            console.log(image.createdAt);
-            return image;
-          });
-
-          // Load image owner data
-          $scope.images.forEach((image) => {
-            dsapi.getUserMinimal(image.ownerID)
-            .then((response) => {
-              image.ownerName = response.data.name;
-              image.caption = `${image.ownerName}`;
-            });
-          });
-        }
+    function updateDiveListAndStatistics() {
+      dsapi.getDivesite(vm.site.id)
+      .then((response) => {
+        vm.site.dives = response.data.dives;
+        vm.site.depth = response.data.depth;
+        vm.site.duration = response.data.duration;
+        getDiverProfileImages();
+        $scope.$broadcast('refresh-statistics', vm.site);
       });
     }
   }
 
-  InformationCardController.$inject = ['$auth',
-    '$document',
-    '$location',
-    '$rootScope',
+  InformationCardController.$inject = [
+    '$auth',
     '$scope',
     '$timeout',
     '$uibModal',
@@ -322,7 +264,6 @@
     'dscomments',
     'dsimg',
     'informationCardService',
-    'localStorageService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardController', InformationCardController);
 })();

@@ -417,19 +417,24 @@
     function summonCard(id, type) {
       // Remove any existing DOM elements
       $('information-card').remove();
-      $('slipway-information-card').remove();
-      $('compressor-information-card').remove();
+      // $('slipway-information-card').remove();
+      // $('compressor-information-card').remove();
 
       // Get the directive that we should be adding, based on the marker's type
-      const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
+      // const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
+      const directiveString = '<information-card></information-card>';
 
       // Create a new scope for the card directive; doing this means
       // that we'll need to destroy it manually too
       const scope = $scope.$new();
 
       // Give the information card the type and id
-      scope.id = id;
-      scope.type = type;
+      // scope.id = id;
+      // scope.type = type;
+      scope.site = {
+        id,
+        type,
+      };
 
       // If we already have the site list in memory (which we should
       // in most circumstances), then pre-load the information card scope
@@ -437,11 +442,14 @@
       if ($scope.mapMarkers) {
         const marker = $scope.mapMarkers.filter((m) => m.id === scope.id)[0];
         if (marker) {
-          scope.site = {
-            name: marker.title,
-            owner: marker.owner,
-            geocoding_data: marker.geocoding_data,
-          };
+          scope.name = marker.title;
+          scope.owner = marker.owner;
+          scope.geocoding_data = marker.geocoding_data;
+          //scope.site = {
+          //name: marker.title,
+          //owner: marker.owner,
+          //geocoding_data: marker.geocoding_data,
+          //};
         }
       }
 

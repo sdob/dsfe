@@ -7,16 +7,22 @@
 
     function activate() {
       vm.isSubmitting = false;
-      $scope.userID = localStorageService.get('user');
       vm.comment = {
       };
       vm.isAuthenticated = $auth.isAuthenticated;
+      vm.site = $scope.site;
       vm.siteType = $scope.site.type;
       vm.submit = submit;
       vm.summonEditCommentModal = summonEditCommentModal;
       vm.summonConfirmCommentDeletionModal = summonConfirmCommentDeletionModal;
+      vm.userID = localStorageService.get('user');
 
-      vm.apiCalls = commentService.apiCalls[vm.siteType];
+      console.log($scope);
+
+      //vm.apiCalls = commentService.apiCalls[vm.siteType];
+      vm.apiCalls = commentService.apiCalls;
+      console.log(vm.siteType);
+      console.log(vm.apiCalls);
     }
 
     function submit() {
@@ -27,8 +33,9 @@
 
       vm.isSubmitting = true;
 
-      vm.apiCalls.create(request)
+      vm.apiCalls.create(vm.site, request)
       .then((response) => {
+        console.log('successful submit');
         $scope.$emit('comment-added');
         // Clear the model
         vm.comment = {};
@@ -64,7 +71,7 @@
           // We can remove the comment from the DOM immediately
           $scope.comments.splice($index, 1);
           // Delete the comment in the background
-          vm.apiCalls.delete(comment.id);
+          vm.apiCalls.delete(vm.site, comment.id);
         }
       });
     }
@@ -88,12 +95,12 @@
             // Non-empty comments are edited
             comment.text = text; // update in the DOM
             // Make server request in the background
-            vm.apiCalls.update(comment.id);
+            vm.apiCalls.update(vm.site, comment.id, comment);
           } else {
             // Empty comments are deleted, optimistically in the DOM and
             // then server-side in the background
             $scope.comments.splice($index, 1);
-            vm.apiCalls.delete(comment.id);
+            vm.apiCalls.delete(vm.site, comment.id);
           }
           // $scope.$emit('comment-list-updated');
         }

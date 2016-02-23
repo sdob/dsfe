@@ -1,24 +1,22 @@
-<div class="information-card shadow-2dp" ng-class="{'information-card--is-loading': vm.isLoading}">
-    <information-card-header site="vm.site"></information-card-header>
-    <div class="information-card__body">
-        <modal-mask message="Loading..." ng-show="vm.isLoading"></modal-mask>
+<div class="information-card shadow-2dp"
+    ng-class="{'information-card--is-loading': icvm.isLoading}">
+    <information-card-header id="icvm.siteID" type="icvm.siteType"></information-card-header>
+    <div class="information-card__body"
+        id="information-card__body"
+        >
+        <modal-mask message="Loading..." ng-show="icvm.isLoading"></modal-mask>
         <div class="information-card__content">
-            <!-- Upper part of the content: stats, etc. -->
             <ng-include src="'information-card/description.template.html'"></ng-include>
             <div class="information-card__site-statistics">
                 <information-card-coordinates></information-card-coordinates>
-                <div ng-if="vm.site.type === 'divesite'">
-                    <ng-include src="'information-card/site-level.template.html'"></ng-include>
-                    <ng-include src="'information-card/site-entries.template.html'"></ng-include>
-                    <information-card-charts></information-card-charts>
-                    <nearby-slipways slipways="site.nearbySlipways"></nearby-slipways>
-                </div>
+                <ng-include src="'information-card/site-level.template.html'"></ng-include>
+                <ng-include src="'information-card/site-entries.template.html'"></ng-include>
+                <information-card-charts></information-card-charts>
+                <nearby-slipways slipways="site.nearbySlipways"></nearby-slipways>
             </div>
-
             <ng-include src="'information-card/actions.template.html'"></ng-include>
 
             <div>
-                <!-- Images, if they exist -->
                 <div ng-if="images.length"
                     class="information-card__divesite-image-section"
                     >
@@ -33,13 +31,13 @@
                 </div>
 
                 <ul id="js-tab-menu" class="nav nav-tabs profile__tab-menu" role="tablist">
-                    <li role="presentation" class="profile__tab-menu-item" ng-show="vm.site.type === 'divesite'">
-                        <a class="profile__tab-link" id="js-dive-list-tab" href aria-controls="dive-list" role="tab" data-toggle="tab" data-target="#js-dive-list">
+                    <li role="presentation" class="active profile__tab-menu-item">
+                        <a class="profile__tab-link" href aria-controls="dive-list" role="tab" data-toggle="tab" data-target="#js-dive-list">
                             <h3 class="information-card__tab-title">Dives</h3>
                         </a>
                     </li>
                     <li role="presentation" class="profile__tab-menu-item">
-                        <a class="profile__tab-link" id="js-comment-list-tab" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
+                        <a class="profile__tab-link" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
                             <h3 class="information-card__tab-title">
                                 Comments ({{ site.comments.length }})
                             </h3>
@@ -48,14 +46,14 @@
                 </ul>
 
                 <section class="tab-content">
-                    <section id="js-dive-list" role="tabpanel" class="tab-pane information-card__dive-list" ng-show="vm.site.type === 'divesite'">
-                        <dive-list dives="vm.site.dives"></dive-list>
+                    <section id="js-dive-list" role="tabpanel" class="active tab-pane information-card__dive-list">
+                        <dive-list dives="site.dives"></dive-list>
                     </section>
                     <section id="js-comment-list" role="tabpanel" class="tab-pane information-card__dive-list">
-                        <comment-list site="vm.site" comments="vm.site.comments"></comment-list>
+                        <comment-list site="site" comments="site.comments"></comment-list>
                     </section>
                 </section>
             </div>
-            <!-- </div> -->
+        </div>
     </div>
 </div>

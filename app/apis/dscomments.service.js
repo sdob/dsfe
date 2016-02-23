@@ -4,22 +4,28 @@
   function dscommentsService($auth, $http, API_URL) {
     return {
 
+      /* Generic comment functions */
+
+      getSiteComments: (site) => {
+        return $http.get(`${API_URL}/${site.type}s/${site.id}/comments/`);
+      },
+
+      postSiteComment: (site, data) => {
+        return $http.post(`${API_URL}/comments/${site.type}s/`, data);
+      },
+
+      updateSiteComment: (site, id, data) => {
+        return $http.patch(`${API_URL}/comments/${site.type}s/${id}/`, data);
+      },
+
+      deleteSiteComment: (site, id) => {
+        return $http.delete(`${API_URL}/comments/${site.type}s/${id}/`);
+      },
+
       /* Divesite comments */
 
       getDivesiteComments: (id) => {
         return $http.get(`${API_URL}/divesites/${id}/comments/`);
-      },
-
-      postDivesiteComment: (data) => {
-        return $http.post(`${API_URL}/comments/divesites/`, data);
-      },
-
-      updateDivesiteComment: (id, data) => {
-        return $http.patch(`${API_URL}/comments/divesites/${id}/`, data);
-      },
-
-      deleteDivesiteComment: (id) => {
-        return $http.delete(`${API_URL}/comments/divesites/${id}/`);
       },
 
       /* Slipway comments */

@@ -33,9 +33,11 @@
       apiCalls,
       escapeKeydownListener,
       formatGeocodingData,
-      getCompressorImages,
+      getSiteImages,
+      getSiteHeaderImage,
       getDivesiteHeaderImage,
       getDivesiteImages,
+      getCompressorImages,
       getSlipwayImages,
       getNearbySlipways,
       toggleOpened,
@@ -148,6 +150,22 @@
       });
     } // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
+    function getSiteHeaderImage(site) {
+      return dsimg.getSiteHeaderImage(site)
+      .then((response) => {
+        console.log('getSiteHeaderImage returns');
+        console.log(response.data);
+        if (response.data && response.data.image && response.data.image.public_id) {
+          const public_id = response.data.image.public_id;
+          const headerImageUrl = $.cloudinary.url(public_id, {
+          });
+          console.log('headerImageUrl: ');
+          console.log(headerImageUrl);
+          return headerImageUrl;
+        }
+      });
+    }
+
     function getCompressorImages(site) {
       // Contact image server for compressor images
       return dsimg.getCompressorImages(site.id)
@@ -171,6 +189,25 @@
     function getDivesiteImages(site) {
       // Contact image server for divesite images
       return dsimg.getDivesiteImages(site.id)
+      .then((response) => {
+        const images = response.data;
+        // This could be an empty response with a 204, so we need to check
+        // that there's content in the response body
+        if (images) {
+          images.forEach((image) => {
+            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+              height: 80,
+              width: 80,
+              crop: 'fill',
+            });
+          });
+          return images;
+        }
+      });
+    }
+
+    function getSiteImages(site) {
+      return dsimg.getSiteImages(site)
       .then((response) => {
         const images = response.data;
         // This could be an empty response with a 204, so we need to check
