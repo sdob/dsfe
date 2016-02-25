@@ -34,12 +34,16 @@
 
     function retrieveProfileThumbnailImage(id) {
       return dsimg.getUserProfileImage(id)
-      .then((response) => $.cloudinary.url(response.data.image.public_id, {
-        height: 18,
-        width: 18,
-        crop: 'fill',
-        gravity: 'face',
-      }));
+      .then((response) => {
+        if (response.data && response.data.public_id) {
+          return $.cloudinary.url(response.data.public_id, {
+            height: 18,
+            width: 18,
+            crop: 'fill',
+            gravity: 'face',
+          });
+        }
+      });
     }
 
     function toggleFullscreen() {

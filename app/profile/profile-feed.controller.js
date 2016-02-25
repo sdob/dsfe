@@ -72,7 +72,7 @@
           } else {
             dsimg.getUserProfileImage(id)
             .then((response) => {
-              const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+              const profileImageUrl = $.cloudinary.url(response.data.public_id, {
                 height: 60,
                 width: 60,
                 crop: 'fill',

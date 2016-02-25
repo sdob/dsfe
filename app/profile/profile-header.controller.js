@@ -67,7 +67,7 @@
         })
         .then((response) => {
           // If we get a successful response, use it
-          const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
+          const url = $.cloudinary.url(response.data.public_id, {
             width: 318,
             height: 318,
             crop: 'fill',
@@ -164,7 +164,7 @@
     }
 
     function formatHeroImageUrl(response) {
-      const url = $.cloudinary.url(response.data.image[cloudinaryIdKey], {
+      const url = $.cloudinary.url(response.data.public_id, {
         width: 318,
         height: 318,
         crop: 'fill',

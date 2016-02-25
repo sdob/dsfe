@@ -72,8 +72,8 @@
       ids.forEach((id) => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
-          if (response && response.data.image && response.data.image.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+          if (response && response.data.image && response.data.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.public_id, {
               height: 60,
               width: 60,
               crop: 'fill',
@@ -94,8 +94,8 @@
       ids.forEach(id => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
-          if (response.data && response.data.image && response.data.image.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.image.public_id, {
+          if (response.data && response.data.image && response.data.public_id) {
+            const profileImageUrl = $.cloudinary.url(response.data.public_id, {
               height: 60,
               width: 60,
               crop: 'fill',
