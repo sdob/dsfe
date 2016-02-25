@@ -24,7 +24,7 @@
       // Upload the file
       file.upload = Upload.upload({
         data: { image: file },
-        url: `${dsimg.IMG_API_URL}/profile_image/`,
+        url: `${dsimg.API_URL}/users/${user.id}/profile_image/`,
       })
       .then((response) => {
         // Return us to the profile view, closing the modal instance

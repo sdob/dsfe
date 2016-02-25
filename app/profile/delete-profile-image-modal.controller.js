@@ -17,7 +17,7 @@
 
     function deleteProfileImage() {
       vm.isDeleting = true;
-      dsimg.deleteProfileImage(user.id)
+      dsimg.deleteUserProfileImage(user.id)
       .then((response) => {
         $timeout(() => {
           $uibModalInstance.close('deleted');
