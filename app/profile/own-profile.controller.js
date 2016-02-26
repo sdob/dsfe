@@ -37,22 +37,22 @@
         $timeout(() => {
           vm.user.imagesAdded = response.data;
           vm.user.imagesAdded.forEach((i) => {
+            i.url = $.cloudinary.url(i.public_id);
             //dsapi.getDivesite(i.divesiteID)
             let apiCall;
             let id;
-            // FIXME: ugly hack because dsimg doesn't return a site type
-            if (i.hasOwnProperty('divesiteID')) {
+            // FIXME: ugly hack because dsimg doesn't return a site type;
+            // ultimately we should be returning the site name with the
+            // image information
+            if (i.content_type === 8) {
               apiCall = dsapi.getDivesite;
-              id = i.divesiteID;
-            } else if (i.hasOwnProperty('slipwayID')) {
+            } else if (i.content_type === 11) {
               apiCall = dsapi.getSlipway;
-              id = i.slipwayID;
-            } else if (i.hasOwnProperty('compressorID')) {
+            } else if (i.content_type === 10) {
               apiCall = dsapi.getCompressor;
-              id = i.compressorID;
             }
 
-            apiCall(id)
+            apiCall(i.object_id)
             .then((response) => {
               i.divesiteName = response.data.name;
             });
@@ -80,21 +80,13 @@
           // background.
           vm.user.imagesAdded.splice(vm.user.imagesAdded.indexOf(image), 1);
           // Now contact DSIMG to perform the deletion
-          const id = image._id;
-          console.log('deleting image');
-          console.log(image);
-          // FIXME: ugly hack to get around the fact that dsimg doesn't
-          // return a site type (yet)
-          let apiCall;
-          if (image.hasOwnProperty('divesiteID')) {
-            apiCall = dsimg.deleteDivesiteImage;
-          } else if (image.hasOwnProperty('slipwayID')) {
-            apiCall = dsimg.deleteSlipwayImage;
-          } else if (image.hasOwnProperty('compressorID')) {
-            apiCall = dsimg.deleteCompressorImage;
-          }
+          const id = image.id;
+          const site = {
+            id: image.object_id,
+            type: dsimg.CONTENT_TYPES[image.content_type],
+          };
 
-          return apiCall(id)
+          return dsimg.deleteSiteImage(site, id)
           .then((response) => {
             console.log(response.data);
           });
