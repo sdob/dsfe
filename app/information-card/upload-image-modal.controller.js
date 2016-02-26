@@ -15,10 +15,10 @@
       vm.isUploading = true;
       const siteID = vm.site.id;
       const type = vm.site.type ? vm.site.type : 'divesite';
-      console.log(`uploading for site ${siteID}`);
+      const url = `${dsimg.API_URL}/${site.type}s/${site.id}/images/`;
       file.upload = Upload.upload({
         data: { image: file },
-        url: `${dsimg.IMG_API_URL}/${type}s/${siteID}`,
+        url,
       })
       .then(() => {
         $uibModalInstance.close('image-uploaded');
