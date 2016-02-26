@@ -72,7 +72,7 @@
       ids.forEach((id) => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
-          if (response && response.data.image && response.data.public_id) {
+          if (response && response.data && response.data.public_id) {
             const profileImageUrl = $.cloudinary.url(response.data.public_id, {
               height: 60,
               width: 60,
@@ -120,28 +120,16 @@
         if (images) {
           // Give each image a transformed URL
           images.forEach((image) => {
-            image.image.transformedUrl = $.cloudinary.url(image.image.public_id, {
+            image.url = $.cloudinary.url(image.public_id);
+            image.transformedUrl = $.cloudinary.url(image.public_id, {
               height: 80,
               width: 80,
               crop: 'fill',
             });
           });
-          // Merge data together so that we only have one 'image' object for
-          // each image. These have to sit in $scope so that the gallery controller
-          // can access them.
-          $scope.images = images.map(i => {
-            const image = Object.assign({}, i.image);
-            image.ownerID = i.ownerID;
-            image.createdAt = i.createdAt;
-            return image;
-          });
-          $scope.images.forEach((image) => {
-            dsapi.getUserMinimal(image.ownerID)
-            .then((response) => {
-              image.ownerName = response.data.name;
-              image.caption = `${image.ownerName}`;
-            });
-          });
+          $scope.images = images;
+          console.log('transformed images');
+          console.log(images);
         }
       });
     }
