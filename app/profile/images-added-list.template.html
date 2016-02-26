@@ -1,6 +1,6 @@
 <div ng-repeat="image in vm.user.imagesAdded | orderBy:'-'">
     <div class="profile-image-list__container">
-        <img ng-src="{{ image.image.url }}" class="profile-image-list__image" />
+        <img ng-src="{{ image.url }}" class="profile-image-list__image" />
         <div class="profile-image-list__actions">
             <a href
                 class="overlay-action-item link--undecorated"
