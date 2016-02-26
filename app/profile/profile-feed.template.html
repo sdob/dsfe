@@ -38,6 +38,7 @@
                                 {{ item.verb }}
                                 {{ item.verb === 'commented' ? 'on' : '' }}
                                 {{ item.verb === 'logged a dive' ? 'at' : '' }}
+                                {{ item.verb === 'added an image' ? 'to' : '' }}
                             </span>
 
                             <span ng-switch="item.target_type">
