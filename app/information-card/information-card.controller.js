@@ -55,6 +55,8 @@
 
     function bindValues() {
       vm.isAuthenticated = $auth.isAuthenticated;
+      // Ensure that 'images' is never undefined
+      vm.images = [];
       vm.isLoading = true;
       vm.site = $scope.site || {};
       vm.site.images = [];
@@ -127,7 +129,8 @@
               crop: 'fill',
             });
           });
-          $scope.images = images;
+          vm.images = images;
+          // $scope.images = images;
           console.log('transformed images');
           console.log(images);
         }
@@ -182,6 +185,7 @@
         controller: 'SetSiteHeaderImageModalController',
         controllerAs: 'vm',
         resolve: {
+          images: () => vm.images,
           site: () => vm.site,
         },
         templateUrl: 'information-card/set-site-header-image-modal.template.html',
