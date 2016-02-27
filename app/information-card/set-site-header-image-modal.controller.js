@@ -1,16 +1,40 @@
 (function() {
-  function SetSiteHeaderImageModalController($scope, $timeout, $uibModalInstance, Upload, site, IMG_API_URL) {
+  function SetSiteHeaderImageModalController($scope, $timeout, $uibModalInstance, Upload, dsimg, images, site, IMG_API_URL) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.addNewImage = addNewImage;
+      vm.clearHeaderImage = clearHeaderImage;
+      vm.images = images;
       vm.isUploading = false;
-      // console.log(site);
-      // console.log(IMG_API_URL);
-      vm.setSiteHeaderImage = setSiteHeaderImage;
+      // vm.setSiteHeaderImage = setSiteHeaderImage;
       vm.site = site;
+      console.log('setSiteHeader scope');
+      console.log($scope);
+      vm.select = select;
     }
 
+    function addNewImage() {
+    }
+
+    function clearHeaderImage() {
+    }
+
+    function select(image) {
+      console.log(image.id);
+      // POST this image's ID to the API to tell it to set
+      // this image as the header
+      dsimg.setSiteHeaderImage(site, image.id)
+      .then((response) => {
+        console.log(response.data);
+        $uibModalInstance.close('changed');
+      });
+      // console.log('selecting');
+      // vm.selectedImage = image;
+    }
+
+    /*
     function setSiteHeaderImage(file) {
       console.log(`I should upload and close the modal`);
       console.log(file);
@@ -18,13 +42,14 @@
       // show the user that we're uploading
       vm.isUploading = true;
 
-      console.log('uploading to');
-      console.log(`{IMG_API_URL}/${site.type}s/${site.id}/header`);
+      const url = `${API_URL}/${site.type}s/${site.id}/images/`;
+      console.log(`uploading to: ${url}`);
+      // console.log(`{IMG_API_URL}/${site.type}s/${site.id}/header`);
 
       // Upload the file
       file.upload = Upload.upload({
-        data: { image: file },
-        url: `${IMG_API_URL}/${site.type}s/${site.id}/header`,
+        data: { image: file, is_header_image: true },
+        url,
       }).then(() => {
         // On success, update UI and close us on out
         $timeout(() => {
@@ -39,6 +64,7 @@
         // TODO: handle error situations
       });
     }
+    */
   }
 
   SetSiteHeaderImageModalController.$inject = [
@@ -46,6 +72,8 @@
     '$timeout',
     '$uibModalInstance',
     'Upload',
+    'dsimg',
+    'images',
     'site',
     'IMG_API_URL',
   ];

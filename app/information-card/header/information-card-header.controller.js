@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function InformationCardHeaderController($scope, dsapi, informationCardService) {
+  function InformationCardHeaderController($scope, dsapi, dsimg, informationCardService) {
     const vm = this;
     activate();
 
@@ -14,10 +14,16 @@
         //informationCardService.getDivesiteHeaderImage($scope.site.id)
         //apiCall($scope.site.id)
       // }
-      setSiteHeaderImage();
+      getAndApplySiteHeaderImage();
 
       $scope.$on('header-image-changed', () => {
-        setSiteHeaderImage();
+        // The main information card handles the logic for changing
+        // the header image; we just listen and obediently make calls
+        // to DSAPI. (In the future, we should probably pass the image
+        // URL up the chain to avoid having to do this, but let's ship
+        // for now.)
+        console.log(`information card header heard 'header-image-changed`);
+        getAndApplySiteHeaderImage();
       });
     }
 
@@ -32,7 +38,21 @@
       return informationCardService.getDivesiteHeaderImage;
     }
 
-    function setSiteHeaderImage() {
+    function getAndApplySiteHeaderImage() {
+      dsimg.getSiteHeaderImage($scope.site)
+      .then((headerImage) => {
+        console.log('I found a header image!');
+        console.log(headerImage);
+        if (headerImage && headerImage.data && headerImage.data.public_id) {
+          vm.headerImageUrl = $.cloudinary.url(headerImage.data.public_id, {});
+          console.log('header image should be');
+          console.log(vm.headerImageUrl);
+          vm.backgroundStyle = {
+            background: `url(${vm.headerImageUrl}) center / cover`,
+          };
+        }
+      });
+      /*
       informationCardService.getSiteHeaderImage($scope.site)
       .then((imageUrl) => {
         console.log('something came back from dsimg');
@@ -45,12 +65,14 @@
           };
         }
       });
+      */
     }
   }
 
   InformationCardHeaderController.$inject = [
     '$scope',
     'dsapi',
+    'dsimg',
     'informationCardService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardHeaderController', InformationCardHeaderController);

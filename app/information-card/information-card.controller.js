@@ -130,9 +130,16 @@
             });
           });
           vm.images = images;
-          // $scope.images = images;
-          console.log('transformed images');
-          console.log(images);
+          // We also have to add the images to the wider scope, because
+          // the Lightbox gallery isn't implemented (AFAIK) to allow
+          // us to pass the variable in.
+          $scope.images = images;
+        }
+
+        // Look for an image tagged as the header for this site
+        const headerImage = vm.images.filter((i) => i.is_header_image)[0];
+        if (headerImage) {
+          vm.headerImage = headerImage;
         }
       });
     }
@@ -191,18 +198,14 @@
         templateUrl: 'information-card/set-site-header-image-modal.template.html',
       });
       instance.result.then((reason) => {
-        if (reason === 'uploaded') {
-          informationCardService.getSiteHeaderImage(vm.site)
-          .then((imageUrl) => {
-            if (imageUrl) {
-              setSiteHeaderImage(imageUrl);
-              // Tell header to refresh header image
-              $scope.$broadcast('header-image-changed');
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        console.log(`set site header image modal closed with reason: ${reason}`);
+        // We have changed the header image, either by selecting an
+        // existing image, by uploading a new one, or by clearing it
+        // (in other words, we haven't cancelled our of the modal)
+        if (reason === 'changed' || reason === 'cleared') {
+          // We don't handle the header image here; we delegate it to
+          // the header directive
+          $scope.$broadcast('header-image-changed');
         }
       });
     }
