@@ -15,20 +15,26 @@
     return {
       API_URL,
       CONTENT_TYPES,
+      clearSiteHeaderImage,
       deleteSiteImage,
       deleteUserProfileImage,
       getSiteHeaderImage,
       getSiteImages,
       getUserImages,
       getUserProfileImage,
+      setSiteHeaderImage,
     };
+
+    function clearSiteHeaderImage(site) {
+      return $http.delete(`${API_URL}/${site.type}s/${site.id}/header_image/`);
+    }
 
     function deleteUserProfileImage(id) {
       return $http.delete(`${API_URL}/users/${id}/profile_image/`);
     }
 
     function getSiteHeaderImage(site) {
-      return $http.get(`${API_URL}/${site.type}s/${site.id}/header/`);
+      return $http.get(`${API_URL}/${site.type}s/${site.id}/header_image/`);
     }
 
     function deleteSiteImage(site, id) {
@@ -45,6 +51,10 @@
 
     function getUserProfileImage(id) {
       return $http.get(`${API_URL}/users/${id}/profile_image/`);
+    }
+
+    function setSiteHeaderImage(site, id) {
+      return $http.post(`$API_URL}/${site.type}s/${site.id}/header_image/`);
     }
   }
 
