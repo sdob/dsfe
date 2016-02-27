@@ -54,7 +54,7 @@
     }
 
     function setSiteHeaderImage(site, id) {
-      return $http.post(`$API_URL}/${site.type}s/${site.id}/header_image/`);
+      return $http.post(`${API_URL}/${site.type}s/${site.id}/header_image/`, { id });
     }
   }
 
