@@ -1,25 +1,12 @@
 .set-divesite-header-image-modal {
 }
 
-.set-header-image-modal__action-item {
-  border: solid 1px rgba(0, 0, 0, 0.17);
-  height: 80px;
-  width: 80px;
-
-  a {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    width: 100%;
-  }
-}
-
 .set-header-image-modal__list {
   display: flex;
   flex-wrap: wrap;
 }
 .set-header-image-modal__list-item {
+  border: solid 2px transparent;
   margin: 4px 4px;
   padding: 4px;
   filter: brightness(0.5);
@@ -27,11 +14,24 @@
   &.selected {
     border: solid 2px $blue-700;
   }
-}
-.set-header-image-modal__preview-image {
-  height: 200px;
   img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.set-header-image-modal__action-item {
+  border: solid 2px rgba(0, 0, 0, 0.17);
+  height: 92px;
+  margin: 4px;
+  padding: 0;
+  width: 92px;
+
+  a {
+    align-items: center;
+    display: flex;
     height: 100%;
-    width: auto;
+    justify-content: center;
+    width: 100%;
   }
 }
