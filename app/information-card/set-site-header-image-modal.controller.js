@@ -50,6 +50,9 @@
           });
           // We're updating an inherited scope value here
           $scope.images.push(image);
+
+          // And while we're at it: make this new image the selected header
+          select(image);
         }
       });
     }
