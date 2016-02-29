@@ -11,14 +11,16 @@
         <div class="ds-modal__body">
             <div>
                 <ul class="list-unstyled set-header-image-modal__list">
-                    <li class="set-header-image-modal__list-item" ng-repeat="image in vm.images">
+                    <li class="set-header-image-modal__list-item"
+                        ng-class="{'selected': image.is_header_image}"
+                        ng-repeat="image in images">
                         <a href ng-click="vm.select(image)">
                             <img ng-src="{{ image.transformedUrl }}" />
                         </a>
                     </li>
                     <li class="set-header-image-modal__list-item set-header-image-modal__action-item ">
                         <!-- Button to add a new image -->
-                        <a class="overlay-action-item" ng-click="vm.addNewImage()" href>
+                        <a class="overlay-action-item" ng-click="vm.summonUploadImageModal()" href>
                             <span class="fa fa-fw fa-stack">
                                 <i class="fa fa-fw fa-stack-2x fa-circle background"></i>
                                 <i class="fa fa-fw fa-stack-1x fa-plus"></i>
@@ -27,7 +29,7 @@
                     </li>
                     <li class="set-header-image-modal__list-item set-header-image-modal__action-item">
                         <!-- Button to clear header -->
-                        <a class="overlay-action-item" ng-click="vm.clearHeaderImage()" href>
+                        <a class="overlay-action-item" ng-click="vm.clearSiteHeaderImage()" href>
                             <span class="fa fa-fw fa-stack">
                                 <i class="fa fa-fw fa-stack-2x fa-circle background"></i>
                                 <i class="fa fa-fw fa-stack-1x fa-minus"></i>

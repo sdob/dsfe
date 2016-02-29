@@ -1,24 +1,57 @@
 (function() {
-  function SetSiteHeaderImageModalController($scope, $timeout, $uibModalInstance, Upload, dsimg, images, site, IMG_API_URL) {
+  function SetSiteHeaderImageModalController($rootScope, $scope, $timeout, $uibModal, $uibModalInstance, Upload, dsimg, images, site, IMG_API_URL) {
     const vm = this;
     activate();
 
     function activate() {
-      vm.addNewImage = addNewImage;
-      vm.clearHeaderImage = clearHeaderImage;
-      vm.images = images;
+      vm.summonUploadImageModal = summonUploadImageModal;
+      vm.clearSiteHeaderImage = clearSiteHeaderImage;
+      // vm.images = images;
+      console.log(images);
       vm.isUploading = false;
       // vm.setSiteHeaderImage = setSiteHeaderImage;
       vm.site = site;
       console.log('setSiteHeader scope');
       console.log($scope);
       vm.select = select;
+      $scope.images = images;
+      console.log($scope.images);
     }
 
-    function addNewImage() {
+    function clearSiteHeaderImage() {
+      dsimg.clearSiteHeaderImage(site)
+      .then((response) => {
+        $scope.images.forEach((i) => {
+          i.is_header_image = false;
+        });
+      });
+      $rootScope.$broadcast('header-image-changed');
     }
 
-    function clearHeaderImage() {
+    function summonUploadImageModal() {
+      const instance = $uibModal.open({
+        controller: 'UploadImageModalController',
+        controllerAs: 'vm',
+        resolve: {
+          site: () => vm.site,
+        },
+        templateUrl: 'information-card/upload-image-modal.template.html',
+      });
+      instance.result.then((val) => {
+        if (val.reason === 'uploaded') {
+          // If we've uploaded a new image, we want to add it to the
+          // set and flag it as selected
+          const image = val.image;
+          image.url = $.cloudinary.url(image.public_id);
+          image.transformedUrl = $.cloudinary.url(image.public_id, {
+            height: 80,
+            width: 80,
+            crop: 'fill',
+          });
+          // We're updating an inherited scope value here
+          $scope.images.push(image);
+        }
+      });
     }
 
     function select(image) {
@@ -28,48 +61,25 @@
       dsimg.setSiteHeaderImage(site, image.id)
       .then((response) => {
         console.log(response.data);
-        $uibModalInstance.close('changed');
-      });
-      // console.log('selecting');
-      // vm.selectedImage = image;
-    }
-
-    /*
-    function setSiteHeaderImage(file) {
-      console.log(`I should upload and close the modal`);
-      console.log(file);
-
-      // show the user that we're uploading
-      vm.isUploading = true;
-
-      const url = `${API_URL}/${site.type}s/${site.id}/images/`;
-      console.log(`uploading to: ${url}`);
-      // console.log(`{IMG_API_URL}/${site.type}s/${site.id}/header`);
-
-      // Upload the file
-      file.upload = Upload.upload({
-        data: { image: file, is_header_image: true },
-        url,
-      }).then(() => {
-        // On success, update UI and close us on out
-        $timeout(() => {
-          console.log('finished uploading');
-          vm.isUploading = false;
-          $uibModalInstance.close('uploaded');
-        }, 200);
-      })
-      .then((response) => {
-      })
-      .catch((err) => {
-        // TODO: handle error situations
+        // We don't need to do a full refresh; we just need to indicate
+        // to the UI that this image is now the header
+        $scope.images.forEach((i) => {
+          i.is_header_image = false;
+        });
+        image.is_header_image = true;
+        // Modal doesn't seem to be attaching to information card as
+        // child: TODO why is this? Workaround: $broadcast from $rootScope
+        // instead.
+        $rootScope.$broadcast('header-image-changed');
       });
     }
-    */
   }
 
   SetSiteHeaderImageModalController.$inject = [
+    '$rootScope',
     '$scope',
     '$timeout',
+    '$uibModal',
     '$uibModalInstance',
     'Upload',
     'dsimg',

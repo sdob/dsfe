@@ -50,6 +50,11 @@
           vm.backgroundStyle = {
             background: `url(${vm.headerImageUrl}) center / cover`,
           };
+        } else {
+          console.log('header image appears to be nothing');
+          delete(vm.headerImageUrl);
+          delete(vm.backgroundStyle);
+          // vm.headerImageUrl = null;
         }
       });
       /*

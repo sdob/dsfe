@@ -219,10 +219,10 @@
         },
         templateUrl: 'information-card/upload-image-modal.template.html',
       });
-      instance.result.then((reason) => {
+      instance.result.then((val) => {
         // If the modal closed because we uploaded an image, then reload
         // the image list
-        if (reason === 'image-uploaded') {
+        if (val.reason === 'image-uploaded') {
           getSiteImages();
         }
       });
