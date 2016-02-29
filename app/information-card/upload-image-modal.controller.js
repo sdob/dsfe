@@ -20,8 +20,13 @@
         data: { image: file },
         url,
       })
-      .then(() => {
-        $uibModalInstance.close('image-uploaded');
+      .then((response) => {
+        console.log('response from upload');
+        console.log(response);
+        $uibModalInstance.close({
+          reason: 'uploaded',
+          image: response.data,
+        });
       })
       .catch((err) => {
         vm.isUploading = false;
