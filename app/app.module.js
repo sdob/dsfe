@@ -36,7 +36,9 @@
       console.log('$routeChangeStart');
     });
 
-    // Intercept $locationChangeStart events and close an existing modal instead
+    // Intercept $locationChangeStart events and close an existing modal instead.
+    // TODO: This isn't a great approach, because it means that we can't navigate
+    // out of a modal (any navigation triggers a $locationChangeStart).
     $rootScope.$on('$locationChangeStart', (event) => {
       event.preventDefault();
       const top = $uibModalStack.getTop();
