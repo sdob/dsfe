@@ -1,11 +1,12 @@
 (function() {
   'use strict';
 
-  function UploadImageModalController($uibModalInstance, Upload, dsimg, site) {
+  function UploadImageModalController($uibModalInstance, Upload, dsimg, modalService, site) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.dismiss = modalService.dismiss;
       vm.isUploading = false;
       vm.site = site;
       vm.submit = submit;
@@ -17,7 +18,10 @@
       const type = vm.site.type ? vm.site.type : 'divesite';
       const url = `${dsimg.API_URL}/${site.type}s/${site.id}/images/`;
       file.upload = Upload.upload({
-        data: { image: file },
+        data: {
+          caption: vm.caption,
+          image: file,
+        },
         url,
       })
       .then((response) => {
@@ -40,6 +44,7 @@
     '$uibModalInstance',
     'Upload',
     'dsimg',
+    'modalService',
     'site',
   ];
   angular.module('divesites.informationCard').controller('UploadImageModalController', UploadImageModalController);
