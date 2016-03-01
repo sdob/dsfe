@@ -25,8 +25,11 @@
     <div class="lightbox-image-container">
         <!-- caption -->
         <div class="lightbox-image-caption">
-            <p class="lightbox-image-caption__username">{{Lightbox.imageCaption}}</p>
-            <p class="lightbox-image-caption__created-at">{{ Lightbox.image.createdAt | date }}</p>
+            <p class="lightbox-image-caption__username">
+                {{ Lightbox.image.owner.name }}
+            </p>
+            <p class="lightbox-image-caption__created-at">{{ Lightbox.image.creation_date | date }}</p>
+            <p class="lightbox-image-caption__text">{{ Lightbox.image.caption }}</p>
         </div>
 
         <!-- image -->
