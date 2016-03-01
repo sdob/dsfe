@@ -1,6 +1,14 @@
 <div class="ds-modal"
     ng-class="{'ds-modal--is-working': vm.isSubmitting}">
     <modal-mask ng-show="vm.isSubmitting" message="Logging..."></modal-mask>
+    <div class="ds-modal__dismiss">
+        <a href class="overlay-action-item" ng-click="vm.dismiss()">
+            <span class="fa fa-stack">
+                <i class="fa fa-fw fa-stack-2x fa-circle background"></i>
+                <i class="fa fa-fw fa-stack-1x fa-times"></i>
+            </span>
+        </a>
+    </div>
     <div class="ds-modal__content">
         <div class="ds-modal__header">
             <h3 class="ds-modal__title">

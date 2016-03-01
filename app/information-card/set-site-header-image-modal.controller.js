@@ -1,19 +1,17 @@
 (function() {
-  function SetSiteHeaderImageModalController($rootScope, $scope, $timeout, $uibModal, $uibModalInstance, Upload, dsimg, images, site, IMG_API_URL) {
+  function SetSiteHeaderImageModalController($rootScope, $scope, $uibModal, $uibModalInstance, Upload, dsimg, images, modalService, site, IMG_API_URL) {
     const vm = this;
     activate();
 
     function activate() {
-      vm.summonUploadImageModal = summonUploadImageModal;
       vm.clearSiteHeaderImage = clearSiteHeaderImage;
-      // vm.images = images;
-      console.log(images);
+      vm.dismiss = modalService.dismiss;
+      vm.summonUploadImageModal = summonUploadImageModal;
       vm.isUploading = false;
-      // vm.setSiteHeaderImage = setSiteHeaderImage;
+      vm.select = select;
       vm.site = site;
       console.log('setSiteHeader scope');
       console.log($scope);
-      vm.select = select;
       $scope.images = images;
       console.log($scope.images);
     }
@@ -81,12 +79,12 @@
   SetSiteHeaderImageModalController.$inject = [
     '$rootScope',
     '$scope',
-    '$timeout',
     '$uibModal',
     '$uibModalInstance',
     'Upload',
     'dsimg',
     'images',
+    'modalService',
     'site',
     'IMG_API_URL',
   ];

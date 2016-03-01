@@ -1,12 +1,12 @@
 (function() {
   'use strict';
-  function LogDiveModalController($scope, $timeout, $uibModalInstance, dsapi, logDiveService, site, uiPreferencesService) {
+  function LogDiveModalController($scope, $timeout, $uibModalInstance, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const vm = this;
     activate();
 
     function activate() {
-      const dt = logDiveService.defaultDateAndTime();
       // Wire up functions
+      vm.dismiss = modalService.dismiss;
       vm.datepicker = {
         opened: false,
       };
@@ -17,6 +17,7 @@
       vm.site = site;
       vm.submit = submit;
 
+      const dt = logDiveService.defaultDateAndTime();
       vm.dive = {
         date: dt.date,
         site: vm.site,
@@ -81,6 +82,7 @@
     '$uibModalInstance',
     'dsapi',
     'logDiveService',
+    'modalService',
     'site',
     'uiPreferencesService',
   ];

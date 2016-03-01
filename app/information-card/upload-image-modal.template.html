@@ -2,6 +2,14 @@
     ng-class="{'ds-modal--is-working': vm.isUploading}"
     >
     <modal-mask ng-if="vm.isUploading" message="Uploading..."></modal-mask>
+    <div class="ds-modal__dismiss">
+        <a href class="overlay-action-item" ng-click="vm.dismiss()">
+            <span class="fa fa-stack">
+                <i class="fa fa-fw fa-stack-2x fa-circle background"></i>
+                <i class="fa fa-fw fa-stack-1x fa-times"></i>
+            </span>
+        </a>
+    </div>
     <div class="ds-modal__content">
         <div class="ds-modal__header">
             <h3 class="ds-modal__title">Add an image for <strong>{{ vm.site.name }}</strong></h3>
@@ -16,6 +24,11 @@
             ngf-thumbnail="vm.imageFile"
             style="height: 200px; max-width: 100%"
             />
+        </div>
+        <div class="form-group">
+            <label>Caption (optional)</label>
+            <textarea class="form-control" ng-model="vm.caption">
+            </textarea>
         </div>
         <div class="ds-form__submit-row"
             ng-cloak
