@@ -2,9 +2,10 @@
   color: #fff;
   .background {
     color: rgba(0, 0, 0, 0.32);
-    
+    transition: background 100ms;
   }
   &:hover {
+    color: #fff;
     .background {
       color: rgba(0,0, 0, 0.7);
     }
@@ -15,9 +16,10 @@
   color: #fff;
   .background {
     color: $blue-700;
-    
+    transition: color 100ms;
   }
   &:hover {
+    color: #fff;
     .background {
       color: darken($blue-700, 25%);
     }
