@@ -1,10 +1,12 @@
 /* Set our own styles for lightbox captions */
 .lightbox-image-caption {
+  background: rgba(0, 0, 0, 0.32);
   color: #fff;
   font-weight: inherit;
   // Move to the bottom
   top: initial;
   bottom: 0;
+  padding: 4px;
   text-shadow: none;
   span {
     background: transparent;
