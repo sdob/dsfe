@@ -151,10 +151,6 @@
 .information-card__comment-form,
 .information-card__dive {
   margin-bottom: 16px;
-  margin-left: 4px;
-  margin-right: 4px;
-  margin-bottom: 16px;
-  padding: 4px;
   position: relative; // to allow absolute child positioning
 }
 
@@ -167,9 +163,9 @@
 
 .information-card__dive-actions {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 10; // WHY?
+  top: 8px;
+  right: 8px;
+  z-index: 10; // TODO: WHY?
 }
 
 .information-card__dive-comment {
