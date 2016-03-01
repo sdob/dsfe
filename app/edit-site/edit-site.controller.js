@@ -73,14 +73,6 @@
           vm.checkAtLeastOneEntryIsSelected();
           // Set up map
           vm.map.center = vm.site.coords;
-        })
-        .then(() => dsimg.getDivesiteHeaderImage(vm.site.id))
-        .then((response) => {
-          // Handle image data from dsimg
-          if (response.data && response.data.image && response.data.image.url) {
-            vm.site.headerImageUrl = response.data.image.url;
-            console.log(vm.site.headerImageUrl);
-          }
         });
         // TODO: handle invalid/missing divesite IDs
       }
