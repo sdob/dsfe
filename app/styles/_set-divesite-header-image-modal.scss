@@ -9,8 +9,9 @@
   border: solid 2px transparent;
   margin: 4px 4px;
   padding: 4px;
-  filter: brightness(0.5);
-  -webkit-filter: brightness(0.5);
+  &:hover {
+    border: solid 2px rgba(0, 0, 0, 0.17);
+  }
   &.selected {
     border: solid 2px $blue-700;
   }
