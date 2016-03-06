@@ -34,6 +34,8 @@
         average_depth: dive.averageDepth,
         comment: dive.comment,
         divesite: vm.site.id,
+        air_temperature: dive.airTemperature,
+        water_temperature: dive.waterTemperature,
       };
       return request;
     }
@@ -60,7 +62,7 @@
       })
       .catch((err) => {
         vm.isSubmitting = false;
-        // Handle 4xx errors
+        // Handle 4xx (client) errors
         if (err.status >= 400 && err.status < 500) {
           console.error(err);
           Object.keys(err.data).forEach((k) => {
