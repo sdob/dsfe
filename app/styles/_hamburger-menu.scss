@@ -1,7 +1,7 @@
 .hamburger-menu__collapsible-menu {
   display: flex;
   flex-direction: column;
-  visibility: hidden;
+  visibility: collapse;
 }
 
 .hamburger-menu__collapsible-menu.opened {
@@ -83,6 +83,7 @@
   @include shadow-2dp;
   background: #fff;
   display: none;
+  margin-left: 1em;
 }
 
 .hamburger-menu__submenu.selected {
@@ -91,7 +92,10 @@
 
 .hamburger-menu__submenu-header {
   align-items: center;
+  background: $blue-700;
+  color: #fff;
   display: flex;
+  font-weight: 500;
   flex-direction: row;
   justify-content: flex-start;
 }
@@ -100,6 +104,7 @@
   font-size: 2em;
   margin: 0;
   margin-left: 0.5em;
+  padding: 0.2em 0;
 }
 
 .hamburger-submenu__content {
