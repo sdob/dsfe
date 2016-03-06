@@ -57,6 +57,7 @@
     color: #fff;
   }
   .background {
+    @include text-shadow-2dp;
     color: $blue-700;
   }
 }
