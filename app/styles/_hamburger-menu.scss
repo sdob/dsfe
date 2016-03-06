@@ -50,6 +50,7 @@
 
   color: #fff;
   pointer-events: auto;
+  transition: color 200ms;
 
   &:active,
   &:focus,
@@ -59,6 +60,7 @@
   .background {
     @include text-shadow-2dp;
     color: $blue-700;
+    transition: color 200ms;
   }
 }
 
