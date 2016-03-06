@@ -55,8 +55,8 @@
                                 {{ item.timestamp | date }}
                             </div>
                             <div ng-if="item.action_object.depth && item.action_object.duration">
-                                <span>{{ item.action_object.depth }} m</span>
-                                <span>{{ item.action_object.duration | duration }} min.</span>
+                                <span><i class="fa fa-fw fa-arrow-down"></i> {{ item.action_object.depth }} m</span>
+                                <span><i class="fa fa-fw fa-clock-o"></i>{{ item.action_object.duration | duration }} min.</span>
                             </div>
                         </div>
                     </div>
