@@ -1,0 +1,127 @@
+<div class="col-sm-6"> <!-- Date -->
+    <div class="form-group ds-form-group-lg"
+        ng-class="{'has-error': logDiveForm.date.$error.serverMessage}"
+        >
+        <label for="log-dive-date">Date</label>
+        <div class="input-group">
+            <input type="text" class="form-control ds-form-control"
+            name="date"
+            ng-change="logDiveForm.date.$error.serverMessage = null"
+            ng-model="vm.dive.date"
+            uib-datepicker-popup="dd MMM yyyy"
+            is-open="vm.datepicker.opened"
+            />
+            <span class="ds-form-control input-group-btn">
+                <button type="button" class="btn btn-default"
+                    ng-click="vm.openDatepicker()"
+                    >
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+        <span class="help-block" ng-show="false">Set this dive's date</span>
+        <div class="has-error">
+            <span class="help-block has-error" ng-show="true">
+                {{ logDiveForm.date.$error.serverMessage }}
+            </span>
+        </div>
+    </div>
+</div> <!-- Date -->
+<div class="col-sm-6"> <!-- Time in -->
+    <div class="form-group ds-form-group-lg">
+        <label for="log-dive-time">Time in
+            (<a href class="link--undecorated"
+                ng-click="vm.options.showMeridian = !vm.options.showMeridian">
+                <i class="fa fa-clock-o"></i>
+                {{ vm.options.showMeridian ? '12hr' : '24hr' }}
+            </a>)
+        </label>
+        <uib-timepicker
+            template-url="templates/timepicker.html"
+            ng-model="vm.dive.time"
+            show-meridian="vm.options.showMeridian"
+            ></uib-timepicker>
+        <span class="help-block">
+            Optional: add the dive's start time.
+        </span>
+    </div>
+</div> <!-- Time in --> 
+<div class="col-sm-4"> <!-- Max depth -->
+    <div class="form-group ds-form-group-lg has-feedback"
+        ng-class="{'has-error': !logDiveForm.maximumDepth.$valid && (logDiveForm.$submitted || logDiveForm.maximumDepth.$touched)}"
+        >
+        <label class="control-label">Max depth</label>
+        <input type="number" class="form-control ds-form-control"
+        name="maximumDepth" ng-model="vm.dive.maximumDepth"
+        required min="0.1"
+        />
+        <span class="form-control-feedback ld-feedback">m</span>
+        <span class="help-block"
+            ng-show="logDiveForm.maximumDepth.$valid || logDiveForm.maximumDepth.$error.required"
+            >Enter this dive's maximum depth.</span>
+        <span class="help-block"
+            ng-show="!logDiveForm.maximumDepth.$error.required && logDiveForm.maximumDepth.$error.min"
+            >
+            Depth must be greater than 0.
+        </span>
+    </div>
+</div> <!-- Max depth -->
+
+<div class="col-sm-4"> <!-- Duration -->
+    <div class="form-group ds-form-group-lg has-feedback"
+        ng-class="{'has-error': !logDiveForm.duration.$valid && (logDiveForm.$submitted || logDiveForm.duration.$touched)}"
+        >
+        <label class="control-label">Duration</label>
+        <input type="number"
+        class="form-control ds-form-control"
+        name="duration" ng-model="vm.dive.duration"
+        required
+        min="1"
+        />
+        <span class="form-control-feedback ld-feedback">
+            min.
+        </span>
+        <span class="help-block"
+            ng-show="logDiveForm.duration.$valid || logDiveForm.duration.$error.required"
+            >
+            Set this dive's duration (in minutes).
+        </span>
+        <span class="help-block"
+            ng-show="!logDiveForm.duration.$valid && logDiveForm.duration.$error.min"
+            >
+            Duration must be greater than 0.
+        </span>
+    </div>
+</div> <!-- Duration -->
+
+<div class="col-sm-4"> <!-- Average depth -->
+    <div class="form-group ds-form-group-lg has-feedback"
+        ng-class="{'has-error': !logDiveForm.averageDepth.$valid && (logDiveForm.$submitted || logDiveForm.averageDepth.$touched)}"
+        >
+        <label class="control-label">Average depth</label>
+        <input type="number" class="form-control ds-form-control"
+        name="averageDepth" ng-model="vm.dive.averageDepth"
+        required min="0.1"
+        />
+        <span class="form-control-feedback ld-feedback">m</span>
+        <span class="help-block"
+            ng-show="logDiveForm.maximumDepth.$valid || logDiveForm.maximumDepth.$error.required"
+            >Optional: enter this dive's average depth.</span>
+        <span class="help-block"
+            ng-show="!logDiveForm.maximumDepth.$error.required && logDiveForm.maximumDepth.$error.min"
+            >
+            Depth must be greater than 0.
+        </span>
+    </div>
+</div> <!-- Average depth -->
+
+<div class="col-xs-12">
+    <div class="form-group ds-form-group-lg">
+        <label>Comments</label>
+        <textarea class="form-control ds-textarea" name="comment" ng-model="vm.dive.comment" rows="4">
+        </textarea>
+        <span class="help-block">
+            Optional: leave a comment about this dive.
+        </span>
+    </div>
+</div>
