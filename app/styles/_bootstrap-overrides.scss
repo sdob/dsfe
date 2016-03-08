@@ -31,6 +31,8 @@ label {
   transform: translate(0, 0);
 }
 
+/* Override nav tab styling */
+
 .nav-tabs {
   border: 0;
 }
@@ -56,4 +58,21 @@ label {
 .nav-tabs > li.active > a:focus {
   border: 0;
   border-radius: 0;
+}
+
+/* Override Bootstrap's default modal behaviour. We use
+ * a lot of modals for data entry, so it makes sense to
+ * have them large. */
+
+.modal-dialog {
+  @media (min-width: $screen-sm-min) {
+    width: auto;
+    margin: 10px;
+  }
+  @media (min-width: $screen-md-min) {
+    &.modal-lg {
+      width: $modal-lg;
+      margin: 30px auto;
+    }
+  }
 }
