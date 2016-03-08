@@ -178,6 +178,7 @@
         resolve: {
           site: () => vm.site,
         },
+        size: 'lg',
         templateUrl: 'information-card/log-dive-modal.template.html',
       });
       instance.result.then((reason) => {
