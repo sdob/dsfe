@@ -45,6 +45,7 @@ module.exports = function(config) {
       'bower_components/showdown/dist/showdown.js',
       'bower_components/angular-markdown-filter/markdown.js',
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
+      'bower_components/bootstrap-select/dist/js/bootstrap-select.js',
       // endbower
       // Load main app module and constants first
       'app/app.module.js',
