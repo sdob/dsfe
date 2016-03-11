@@ -26,7 +26,7 @@
         </span>
     </div>
 </div>
-<div class="col-xs-6 col-sm-4">
+<div class="col-xs-6 col-sm-4 ">
     <div class="form-group ds-form-group-lg has-feedback">
         <label>Air out</label>
         <input type="number"
@@ -38,5 +38,58 @@
         <span class="help-block">
             Optional: enter your final tank pressure
         </span>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="row">
+        <label class="col-xs-12 ds-label--lg">Gas</label>
+    </div>
+    <div class="row">
+        <label class="col-xs-12 col-sm-4">
+            <input type="radio" name="gasMix" value="'air'" />
+            <span>Air</span>
+        </label>
+        <label class="col-xs-12 col-sm-4">
+            <input type="radio" name="gasMix" value="'nitrox'" />
+            <span>Nitrox</span>
+            <div>
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <span class="input-group-addon">O₂</span>
+                        <input class="form-control" type="number"
+                        ng-model="vm.dive.nitroxO2"
+                        />
+                    </div>
+                    <span class="form-control-feedback ld-feedback">%</span>
+                </div>
+            </div>
+        </label>
+        <label class="col-xs-12 col-sm-4">
+            <input type="radio" name="gasMix" value="'trimix'" />
+            <span>Trimix</span>
+            <div>
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <span class="input-group-addon">He</span>
+                        <input class="form-control" type="number"
+                        ng-model="vm.dive.trimixHe"
+                        />
+                    </div>
+                    <span class="form-control-feedback ld-feedback">%</span>
+                </div>
+            </div>
+            <div>
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <span class="input-group-addon">O₂</span>
+                        <input class="form-control" type="number"
+                        ng-model="vm.dive.trimixO2"
+                        />
+                    </div>
+                    <span class="form-control-feedback ld-feedback">%</span>
+                </div>
+            </div>
+        </label>
     </div>
 </div>
