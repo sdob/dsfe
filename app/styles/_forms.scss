@@ -42,6 +42,20 @@
   width: $ds-feedback-width;
 }
 
+.ds-label--lg {
+  font-size: 20px;
+}
+
 .ds-textarea {
   font-size: 20px;
+}
+
+.ds-complex-radio {
+  // Overrides for complex radio groups involving inputs
+  & > label {
+    display: flex;
+    & > input[type="radio"] {
+      position: relative;
+    }
+  }
 }
