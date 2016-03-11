@@ -11,58 +11,6 @@
 
         <divesite-details></divesite-details>
 
-        <section ng-if="false" class="edit-site__header-image">
-            <h3>Header image</h3>
-            <span class="help-block">
-                Optional: give this site a header image.
-            </span>
-            <div class="edit-site__header-image-container">
-                <div 
-                    ng-if="!!vm.site.headerImageUrl"
-                    style="height: 200px; position: relative;"
-                    ng-style="{'background': 'url(\'' + vm.site.headerImageUrl + '\') center / cover'}">
-                    <a
-                        href
-                        ng-click="vm.prepareToDeleteExistingHeaderImage()"
-                        style="position: absolute; top: 16px; right: 16px;">
-                        <span class="fa fa-stack fa-stack-lg overlay-action-item text-shadow-2dp">
-                            <i class="fa fa-stack-2x fa-circle background"></i>
-                            <i class="fa fa-stack-1x fa-times"></i>
-                        </span>
-                    </a>
-                </div>
-                <div
-                    ng-if="!vm.site.headerImageUrl"
-                    >
-                    <form>
-                        <input
-                        type="file"
-                        ng-model="vm.imgFile"
-                        ngf-select
-                        >
-                        <div class="thumb-preview-container"
-                            style="position: relative"
-                            ng-if="vm.imgFile"
-                            >
-                            <a
-                                href
-                                ng-click="vm.removeImageThumbnail()"
-                                style="position: absolute; top: 16px; right: 16px;"
-                                >
-                                <span class="fa fa-stack fa-stack-lg overlay-action-item">
-                                    <i class="fa fa-stack-2x fa-circle background"></i>
-                                    <i class="fa fa-stack-1x fa-times"></i>
-                                </span>
-                            </a>
-                            <img
-                            class="thumb-preview"
-                            ngf-thumbnail="vm.imgFile"
-                            >
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <ng-include src="'edit-site/submit-row.template.html'"></ng-include>
         </form>
     </div>
