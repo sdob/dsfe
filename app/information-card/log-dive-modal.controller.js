@@ -40,6 +40,7 @@
       if (vm.dive.gasMix === 'nitrox') {
         obj.o2 = vm.dive.nitroxO2;
       }
+
       return obj;
     }
 
@@ -94,7 +95,6 @@
       console.log('sending request');
       console.log(request);
       vm.isSubmitting = false;
-      /*
       dsapi.postDive(request)
       .then((response) => {
         $uibModalInstance.close('logged');
@@ -114,7 +114,6 @@
           console.error(err);
         }
       });
-      */
     }
   }
 
