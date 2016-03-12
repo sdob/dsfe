@@ -17,6 +17,7 @@
         <label>Air in</label>
         <input type="number"
         class="form-control ds-form-control"
+        min="0"
         name="airIn"
         ng-model="vm.dive.pressureIn"
         />
@@ -31,6 +32,7 @@
         <label>Air out</label>
         <input type="number"
         class="form-control ds-form-control"
+        min="0"
         name="airOut"
         ng-model="vm.dive.pressureOut"
         />
@@ -46,25 +48,35 @@
         <label class="col-xs-12 ds-label--lg">Gas</label>
     </div>
     <div class="row">
-        <label class="col-xs-12 col-sm-4">
-            <input type="radio" name="gasMix" value="'air'" />
+        <label class="col-xs-6 col-sm-4">
+            <input type="radio" name="gasMix" value="air"
+            ng-change="vm.setNitrox(false)"
+            ng-model="vm.dive.gasMix"
+            />
             <span>Air</span>
         </label>
-        <label class="col-xs-12 col-sm-4">
-            <input type="radio" name="gasMix" value="'nitrox'" />
+        <label class="col-xs-6 col-sm-4">
+            <input type="radio" name="gasMix" value="nitrox"
+            ng-model="vm.dive.gasMix"
+            ng-change="vm.setNitrox(true)"
+            />
             <span>Nitrox</span>
             <div>
                 <div class="form-group has-feedback">
                     <div class="input-group">
                         <span class="input-group-addon">O₂</span>
                         <input class="form-control" type="number"
+                        ng-focus="vm.setNitrox(true)"
                         ng-model="vm.dive.nitroxO2"
+                        min="21"
+                        max="100"
                         />
                     </div>
                     <span class="form-control-feedback ld-feedback">%</span>
                 </div>
             </div>
         </label>
+        <!--
         <label class="col-xs-12 col-sm-4">
             <input type="radio" name="gasMix" value="'trimix'" />
             <span>Trimix</span>
@@ -91,5 +103,6 @@
                 </div>
             </div>
         </label>
+        -->
     </div>
 </div>
