@@ -27,6 +27,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div ng-if="dive.cylinder_capacity || dive.air_in || dive.air_out"><!-- Tank stuff -->
+                </div>
+
+                <div ng-if="dive.air_temperature || dive.water_temperature"><!-- Temperature -->
+                    <div ng-if="dive.air_temperature">
+                        Air:
+                        {{ dive.air_temperature | number }} ° C
+                    </div>
+                    <div ng-if="dive.water_temperature">
+                        Water:
+                        {{ dive.water_temperature | number }} ° C
+                    </div>
+                </div><!-- Temperature -->
+
                 <div ng-if="dive.comment" class="comment__text profile-feed__comment-text">
                     {{ dive.comment }}
                 </div>
