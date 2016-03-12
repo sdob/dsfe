@@ -46,6 +46,7 @@
     function formatRequest(dive) {
       // Build the object that DSAPI expects
       const request = {
+        cylinder_capacity: vm.dive.cylinderCapacity,
         date: moment(dive.date).format('YYYY-MM-DD'),
         time: dive.time ? moment(dive.time).format('HH:mm') : undefined,
         duration: moment.duration(dive.duration, 'minutes'),
