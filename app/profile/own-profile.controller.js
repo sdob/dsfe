@@ -4,6 +4,10 @@
     const vm = this;
     activate();
 
+    const SLIPWAY_CTID = 15;
+    const DIVESITE_CTID = 17;
+    const COMPRESSOR_CTID = 18;
+
     function activate() {
       console.log('OwnProfileController.activate()');
       vm.editable = true;
@@ -30,6 +34,8 @@
               vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
         );
         $scope.$broadcast('user-loaded', vm.user);
+
+        // Get images this user has uploaded
         return dsimg.getUserImages(vm.user.id);
       })
       .then((response) => {
@@ -44,11 +50,11 @@
             // FIXME: ugly hack because dsimg doesn't return a site type;
             // ultimately we should be returning the site name with the
             // image information
-            if (i.content_type === 8) {
+            if (i.content_type === DIVESITE_CTID) {
               apiCall = dsapi.getDivesite;
-            } else if (i.content_type === 11) {
+            } else if (i.content_type === SLIPWAY_CTID) {
               apiCall = dsapi.getSlipway;
-            } else if (i.content_type === 10) {
+            } else if (i.content_type === COMPRESSOR_CTID) {
               apiCall = dsapi.getCompressor;
             }
 
