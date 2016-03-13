@@ -58,16 +58,37 @@
     </div>
 </div>
 <div class="col-sm-6">
-        </ul>
+</ul>
     </div>
 </div>
 <div class="col-sm-6">
     <div class="form-group ds-form-group-lg">
-        <label>Sea conditions</label>
-        <input type="text"
-        class="form-control ds-form-control"
-        name="weather"
-        ng-model="vm.dive.seaConditions"
-        />
+        <label>Wind</label>
+        <div>
+            <div class="btn-group log-dive__btn-group--wide">
+                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span ng-if="!vm.dive.wind.value">
+                        Select one...
+                    </span>
+                    <span ng-if="vm.dive.wind.value">
+                        <i class="wi wi-fw" ng-class="'wi-wind-beaufort-' + vm.dive.wind.value"></i> {{ vm.dive.wind.description }}
+                    </span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="wind in vm.winds" ng-click="vm.selectWind(wind)">
+                        <span>
+                            <i class="wi wi-fw" ng-class="'wi-wind-beaufort-' + wind.value"></i> {{ wind.description }}
+                        </span>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li ng-click="vm.selectWind(null)">
+                        <span>
+                            <i class="fa fa-fw fa-ban"></i> None
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
