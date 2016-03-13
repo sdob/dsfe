@@ -28,7 +28,20 @@
                     </div>
                 </div>
 
-                <div ng-if="dive.cylinder_capacity || dive.air_in || dive.air_out"><!-- Tank stuff -->
+                <div ng-if="dive.pressure_in || dive.pressure_out"><!-- Tank stuff -->
+                    <div ng-if="dive.cylinder_capacity">Cylinder: {{ dive.cylinder_capacity | number }} l.
+                        <span>
+                            {{ dive.gas_mix | gasMix }}
+                        </span>
+                    </div>
+                    <div ng-if="dive.pressure_in">
+                        <i class="fa fa-fw fa-battery-full fa-rotate-270"></i>
+                        {{ dive.pressure_in }}
+                    </div>
+                    <div ng-if="dive.pressure_out">
+                        <i class="fa fa-fw fa-battery-quarter fa-rotate-270"></i>
+                        {{ dive.pressure_out }}
+                    </div>
                 </div>
 
                 <div ng-if="dive.air_temperature || dive.water_temperature"><!-- Temperature -->
