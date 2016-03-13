@@ -12,6 +12,7 @@ module.exports = {
         '**/*.html',
         '*.html',
         'img/**/*',
+        'font/**/*',
       ],
     },
     {
