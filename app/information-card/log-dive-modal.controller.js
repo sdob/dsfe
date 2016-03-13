@@ -2,9 +2,18 @@
   'use strict';
   function LogDiveModalController($scope, $timeout, $uibModalInstance, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const vm = this;
+
+    const weathers = [
+      { type: 'clear', wiClass: 'wi-day-sunny', text: 'Clear' },
+      { type: 'clouds', wiClass: 'wi-cloud', text: 'Clouds' },
+      { type: 'rain', wiClass: 'wi-rain', text: 'Rain' },
+      { type: 'fog', wiClass: 'wi-fog', text: 'Fog' },
+    ];
+
     activate();
 
     function activate() {
+      vm.weathers = weathers;
       // Wire up functions
       vm.dismiss = modalService.dismiss;
       vm.datepicker = {
@@ -14,6 +23,7 @@
       vm.options = {
         showMeridian: uiPreferencesService.get().clock === '12hr',
       };
+      vm.selectWeather = selectWeather;
       vm.setNitrox = setNitrox;
       vm.site = site;
       vm.submit = submit;
@@ -25,11 +35,6 @@
         gasMix: 'air',
         site: vm.site,
       };
-    }
-
-    function ensureNitroxO2ContentIsDefined() {
-      console.log('ensuring nitroxO2 content is defined');
-      vm.dive.nitroxO2 = vm.dive.nitroxO2 || 21;
     }
 
     function formatGasMix() {
@@ -70,13 +75,22 @@
       vm.datepicker.opened = true;
     }
 
+    function selectWeather(weather) {
+      // console.log(weather);
+      if (weather) {
+        console.log(`selecting weather as ${weather.type}`);
+        vm.dive.weather = weather;
+      } else {
+        delete vm.dive.weather;
+      }
+    }
+
     function setNitrox(isNitrox) {
       // Set the gas mix to Nitrox when focusing the O2 input,
       // even if the user hasn't used the radio button
       if (isNitrox) {
         vm.dive.gasMix = 'nitrox';
         vm.dive.nitroxO2 = vm.dive.nitroxO2 || 21;
-        // vm.ensureNitroxO2ContentIsDefined();
       } else {
         delete vm.dive.nitroxO2;
       }

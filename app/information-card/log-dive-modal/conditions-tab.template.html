@@ -29,11 +29,36 @@
 <div class="col-sm-6">
     <div class="form-group ds-form-group-lg">
         <label>Weather</label>
-        <input type="text"
-        class="form-control ds-form-control"
-        name="weather"
-        ng-model="vm.dive.weather"
-        />
+        <div>
+            <div class="btn-group log-dive__btn-group--wide">
+                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span ng-if="!vm.dive.weather.type">
+                        Select one...
+                    </span>
+                    <span ng-if="vm.dive.weather.type">
+                        <i class="wi wi-fw" ng-class="vm.dive.weather.wiClass"></i> {{ vm.dive.weather.text }}
+                    </span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="weather in vm.weathers" ng-click="vm.selectWeather(weather)">
+                        <span>
+                            <i class="wi wi-fw" ng-class="weather.wiClass"></i> {{ weather.text }}
+                        </span>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li ng-click="vm.selectWeather(null)">
+                        <span>
+                            <i class="fa fa-fw fa-ban"></i> None
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-6">
+        </ul>
     </div>
 </div>
 <div class="col-sm-6">
