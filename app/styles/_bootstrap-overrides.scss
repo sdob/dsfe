@@ -76,3 +76,7 @@ label {
     }
   }
 }
+/* By default, .wi-fw is set to too large a value (1.4em) */
+.wi-fw {
+  width: 1.28571429em;
+}

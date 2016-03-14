@@ -178,6 +178,17 @@
   line-height: 1.42857143;
 }
 
+.profile-dive__icon {
+  font-size: 120%;
+}
+
+.profile-dive__stat-row {
+  margin-top: 8px;
+}
+
+.profile-dive__temperature-container {
+}
+
 .profile-image-list__actions {
   bottom: 16px;
   position: absolute;
@@ -265,7 +276,16 @@
   margin-right: 8px;
   padding-right: 0;
   text-align: right;
+  &.comment__image--none {
+    display: flex;
+    height: 60px !important;
+    width: 60px !important;
+    background: rgba(0, 0, 0, 0.17);
+    align-items: center;
+    justify-content: center;
+  }
 }
+
 
 .profile-feed__comment-summary {
 }
