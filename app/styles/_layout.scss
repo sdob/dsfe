@@ -8,3 +8,27 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+// Full-width dropdown selects
+.ds-btn-group--wide {
+  width: 100%;
+  button {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    width: 100%;
+  }
+  ul {
+    width: 100%;
+    li {
+      cursor: pointer;
+      padding-left: 12px;
+      transition: color 100ms, background 100ms;
+      &:hover {
+        color: #fff;
+        background: $blue-700;
+      }
+    }
+  }
+}
