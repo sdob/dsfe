@@ -53,14 +53,13 @@
                     <div ng-if="dive.air_temperature || dive.water_temperature"
                         class="profile-dive__temperature-container"><!-- Temperature -->
                         <div class="temperature__temperatures">
-                                <i class="wi wi-fw wi-thermometer profile-dive__icon"></i>
-                                <span ng-if="dive.air_temperature">
-                                    {{ dive.air_temperature | number }} ° C (air)
-                                </span>
-                                <span ng-if="dive.water_temperature">
-                                    {{ dive.water_temperature | number }} ° C (water)
-                                </span>
-                            </div>
+                            <i class="wi wi-fw wi-thermometer profile-dive__icon"></i>
+                            <span ng-if="dive.air_temperature">
+                                {{ dive.air_temperature | number }} ° C (air)
+                            </span>
+                            <span ng-if="dive.water_temperature">
+                                {{ dive.water_temperature | number }} ° C (water)
+                            </span>
                         </div>
                     </div><!-- Temperature -->
 
