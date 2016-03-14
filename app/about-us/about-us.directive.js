@@ -1,7 +1,7 @@
 (function() {
   function aboutUs() {
     return {
-      templateUrl: 'about-us/about-us.html',
+      templateUrl: 'about-us/about-us.template.html',
     };
   }
 
