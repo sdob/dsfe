@@ -45,6 +45,10 @@
         });
       },
 
+      getStatistics: () => {
+        return $http.get(`${API_URL}/statistics/`);
+      },
+
       getSlipway: (id) => {
         return $http.get(`${API_URL}/slipways/${id}/`);
       },

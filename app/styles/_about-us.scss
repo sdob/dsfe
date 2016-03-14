@@ -1,0 +1,11 @@
+.about-us__statistics-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  .statistics {
+    text-align: center;
+  }
+  .statistics__number {
+    font-size: 200%;
+  }
+}

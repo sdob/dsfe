@@ -1,8 +1,37 @@
 <div class="container">
     <div class="about-us__header">
         <h1 class="about-us__header-text">
-            About divesit.es
+            divesit.es has
         </h1>
+        <div class="about-us__statistics-container">
+            <div class="statistics">
+                <div class="statistics__number">{{ vm.statistics.users }}</div>
+                <div class="statistics__text">user{{ vm.statistics.users === 1 ? '' : 's' }}</div>
+            </div>
+            <span>
+                logging
+            </span>
+            <div class="statistics">
+                <div class="statistics__number">{{ vm.statistics.dives }}</div>
+                <div class="statistics__text">dive{{ vm.statistics.dives === 1 ? '' : 's' }}</div>
+            </div>
+            <span>
+                on
+            </span>
+            <div class="statistics">
+                <div class="statistics__number">{{ vm.statistics.divesites }}</div>
+                <div class="statistics__text">divesite{{ vm.statistics.divesites === 1 ? '' : 's' }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-us__content">
+        <section>
+            <h1>divesit.es is</h1>
+            <p>
+                a web application for finding places to go diving.
+            </p>
+        </section>
     </div>
 
 </div>

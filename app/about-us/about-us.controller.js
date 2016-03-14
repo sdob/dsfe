@@ -5,6 +5,11 @@
     activate();
 
     function activate() {
+      dsapi.getStatistics()
+      .then((response) => {
+        vm.statistics = response.data;
+      });
+
       dsapi.getDivesites()
       .then((response) => {
         vm.numberOfDivesites = response.data.length;
