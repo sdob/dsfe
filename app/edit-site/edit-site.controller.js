@@ -12,9 +12,11 @@
     dsapi,
     dsimg,
     editSiteService,
-    mapService
+    mapService,
+    seabedTypesService
   ) {
     const { formatRequest, formatResponse } = editSiteService;
+    const { seabedTypes } = seabedTypesService;
     const vm = this;
     activate();
 
@@ -25,10 +27,14 @@
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
       vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
       vm.removeImageThumbnail = removeImageThumbnail;
+      vm.selectSeabedType = selectSeabedType;
       vm.submit = submit;
       vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
+      vm.seabedTypes = seabedTypes;
       vm.updateMap = updateMap;
+
+      console.log(vm.seabedTypes);
 
       // Retrieve map settings
       vm.map = mapService.get();
@@ -82,12 +88,24 @@
       vm.atLeastOneEntryIsSelected = (vm.site.boatEntry || vm.site.shoreEntry);
     }
 
+    function handleSuccessfulSave() {
+      // On successful save, bring the user back to the map with a search string
+      // pointing to this site
+      // $window.history.back();
+      $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
+    }
+
     function prepareToDeleteExistingHeaderImage() {
       vm.site.headerImageUrl = null;
     }
 
     function removeImageThumbnail() {
       delete vm.imgFile;
+    }
+
+    function selectSeabedType(seabed) {
+      vm.site.seabed = seabed;
+      console.log(vm.site.seabed);
     }
 
     function submit() {
@@ -114,8 +132,11 @@
       // API call to use (create/update)
       const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
-      console.log(vm.siteTypeString);
-      console.log(vm.site);
+      // console.log(vm.siteTypeString);
+      // console.log(vm.site);
+
+      console.log(data);
+      vm.isSaving = false;
 
       apiCall(data)
       .then((response) => {
@@ -133,13 +154,6 @@
         console.log(err);
         // TODO: handle 4xx and 5xx errors
       });
-    }
-
-    function handleSuccessfulSave() {
-      // On successful save, bring the user back to the map with a search string
-      // pointing to this site
-      // $window.history.back();
-      $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
     }
 
     function truncateCoordinate(n) {
@@ -175,6 +189,7 @@
     'dsimg',
     'editSiteService',
     'mapService',
+    'seabedTypesService',
   ];
   angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
 })();

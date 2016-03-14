@@ -60,6 +60,28 @@
         </section>
     </section>
 
+    <section class="row"><!-- Other divesite details -->
+        <div class="col-xs-6">
+            <h2>Seabed</h2>
+            <div class="btn-group ds-btn-group--wide">
+                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span ng-if="!vm.site.seabed">
+                        Select one...
+                    </span>
+                    <span ng-if="vm.site.seabed">
+                        {{ vm.site.seabed | seabedDescription }}
+                    </span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="type in vm.seabedTypes" ng-click="vm.selectSeabedType(type)">
+                        {{ type.description }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <section class="row">
         <div class="col-xs-12">
             <h3>Description</h3>
