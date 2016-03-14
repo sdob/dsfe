@@ -32,13 +32,13 @@
                     </ul>
                 </div>
 
-                <ul id="js-tab-menu" class="nav nav-tabs information-card__tab-menu" role="tablist">
-                    <li role="presentation" class="information-card__tab-menu-item" ng-show="vm.site.type === 'divesite'">
+                <ul id="js-tab-menu" class="row nav nav-tabs information-card__tab-menu" role="tablist">
+                    <li role="presentation" class="col-xs-6 information-card__tab-menu-item" ng-show="vm.site.type === 'divesite'">
                         <a id="js-dive-list-tab" href aria-controls="dive-list" role="tab" data-toggle="tab" data-target="#js-dive-list">
                             Dives
                         </a>
                     </li>
-                    <li role="presentation" class="information-card__tab-menu-item">
+                    <li role="presentation" class="col-xs-6 information-card__tab-menu-item">
                         <a id="js-comment-list-tab" href aria-controls="comment-list" role="tab" data-toggle="tab" data-target="#js-comment-list">
                                 Comments ({{ site.comments.length }})
                         </a>
