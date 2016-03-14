@@ -274,57 +274,47 @@
 }
 
 .information-card__tab-menu {
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
   // font-size: 20px;
   font-weight: 500;
-  justify-content: space-between;
+  // justify-content: space-between;
 
-& > .information-card__tab-menu-item {
-  background: $blue-700;
-  display: flex;
-  &:not(:first-child) {
-    // margin-left: 16px;
-    margin-left: 2px;
-  }
-  &:not(:last-child) {
-    // margin-right: 16px;
-    margin-right: 2px;
-  }
-  width: 100%;
-  & > a {
-    color: #fff;
-    margin-right: 0;
-    padding: 8px 16px;
-    width: 100%;
-    text-align: center;
-    text-decoration: none;
-    transition: color 200ms, background 200ms;
-    &:active,
-    &:hover,
-    &:focus {
-      /* Bootstrap overrides */
-      background: darken($blue-700, 30%) !important;
-      color: #fff !important;
+  & > .information-card__tab-menu-item {
+    & > a {
+      background: $blue-700;
+      color: #fff;
+      margin-right: 0;
+      padding: 8px 16px;
+      width: 100%;
+      text-align: center;
       text-decoration: none;
+      transition: color 200ms, background 200ms;
+      &:active,
+      &:hover,
+      &:focus {
+        /* Bootstrap overrides */
+        background: darken($blue-700, 30%) !important;
+        color: #fff !important;
+        text-decoration: none;
+      }
     }
   }
-}
 
-.information-card__tab-menu-item.active {
-  background: #fff;
-  color: $blue-700;
-  a {
+  .information-card__tab-menu-item.active {
+    background: #fff;
     color: $blue-700;
-    &:active,
-    &:hover,
-    &:focus {
-      // We're overriding our own !important...
-      background: #fff !important;
-      color: $blue-700 !important;
+    a {
+      color: $blue-700;
+      &:active,
+      &:hover,
+      &:focus {
+        // We're overriding our own !important...
+        background: #fff !important;
+        color: $blue-700 !important;
+      }
     }
   }
-}
 }
 
 .information-card__title {
