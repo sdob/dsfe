@@ -14,46 +14,65 @@
                                     {{ dive.time | date:'HH:mm' }}
                                 </span>
                             </div>
-                            <div class="profile-dive__depth-and-time">
-                                <div class="profile-dive__max-depth">
-                                    <i class="fa fa-fw fa-arrow-down"></i>
-                                    <span> {{ dive.depth }} m </span>
-                                </div>
-                                <div class="profile-dive__duration">
-                                    <i class="fa fa-fw fa-clock-o"></i>
-                                    <span> {{ dive.duration | duration }} min.  </span>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                </div>
+                </div><!-- Header -->
 
-                <div ng-if="dive.pressure_in || dive.pressure_out"><!-- Tank stuff -->
-                    <div ng-if="dive.cylinder_capacity">Cylinder: {{ dive.cylinder_capacity | number }} l.
-                        <span>
-                            {{ dive.gas_mix | gasMix }}
+                <div class="ds-flex-row--wrap profile-dive__stat-row">
+                    <div class="profile-dive__depth-and-time">
+                        <div class="profile-dive__max-depth">
+                            <i class="fa fa-fw fa-arrow-down profile-dive__icon"></i>
+                            <span> {{ dive.depth }} m </span>
+                        </div>
+                        <div class="profile-dive__duration">
+                            <i class="fa fa-fw fa-clock-o profile-dive__icon"></i>
+                            <span> {{ dive.duration | duration }} min.  </span>
+                        </div>
+                    </div>
+
+                    <div ng-if="dive.pressure_in || dive.pressure_out"><!-- Tank stuff -->
+                        <span ng-if="dive.cylinder_capacity">
+                            <i class="fa fa-fw fa-battery-empty fa-rotate-270 profile-dive__icon"></i>
+                            {{ dive.cylinder_capacity | number }} l.
+                            <span>
+                                {{ dive.gas_mix | gasMix }}
+                            </span>
+                        </span>
+                        <span ng-if="dive.pressure_in">
+                            <i class="fa fa-fw fa-battery-full fa-rotate-270"></i>
+                            {{ dive.pressure_in }}
+                        </span>
+                        <span ng-if="dive.pressure_out">
+                            <i class="fa fa-fw fa-battery-quarter fa-rotate-270"></i>
+                            {{ dive.pressure_out }}
                         </span>
                     </div>
-                    <div ng-if="dive.pressure_in">
-                        <i class="fa fa-fw fa-battery-full fa-rotate-270"></i>
-                        {{ dive.pressure_in }}
-                    </div>
-                    <div ng-if="dive.pressure_out">
-                        <i class="fa fa-fw fa-battery-quarter fa-rotate-270"></i>
-                        {{ dive.pressure_out }}
-                    </div>
                 </div>
 
-                <div ng-if="dive.air_temperature || dive.water_temperature"><!-- Temperature -->
-                    <div ng-if="dive.air_temperature">
-                        Air:
-                        {{ dive.air_temperature | number }} ° C
+                <div class="ds-flex-row--wrap profile-dive__stat-row">
+                    <div ng-if="dive.air_temperature || dive.water_temperature"
+                        class="profile-dive__temperature-container"><!-- Temperature -->
+                        <div class="temperature__temperatures">
+                            <div ng-if="dive.air_temperature">
+                                <i class="wi wi-fw wi-thermometer profile-dive__icon"></i>
+                                {{ dive.air_temperature | number }} ° C (air)
+                                {{ dive.water_temperature | number }} ° C (water)
+                            </div>
+                        </div>
+                    </div><!-- Temperature -->
+
+                    <div ng-if="dive.weather || dive.wind"><!-- weather conditions -->
+                        <span ng-if="dive.weather">
+                            <i class="wi wi-fw wi-day-rain profile-dive__icon"></i>
+                            {{ dive.weather | weatherDescription }}
+                        </span>
+                        <span ng-if="dive.wind">
+                            <i class="wi wi-fw wi-strong-wind profile-dive__icon"></i>
+                            {{ dive.wind | windLevel }}
+                        </span>
                     </div>
-                    <div ng-if="dive.water_temperature">
-                        Water:
-                        {{ dive.water_temperature | number }} ° C
-                    </div>
-                </div><!-- Temperature -->
+
+                </div>
 
                 <div ng-if="dive.comment" class="comment__text profile-feed__comment-text">
                     {{ dive.comment }}
