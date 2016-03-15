@@ -4,9 +4,9 @@
     const vm = this;
     activate();
 
-    const SLIPWAY_CTID = 15;
-    const DIVESITE_CTID = 17;
-    const COMPRESSOR_CTID = 18;
+    const SLIPWAY_CTID = 10;
+    const DIVESITE_CTID = 8;
+    const COMPRESSOR_CTID = 11;
 
     function activate() {
       console.log('OwnProfileController.activate()');
