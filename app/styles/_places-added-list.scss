@@ -1,3 +1,26 @@
+.places-added__filter-link {
+  &.disabled {
+    img {
+      filter: opacity(50%);
+    }
+  }
+}
+.places-added__header-image {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  max-height: 60px;
+  max-width: 60px;
+  &.disabled {
+  }
+}
+
+.places-added__header-row {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
 .places-added__item {
   margin-top: 16px;
   margin-bottom: 16px;
