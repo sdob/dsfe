@@ -40,6 +40,7 @@
       })
       .then((response) => {
         console.log(`response from dsimg: ${response.data.length}`);
+        console.log(response.data);
         $timeout(() => {
           vm.user.imagesAdded = response.data;
           vm.user.imagesAdded.forEach((i) => {
@@ -50,11 +51,11 @@
             // FIXME: ugly hack because dsimg doesn't return a site type;
             // ultimately we should be returning the site name with the
             // image information
-            if (i.content_type === DIVESITE_CTID) {
+            if (i.content_type_model === 'divesite') {
               apiCall = dsapi.getDivesite;
-            } else if (i.content_type === SLIPWAY_CTID) {
+            } else if (i.content_type_model === 'slipway') {
               apiCall = dsapi.getSlipway;
-            } else if (i.content_type === COMPRESSOR_CTID) {
+            } else if (i.content_type_model === 'compressor') {
               apiCall = dsapi.getCompressor;
             }
 
@@ -89,7 +90,7 @@
           const id = image.id;
           const site = {
             id: image.object_id,
-            type: dsimg.CONTENT_TYPES[image.content_type],
+            type: image.content_type_model,
           };
 
           return dsimg.deleteSiteImage(site, id)

@@ -3,18 +3,8 @@
 
   function dsimgService($http, API_URL) {
 
-    /* These are potentially subject to change if there's a
-     * major rewrite of the API.
-     */
-    const CONTENT_TYPES = {
-      8: 'divesite',
-      10: 'compressor',
-      11: 'slipway',
-    };
-
     return {
       API_URL,
-      CONTENT_TYPES,
       clearSiteHeaderImage,
       deleteSiteImage,
       deleteUserProfileImage,
