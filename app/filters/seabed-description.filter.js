@@ -3,8 +3,8 @@
 
   function seabedDescription(seabedTypesService) {
     const { seabedTypes } = seabedTypesService;
-    return (s) => {
-      const seabed = seabedTypes.filter(x => x.value === s.value);
+    return (value) => {
+      const seabed = seabedTypes.filter(x => x.value === value);
       if (seabed.length) {
         return seabed[0].description;
       }

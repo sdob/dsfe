@@ -132,11 +132,7 @@
       // API call to use (create/update)
       const apiCall = editSiteService.selectSubmissionApiCall($routeParams.id);
 
-      // console.log(vm.siteTypeString);
-      // console.log(vm.site);
-
       console.log(data);
-      vm.isSaving = false;
 
       apiCall(data)
       .then((response) => {

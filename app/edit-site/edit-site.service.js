@@ -40,11 +40,6 @@
       delete obj.boatEntry;
       delete obj.shoreEntry;
 
-      if (obj.seabed) {
-        obj.bottom_type = obj.seabed.value;
-        delete obj.seabed;
-      }
-
       return obj;
     }
 

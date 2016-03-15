@@ -74,8 +74,18 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="type in vm.seabedTypes" ng-click="vm.selectSeabedType(type)">
-                        {{ type.description }}
+                    <li ng-repeat="type in vm.seabedTypes" ng-click="vm.selectSeabedType(type.value)">
+                        <span>
+                            {{ type.description }}
+                        </span>
+                    </li>
+                    <li ng-click="vm.selectSeabedType(null)">
+                        <span>
+                            <i class="fa fa-ban"></i>
+                        </span>
+                        <span>
+                            None
+                        </span>
                     </li>
                 </ul>
             </div>

@@ -10,6 +10,7 @@
                 <div ng-if="vm.site.type === 'divesite'">
                     <ng-include src="'information-card/site-level.template.html'"></ng-include>
                     <ng-include src="'information-card/site-entries.template.html'"></ng-include>
+                    <ng-include ng-if="vm.site.seabed" src="'information-card/seabed.template.html'"></ng-include>
                     <information-card-charts></information-card-charts>
                     <nearby-slipways slipways="site.nearbySlipways"></nearby-slipways>
                 </div>
