@@ -1,7 +1,26 @@
+.about-us__header,
+.about-us__content {
+  // Bump up default font-size
+  font-size: 20px;
+}
+
+.about-us__smalltext {
+  font-size: 14px;
+}
+
+.about-us__column-image {
+  display: block;
+  max-width: 80px;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
 .about-us__statistics-container {
   align-items: center;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 10px;
   .statistics {
     text-align: center;
   }

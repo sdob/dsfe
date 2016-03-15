@@ -1,28 +1,5 @@
 <div class="container">
     <div class="about-us__header">
-        <h1 class="about-us__header-text">
-            divesit.es has
-        </h1>
-        <div class="about-us__statistics-container">
-            <div class="statistics">
-                <div class="statistics__number">{{ vm.statistics.users }}</div>
-                <div class="statistics__text">user{{ vm.statistics.users === 1 ? '' : 's' }}</div>
-            </div>
-            <span>
-                logging
-            </span>
-            <div class="statistics">
-                <div class="statistics__number">{{ vm.statistics.dives }}</div>
-                <div class="statistics__text">dive{{ vm.statistics.dives === 1 ? '' : 's' }}</div>
-            </div>
-            <span>
-                on
-            </span>
-            <div class="statistics">
-                <div class="statistics__number">{{ vm.statistics.divesites }}</div>
-                <div class="statistics__text">divesite{{ vm.statistics.divesites === 1 ? '' : 's' }}</div>
-            </div>
-        </div>
     </div>
 
     <div class="about-us__content">
@@ -30,8 +7,89 @@
             <h1>divesit.es is</h1>
             <p>
                 a web application for finding places to go diving.
+                You look at the map and click on things, and then you find
+                out about them.
+            </p>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div>
+                        <img class="about-us__column-image" src="/img/divesite.svg" />
+                    </div>
+                    <p class="about-us__smalltext">
+                        This is a <strong>divesite</strong>, where people go diving.
+                        This is usually done in water, but sometimes plans go awry.
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <div>
+                        <img class="about-us__column-image" src="/img/slipway.svg" />
+                    </div>
+                    <p class="about-us__smalltext">
+                        This is a <strong>slipway</strong>, where people launch boats.
+                        The fat end goes in first, just like in the picture. You see? It's
+                        helpful!
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <div>
+                        <img class="about-us__column-image" src="/img/compressor.svg" />
+                    </div>
+                    <p class="about-us__smalltext">
+                        This is a <strong>compressor</strong>, where people fill tanks.
+                        That's about all there is to say about compressors.
+                    </p>
+                </div>
+            </div>
+            <p>
             </p>
         </section>
+        <section>
+            <h1 class="about-us__header-text">
+                Some statistics
+            </h1>
+            <p>
+                It looks like we've got
+            </p>
+            <div class="about-us__statistics-container">
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.users }}</div>
+                    <div class="statistics__text">user{{ vm.statistics.users === 1 ? '' : 's' }}</div>
+                </div>
+                <p>
+                    logging
+                </p>
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.dives }}</div>
+                    <div class="statistics__text">dive{{ vm.statistics.dives === 1 ? '' : 's' }}</div>
+                </div>
+                <span>
+                    totalling
+                </span>
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.total_hours_underwater }}</div>
+                    <div class="statistics__text">hour{{ vm.statistics.total_hours_underwater === 1 ? '' : 's' }} underwater</div>
+                </div>
+            </div>
+            <p>Not too shabby. Here are some more statistics. divesit.es users have contributed</p>
+            <div class="about-us__statistics-container">
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.divesites }}</div>
+                    <div class="statistics__text">divesite{{ vm.statistics.divesites === 1 ? '' : 's' }}</div>
+                </div>
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.slipways }}</div>
+                    <div class="statistics__text">slipway{{ vm.statistics.slipways === 1 ? '' : 's' }}</div>
+                </div>
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.compressors }}</div>
+                    <div class="statistics__text">compressor{{ vm.statistics.compressors === 1 ? '' : 's' }}</div>
+                </div>
+                <div class="statistics">
+                    <div class="statistics__number">{{ vm.statistics.images }}</div>
+                    <div class="statistics__text">image{{ vm.statistics.images === 1 ? '' : 's' }}</div>
+                </div>
+            </div>
+            <p>User-generated content FTW.</p>
+        </section>
     </div>
-
 </div>
