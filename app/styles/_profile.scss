@@ -355,7 +355,7 @@
     }
     text-align: center;
     transition: color 200ms, background 200ms;
-    @media (min-width: $screen-md-min) {
+    @media (min-width: $screen-sm-min) {
       padding: 0px 16px;
       text-align: left;
     }
