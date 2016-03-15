@@ -39,6 +39,7 @@
         $timeout(() => {
           vm.user.imagesAdded = response.data;
           vm.user.imagesAdded.forEach((i) => {
+            i.url = $.cloudinary.url(i.public_id);
             let apiCall;
             let id;
             // FIXME: ugly hack because dsimg doesn't return a site type
@@ -53,6 +54,10 @@
               id = i.object_id;
             }
 
+            console.log(`I'm looking for an image`);
+            console.log(i);
+            console.log(apiCall);
+
             if (!apiCall) {
               console.error(`I was expecting apiCall to be defined, but it isn't`);
               console.error(i);
@@ -62,7 +67,11 @@
             //dsapi.getDivesite(i.divesiteID)
             apiCall(id)
             .then((response) => {
+              console.log('response came back');
+              console.log(response);
+              console.log(response.data);
               i.divesiteName = response.data.name;
+              console.log(i);
             });
           });
         });
