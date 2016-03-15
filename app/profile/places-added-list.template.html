@@ -1,5 +1,43 @@
 <section class="profile-places-added">
-    <div ng-repeat="place in vm.user.placesAdded | orderBy:'-creation_date'" class="row">
+    <div class="row places-added__header-row">
+        <div class="col-xs-4">
+            <div class="row">
+                <a href class="places-added__filter-link" ng-class="{'disabled': !vm.visibility.divesite}" ng-click="vm.toggleVisibility('divesite')">
+                    <div class="col-xs-12">
+                        <img class="places-added__header-image" src="/img/divesite_circular.svg" />
+                    </div>
+                    <div class="col-xs-12">
+                        Divesites
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="row">
+                <a href class="places-added__filter-link" ng-class="{'disabled': !vm.visibility.slipway}" ng-click="vm.toggleVisibility('slipway')">
+                    <div class="col-xs-12">
+                        <img class="places-added__header-image" src="/img/slipway_circular.svg" />
+                    </div>
+                    <div class="col-xs-12">
+                        Slipways
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="row">
+                <a href class="places-added__filter-link" ng-class="{'disabled': !vm.visibility.compressor}" ng-click="vm.toggleVisibility('compressor')">
+                    <div class="col-xs-12">
+                        <img class="places-added__header-image" src="/img/compressor_circular.svg" />
+                    </div>
+                    <div class="col-xs-12">
+                        Compressors
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-show="vm.visibility[place.type]" ng-repeat="place in vm.user.placesAdded | orderBy:'-creation_date'" class="row">
         <div class="col-xs-12">
             <div class="profile-feed__item">
                 <div class="profile-feed__comment-header">

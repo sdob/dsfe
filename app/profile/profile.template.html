@@ -26,7 +26,7 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="js-profile-places-tab">
-                    <places-added-list ng-if="vm.user.placesAdded.length"></places-added-list>
+                    <places-added-list ng-if="vm.user.placesAdded.length" user="vm.user"></places-added-list>
                     <div ng-if="!vm.user.placesAdded.length" class="profile__no-places-added">
                         <i class="fa fa-fw fa-frown-o"></i>
                         Nothing yet!

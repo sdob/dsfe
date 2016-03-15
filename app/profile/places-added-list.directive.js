@@ -3,6 +3,11 @@
 
   function placesAddedList() {
     return {
+      controller: 'PlacesAddedListController',
+      controllerAs: 'vm',
+      scope: {
+        user: '=',
+      },
       templateUrl: 'profile/places-added-list.template.html',
     };
   }
