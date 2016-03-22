@@ -14,13 +14,11 @@
     activate();
 
     function activate() {
-      vm.toggleFullscreen = toggleFullscreen;
+      // Set bindable values
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.signOut = signOut;
       vm.summonLoginModal = summonLoginModal;
-      $document.bind('fullscreenchange', () => {
-        vm.isFullscreen = $(document).fullScreen();
-      });
+      vm.toggleFullscreen = toggleFullscreen;
 
       // Try and download a thumbnail image if we have a user ID
       if (localStorageService.get('user')) {
@@ -30,6 +28,11 @@
           vm.userProfileThumbnailImage = url;
         });
       }
+
+      // Listen for fullscreen mode changes
+      $document.bind('fullscreenchange', () => {
+        vm.isFullscreen = $(document).fullScreen();
+      });
     }
 
     function formatDsimgResponse(response) {
