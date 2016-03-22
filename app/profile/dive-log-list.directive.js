@@ -3,9 +3,6 @@
   function diveLogList() {
     return {
       templateUrl: 'profile/dive-log-list.template.html',
-      link: (scope, elem, attrs, ctrl) => {
-        console.log(scope);
-      },
     };
   }
 
