@@ -91,7 +91,7 @@
       // is OK with losing their changes
       if (form.$dirty) {
         const modalInstance = $uibModal.open({
-          templateUrl: 'views/cancel-editing-modal.html',
+          templateUrl: 'templates/cancel-editing-modal.template.html',
           controller: 'CancelEditingModalController',
           controllerAs: 'vm',
           size: 'lg',
