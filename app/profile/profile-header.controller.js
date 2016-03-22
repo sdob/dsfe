@@ -31,11 +31,8 @@
           // Check whether this user is being followed by the viewer
           followService.userIsFollowing(vm.user)
           .then((result) => {
-            console.log(result);
-            isFollowing = result;
             // Then set a flag
-            vm.userIsFollowing = isFollowing;
-            console.log('is the user following? ' + vm.userIsFollowing);
+            vm.userIsFollowing = result;
             // Display the follow/unfollow button
             vm.hasLoadedFollowStatus = true;
           });
@@ -47,20 +44,21 @@
           // Put profile data into scope
           vm.user = profileService.formatResponseData(profile);
 
-          // Ensure that nothing is undefined
+          // Ensure that none of the sub-lists of places added is undefined
           vm.user.compressors = vm.user.compressors || [];
           vm.user.divesites = vm.user.divesites || [];
           vm.user.slipways = vm.user.slipways || [];
 
-          // Build a 'contributions' list
+          // Build a 'places added' list
           vm.user.placesAdded = [].concat(
-            vm.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
-              vm.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x)),
-                vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
+            vm.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x))
+          )
+          .concat(
+            vm.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x))
+          )
+          .concat(
+            vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
           );
-
-          //console.log(vm.user.placesAdded);
-          console.log($scope);
 
           // Look for a profile image
           return dsimg.getUserProfileImage(profile.id);
@@ -79,8 +77,7 @@
           }, 0);
         })
         .catch((err) => {
-          // On failure (including 404) jus tmake sure that
-          // the UI is clean
+          // On failure (including 404) just make sure that the UI is clean
           console.error(err);
           $timeout(() => {
             vm.dsimgHasResponded = true;
@@ -92,12 +89,23 @@
     function follow() {
       dsactivity.followUser(vm.user.id)
       .then((response) => {
-        console.log(response.data);
-        vm.userIsFollowing = true; // User can't follow any more
+        // The viewing user is now following this profile's user
+        vm.userIsFollowing = true;
       })
       .catch((err) => {
         console.error(err);
       });
+    }
+
+    function formatHeroImageUrl(response) {
+      const url = $.cloudinary.url(response.data.public_id, {
+        width: 318,
+        height: 318,
+        crop: 'fill',
+      });
+      console.log('formatted hero image:');
+      console.log(url);
+      return url;
     }
 
     function summonDeleteProfileImageModal() {
@@ -121,16 +129,6 @@
       });
     }
 
-    function unfollow() {
-      dsactivity.unfollowUser(vm.user.id)
-      .then((response) => {
-        vm.userIsFollowing = false;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
     function summonImageUploadModal() {
       // Summon a modal dialog to allow the user to upload a new image
       const instance = $uibModal.open({
@@ -142,17 +140,15 @@
         },
         size: 'sm',
       });
+
+      // When the modal dialog closes, if the user uploaded an image,
+      // update their profile image
       instance.result.then((reason) => {
-        console.log(`modal dismissed with reason: ${reason}`);
         if (reason === 'uploaded') {
           dsimg.getUserProfileImage(vm.user.id)
           .then((response) => {
-            console.log('received response from dsimg');
-            console.log(response.data);
             const url = formatHeroImageUrl(response);
             $timeout(() => {
-              console.log('updating vm.profileImageUrl');
-              console.log(url);
               vm.profileImageUrl = url;
             }, 0);
           })
@@ -163,15 +159,15 @@
       });
     }
 
-    function formatHeroImageUrl(response) {
-      const url = $.cloudinary.url(response.data.public_id, {
-        width: 318,
-        height: 318,
-        crop: 'fill',
+    function unfollow() {
+      dsactivity.unfollowUser(vm.user.id)
+      .then((response) => {
+        // The viewing user is now not following this profile's user
+        vm.userIsFollowing = false;
+      })
+      .catch((err) => {
+        console.error(err);
       });
-      console.log('formatted hero image:');
-      console.log(url);
-      return url;
     }
   }
 
