@@ -45,9 +45,7 @@
           vm.user.imagesAdded = response.data;
           vm.user.imagesAdded.forEach((i) => {
             i.url = $.cloudinary.url(i.public_id);
-            //dsapi.getDivesite(i.divesiteID)
             let apiCall;
-            let id;
             // FIXME: ugly hack because dsimg doesn't return a site type;
             // ultimately we should be returning the site name with the
             // image information
