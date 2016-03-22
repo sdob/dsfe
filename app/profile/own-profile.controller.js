@@ -21,48 +21,13 @@
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
-        vm.user.imagesAdded = [];
-        // Ensure that nothing is undefined
-        vm.user.compressors = vm.user.compressors || [];
-        vm.user.divesites = vm.user.divesites || [];
-        vm.user.slipways = vm.user.slipways || [];
-
-        // Build a 'contributions' list
-        vm.user.placesAdded = [].concat(
-          vm.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x)),
-            vm.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x)),
-              vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
-        );
-        $scope.$broadcast('user-loaded', vm.user);
+        vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
 
         // Get images this user has uploaded
         return dsimg.getUserImages(vm.user.id);
       })
       .then((response) => {
-        console.log(`response from dsimg: ${response.data.length}`);
-        console.log(response.data);
-        $timeout(() => {
-          vm.user.imagesAdded = response.data;
-          vm.user.imagesAdded.forEach((i) => {
-            i.url = $.cloudinary.url(i.public_id);
-            let apiCall;
-            // FIXME: ugly hack because dsimg doesn't return a site type;
-            // ultimately we should be returning the site name with the
-            // image information
-            if (i.content_type_model === 'divesite') {
-              apiCall = dsapi.getDivesite;
-            } else if (i.content_type_model === 'slipway') {
-              apiCall = dsapi.getSlipway;
-            } else if (i.content_type_model === 'compressor') {
-              apiCall = dsapi.getCompressor;
-            }
-
-            apiCall(i.object_id)
-            .then((response) => {
-              i.divesiteName = response.data.name;
-            });
-          });
-        });
+        vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
       })
       .catch((err) => {
         console.error(err);

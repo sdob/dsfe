@@ -44,21 +44,8 @@
           // Put profile data into scope
           vm.user = profileService.formatResponseData(profile);
 
-          // Ensure that none of the sub-lists of places added is undefined
-          vm.user.compressors = vm.user.compressors || [];
-          vm.user.divesites = vm.user.divesites || [];
-          vm.user.slipways = vm.user.slipways || [];
-
           // Build a 'places added' list
-          vm.user.placesAdded = [].concat(
-            vm.user.divesites.map((x) => Object.assign({ type: 'divesite' }, x))
-          )
-          .concat(
-            vm.user.compressors.map((x) => Object.assign({ type: 'compressor' }, x))
-          )
-          .concat(
-            vm.user.slipways.map((x) => Object.assign({ type: 'slipway' }, x))
-          );
+          vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
 
           // Look for a profile image
           return dsimg.getUserProfileImage(profile.id);
