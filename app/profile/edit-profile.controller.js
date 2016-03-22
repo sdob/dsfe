@@ -5,17 +5,14 @@
     activate();
 
     function activate() {
+      // Set bindable values
       vm.cancel = cancel;
-      vm.saveNewPassword = saveNewPassword;
       vm.saveProfile = saveProfile;
-      vm.cancelEditingPassword = cancelEditingPassword;
-      vm.startEditingPassword = startEditingPassword;
 
       const userId = localStorageService.get('user');
       dsapi.getOwnProfile()
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
-        console.log(vm.user);
       });
     }
 
@@ -36,17 +33,6 @@
       }
     }
 
-    function cancelEditingPassword() {
-      vm.isEditingPassword = false;
-      delete vm.newPassword1;
-      delete vm.newPassword2;
-    }
-
-    function saveNewPassword() {
-      console.log('saving new password');
-      vm.isEditingPassword = false;
-    }
-
     function saveProfile() {
       console.log(vm.user);
       dsapi.updateProfile(profileService.formatRequestData(vm.user))
@@ -57,10 +43,6 @@
       .catch((err) => {
         console.error(err);
       });
-    }
-
-    function startEditingPassword() {
-      vm.isEditingPassword = true;
     }
   }
 
