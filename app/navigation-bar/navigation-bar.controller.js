@@ -22,7 +22,7 @@
         vm.isFullscreen = $(document).fullScreen();
       });
 
-      // Try and download a thumbnail
+      // Try and download a thumbnail image if we have a user ID
       if (localStorageService.get('user')) {
         const userID = localStorageService.get('user');
         retrieveProfileThumbnailImage(userID)
@@ -32,18 +32,22 @@
       }
     }
 
+    function formatDsimgResponse(response) {
+      if (response.data && response.data.public_id) {
+        return $.cloudinary.url(response.data.public_id, {
+          height: 18,
+          width: 18,
+          crop: 'fill',
+          gravity: 'face',
+        });
+      }
+
+      return undefined;
+    }
+
     function retrieveProfileThumbnailImage(id) {
       return dsimg.getUserProfileImage(id)
-      .then((response) => {
-        if (response.data && response.data.public_id) {
-          return $.cloudinary.url(response.data.public_id, {
-            height: 18,
-            width: 18,
-            crop: 'fill',
-            gravity: 'face',
-          });
-        }
-      });
+      .then(formatDsimgResponse);
     }
 
     function toggleFullscreen() {
