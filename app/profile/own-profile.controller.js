@@ -22,6 +22,7 @@
       .then((response) => {
         vm.user = profileService.formatResponseData(response.data);
         vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
+        $scope.$broadcast('user-loaded', vm.user);
 
         // Get images this user has uploaded
         return dsimg.getUserImages(vm.user.id);
