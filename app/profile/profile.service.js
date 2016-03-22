@@ -7,6 +7,8 @@
       clear,
       formatRequestData,
       formatResponseData,
+      formatUserProfileImagesAdded,
+      formatUserProfilePlacesAdded,
       getUserProfile,
     };
 
@@ -28,6 +30,50 @@
       obj.about_me = obj.aboutMe;
       delete obj.aboutMe;
       return obj;
+    }
+
+    function formatUserProfileImagesAdded(response) {
+      const images = response.data;
+      images.forEach((i) => {
+        i.url = $.cloudinary.url(i.public_id);
+        let apiCall;
+        const id = i.object_id;
+        if (i.content_type_model === 'divesite') {
+          apiCall = dsapi.getDivesite;
+        } else if (i.content_type_model === 'slipway') {
+          apiCall = dsapi.getSlipway;
+        } else if (i.content_type_model === 'compressor') {
+          apiCall = dsapi.getCompressor;
+        }
+
+        if (!(apiCall && id)) {
+          console.error(`Expected a content_type_model and object_id for an image but didn't find one`);
+          console.error(i);
+          return;
+        }
+
+        return apiCall(id)
+        .then((response) => {
+          i.divesiteName = response.data.name;
+        });
+      });
+
+      return images;
+    }
+
+    function formatUserProfilePlacesAdded(user) {
+      const divesites = user.divesites || [];
+      const compressors = user.compressors || [];
+      const slipways = user.slipways || [];
+      return [].concat(
+        divesites.map((x) => Object.assign({ type: 'divesite' }, x))
+      )
+      .concat(
+        compressors.map((x) => Object.assign({ type: 'compressor' }, x))
+      )
+      .concat(
+        slipways.map((x) => Object.assign({ type: 'slipway' }, x))
+      );
     }
 
     function getUserProfile(id) {
