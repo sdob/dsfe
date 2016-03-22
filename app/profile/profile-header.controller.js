@@ -23,9 +23,8 @@
       $scope.$on('user-loaded', (e, user) => {
         console.log('profile header heard user-loaded');
         vm.user = user;
-        const userId = vm.user.id;
 
-        // Check whether the viewer is logged in
+        // Check whether the viewer is logged in and allow them to follow/unfollow
         if (vm.isAuthenticated()) {
           let isFollowing = false;
           // Check whether this user is being followed by the viewer
@@ -38,26 +37,15 @@
           });
         }
 
-        // Retrieve the user profile
-        profileService.getUserProfile(userId)
-        .then((profile) => {
-          // Put profile data into scope
-          vm.user = profileService.formatResponseData(profile);
-
-          // Build a 'places added' list
-          vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
-
-          // Look for a profile image
-          return dsimg.getUserProfileImage(profile.id);
-        })
+        dsimg.getUserProfileImage(vm.user.id)
         .then((response) => {
-          // If we get a successful response, use it
+          // If we get a successful response, use it for the main profile image
           const url = $.cloudinary.url(response.data.public_id, {
             width: 318,
             height: 318,
             crop: 'fill',
           });
-          // Push this into the next tick
+          // Push UI update to the next tick
           $timeout(() => {
             vm.profileImageUrl = url;
             vm.dsimgHasResponded = true;
