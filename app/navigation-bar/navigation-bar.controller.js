@@ -23,7 +23,7 @@
       // Try and download a thumbnail image if we have a user ID
       if (localStorageService.get('user')) {
         const userID = localStorageService.get('user');
-        retrieveProfileThumbnailImage(userID)
+        retrieveAndFormatProfileThumbnailImage(userID)
         .then((url) => {
           vm.userProfileThumbnailImage = url;
         });
@@ -48,7 +48,7 @@
       return undefined;
     }
 
-    function retrieveProfileThumbnailImage(id) {
+    function retrieveAndFormatProfileThumbnailImage(id) {
       return dsimg.getUserProfileImage(id)
       .then(formatDsimgResponse);
     }
@@ -79,10 +79,9 @@
       });
       modalInstance.result.then((reason) => {
         if (reason === 'signed-in') {
-          // We've signed in successfully
-          console.log('navigation bar controller: signed in');
+          // We've signed in successfully: retrieve the user profile thumbnail
           const userID = localStorageService.get('user');
-          retrieveProfileThumbnailImage(userID)
+          retrieveAndFormatProfileThumbnailImage(userID)
           .then((url) => {
             vm.userProfileThumbnailImage = url;
           });
