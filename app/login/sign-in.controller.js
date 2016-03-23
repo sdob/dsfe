@@ -10,9 +10,6 @@
       vm.submit = submit;
       vm.user = {
       };
-
-      console.log('SignInController.activate()');
-      console.log($scope);
     }
 
     function goToProfile() {
@@ -22,35 +19,33 @@
     function loginFacebook() {
       // Set isLoggingIn status
       $scope.status.isLoggingIn = true;
-      console.log('trying to log in with facebook');
       $auth.authenticate('facebook')
       .then(() => {
         // Remove isLoggingIn status
         $scope.status.isLoggingIn = false;
-        console.log('finished authenticating w/ facebook');
       })
-      .then(retrieveAndStoreUserID())
+      .then(retrieveAndStoreUserID)
       .then(() => $scope.modalInstance.close('signed-in'))
       .then(goToProfile)
       .catch((err) => {
+        // TODO: explain to the user that we couldn't log in
         console.error(`couldn't log in with facebook`);
       });
     }
 
     function loginGoogle() {
-      console.log('trying to log in with google');
       // Set isLoggingIn status
       $scope.status.isLoggingIn = true;
       $auth.authenticate('google')
       .then(() => {
         // remove isLoggingIn status
         $scope.status.isLoggingIn = false;
-        console.log('finished authenticating with google');
       })
       .then(retrieveAndStoreUserID)
       .then(() => $scope.modalInstance.close('signed-in'))
       .then(goToProfile)
       .catch((err) => {
+        // TODO: explain to the user that we couldn't log in
         console.error(`couldn't log in with google`);
       });
     }
@@ -58,7 +53,6 @@
     function retrieveAndStoreUserID() {
       return dsapi.getOwnProfile()
       .then((response) => {
-        console.log('storing user ID');
         localStorageService.set('user', response.data.id);
         return response.data;
       });
