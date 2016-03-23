@@ -11,7 +11,19 @@
       console.log('InformationCardController.activate()');
 
       // Bind values to 'vm' that don't require a call to dsapi
-      bindValues();
+      vm.isAuthenticated = $auth.isAuthenticated;
+      // Ensure that 'images' is never undefined
+      vm.images = [];
+      vm.isLoading = true;
+      vm.site = $scope.site || {};
+      vm.site.images = [];
+      vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
+      vm.summonUploadImageModal = summonUploadImageModal;
+
+      // Depending on the site type, we may offer different functionality
+      if (vm.site.type === 'divesite') {
+        vm.summonLogDiveModal = summonLogDiveModal;
+      }
 
       // Retrieve comments for this site
       updateCommentList();
@@ -51,22 +63,6 @@
         // Check whether the user owns this site
         vm.userIsOwner = userIsOwner(vm.site);
       });
-    }
-
-    function bindValues() {
-      vm.isAuthenticated = $auth.isAuthenticated;
-      // Ensure that 'images' is never undefined
-      vm.images = [];
-      vm.isLoading = true;
-      vm.site = $scope.site || {};
-      vm.site.images = [];
-      vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
-      vm.summonUploadImageModal = summonUploadImageModal;
-
-      // Depending on the site type, we may offer different functionality
-      if (vm.site.type === 'divesite') {
-        vm.summonLogDiveModal = summonLogDiveModal;
-      }
     }
 
     function getCommenterProfileImages() {
@@ -114,13 +110,14 @@
     }
 
     function getSiteImages() {
+      // Retrieve uploaded images for this site
       dsimg.getSiteImages(vm.site)
       .then((response) => {
         const images = response.data;
         // This could be an empty response with a 204, so we need to check
         // that there's content in the response body
         if (images) {
-          // Give each image a transformed URL
+          // Give each image a transformed thumbnail URL
           images.forEach((image) => {
             image.url = $.cloudinary.url(image.public_id);
             image.transformedUrl = $.cloudinary.url(image.public_id, {
