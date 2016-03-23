@@ -5,6 +5,7 @@
     activate();
 
     function activate() {
+      vm.login = login;
       vm.loginFacebook = loginFacebook;
       vm.loginGoogle = loginGoogle;
       vm.submit = submit;
@@ -12,42 +13,27 @@
       };
     }
 
+    function closeModal() {
+      $scope.modalInstance.close('signed-in');
+    }
+
     function goToProfile() {
       $location.path('/me');
     }
 
-    function loginFacebook() {
-      // Set isLoggingIn status
-      $scope.status.isLoggingIn = true;
-      $auth.authenticate('facebook')
-      .then(() => {
-        // Remove isLoggingIn status
-        $scope.status.isLoggingIn = false;
-      })
-      .then(retrieveAndStoreUserID)
-      .then(() => $scope.modalInstance.close('signed-in'))
-      .then(goToProfile)
-      .catch((err) => {
-        // TODO: explain to the user that we couldn't log in
-        console.error(`couldn't log in with facebook`);
-      });
+    function handleLoginError(err) {
+      // TODO: explain to the user that we couldn't log in
+      console.error(err);
     }
 
-    function loginGoogle() {
-      // Set isLoggingIn status
+    function login(provider) {
+      // Set isLoggingIn status (to show the user that we're working)
       $scope.status.isLoggingIn = true;
-      $auth.authenticate('google')
-      .then(() => {
-        // remove isLoggingIn status
-        $scope.status.isLoggingIn = false;
-      })
+      $auth.authenticate(provider)
       .then(retrieveAndStoreUserID)
-      .then(() => $scope.modalInstance.close('signed-in'))
+      .then(closeModal)
       .then(goToProfile)
-      .catch((err) => {
-        // TODO: explain to the user that we couldn't log in
-        console.error(`couldn't log in with google`);
-      });
+      .catch(handleLoginError);
     }
 
     function retrieveAndStoreUserID() {
