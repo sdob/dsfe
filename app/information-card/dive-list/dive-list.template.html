@@ -12,14 +12,14 @@
             </a>
         </div>
         <div class="information-card__dive-header">
-            <div class="information-card__dive-image" ng-show="dive.diver.profileImageUrl">
+            <div class="information-card__dive-image" ng-show="userProfileImageUrls[dive.diver.id]">
                 <!-- width and height seem to need hard-coding -->
                 <img
                 height="60" width="60"
-                ng-src="{{ dive.diver.profileImageUrl }}"
+                ng-src="{{ userProfileImageUrls[dive.diver.id] }}"
                 />
             </div>
-            <div class="information-card__dive-image--none" ng-show="!dive.diver.profileImageUrl">
+            <div class="information-card__dive-image--none" ng-show="!userProfileImageUrls[dive.diver.id]">
                 <i class="fa fa-fw fa-user fa-3x"></i>
             </div>
             <div class="information-card__dive-details">

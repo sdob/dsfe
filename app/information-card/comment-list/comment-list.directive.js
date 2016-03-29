@@ -9,6 +9,7 @@
       scope: {
         comments: '=',
         site: '=',
+        userProfileImageUrls: '=',
       },
       templateUrl: 'information-card/comment-list/comment-list.template.html',
     };
