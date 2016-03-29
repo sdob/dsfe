@@ -6,8 +6,6 @@
 
     function activate() {
       vm.login = login;
-      vm.loginFacebook = loginFacebook;
-      vm.loginGoogle = loginGoogle;
       vm.submit = submit;
       vm.user = {
       };

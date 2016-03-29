@@ -417,8 +417,6 @@
     function summonCard(id, type) {
       // Remove any existing DOM elements
       $('information-card').remove();
-      // $('slipway-information-card').remove();
-      // $('compressor-information-card').remove();
 
       // Get the directive that we should be adding, based on the marker's type
       // const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
@@ -440,16 +438,11 @@
       // in most circumstances), then pre-load the information card scope
       // with details
       if ($scope.mapMarkers) {
-        const marker = $scope.mapMarkers.filter((m) => m.id === scope.id)[0];
+        const marker = $scope.mapMarkers.filter((m) => m.id === scope.site.id)[0];
         if (marker) {
-          scope.name = marker.title;
-          scope.owner = marker.owner;
-          scope.geocoding_data = marker.geocoding_data;
-          //scope.site = {
-          //name: marker.title,
-          //owner: marker.owner,
-          //geocoding_data: marker.geocoding_data,
-          //};
+          scope.site.geocoding_data = marker.geocoding_data;
+          scope.site.name = marker.title;
+          scope.site.owner = marker.owner;
         }
       }
 
