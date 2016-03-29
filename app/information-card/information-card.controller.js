@@ -163,7 +163,7 @@
             });
           });
           vm.images = images;
-          // We also have to add the images to the wider scope, because
+          // We also have to bind the images to $scope, because
           // the Lightbox gallery isn't implemented (AFAIK) to allow
           // us to pass the variable in.
           $scope.images = images;
