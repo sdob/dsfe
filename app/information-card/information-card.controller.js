@@ -16,6 +16,7 @@
       vm.images = [];
       vm.isLoading = true;
       vm.site = $scope.site || {};
+      vm.site.locData = formatGeocodingData(vm.site);
       vm.site.images = [];
       vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
       vm.summonUploadImageModal = summonUploadImageModal;
