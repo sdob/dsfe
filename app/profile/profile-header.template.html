@@ -63,19 +63,6 @@
                         {{ vm.user.name }}
                     </span>
                 </h1>
-                <div ng-if="vm.hasLoadedFollowStatus && vm.isAuthenticated() && vm.user.id != vm.ownID" class="profile-header__follow">
-                    <button ng-if="!vm.userIsFollowing" class="btn btn-primary"
-                        ng-click="vm.follow()">
-                        <i class="fa fa-fw fa-plus"></i>
-                        <span>Follow</span>
-                    </button>
-                    <button ng-if="vm.userIsFollowing" class="btn btn-success"
-                        ng-click="vm.unfollow()"
-                        >
-                        <i class="fa fa-fw fa-check"></i>
-                        <span>Following</span>
-                    </button>
-                </div>
             </div>
             <div class="profile-header__member-since">
                 Member since {{ vm.user.date_joined | date:'MMMM yyyy' }}
@@ -97,6 +84,19 @@
                     <div class="profile-header__dive-stat__desc">
                         Following
                     </div>
+                </div>
+                <div ng-if="vm.hasLoadedFollowStatus && vm.isAuthenticated() && vm.user.id != vm.ownID" class="profile-header__follow">
+                    <button ng-if="!vm.userIsFollowing" class="btn btn-primary"
+                        ng-click="vm.follow()">
+                        <i class="fa fa-fw fa-plus"></i>
+                        <span>Follow</span>
+                    </button>
+                    <button ng-if="vm.userIsFollowing" class="btn btn-success"
+                        ng-click="vm.unfollow()"
+                        >
+                        <i class="fa fa-fw fa-check"></i>
+                        <span>Following</span>
+                    </button>
                 </div>
             </div>
             <div class="profile-header__about-me">
