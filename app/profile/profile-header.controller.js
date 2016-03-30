@@ -24,6 +24,17 @@
         console.log('profile header heard user-loaded');
         vm.user = user;
 
+        // Retrieve follower/follow lists
+        dsactivity.getUserFollowers(user.id)
+        .then((response) => {
+          vm.followers = response.data;
+        });
+
+        dsactivity.getUserFollows(user.id)
+        .then((response) => {
+          vm.follows = response.data;
+        });
+
         // Check whether the viewer is logged in and allow them to follow/unfollow
         if (vm.isAuthenticated()) {
           let isFollowing = false;

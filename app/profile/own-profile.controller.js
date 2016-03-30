@@ -33,19 +33,6 @@
       .catch((err) => {
         console.error(err);
       });
-
-      // Get followers
-      dsactivity.getOwnFollowers()
-      .then((response) => {
-        vm.followers = response.data;
-      });
-
-      // Get follows
-      dsactivity.getOwnFollows()
-      .then((response) => {
-        vm.follows = response.data;
-      });
-
     }
 
     function summonConfirmDeleteImageModal(image, $index) {

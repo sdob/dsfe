@@ -29,18 +29,6 @@
       .then((response) => {
         vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
       });
-
-      // Get followers
-      dsactivity.getUserFollowers(userId)
-      .then((response) => {
-        vm.followers = response.data;
-      });
-
-      // Get follows
-      dsactivity.getUserFollows(userId)
-      .then((response) => {
-        vm.follows = response.data;
-      });
     }
   }
 

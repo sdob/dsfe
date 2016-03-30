@@ -80,6 +80,25 @@
             <div class="profile-header__member-since">
                 Member since {{ vm.user.date_joined | date:'MMMM yyyy' }}
             </div>
+            <!-- Follower/following stats -->
+            <div class="profile-header__dive-stats">
+                <div class="profile-header__dive-stat">
+                    <div class="profile-header__dive-stat__number">
+                        {{ vm.followers.length }}
+                    </div>
+                    <div class="profile-header__dive-stat__desc">
+                        Followers
+                    </div>
+                </div>
+                <div class="profile-header__dive-stat">
+                    <div class="profile-header__dive-stat__number">
+                        {{ vm.follows.length }}
+                    </div>
+                    <div class="profile-header__dive-stat__desc">
+                        Following
+                    </div>
+                </div>
+            </div>
             <div class="profile-header__about-me">
                 {{ vm.user.aboutMe }}
             </div>
