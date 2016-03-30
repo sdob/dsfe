@@ -54,7 +54,7 @@
       checkSearchPath();
 
       // Set up event listeners
-      setEventListeners();
+      registerEventListeners();
 
       // Retrieve site information
       retrieveSites();
@@ -266,8 +266,7 @@
     // handle map click events
     function mapClick(map, evt, args) {
       // When the user clicks on the map, we should do two things:
-      // (1) close the right-click context menu (which this controller
-      // can do), and
+      // (1) close the right-click context menu (which this controller can do), and
       // (2) close any open filter/search/add menus.
       // To achieve (2), we'll broadcast a scope event.
       closeContextMenu();
@@ -388,7 +387,7 @@
       $location.search(`${type}=${model.id}`);
     }
 
-    function setEventListeners() {
+    function registerEventListeners() {
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
       // Listen for item selections in the search menu
