@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function OwnProfileController($element, $rootScope, $scope, $timeout, $uibModal, dsapi, dsimg, localStorageService, profileService) {
+  function OwnProfileController($element, $rootScope, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
@@ -33,6 +33,19 @@
       .catch((err) => {
         console.error(err);
       });
+
+      // Get followers
+      dsactivity.getOwnFollowers()
+      .then((response) => {
+        vm.followers = response.data;
+      });
+
+      // Get follows
+      dsactivity.getOwnFollows()
+      .then((response) => {
+        vm.follows = response.data;
+      });
+
     }
 
     function summonConfirmDeleteImageModal(image, $index) {
@@ -72,6 +85,7 @@
     '$scope',
     '$timeout',
     '$uibModal',
+    'dsactivity',
     'dsapi',
     'dsimg',
     'localStorageService',
