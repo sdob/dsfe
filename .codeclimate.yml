@@ -3,13 +3,6 @@ languages:
 engines:
   eslint:
     enabled: true
-    checks:
-      comma-dangle:
-        enabled: false
-      wrap-iife:
-        enabled: false
-      global-require:
-        enabled: false
 ratings:
   paths:
     - "**.js"

@@ -1,0 +1,10 @@
+{
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "wrap-iife": "off",
+    "global-require": "off"
+  }
+}
