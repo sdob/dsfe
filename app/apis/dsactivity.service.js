@@ -5,6 +5,7 @@
     return {
       followUser,
       getOwnActivity,
+      getOwnFollowers,
       getOwnFollows,
       getUserActivity,
       unfollowUser,
@@ -16,6 +17,10 @@
 
     function getOwnActivity(offset) {
       return $http.get(`${API_URL}/users/my_feed/?offset=${offset}`);
+    }
+
+    function getOwnFollowers() {
+      return $http.get(`${API_URL}/users/my_followers/`);
     }
 
     function getOwnFollows() {
