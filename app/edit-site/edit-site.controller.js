@@ -25,23 +25,21 @@
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
-      vm.prepareToDeleteExistingHeaderImage = prepareToDeleteExistingHeaderImage;
-      vm.removeImageThumbnail = removeImageThumbnail;
-      vm.selectSeabedType = selectSeabedType;
-      vm.submit = submit;
-      vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
       vm.handleSuccessfulSave = handleSuccessfulSave;
       vm.seabedTypes = seabedTypes;
+      vm.selectSeabedType = selectSeabedType;
+      vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
+      vm.submit = submit;
       vm.updateMap = updateMap;
-
-      console.log(vm.seabedTypes);
 
       // Retrieve map settings
       vm.map = mapService.get();
+
       // By default, we're adding a new site
       vm.siteTypeString = 'divesite';
       vm.title = 'Add a new divesite';
 
+      // Register map event listeners
       vm.mapEvents = {
         center_changed: (evt) => {
           // When the map center changes, update the site coords
@@ -50,7 +48,7 @@
         },
       };
 
-      // Try to retrieve context menu coordinates and use them instead
+      // Try to retrieve context menu coordinates and use them instead of defaults
       const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
       if (contextMenuCoordinates !== undefined) {
         vm.map.center = contextMenuCoordinates;
@@ -91,16 +89,7 @@
     function handleSuccessfulSave() {
       // On successful save, bring the user back to the map with a search string
       // pointing to this site
-      // $window.history.back();
       $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
-    }
-
-    function prepareToDeleteExistingHeaderImage() {
-      vm.site.headerImageUrl = null;
-    }
-
-    function removeImageThumbnail() {
-      delete vm.imgFile;
     }
 
     function selectSeabedType(seabed) {
@@ -161,13 +150,6 @@
       $timeout(() => {
         vm.map.center.latitude = vm.site.coords.latitude;
         vm.map.center.longitude = vm.site.coords.longitude;
-      });
-    }
-
-    function uploadHeaderImage(file) {
-      return Upload.upload({
-        data: { image: file },
-        url: `${dsimg.IMG_API_URL}/divesites/${vm.site.id}/header`,
       });
     }
   }
