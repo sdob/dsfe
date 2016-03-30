@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsapi, dsimg, informationCardService, profileService, userSettingsService) {
+  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsactivity, dsapi, dsimg, informationCardService, profileService, userSettingsService) {
     const vm = this;
     activate();
 
@@ -29,6 +29,18 @@
       .then((response) => {
         vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
       });
+
+      // Get followers
+      dsactivity.getUserFollowers(userId)
+      .then((response) => {
+        vm.followers = response.data;
+      });
+
+      // Get follows
+      dsactivity.getUserFollows(userId)
+      .then((response) => {
+        vm.follows = response.data;
+      });
     }
   }
 
@@ -37,6 +49,7 @@
     '$rootScope',
     '$scope',
     '$timeout',
+    'dsactivity',
     'dsapi',
     'dsimg',
     'informationCardService',

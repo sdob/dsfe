@@ -2,6 +2,12 @@
     <profile-header user="vm.user" editable="vm.editable"></profile-header>
 
     <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+            {{ vm.followers.length }} followers {{ vm.follows.length }} following
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-12 col-sm-4" role="navigation">
             <ul id="js-tab-menu" class="list-unstyled profile__sidebar">
                 <li class="profile__sidebar-item active"><a href data-target="#js-profile-feed-tab" data-toggle="tab">Feed</a></li>
