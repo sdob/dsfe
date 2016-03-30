@@ -8,6 +8,8 @@
       getOwnFollowers,
       getOwnFollows,
       getUserActivity,
+      getUserFollowers,
+      getUserFollows,
       unfollowUser,
     };
 
@@ -29,6 +31,14 @@
 
     function getUserActivity(id, offset) {
       return $http.get(`${API_URL}/users/${id}/feed/?offset=${offset}`);
+    }
+
+    function getUserFollowers(id) {
+      return $http.get(`${API_URL}/users/${id}/followers/`);
+    }
+
+    function getUserFollows(id) {
+      return $http.get(`${API_URL}/users/${id}/follows/`);
     }
 
     function unfollowUser(otherUserID) {
