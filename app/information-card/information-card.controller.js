@@ -60,6 +60,7 @@
           // Force stats charts to be rebuilt
           $timeout(() => {
             $scope.$broadcast('refresh-statistics', vm.site);
+            $scope.$broadcast('site-loaded', vm.site);
           });
         }
 
