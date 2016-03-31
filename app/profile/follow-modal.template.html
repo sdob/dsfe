@@ -1,11 +1,19 @@
 <div class="ds-modal">
+    <div class="ds-modal__dismiss">
+        <a href class="overlay-action-item" ng-click="vm.dismiss()">
+            <span class="fa fa-stack">
+                <i class="fa fa-fw fa-stack-2x fa-circle background"></i>
+                <i class="fa fa-fw fa-stack-1x fa-times"></i>
+            </span>
+        </a>
+    </div>
     <div class="ds-modal__content">
         <h3>
             <span ng-if="vm.direction === 'follows'">
                 {{ vm.user.name }} follows
             </span>
             <span ng-if="vm.direction === 'followers'">
-                Following {{ vm.user.name }}
+                Users following {{ vm.user.name }}
             </span>
         </h3>
         <ul class="list-unstyled">
@@ -16,12 +24,23 @@
                             <i class="fa fa-fw fa-user fa-3x"></i>
                         </div>
                     </div>
+                    <div ng-show="user.profileImageUrl">
+                        <div class="profile-feed__comment-image">
+                            <!-- Seems to need hard-coding -->
+                            <img
+                            style="width: 100%; height: auto; max-width: 60px;"
+                            ng-src="{{ user.profileImageUrl }}"
+                            />
+                        </div>
+                    </div>
                     <div class="">
-                        {{ user.name }}
+                        <a href ng-click="vm.dismiss(user)">
+                            {{ user.name }}
+                        </a>
                     </div>
                 </div>
                 <div class="">
-                    <span ng-if="vm.isAuthenticated()">
+                    <span ng-if="vm.isAuthenticated() && user.id !== vm.viewingUserID">
                         <button ng-if="!user.viewingUserIsFollowing" class="btn btn-primary"
                             ng-click="vm.follow(user)">
                             <i class="fa fa-fw fa-plus"></i>
