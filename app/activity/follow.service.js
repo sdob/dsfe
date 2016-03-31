@@ -5,6 +5,7 @@
 
     return {
       followUser,
+      getSuggestions,
       unfollowUser,
       userIsFollowing,
     };
@@ -16,6 +17,13 @@
       }
 
       return dsactivity.followUser(otherUser);
+    }
+
+    function getSuggestions() {
+      return dsactivity.getOwnFollowSuggestions()
+      .then((response) => {
+        return response.data;
+      });
     }
 
     function unfollowUser(otherUser) {
