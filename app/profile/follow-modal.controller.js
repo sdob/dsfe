@@ -54,7 +54,7 @@
     }
 
     function follow(user) {
-      followService.followUser(user.id)
+      followService.followUser(user)
       .then((result) => {
         // Update UI
         user.viewingUserIsFollowing = true;
@@ -84,7 +84,7 @@
     }
 
     function unfollow(user) {
-      followService.unfollowUser(user.id)
+      followService.unfollowUser(user)
       .then((result) => {
         user.viewingUserIsFollowing = false;
       });
