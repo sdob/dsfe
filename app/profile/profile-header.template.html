@@ -108,6 +108,16 @@
                         <span>Following</span>
                     </button>
                 </div>
+                <div ng-if="vm.user.id === vm.ownID" class="profile-header__dive-stat">
+                    <div class="profile-header__dive-stat__number">
+                        <a href class="link--undecorated" ng-click="vm.summonFollowModal('suggestions', [])">
+                            +
+                        </a>
+                    </div>
+                    <div class="profile-header__dive-stat__desc">
+                        Find people
+                    </div>
+                </div>
             </div>
             <div class="profile-header__about-me">
                 {{ vm.user.aboutMe }}
