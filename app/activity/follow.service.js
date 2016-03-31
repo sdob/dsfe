@@ -5,6 +5,7 @@
 
     return {
       followUser,
+      unfollowUser,
       userIsFollowing,
     };
 
@@ -15,6 +16,10 @@
       }
 
       return dsactivity.followUser(otherUser);
+    }
+
+    function unfollowUser(otherUser) {
+      return dsactivity.unfollowUser(otherUser);
     }
 
     function userIsFollowing(otherUser) {
