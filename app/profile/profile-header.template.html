@@ -79,7 +79,9 @@
                 </div>
                 <div class="profile-header__dive-stat">
                     <div class="profile-header__dive-stat__number">
-                        {{ vm.follows.length }}
+                        <a class="link--undecorated" href ng-click="vm.summonFollowModal('follows', vm.follows)">
+                            {{ vm.follows.length }}
+                        </a>
                     </div>
                     <div class="profile-header__dive-stat__desc">
                         Following

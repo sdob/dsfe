@@ -7,11 +7,13 @@
 
     function activate() {
       console.log('ProfileHeaderController.activate()');
+
       vm.dsimgHasResponded = false;
       vm.follow = follow;
       vm.hasLoadedFollowStatus = false;
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
+      vm.summonFollowModal = summonFollowModal;
       vm.summonProfileImageUploadModal = summonImageUploadModal;
       vm.unfollow = unfollow;
 
@@ -112,6 +114,20 @@
             vm.profileImageUrl = undefined;
           });
         }
+      });
+    }
+
+    function summonFollowModal(direction, userList) {
+      const instance = $uibModal.open({
+        templateUrl: 'profile/follow-modal.template.html',
+        controller: 'FollowModalController',
+        controllerAs: 'vm',
+        resolve: {
+          direction: () => direction,
+          user: () => vm.user,
+          users: () => userList,
+        },
+        size: 'lg',
       });
     }
 
