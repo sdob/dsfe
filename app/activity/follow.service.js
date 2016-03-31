@@ -16,7 +16,7 @@
         return false;
       }
 
-      return dsactivity.followUser(otherUser);
+      return dsactivity.followUser(otherUser.id);
     }
 
     function getSuggestions() {
@@ -27,7 +27,7 @@
     }
 
     function unfollowUser(otherUser) {
-      return dsactivity.unfollowUser(otherUser);
+      return dsactivity.unfollowUser(otherUser.id);
     }
 
     function userIsFollowing(otherUser) {
