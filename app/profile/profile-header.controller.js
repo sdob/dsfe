@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileHeaderController($auth, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
+  function ProfileHeaderController($auth, $location, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
     const cloudinaryIdKey = 'public_id';
     const vm = this;
     activate();
@@ -26,16 +26,8 @@
         console.log('profile header heard user-loaded');
         vm.user = user;
 
-        // Retrieve follower/follow lists
-        dsactivity.getUserFollowers(user.id)
-        .then((response) => {
-          vm.followers = response.data;
-        });
-
-        dsactivity.getUserFollows(user.id)
-        .then((response) => {
-          vm.follows = response.data;
-        });
+        // Retrieve follow/follower stats and bind to scope
+        updateUserFollowStats();
 
         // Check whether the viewer is logged in and allow them to follow/unfollow
         if (vm.isAuthenticated()) {
@@ -80,6 +72,7 @@
         // The viewing user is now following this profile's user
         vm.userIsFollowing = true;
       })
+      .then(updateUserFollowStats)
       .catch((err) => {
         console.error(err);
       });
@@ -129,6 +122,20 @@
         },
         size: 'lg',
       });
+      // On modal close, follow a link to selected user's profile
+      // (if a user was selected)
+      instance.result
+      .then((user) => {
+        if (user !== undefined) {
+          console.log(`heading for user ${user.id}`);
+          return goToProfile(user);
+        }
+      })
+      .then(updateUserFollowStats);
+
+      function goToProfile(user) {
+        $location.path(`/users/${user.id}`);
+      }
     }
 
     function summonImageUploadModal() {
@@ -167,14 +174,29 @@
         // The viewing user is now not following this profile's user
         vm.userIsFollowing = false;
       })
+      .then(updateUserFollowStats)
       .catch((err) => {
         console.error(err);
+      });
+    }
+
+    function updateUserFollowStats() {
+      // Retrieve follower/follow lists
+      dsactivity.getUserFollowers(vm.user.id)
+      .then((response) => {
+        vm.followers = response.data;
+      });
+
+      dsactivity.getUserFollows(vm.user.id)
+      .then((response) => {
+        vm.follows = response.data;
       });
     }
   }
 
   ProfileHeaderController.$inject = [
     '$auth',
+    '$location',
     '$scope',
     '$timeout',
     '$uibModal',
