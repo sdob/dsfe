@@ -1,11 +1,31 @@
 (function() {
   'use strict';
-  function InformationCardHeaderController($scope, dsapi, dsimg, informationCardService) {
+  function InformationCardHeaderController($auth, $scope, dsapi, dsimg, followService, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
     function activate() {
+      vm.follow = follow;
+      vm.followStatusHasLoaded = false;
+      vm.isAuthenticated = $auth.isAuthenticated;
+      vm.unfollow = unfollow;
+
       getAndApplySiteHeaderImage();
+
+      // Wait for main information card to load site data asynchronously,
+      // then perform a single check to see if the viewing user is following
+      // the owner
+      $scope.$on('site-loaded', (e, site) => {
+        const owner = site.owner;
+        if (vm.isAuthenticated()) {
+          const viewingUserID = localStorageService.get('user');
+          followService.userIsFollowing(owner)
+          .then((result) => {
+            vm.followStatusHasLoaded = true;
+            vm.userIsFollowingOwner = result;
+          });
+        }
+      });
 
       $scope.$on('header-image-changed', () => {
         // The main information card handles the logic for changing
@@ -15,6 +35,13 @@
         // for now.)
         console.log(`information card header heard 'header-image-changed`);
         getAndApplySiteHeaderImage();
+      });
+    }
+
+    function follow(user) {
+      followService.followUser(user)
+      .then(() => {
+        vm.userIsFollowingOwner = true;
       });
     }
 
@@ -45,17 +72,26 @@
           console.log('header image appears to be nothing');
           delete(vm.headerImageUrl);
           delete(vm.backgroundStyle);
-          // vm.headerImageUrl = null;
         }
+      });
+    }
+
+    function unfollow(user) {
+      followService.unfollowUser(user)
+      .then(() => {
+        vm.userIsFollowingOwner = false;
       });
     }
   }
 
   InformationCardHeaderController.$inject = [
+    '$auth',
     '$scope',
     'dsapi',
     'dsimg',
+    'followService',
     'informationCardService',
+    'localStorageService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardHeaderController', InformationCardHeaderController);
 })();
