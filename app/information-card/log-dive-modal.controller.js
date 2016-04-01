@@ -1,16 +1,13 @@
 (function() {
   'use strict';
-  function LogDiveModalController($scope, $timeout, $uibModalInstance, conditionsLayoutService, dsapi, logDiveService, modalService, site, uiPreferencesService) {
+  function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const vm = this;
     const { weathers, winds } = conditionsLayoutService;
 
     activate();
 
     function activate() {
-      vm.weathers = weathers;
-      vm.winds = winds;
-      // Wire up functions
-      vm.dismiss = modalService.dismiss;
+      vm.dismiss = dismiss;
       vm.datepicker = {
         opened: false,
       };
@@ -23,6 +20,8 @@
       vm.setNitrox = setNitrox;
       vm.site = site;
       vm.submit = submit;
+      vm.weathers = weathers;
+      vm.winds = winds;
 
       // Set defaults for this dive
       const dt = logDiveService.defaultDateAndTime();
@@ -31,6 +30,44 @@
         gasMix: 'air',
         site: vm.site,
       };
+
+      // This flag lets us track whether the user has confirmed that they
+      // definitely want to close the modal (since closing without saving
+      // will lose any data they've entered)
+      let modalCloseConfirmed = false;
+
+      // Register an event listener for when the modal closes, and
+      // confirm
+      $scope.$on('modal.closing', (e) => {
+        // If we've checked with the user that they definitely want to
+        // close the modal, then proceed as usual
+        if (modalCloseConfirmed) {
+          return;
+        }
+        // Otherwise, cancel closing and pop up a confirmation modal
+        e.preventDefault();
+        const instance = $uibModal.open({
+          controller: 'CancelLoggingModalController',
+          controllerAs: 'vm',
+          size: 'lg',
+          templateUrl: 'information-card/log-dive-modal/cancel-logging-modal.template.html',
+        });
+        // When the confirmation modal closes, check the dismissal reason;
+        // if the user definitely wants to cancel, then make it so
+        instance.result.then((reason) => {
+          if (reason === 'performCancel') {
+            // Flag as OK to close, and re-fire the event
+            modalCloseConfirmed = true;
+            $uibModalInstance.dismiss();
+          }
+        });
+      });
+    }
+
+    // Close the modal (likely causing a confirmation modal to pop up if
+    // the user hasn't explicitly indicated that they want to discard info)
+    function dismiss() {
+      $uibModalInstance.close();
     }
 
     function formatGasMix() {
@@ -135,6 +172,9 @@
       vm.isSubmitting = false;
       dsapi.postDive(request)
       .then((response) => {
+        // It's OK to close the modal, since we've successfully submitted the
+        // information
+        modalCloseConfirmed = true;
         $uibModalInstance.close('logged');
       })
       .catch((err) => {
@@ -158,6 +198,7 @@
   LogDiveModalController.$inject = [
     '$scope',
     '$timeout',
+    '$uibModal',
     '$uibModalInstance',
     'conditionsLayoutService',
     'dsapi',
