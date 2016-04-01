@@ -10,6 +10,10 @@
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.unfollow = unfollow;
 
+      if (vm.isAuthenticated()) {
+        vm.viewingUserID = localStorageService.get('user');
+      }
+
       getAndApplySiteHeaderImage();
 
       // Wait for main information card to load site data asynchronously,

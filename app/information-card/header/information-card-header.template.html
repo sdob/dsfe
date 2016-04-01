@@ -10,7 +10,7 @@
         </h3>
         <h3 class="information-card__site-owner">
             Added by <a href="/#/users/{{site.owner.id}}/">{{ site.owner.name }}</a>
-            <span ng-if="vm.isAuthenticated() && vm.followStatusHasLoaded">
+            <span ng-if="vm.isAuthenticated() && site.owner.id != vm.viewingUserID && vm.followStatusHasLoaded">
                 <span ng-if="vm.userIsFollowingOwner">
                     <a class="is-following link--undecorated" href ng-click="vm.unfollow(site.owner)">
                         <span class="fa fa-stack">
