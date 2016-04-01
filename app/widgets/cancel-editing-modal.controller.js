@@ -30,5 +30,5 @@
     '$uibModalInstance',
     '$window',
   ];
-  angular.module('divesites').controller('CancelEditingModalController', CancelEditingModalController);
+  angular.module('divesites.widgets').controller('CancelEditingModalController', CancelEditingModalController);
 })();
