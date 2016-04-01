@@ -19,8 +19,12 @@
 .about-us__statistics-container {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   margin-bottom: 10px;
+  @media (min-width: $screen-sm-min) {
+    flex-direction: row;
+  }
   .statistics {
     text-align: center;
   }
