@@ -345,7 +345,7 @@
   a {
     color: #fff;
     font-weight: 500;
-    padding: 8px 16px;
+    padding: 8px 0px;
     text-decoration: none;
     width: 100%;
     &:active,
@@ -375,5 +375,12 @@
       color: $blue-700;
       background: #fff;
     }
+  }
+}
+
+.sidebar-item__text {
+  display: none;
+  @media (min-width: $screen-sm-min) {
+    display: initial;
   }
 }
