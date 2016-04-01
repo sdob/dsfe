@@ -22,12 +22,9 @@
         </div>
 
         <div class="information-card__dive-header">
-            <div class="information-card__dive-image" ng-show="userProfileImageUrls[comment.owner.id]">
+            <div class="information-card__dive-image">
                 <!-- width and height seem to need hard-coding -->
-                <img height="60" width="60" ng-src="{{ userProfileImageUrls[comment.owner.id]  }}" />
-            </div>
-            <div class="information-card__dive-image--none" ng-show="!userProfileImageUrls[comment.owner.id]">
-                <i class="fa fa-fw fa-user fa-3x"></i>
+                <img height="60" width="60" ng-src="{{ userProfileImageUrls[comment.owner.id] || '/img/no_profile_image.svg' }}" />
             </div>
             <div class="information-card__dive-details">
                 <div>

@@ -5,18 +5,9 @@
                 <div class="profile-feed__item">
 
                     <div class="profile-feed__comment-header">
-                        <div ng-show="item.actor.profileImageUrl">
-                            <div class="profile-feed__comment-image">
-                                <!-- width and height seem to need hard-coding -->
-                                <img style="width: 100%; height: auto; max-width: 60px;"
-                                ng-src="{{ item.actor.profileImageUrl }}"
-                                />
-                            </div>
-                        </div>
-                        <div ng-show="!item.actor.profileImageUrl">
-                            <div class="profile-feed__comment-image comment__image--none">
-                                <i class="fa fa-fw fa-user fa-3x"></i>
-                            </div>
+                        <div class="profile-feed__comment-image">
+                            <img style="width: 100%; height: auto; max-width; 60px;"
+                            ng-src="{{ item.actor.profileImageUrl || '/img/no_profile_image.svg' }}" />
                         </div>
                         <div class="profile-feed__comment-summary">
                             <span class="profile-feed__actor" ng-switch="item.actor.id === vm.ownID">
