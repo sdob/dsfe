@@ -11,19 +11,14 @@
         <h3 class="information-card__site-owner">
             Added by <a href="/#/users/{{site.owner.id}}/">{{ site.owner.name }}</a>
             <span ng-if="vm.isAuthenticated() && site.owner.id != vm.viewingUserID && vm.followStatusHasLoaded">
-                <span ng-if="vm.userIsFollowingOwner">
-                    <a class="is-following link--undecorated" href ng-click="vm.unfollow(site.owner)">
+                <span>
+                    <a class="link--undecorated" href
+                        ng-class="{'is-following': vm.userIsFollowingOwner, 'can-follow': !vm.userIsFollowingOwner}"
+                        ng-click="vm.userIsFollowingOwner ? vm.unfollow(site.owner) : vm.follow(site.owner)">
                         <span class="fa fa-stack">
                             <i class="fa fa-stack-2x fa-circle background"></i>
-                            <i class="fa fa-stack-1x fa-check"></i>
-                        </span>
-                    </a>
-                </span>
-                <span ng-if="!vm.userIsFollowingOwner">
-                    <a class="can-follow link--undecorated" href ng-click="vm.follow(site.owner)">
-                        <span class="fa fa-stack">
-                            <i class="fa fa-stack-2x fa-circle background"></i>
-                            <i class="fa fa-stack-1x fa-plus"></i>
+                            <i class="fa fa-stack-1x"
+                                ng-class="{'fa-check': vm.userIsFollowingOwner, 'fa-plus': !vm.userIsFollowingOwner}"></i>
                         </span>
                     </a>
                 </span>

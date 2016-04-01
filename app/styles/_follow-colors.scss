@@ -2,11 +2,13 @@
   color: #fff;
   .background {
     color: $brand-success;
+    transition: color 200ms;
   }
 }
 .is-following {
   color: #fff;
   .background {
     color: $brand-primary;
+    transition: color 200ms;
   }
 }
