@@ -249,8 +249,22 @@
   font-weight: 500;
   font-size: 14px;
   a {
+    @extend .link--undecorated;
     color: $blue-100;
   }
+}
+
+.site-owner__name {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.site-owner__profile-image {
+  height: auto;
+  margin: 0 0.2em 0 0.5em;
+  max-width: 18px;
+  width: 100%;
 }
 
 .information-card__site-statistics {
