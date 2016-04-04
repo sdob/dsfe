@@ -1,14 +1,21 @@
 .can-follow {
   color: #fff;
   .background {
-    color: $brand-success;
+    color: $brand-primary;
+    transition: color 200ms;
+  }
+}
+.follow-unresolved {
+  color: #fff;
+  .background {
+    color: rgba(0, 0, 0, 0.32);
     transition: color 200ms;
   }
 }
 .is-following {
   color: #fff;
   .background {
-    color: $brand-primary;
+    color: $brand-success;
     transition: color 200ms;
   }
 }
