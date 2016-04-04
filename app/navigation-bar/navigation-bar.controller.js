@@ -18,7 +18,6 @@
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.signOut = signOut;
       vm.summonLoginModal = summonLoginModal;
-      vm.toggleFullscreen = toggleFullscreen;
 
       // Try and download a thumbnail image if we have a user ID
       if (localStorageService.get('user')) {
@@ -28,11 +27,6 @@
           vm.userProfileThumbnailImage = url;
         });
       }
-
-      // Listen for fullscreen mode changes
-      $document.bind('fullscreenchange', () => {
-        vm.isFullscreen = $(document).fullScreen();
-      });
     }
 
     function formatDsimgResponse(response) {
@@ -51,10 +45,6 @@
     function retrieveAndFormatProfileThumbnailImage(id) {
       return dsimg.getUserProfileImage(id)
       .then(formatDsimgResponse);
-    }
-
-    function toggleFullscreen() {
-      $(document).toggleFullScreen();
     }
 
     function signOut() {
