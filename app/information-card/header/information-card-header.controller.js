@@ -24,9 +24,9 @@
           const viewingUserID = localStorageService.get('user');
           followService.userIsFollowing(owner)
           .then((result) => {
+            vm.userIsFollowingOwner = result;
             $timeout(() => {
               vm.followStatusHasLoaded = true;
-              vm.userIsFollowingOwner = result;
             });
           });
         }
@@ -89,8 +89,8 @@
       // Make the call and switch the controller state on success
       apiCall(user)
       .then(() => {
+        vm.userIsFollowingOwner = !vm.userIsFollowingOwner;
         $timeout(() => {
-          vm.userIsFollowingOwner = !vm.userIsFollowingOwner;
           vm.followStatusHasLoaded = true;
         });
       });
