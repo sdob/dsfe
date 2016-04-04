@@ -14,7 +14,8 @@
                 <span>
                     <a class="link--undecorated" href
                         ng-class="{'is-following': vm.userIsFollowingOwner, 'can-follow': !vm.userIsFollowingOwner}"
-                        ng-click="vm.userIsFollowingOwner ? vm.unfollow(site.owner) : vm.follow(site.owner)">
+                        ng-click="vm.toggleFollowing(site.owner,  $event)"
+                        >
                         <span class="fa fa-stack">
                             <i class="fa fa-stack-2x fa-circle background"></i>
                             <i class="fa fa-stack-1x"

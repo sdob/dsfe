@@ -5,10 +5,9 @@
     activate();
 
     function activate() {
-      vm.follow = follow;
       vm.followStatusHasLoaded = false;
       vm.isAuthenticated = $auth.isAuthenticated;
-      vm.unfollow = unfollow;
+      vm.toggleFollowing = toggleFollowing;
 
       if (vm.isAuthenticated()) {
         vm.viewingUserID = localStorageService.get('user');
@@ -39,13 +38,6 @@
         // for now.)
         console.log(`information card header heard 'header-image-changed`);
         getAndApplySiteHeaderImage();
-      });
-    }
-
-    function follow(user) {
-      followService.followUser(user)
-      .then(() => {
-        vm.userIsFollowingOwner = true;
       });
     }
 
@@ -80,10 +72,20 @@
       });
     }
 
-    function unfollow(user) {
-      followService.unfollowUser(user)
+    /* Send an API request to toggle whether the viewing user is following
+     * the site owner
+     */
+    function toggleFollowing(user, evt) {
+      // Stop the event from propagating (so that we don't proceed to
+      // expand/contract the info card
+      evt.stopPropagation();
+      // Pick an API call depending on whether the user is currently following
+      const { followUser, unfollowUser } = followService;
+      const apiCall = vm.userIsFollowingOwner ? unfollowUser : followUser;
+      // Make the call and switch the controller state on success
+      apiCall(user)
       .then(() => {
-        vm.userIsFollowingOwner = false;
+        vm.userIsFollowingOwner = !vm.userIsFollowingOwner;
       });
     }
   }
