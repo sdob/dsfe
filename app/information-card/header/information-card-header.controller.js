@@ -20,6 +20,24 @@
       // the owner
       $scope.$on('site-loaded', (e, site) => {
         const owner = site.owner;
+
+        // Retrieve the owner's profile image URL
+        dsimg.getUserProfileImage(owner.id)
+        .then((response) => {
+          console.log('retrieved owner profile image');
+          if (response && response.data && response.data.public_id) {
+            vm.ownerProfileImageUrl = $.cloudinary.url(response.data.public_id, {
+              height: 18,
+              width: 18,
+              crop: 'fill',
+              gravity: 'face',
+            });
+            console.log(vm.ownerProfileImageUrl);
+          }
+        });
+
+        // If the viewing user is authenticated, consult the follow API
+        // to see if they're following the site owner
         if (vm.isAuthenticated()) {
           const viewingUserID = localStorageService.get('user');
           followService.userIsFollowing(owner)
@@ -57,17 +75,12 @@
     function getAndApplySiteHeaderImage() {
       dsimg.getSiteHeaderImage($scope.site)
       .then((headerImage) => {
-        console.log('I found a header image!');
-        console.log(headerImage);
         if (headerImage && headerImage.data && headerImage.data.public_id) {
           vm.headerImageUrl = $.cloudinary.url(headerImage.data.public_id, {});
-          console.log('header image should be');
-          console.log(vm.headerImageUrl);
           vm.backgroundStyle = {
             background: `url(${vm.headerImageUrl}) center / cover`,
           };
         } else {
-          console.log('header image appears to be nothing');
           delete(vm.headerImageUrl);
           delete(vm.backgroundStyle);
         }
