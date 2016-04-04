@@ -1,15 +1,15 @@
-<div class="ds-cancel-editing-modal__content">
-<h1>Cancel logging</h1>
-<div>
-    Are you sure you want to discard this log?
-    Any unsaved changes will be lost.
-</div>
-<div class="ds-form ds-form__submit-row">
-    <button
-        class="btn btn-default big-button"
-        ng-click="vm.dontPerformCancel()">No</button>
-    <button
-        class="btn btn-primary big-button"
-        ng-click="vm.performCancel()">Yes</button>
-</div>
+<div class="ds-modal">
+    <h1 class="ds-modal__header">Cancel logging</h1>
+    <div>
+        Are you sure you want to discard this log?
+        Any unsaved changes will be lost.
+    </div>
+    <div class="ds-form__submit-row">
+        <button
+            class="btn btn-default big-button"
+            ng-click="vm.dontPerformCancel()">No</button>
+        <button
+            class="btn btn-primary big-button"
+            ng-click="vm.performCancel()">Yes</button>
+    </div>
 </div>

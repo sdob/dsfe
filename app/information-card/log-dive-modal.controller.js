@@ -49,8 +49,9 @@
         const instance = $uibModal.open({
           controller: 'CancelLoggingModalController',
           controllerAs: 'vm',
-          size: 'lg',
+          size: 'sm',
           templateUrl: 'information-card/log-dive-modal/cancel-logging-modal.template.html',
+          windowClass: 'modal-center',
         });
         // When the confirmation modal closes, check the dismissal reason;
         // if the user definitely wants to cancel, then make it so
