@@ -9,7 +9,14 @@
             {{ site.locData.join(', ') }}
         </h3>
         <h3 class="information-card__site-owner">
-            Added by <a href="/#/users/{{site.owner.id}}/">{{ site.owner.name }}</a>
+            Added by
+                <a href="/#/users/{{site.owner.id}}/">
+                <img class="site-owner__profile-image"
+                ng-src="{{ vm.ownerProfileImageUrl ? vm.ownerProfileImageUrl : '/img/no_profile_image.svg' }}" />
+                <span class="site-owner__name">
+                    {{ site.owner.name }}
+                </span>
+            </a>
             <span ng-if="vm.isAuthenticated() && site.owner.id != vm.viewingUserID">
                 <span ng-show="!vm.followStatusHasLoaded">
                     <a class="link--undecorated follow-unresolved"
