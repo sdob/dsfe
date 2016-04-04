@@ -9,7 +9,6 @@
 
       // Get the user's ID and put it into $scope
       const userId = $routeParams.userId;
-      console.log(`loading user ${userId}`);
       vm.userId = userId;
       $scope.userId = userId;
       vm.user = {
