@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function InformationCardHeaderController($auth, $scope, dsapi, dsimg, followService, informationCardService, localStorageService) {
+  function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService) {
     const vm = this;
     activate();
 
@@ -24,8 +24,10 @@
           const viewingUserID = localStorageService.get('user');
           followService.userIsFollowing(owner)
           .then((result) => {
-            vm.followStatusHasLoaded = true;
-            vm.userIsFollowingOwner = result;
+            $timeout(() => {
+              vm.followStatusHasLoaded = true;
+              vm.userIsFollowingOwner = result;
+            });
           });
         }
       });
@@ -76,6 +78,8 @@
      * the site owner
      */
     function toggleFollowing(user, evt) {
+      // Flag that we're in the middle of an AJAX operation
+      vm.followStatusHasLoaded = false;
       // Stop the event from propagating (so that we don't proceed to
       // expand/contract the info card
       evt.stopPropagation();
@@ -85,7 +89,10 @@
       // Make the call and switch the controller state on success
       apiCall(user)
       .then(() => {
-        vm.userIsFollowingOwner = !vm.userIsFollowingOwner;
+        $timeout(() => {
+          vm.userIsFollowingOwner = !vm.userIsFollowingOwner;
+          vm.followStatusHasLoaded = true;
+        });
       });
     }
   }
@@ -93,6 +100,7 @@
   InformationCardHeaderController.$inject = [
     '$auth',
     '$scope',
+    '$timeout',
     'dsapi',
     'dsimg',
     'followService',
