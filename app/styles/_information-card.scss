@@ -323,10 +323,13 @@
   padding-left: 16px;
   min-height: 70px; // To allow for the modal-mask spinner
   position: relative;
-  /* On medium devices,the title section has a minimum height */
+  /* On medium devices, the title section has a minimum height */
   @media (min-width: $screen-md-min) {
-    cursor: inherit;
     height: 200px;
+  }
+  /* On full-size devices, the title section has a default pointer */
+  @media (min-width: $screen-lg-min) {
+    cursor: inherit;
   }
 }
 
