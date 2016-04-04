@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, informationCardService) {
+  function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, followService, informationCardService) {
     const { apiCalls, formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
     const vm = this;
 
@@ -60,14 +60,19 @@
           // Force stats charts to be rebuilt
           $timeout(() => {
             $scope.$broadcast('refresh-statistics', vm.site);
-            $scope.$broadcast('site-loaded', vm.site);
           });
+
         }
 
         // Remove the isLoading flag
         vm.isLoading = false;
         // Check whether the user owns this site
         vm.userIsOwner = userIsOwner(vm.site);
+
+        $timeout(() => {
+          $scope.$broadcast('site-loaded', vm.site);
+        });
+
       });
     }
 
@@ -273,6 +278,15 @@
       .then((response) => {
         $timeout(() => {
           vm.site.comments = response.data;
+          if (vm.isAuthenticated()) {
+            vm.site.comments.forEach((comment) => {
+              const owner = comment.owner;
+              followService.userIsFollowing(owner)
+              .then((result) => {
+                comment.viewerIsFollowingOwner = result;
+              });
+            });
+          }
         });
       });
     }
@@ -323,6 +337,7 @@
     'dsapi',
     'dscomments',
     'dsimg',
+    'followService',
     'informationCardService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardController', InformationCardController);
