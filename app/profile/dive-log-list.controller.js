@@ -18,6 +18,8 @@
       instance.result.then((reason) => {
         if (reason === 'deleted') {
           console.log('dive sucessfully deleted');
+          // TODO: Other components within the profile should update their
+          // knowledge of the dive log when it changes
           $scope.$emit('dive-log-updated');
           dsapi.getUserDives($scope.user.id)
           .then((response) => {
