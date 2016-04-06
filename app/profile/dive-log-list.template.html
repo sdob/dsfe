@@ -2,6 +2,24 @@
     <div class="row comment" ng-repeat="dive in vm.user.dives | orderBy:'-'">
         <div class="col-xs-12">
             <div class="profile-feed__item">
+                <div class="profile-feed__comment-actions">
+                    <a href class="overlay-action-item--blue"
+                        ng-click="vm.summonDiveLogModal(dive)"
+                        >
+                        <span class="fa fa-stack">
+                            <i class="fa fa-stack-2x fa-circle background"></i>
+                            <i class="fa fa-stack-1x fa-edit"></i>
+                        </span>
+                    </a>
+                    <a href class="overlay-action-item--blue"
+                        ng-click="vm.summonDeleteDiveModal(dive)"
+                        >
+                        <span class="fa fa-stack">
+                            <i class="fa fa-stack-2x fa-circle background"></i>
+                            <i class="fa fa-stack-1x fa-trash"></i>
+                        </span>
+                    </a>
+                </div>
                 <div class="profile-feed__comment-header">
                     <div class="profile-feed__comment-summary">
                         <div class="profile-dive__divesite-name">

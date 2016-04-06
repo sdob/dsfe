@@ -32,7 +32,7 @@
       display: flex;
     }
     &__action-item {
-        margin-left: 8px;
+      margin-left: 8px;
     }
   }
   &__about-me {
@@ -264,6 +264,12 @@
 
 .profile-feed__target {
   font-weight: 500;
+}
+
+.profile-feed__comment-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .profile-feed__comment-date {
