@@ -16,6 +16,10 @@
         return $http.get(`${API_URL}/compressors/`);
       },
 
+      getDive: (id) => {
+        return $http.get(`${API_URL}/dives/${id}/`);
+      },
+
       getDivesite: (id) => {
         return $http.get(`${API_URL}/divesites/${id}/`);
       },
@@ -94,6 +98,10 @@
       /* UPDATE methods */
       updateCompressor: (id, data) => {
         return $http.patch(`${API_URL}/compressors/${id}/`, data);
+      },
+
+      updateDive: (id, data) => {
+        return $http.patch(`${API_URL}/dives/${id}/`, data);
       },
 
       updateDivesite: (id, data) => {

@@ -48,7 +48,7 @@
 
                 <section class="tab-content">
                     <section id="js-dive-list" role="tabpanel" class="tab-pane information-card__dive-list" ng-show="vm.site.type === 'divesite'">
-                        <dive-list dives="vm.site.dives" user-profile-image-urls="vm.userProfileImageUrls"></dive-list>
+                        <dive-list dives="vm.site.dives" site="vm.site" user-profile-image-urls="vm.userProfileImageUrls"></dive-list>
                     </section>
                     <section id="js-comment-list" role="tabpanel" class="tab-pane information-card__dive-list">
                         <comment-list site="vm.site" comments="vm.site.comments" user-profile-image-urls="vm.userProfileImageUrls"></comment-list>

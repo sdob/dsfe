@@ -1,8 +1,9 @@
 (function() {
   'use strict';
 
-  function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, followService, informationCardService) {
+  function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, followService, informationCardService, logDiveService) {
     const { apiCalls, formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
+    console.log(logDiveService);
     const vm = this;
 
     activate();
@@ -24,6 +25,7 @@
 
       // Depending on the site type, we may offer different functionality
       if (vm.site.type === 'divesite') {
+        // Divesites allow us to log dives
         vm.summonLogDiveModal = summonLogDiveModal;
       }
 
@@ -211,16 +213,8 @@
       });
     }
 
-    function summonLogDiveModal() {
-      const instance = $uibModal.open({
-        controller: 'LogDiveModalController',
-        controllerAs: 'vm',
-        resolve: {
-          site: () => vm.site,
-        },
-        size: 'lg',
-        templateUrl: 'information-card/log-dive-modal.template.html',
-      });
+    function summonLogDiveModal(dive) {
+      const instance = logDiveService.summonLogDiveModal(dive, vm.site);
       instance.result.then((reason) => {
         if (reason === 'logged') {
           updateDiveListAndStatistics();
@@ -339,6 +333,7 @@
     'dsimg',
     'followService',
     'informationCardService',
+    'logDiveService',
   ];
   angular.module('divesites.informationCard').controller('InformationCardController', InformationCardController);
 })();

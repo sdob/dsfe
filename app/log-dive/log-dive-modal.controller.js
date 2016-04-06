@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, dsapi, logDiveService, modalService, site, uiPreferencesService) {
+  function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, diveID, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const vm = this;
     const { weathers, winds } = conditionsLayoutService;
 
@@ -31,17 +31,31 @@
         site: vm.site,
       };
 
+      // If we're passed a dive UUID, then retrieve the data from DSAPI and
+      // populate the model
+      if (diveID !== undefined) {
+        console.log('looks like I received a diveID');
+        dsapi.getDive(diveID)
+        .then((response) => {
+          // Format DSAPI response to conform to our Angular model
+          const dive = formatResponse(response);
+          vm.dive = dive;
+          console.log(vm.dive);
+        });
+        // Invalid diveIDs will return a 404
+      }
+
       // This flag lets us track whether the user has confirmed that they
       // definitely want to close the modal (since closing without saving
       // will lose any data they've entered)
-      let modalCloseConfirmed = false;
+      vm.modalCloseConfirmed = false;
 
       // Register an event listener for when the modal closes, and
       // confirm
       $scope.$on('modal.closing', (e) => {
         // If we've checked with the user that they definitely want to
         // close the modal, then proceed as usual
-        if (modalCloseConfirmed) {
+        if (vm.modalCloseConfirmed) {
           return;
         }
         // Otherwise, cancel closing and pop up a confirmation modal
@@ -50,7 +64,7 @@
           controller: 'CancelLoggingModalController',
           controllerAs: 'vm',
           size: 'sm',
-          templateUrl: 'information-card/log-dive-modal/cancel-logging-modal.template.html',
+          templateUrl: 'log-dive/log-dive-modal/cancel-logging-modal.template.html',
           windowClass: 'modal-center',
         });
         // When the confirmation modal closes, check the dismissal reason;
@@ -58,7 +72,7 @@
         instance.result.then((reason) => {
           if (reason === 'performCancel') {
             // Flag as OK to close, and re-fire the event
-            modalCloseConfirmed = true;
+            vm.modalCloseConfirmed = true;
             $uibModalInstance.dismiss();
           }
         });
@@ -86,6 +100,7 @@
     function formatRequest(dive) {
       // Build the object that DSAPI expects
       const request = {
+        air_temperature: dive.airTemperature,
         cylinder_capacity: vm.dive.cylinderCapacity,
         date: moment(dive.date).format('YYYY-MM-DD'),
         time: dive.time ? moment(dive.time).format('HH:mm') : undefined,
@@ -94,19 +109,70 @@
         average_depth: dive.averageDepth,
         comment: dive.comment,
         divesite: vm.site.id,
-        air_temperature: dive.airTemperature,
-        water_temperature: dive.waterTemperature,
         // Tank pressure
         pressure_in: dive.pressureIn,
         pressure_out: dive.pressureOut,
         // Gas mix
         gas_mix: formatGasMix(),
+        water_temperature: dive.waterTemperature,
         // Weather
         weather: formatWeather(),
         // Wind
         wind: formatWind(),
       };
+      console.log('formatted request');
+      console.log(request);
       return request;
+    }
+
+    function formatResponse(response) {
+      const data = response.data;
+      console.log('unformatted response data');
+      console.log(data);
+      const dive = {
+        //airTemperature: data.air_temperature ? Number(data.air_temperature) : undefined,
+        airTemperature: numberOrUndefined(data.air_temperature),
+        averageDepth: data.average_depth ? Number(data.average_depth) : undefined,
+        comment: data.comment,
+        date: moment(data.date).toDate(),
+        cylinderCapacity: data.cylinder_capacity ? Number(data.cylinder_capacity) : undefined,
+        duration: moment.duration(data.duration).asMinutes(),
+        gasMix: data.gas_mix ? data.gas_mix.mix : undefined,
+        maximumDepth: Number(data.depth),
+        nitroxO2: data.gas_mix ? data.gas_mix.o2 : undefined,
+        pressureIn: data.pressure_in ? Number(data.pressure_in) : undefined,
+        pressureOut: data.pressure_out ? Number(data.pressure_out) : undefined,
+        // time: data.time ? moment(data.time).toDate() : undefined,
+        waterTemperature: data.water_temperature ? Number(data.water_temperature) : undefined,
+        weather: getWeather(data.weather),
+        wind: getWind(data.wind),
+      };
+      console.log(dive.date);
+      // Timepicker needs a Date object, so we'll just dummy in the information
+      // from the date
+      if (data.time) {
+        const time = moment(data.time, 'HH:mm');
+        console.log(time);
+        dive.time = moment(dive.date).hours(time.hours()).minutes(time.minutes());
+      }
+
+      return dive;
+
+      function getWeather(type) {
+        return weathers.filter(w => w.type === type)[0];
+      }
+
+      function getWind(value) {
+        return winds.filter(w => w.value === value)[0];
+      }
+
+      function numberOrUndefined(x) {
+        if (x) {
+          return Number(x);
+        }
+
+        return undefined;
+      }
     }
 
     function formatWeather() {
@@ -171,11 +237,13 @@
       console.log('sending request');
       console.log(request);
       vm.isSubmitting = false;
-      dsapi.postDive(request)
+      const apiCall = diveID ? (request) => dsapi.updateDive(diveID, request) : dsapi.postDive;
+      apiCall(request)
+      //dsapi.postDive(request)
       .then((response) => {
         // It's OK to close the modal, since we've successfully submitted the
         // information
-        modalCloseConfirmed = true;
+        vm.modalCloseConfirmed = true;
         $uibModalInstance.close('logged');
       })
       .catch((err) => {
@@ -202,12 +270,13 @@
     '$uibModal',
     '$uibModalInstance',
     'conditionsLayoutService',
+    'diveID',
     'dsapi',
     'logDiveService',
     'modalService',
     'site',
     'uiPreferencesService',
   ];
-  angular.module('divesites.informationCard').controller('LogDiveModalController', LogDiveModalController);
+  angular.module('divesites.logDive').controller('LogDiveModalController', LogDiveModalController);
 
 })();

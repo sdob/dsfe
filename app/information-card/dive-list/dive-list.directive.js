@@ -7,6 +7,7 @@
       link,
       scope: {
         dives: '=',
+        site: '=',
         userProfileImageUrls: '=',
       },
       templateUrl: 'information-card/dive-list/dive-list.template.html',
