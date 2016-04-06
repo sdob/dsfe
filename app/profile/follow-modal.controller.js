@@ -38,15 +38,18 @@
       // the members of the list
       if (vm.isAuthenticated()) {
         vm.viewingUserID = localStorageService.get('user');
-        // Check whether each of the members of this list is followed by the viewing user
-        vm.users.forEach((user) => {
-          followService.userIsFollowing(user)
-          .then((isFollowing) => {
-            // Update UI in the next tick
-            $timeout(() => {
-              user.followStatusResolved = true;
-              user.viewingUserIsFollowing = isFollowing;
-            });
+
+        // Retrieve viewing user's follows once, then check each user's ID
+        // against them (this means we only have to make a single API request
+        // per controller activation)
+        followService.getOwnFollows()
+        .then((response) => {
+          vm.ownFollowIDs = response.data.map(u => u.id);
+          console.log('ownFollowIDCache:');
+          console.log(vm.ownFollowIDs);
+          vm.users.forEach((user) => {
+            user.followStatusResolved = true;
+            user.viewingUserIsFollowing = vm.ownFollowIDs.indexOf(user.id) >= 0;
           });
         });
       }
