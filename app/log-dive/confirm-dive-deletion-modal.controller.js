@@ -39,5 +39,5 @@
     'dive',
     'dsapi',
   ];
-  angular.module('divesites.informationCard').controller('ConfirmDiveDeletionModalController', ConfirmDiveDeletionModalController);
+  angular.module('divesites.logDive').controller('ConfirmDiveDeletionModalController', ConfirmDiveDeletionModalController);
 })();
