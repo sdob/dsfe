@@ -5,6 +5,7 @@
 
     return {
       followUser,
+      getOwnFollows,
       getSuggestions,
       unfollowUser,
       userIsFollowing,
@@ -17,6 +18,10 @@
       }
 
       return dsactivity.followUser(otherUser.id);
+    }
+
+    function getOwnFollows() {
+      return dsactivity.getOwnFollows();
     }
 
     function getSuggestions() {
