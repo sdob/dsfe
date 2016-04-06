@@ -10,10 +10,23 @@
     <div class="ds-modal__content">
         <h3>
             <span ng-if="vm.direction === 'follows'">
-                {{ vm.user.name }} follows
+                People
+                <span ng-show="vm.user.id == vm.viewingUserID">
+                    you're
+                </span>
+                <span ng-show="vm.user.id != vm.viewingUserID">
+                    {{ vm.user.name }} is
+                </span>
+                following
             </span>
             <span ng-if="vm.direction === 'followers'">
-                Users following {{ vm.user.name }}
+                People following
+                <span ng-if="vm.user.id === vm.viewingUserID">
+                    you
+                </span>
+                <span ng-if="vm.user.id !== vm.viewingUserID">
+                    {{ vm.user.name }}
+                </span>
             </span>
             <span ng-if="vm.direction === 'suggestions'">
                 People you might know
@@ -39,16 +52,21 @@
                 </div>
                 <div class="">
                     <span ng-if="vm.isAuthenticated() && user.id !== vm.viewingUserID">
-                        <button ng-if="!user.viewingUserIsFollowing" class="btn btn-primary"
-                            ng-click="vm.follow(user)">
-                            <i class="fa fa-fw fa-plus"></i>
-                            <span>Follow</span>
-                        </button>
-                        <button ng-if="user.viewingUserIsFollowing" class="btn btn-success"
-                            ng-click="vm.unfollow(user)">
-                            <i class="fa fa-fw fa-check"></i>
-                            <span>Following</span>
-                        </button>
+                        <span ng-show="!user.followStatusResolved">
+                            <i class="fa fa-fw fa-spin fa-spinner"></i>
+                        </span>
+                        <span ng-show="user.followStatusResolved">
+                            <button ng-if="!user.viewingUserIsFollowing" class="btn btn-primary"
+                                ng-click="vm.follow(user)">
+                                <i class="fa fa-fw fa-plus"></i>
+                                <span>Follow</span>
+                            </button>
+                            <button ng-if="user.viewingUserIsFollowing" class="btn btn-success"
+                                ng-click="vm.unfollow(user)">
+                                <i class="fa fa-fw fa-check"></i>
+                                <span>Following</span>
+                            </button>
+                        </span>
                     </span>
                 </div>
             </li>

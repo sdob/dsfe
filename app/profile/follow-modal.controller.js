@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function FollowModalController($auth, $uibModalInstance, direction, dsimg, followService, localStorageService, user, users) {
+  function FollowModalController($auth, $timeout, $uibModalInstance, direction, dsimg, followService, localStorageService, user, users) {
     const vm = this;
     activate();
 
@@ -42,7 +42,11 @@
         vm.users.forEach((user) => {
           followService.userIsFollowing(user)
           .then((isFollowing) => {
-            user.viewingUserIsFollowing = isFollowing;
+            // Update UI in the next tick
+            $timeout(() => {
+              user.followStatusResolved = true;
+              user.viewingUserIsFollowing = isFollowing;
+            });
           });
         });
       }
@@ -93,6 +97,7 @@
 
   FollowModalController.$inject = [
     '$auth',
+    '$timeout',
     '$uibModalInstance',
     'direction',
     'dsimg',
