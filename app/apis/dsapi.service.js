@@ -61,16 +61,16 @@
         return $http.get(`${API_URL}/slipways/`);
       },
 
+      getUser: (id) => {
+        return $http.get(`${API_URL}/users/${id}/`);
+      },
+
       getUserDives: (id) => {
         return $http.get(`${API_URL}/users/${id}/dives/`);
       },
 
       getUserDivesites: (id) => {
         return $http.get(`${API_URL}/users/${id}/divesites/`);
-      },
-
-      getUser: (id) => {
-        return $http.get(`${API_URL}/users/${id}/`);
       },
 
       getUserMinimal: (id) => {
