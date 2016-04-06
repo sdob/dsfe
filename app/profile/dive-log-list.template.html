@@ -1,5 +1,5 @@
 <section class="profile-dive-log">
-    <div class="row comment" ng-repeat="dive in vm.user.dives | orderBy:'-'">
+    <div class="row comment" ng-repeat="dive in dives | orderBy:'-'">
         <div class="col-xs-12">
             <div class="profile-feed__item">
                 <div class="profile-feed__comment-actions">
@@ -12,7 +12,7 @@
                         </span>
                     </a>
                     <a href class="overlay-action-item--blue"
-                        ng-click="vm.summonDeleteDiveModal(dive)"
+                        ng-click="vm.summonConfirmDiveDeletionModal(dive)"
                         >
                         <span class="fa fa-stack">
                             <i class="fa fa-stack-2x fa-circle background"></i>

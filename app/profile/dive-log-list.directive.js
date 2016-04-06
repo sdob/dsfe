@@ -2,6 +2,12 @@
   'use strict';
   function diveLogList() {
     return {
+      controller: 'DiveLogListController',
+      controllerAs: 'vm',
+      scope: {
+        dives: '=',
+        user: '=',
+      },
       templateUrl: 'profile/dive-log-list.template.html',
     };
   }
