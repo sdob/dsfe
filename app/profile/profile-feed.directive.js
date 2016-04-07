@@ -7,8 +7,8 @@
       controllerAs: 'vm',
       link,
       scope: {
+        editable: '=',
         user: '=',
-        viewing: '=',
       },
       templateUrl: 'profile/profile-feed.template.html',
     };
