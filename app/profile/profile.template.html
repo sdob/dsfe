@@ -46,7 +46,7 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="js-profile-dives-tab">
-                    <dive-log-list dives="vm.user.dives" user="vm.user" ng-if="vm.user.dives.length"></dive-log-list>
+                    <dive-log-list user="vm.user" ng-if="vm.user.dives.length"></dive-log-list>
                     <div ng-if="!vm.user.dives.length" class="profile__no-dives">
                         <i class="fa fa-fw fa-frown-o"></i>
                         Nothing yet!
