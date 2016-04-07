@@ -1,10 +1,10 @@
 <section class="profile-dive-log">
-    <div class="row comment" ng-repeat="dive in dives | orderBy:'-'">
+    <div class="row comment" ng-repeat="dive in user.dives | orderBy:'-'">
         <div class="col-xs-12">
             <div class="profile-feed__item">
                 <div class="profile-feed__comment-actions">
                     <a href class="overlay-action-item--blue"
-                        ng-click="vm.summonDiveLogModal(dive)"
+                        ng-click="vm.summonLogDiveModal(dive)"
                         >
                         <span class="fa fa-stack">
                             <i class="fa fa-stack-2x fa-circle background"></i>
