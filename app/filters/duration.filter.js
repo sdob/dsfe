@@ -1,7 +1,8 @@
 (function() {
   'use strict';
   function durationFilter(moment) {
-    return (duration) => (moment.duration(duration).hours() * 60) + moment.duration(duration).minutes();
+    // Use moment.js to convert duration to minutes
+    return (duration) => moment.duration(duration).asMinutes();
   }
 
   durationFilter.$inject = ['moment'];
