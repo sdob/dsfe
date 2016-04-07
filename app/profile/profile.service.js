@@ -1,10 +1,12 @@
 // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 (function() {
   'use strict';
-  function profileService(dsapi) {
+  function profileService(dsapi, logDiveService) {
     let ownProfile; // cache the user's profile information here
     return {
       clear,
+      confirmDiveDeletion,
+      editDive,
       formatRequestData,
       formatResponseData,
       formatUserProfileImagesAdded,
@@ -14,6 +16,22 @@
 
     function clear() {
       ownProfile = undefined;
+    }
+
+    function confirmDiveDeletion(dive) {
+      return logDiveService.summonConfirmDiveDeletionModal(dive).result;
+    }
+
+    function editDive(dive) {
+      // We need to retrieve the divesite details first
+      return dsapi.getDivesite(dive.divesite.id)
+      .then((response) => {
+        const site = response.data;
+        const instance = logDiveService.summonLogDiveModal(dive, site);
+        console.log('editDive instance');
+        console.log(instance);
+        return instance.result;
+      });
     }
 
     // Convert snake-cased fields to camelCased fields
@@ -106,11 +124,11 @@
         });
       });
     }
-
   }
 
   profileService.$inject = [
     'dsapi',
+    'logDiveService',
   ];
   angular.module('divesites.profile').factory('profileService', profileService);
 })();

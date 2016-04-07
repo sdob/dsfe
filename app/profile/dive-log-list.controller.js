@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function DiveLogListController($scope, $timeout, $uibModal, dsapi, logDiveService) {
+  function DiveLogListController($scope, $timeout, $uibModal, dsapi, logDiveService, profileService) {
     const vm = this;
     activate();
 
@@ -16,6 +16,7 @@
      */
     function emitEventIfSuccessful(expectedReason, event) {
       return (reason) => {
+        console.log(reason);
         if (reason === expectedReason) {
           $scope.$emit(event);
         }
@@ -24,20 +25,13 @@
 
     function summonConfirmDiveDeletionModal(dive) {
       console.log('deleting');
-      const instance = logDiveService.summonConfirmDiveDeletionModal(dive);
-      // We might need to emit an event when the modal closes
-      instance.result.then(emitEventIfSuccessful('deleted', 'dive-log-updated'));
+      profileService.confirmDiveDeletion(dive)
+      .then(emitEventIfSuccessful('deleted', 'dive-log-updated'));
     }
 
     function summonLogDiveModal(dive) {
-      // We need to retrieve the divesite details first
-      dsapi.getDivesite(dive.divesite.id)
-      .then((response) => {
-        const site = response.data;
-        const instance = logDiveService.summonLogDiveModal(dive, site);
-        // We might need to emit an event when the modal closes
-        instance.result.then(emitEventIfSuccessful('logged', 'dive-log-updated'));
-      });
+      profileService.editDive(dive)
+      .then(emitEventIfSuccessful('logged', 'dive-log-updated'));
     }
   }
 
@@ -47,6 +41,7 @@
     '$uibModal',
     'dsapi',
     'logDiveService',
+    'profileService',
   ];
   angular.module('divesites.profile').controller('DiveLogListController', DiveLogListController);
 })();
