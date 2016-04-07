@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ProfileFeedController($auth, $scope, $timeout, dsactivity, dsimg, localStorageService) {
+  function ProfileFeedController($auth, $scope, $timeout, dsactivity, dsapi, dsimg, localStorageService, profileService) {
     const vm = this;
     activate();
 
@@ -97,8 +97,10 @@
     '$scope',
     '$timeout',
     'dsactivity',
+    'dsapi',
     'dsimg',
     'localStorageService',
+    'profileService',
   ];
   angular.module('divesites.profile').controller('ProfileFeedController', ProfileFeedController);
 })();
