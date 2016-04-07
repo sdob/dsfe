@@ -15,6 +15,13 @@
         id: userId,
       };
 
+      $scope.$on('dive-log-updated', (e) => {
+        dsapi.getUserDives(userId)
+        .then((response) => {
+          vm.user.dives = response.data;
+        });
+      });
+
       // Get this user's profile information from the API server
       dsapi.getUser(userId)
       .then((response) => {
