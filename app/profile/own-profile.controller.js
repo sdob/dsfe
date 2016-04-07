@@ -17,11 +17,25 @@
       vm.summonConfirmDeleteImageModal = summonConfirmDeleteImageModal;
       $scope.editable = true;
 
-      // Retrieve profile info
+      $scope.$on('dive-log-updated', (e) => {
+        console.log('heard dive-log-updated');
+        // For now, we'll just do a complete reload of the user profile
+        retrieveAndFormatOwnProfile();
+      });
+
+      retrieveAndFormatOwnProfile();
+
+    }
+
+    function retrieveAndFormatOwnProfile() {
+      // Retrieve and format profile info
       dsapi.getOwnProfile()
       .then((response) => {
+        // Format the user data
         vm.user = profileService.formatResponseData(response.data);
+        // Format the places added
         vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
+        // Broadcast an event to force UI updates
         $scope.$broadcast('user-loaded', vm.user);
 
         // Get images this user has uploaded
