@@ -350,6 +350,7 @@
   width: 100%;
   a {
     color: #fff;
+    font-size: 150%;
     font-weight: 500;
     padding: 8px 0px;
     text-decoration: none;
@@ -364,6 +365,7 @@
     text-align: center;
     transition: color 200ms, background 200ms;
     @media (min-width: $screen-sm-min) {
+      font-size: 100%;
       padding: 0px 16px;
       text-align: left;
     }
