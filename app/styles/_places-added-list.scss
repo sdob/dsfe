@@ -1,7 +1,11 @@
 .places-added__filter-link {
+  img {
+    transition: filter 500ms;
+  }
   &.disabled {
     img {
-      filter: opacity(25%);
+      opacity: 0.25;
+      transition: opacity 200ms;
     }
   }
 }
