@@ -18,12 +18,16 @@
 .filter-menu__category {
   margin-top: 4px;
   padding: 2px 4px;
-  transition: background 200ms;
+  label {
+    transition: background 200ms;
+    width: 100%;
+  }
   &:hover {
     background: $blue-700--0_17;
     cursor: pointer;
     label {
       cursor: pointer;
+      /* width: 100%; */
     }
   }
 }
