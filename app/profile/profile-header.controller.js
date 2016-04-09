@@ -122,6 +122,7 @@
         },
         size: 'lg',
       });
+
       // On modal close, follow a link to selected user's profile
       // (if a user was selected)
       instance.result
@@ -181,15 +182,20 @@
     }
 
     function updateUserFollowStats() {
+      console.log('updating follow stats');
       // Retrieve follower/follow lists
       dsactivity.getUserFollowers(vm.user.id)
       .then((response) => {
-        vm.followers = response.data;
+        $timeout(() => {
+          vm.followers = response.data;
+        });
       });
 
       dsactivity.getUserFollows(vm.user.id)
       .then((response) => {
-        vm.follows = response.data;
+        $timeout(() => {
+          vm.follows = response.data;
+        });
       });
     }
   }
