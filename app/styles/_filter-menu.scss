@@ -21,9 +21,10 @@
 
 .filter-menu__category-icon {
   height: 24px;
+  transition: opacity 200ms;
 }
 .filter-menu__category-icon.muted {
-  filter: opacity(50%);
+  opacity: 0.5;
 }
 
 .filter-menu__header-text {
