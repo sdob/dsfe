@@ -335,26 +335,32 @@
 .profile__sidebar-item {
   background: $blue-700;
   display: flex;
-  // margin-bottom: 16px;
   margin: 0px 8px 16px;
+  transition: background 300ms;
+  width: 100%;
+  
+  @media (min-width: $screen-sm-min) {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
   &:first-child {
     margin-left: 0px;
   }
   &:last-child {
     margin-right: 0px;
   }
-  @media (min-width: $screen-sm-min) {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-  width: 100%;
+
   a {
     color: #fff;
     font-size: 150%;
     font-weight: 500;
     padding: 8px 0px;
+    text-align: center;
     text-decoration: none;
+    transition: color 200ms, background 200ms;
     width: 100%;
+
     &:active,
     &:hover,
     &:focus {
@@ -362,8 +368,6 @@
       background: darken($blue-700, 30%);
       text-decoration: none;
     }
-    text-align: center;
-    transition: color 200ms, background 200ms;
     @media (min-width: $screen-sm-min) {
       font-size: 100%;
       padding: 0px 16px;
