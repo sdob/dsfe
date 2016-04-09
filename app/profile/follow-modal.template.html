@@ -1,4 +1,5 @@
-<div class="ds-modal">
+<div class="ds-modal" ng-class="{'ds-modal--is-working': vm.isLoading}">
+    <modal-mask message="Loading..." ng-show="vm.isLoading"></modal-mask>
     <div class="ds-modal__dismiss">
         <a href class="overlay-action-item" ng-click="vm.dismiss()">
             <span class="fa fa-stack">

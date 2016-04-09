@@ -17,9 +17,11 @@
 
       // If we're going to show suggestions, we need to show them first
       if (direction === 'suggestions') {
+        vm.isLoading = true;
         console.log('finding suggestions');
         vm.getSuggestions()
         .then((users) => {
+          vm.isLoading = false;
           console.log('suggestions returned!');
           console.log(users);
           vm.users = users;
