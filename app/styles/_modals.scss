@@ -38,6 +38,7 @@
 .ds-modal--is-working {
   .ds-modal__content {
     filter: blur(2px);
+    -webkit-filter: blur(2px);
   }
 }
 .ds-modal__dismiss {
