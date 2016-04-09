@@ -17,6 +17,15 @@
 
 .filter-menu__category {
   margin-top: 4px;
+  padding: 2px 4px;
+  transition: background 200ms;
+  &:hover {
+    background: $blue-700--0_17;
+    cursor: pointer;
+    label {
+      cursor: pointer;
+    }
+  }
 }
 
 .filter-menu__category-icon {
@@ -32,7 +41,7 @@
 }
 .filter-menu__section {
   border-top: solid 1px rgba(0, 0, 0, 0.16);
-  padding: 8px 16px;
+  padding: 8px 8px;
 }
 .filter-menu__section-header {
   font-size: 16px;
