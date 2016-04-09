@@ -1,14 +1,19 @@
 (function() {
   'use strict';
 
-  function DiveLogListController($scope, $timeout, $uibModal, dsapi, logDiveService, profileService) {
+  function DiveLogListController($auth, $scope, $timeout, $uibModal, dsapi, localStorageService, logDiveService, profileService) {
     const vm = this;
     activate();
 
     function activate() {
       console.log('DiveLogListController.activate()');
+      vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonConfirmDiveDeletionModal = summonConfirmDiveDeletionModal;
       vm.summonLogDiveModal = summonLogDiveModal;
+
+      if (vm.isAuthenticated()) {
+        vm.viewingUserID = localStorageService.get('user');
+      }
     }
 
     /* Return a function that takes a reason, compares it to the expected reason,
@@ -36,10 +41,12 @@
   }
 
   DiveLogListController.$inject = [
+    '$auth',
     '$scope',
     '$timeout',
     '$uibModal',
     'dsapi',
+    'localStorageService',
     'logDiveService',
     'profileService',
   ];

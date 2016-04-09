@@ -2,7 +2,9 @@
     <div class="row comment" ng-repeat="dive in user.dives | orderBy:'-'">
         <div class="col-xs-12">
             <div class="profile-feed__item">
-                <div class="profile-feed__comment-actions">
+                <div class="profile-feed__comment-actions"
+                    ng-if="vm.viewingUserID === user.id"
+                    >
                     <a href class="overlay-action-item--blue"
                         ng-click="vm.summonLogDiveModal(dive)"
                         >
