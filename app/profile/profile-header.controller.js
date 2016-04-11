@@ -123,8 +123,10 @@
         size: 'lg',
       });
 
-      // When the instance is closed or dismissed,
-      // update the user's follow stats
+      // When the instance is closed or dismissed, update the user's follow stats.
+      // We do this because changes are made while the modal is open, and don't
+      // require the modal to be closed with a success-like result in order for
+      // the header to need updating
       instance.closed.then(updateUserFollowStats);
 
       // On modal close, follow a link to selected user's profile
