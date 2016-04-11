@@ -27,35 +27,71 @@
     // Minimum number of nearby markers before we cluster them
     const MINIMUM_CLUSTER_SIZE = 4;
 
-    // Flag to tell us whether the right-click menu is open
+    // Flag to tell us whether the right-click menu is open, which is subject
+    // to change during the controller's lifetime
     let contextMenuIsOpen = false;
-    // ID of the currently selected marker
+    // ID of the currently selected marker, which is subject to change
+    // during the controller's lifetime
     let selectedMarkerID;
 
     // angular-google-maps doesn't seem to be happy if these are attached to
-    // $scope.vm
+    // $scope.vm, so they have to stay in $scope
     $scope.control = {};
+    // Initialize markers as an empty array so that it's never undefined
+    // (and angular-google-maps doesn't complain). This lives in
+    // $scope so that nested controllers can access it.
+    $scope.mapMarkers = [];
     $scope.markerControl = {};
+    // 'Loading' state, initially true (so the user knows that something
+    // is happening)
+    vm.isLoading = true;
+    // Authentication check
+    vm.isAuthenticated = $auth.isAuthenticated;
+    // Retrieve stored map settings
+    vm.map = mapService.get();
+    // Set map event listeners
+    vm.mapEvents =  {
+      click: mapClick,
+      dragstart: mapDragStart,
+      idle: mapIdle,
+      rightclick: mapRightClick,
+    };
+    // Set map marker event listeners
+    vm.markerEvents = {
+      click: markerClick,
+    };
+    // Marker options
+    vm.markerOptions = {
+    };
+    // Map options
+    vm.options = {
+      minZoom: 3,
+      streetViewControl: false,
+    };
+    // Cluster/spiderfy options
+    vm.typeOptions = {
+      keepSpiderfied: true, // keep markers spiderfied when clicked
+      minimumClusterSize: MINIMUM_CLUSTER_SIZE, // prefer larger clusters
+      nearbyDistance: 48, // Increase pixel radius
+      imagePath: '/img/m', // Prefix for cluster-marker images
+    };
+    // Cluster/spiderfy events
+    vm.typeEvents = {
+    };
 
+    // Run activate block
     activate();
 
     /* Run whatever's necessary when the controller is initialized. */
     function activate() {
-      // Bind values to $scope.vm
-      bindValues();
-
       // Wait for Google API to load and then do whatever depends on it
       awaitGoogleApi();
-
       // Clean up contextMenuService
       closeContextMenu();
-
       // Handle search path parameters
       checkSearchPath();
-
       // Set up event listeners
       registerEventListeners();
-
       // Retrieve site information
       retrieveSites();
     }
@@ -71,64 +107,6 @@
           position: maps.ControlPosition.BOTTOM_CENTER,
         };
       });
-    }
-
-    // Bind any values to $scope.vm that don't require HTTP calls to
-    // populate them
-    function bindValues() {
-      // 'Loading' state, initially true (so the user knows that something
-      // is happening)
-      vm.isLoading = true;
-
-      // Authentication check
-      vm.isAuthenticated = $auth.isAuthenticated;
-
-      // Initialize markers as an empty array so that it's never undefined
-      // (and angular-google-maps doesn't complain). This lives in
-      // $scope so that nested controllers can access it.
-      $scope.mapMarkers = [];
-
-      // Retrieve stored map settings
-      vm.map = mapService.get();
-
-      // Map 'control' object with which to manipulate the
-      // Google map object directly
-      $scope.control = {};
-
-      // Set map event listeners
-      vm.mapEvents =  {
-        click: mapClick,
-        dragstart: mapDragStart,
-        idle: mapIdle,
-        rightclick: mapRightClick,
-      };
-
-      // Set map marker event listeners
-      vm.markerEvents = {
-        click: markerClick,
-      };
-
-      // Marker options
-      vm.markerOptions = {
-      };
-
-      // Map options
-      vm.options = {
-        minZoom: 3,
-        streetViewControl: false,
-      };
-
-      // Cluster/spiderfy options
-      vm.typeOptions = {
-        keepSpiderfied: true, // keep markers spiderfied when clicked
-        minimumClusterSize: MINIMUM_CLUSTER_SIZE, // prefer larger clusters
-        nearbyDistance: 48, // Increase pixel radius
-        imagePath: '/img/m',
-      };
-
-      // Cluster/spiderfy events
-      vm.typeEvents = {
-      };
     }
 
     function checkSearchPath() {
@@ -172,15 +150,19 @@
       // only one of these three will be true, but we'll return early from
       // each case to avoid malformed queries like '?divesite=foo&compressor=bar'
       if (c.params) {
-        const type = Object.keys(c.params)[0]; // only pay attention to the first key
+        // The site type is given by the first search parameter key
+        const type = Object.keys(c.params)[0];
+        // The site UUID is given by this key's value
         const id = c.params[type];
+        // Find the site marker by ID
         const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
-        // Set the marker icon
+        // Set the marker icon in the next digest cycle
         $timeout(() => {
           setSelectedMarker(selectedMarker);
         });
       }
 
+      // We need to tell summonCard() what type of site this is
       if (c.params.divesite) {
         return summonCard(c.params.divesite, 'divesite');
       }
