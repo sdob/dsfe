@@ -67,10 +67,10 @@
         <div>
             <div class="btn-group ds-btn-group--wide">
                 <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span ng-if="!vm.dive.wind.value">
+                    <span ng-if="vm.dive.wind.value === undefined">
                         Select one...
                     </span>
-                    <span ng-if="vm.dive.wind.value">
+                    <span ng-if="vm.dive.wind.value !== undefined">
                         <i class="wi wi-fw" ng-class="'wi-wind-beaufort-' + vm.dive.wind.value"></i> {{ vm.dive.wind.description }}
                     </span>
                     <span class="caret"></span>
