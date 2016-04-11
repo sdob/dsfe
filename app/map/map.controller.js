@@ -111,21 +111,36 @@
       });
     }
 
+    /*
+     * If there's a query param in the URL when the controller
+     * is activated, then try and summon an information card,
+     * and (because we're activating the controller, thus arriving
+     * here for the first time from elsewhere) get the site's
+     * coordinates and put the map's centre there
+     */
     function checkSearchPath() {
-      // If there's a query param in the URL when the controller
-      // is activated, then try and summon an information card,
-      // and (because we're activating the controller, thus arriving
-      // here for the first time from elsewhere) get the site's
-      // coordinates and put the map's centre there
+      let id;
+      let type;
+
+      // Look at the search path for a 'divesite', 'slipway', or
+      // 'compressor' query, and set the type and ID accordingly
+      // if we find one
       if ($location.$$search.divesite) {
-        setMapCentre($location.$$search.divesite, 'divesite');
-        summonCard($location.$$search.divesite, 'divesite');
+        id = $location.$$search.divesite;
+        type = 'divesite';
       } else if ($location.$$search.slipway) {
-        setMapCentre($location.$$search.slipway, 'slipway');
-        summonCard($location.$$search.slipway, 'slipway');
+        id = $location.$$search.slipway;
+        type = 'slipway';
       } else if ($location.$$search.compressor) {
-        setMapCentre($location.$$search.compressor, 'compressor');
-        summonCard($location.$$search.compressor, 'compressor');
+        id = $location.$$search.compressor;
+        type = 'compressor';
+      }
+
+      // If we've found a site type and ID that we understand, centre the
+      // map on the coordinates and then summon an information card
+      if (id && type) {
+        setMapCentre(id, type);
+        summonCard(id, type);
       }
     }
 
