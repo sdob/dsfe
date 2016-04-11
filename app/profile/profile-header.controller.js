@@ -3,21 +3,33 @@
   function ProfileHeaderController($auth, $location, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
     const cloudinaryIdKey = 'public_id';
     const vm = this;
+    // This flag lets the UI know whether we've received the profile image
     vm.dsimgHasResponded = false;
+    // Let the viewing user follow this user (if they're not the same user)
     vm.follow = follow;
+    // This flag lets the UI know whether we've resolved the question of
+    // whether the viewing user is following this user (if they're not the
+    // same user)
     vm.hasLoadedFollowStatus = false;
+    // Pointer to the auth service's authentication checker
     vm.isAuthenticated = $auth.isAuthenticated;
+    // Confirm profile image deletion
     vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
+    // Bring up the follow/follower information modal for this user
     vm.summonFollowModal = summonFollowModal;
-    vm.summonProfileImageUploadModal = summonImageUploadModal;
+    // Allow the user to edit their profile
+    vm.summonProfileImageUploadModal = summonProfileImageUploadModal;
+    // Let the viewing user unfollow this user (if they're not the same user)
     vm.unfollow = unfollow;
 
     // Run activate block
     activate();
 
+    // Activate block: make API requests
     function activate() {
       console.log('ProfileHeaderController.activate()');
 
+      // Retrieve the viewing user's ID
       if (vm.isAuthenticated()) {
         vm.ownID = localStorageService.get('user');
       }
@@ -43,31 +55,34 @@
           });
         }
 
+        // Retrieve this user's full profile image URL
         dsimg.getUserProfileImage(vm.user.id)
         .then((response) => {
+          // Update the UI that we're no longer waiting
+          vm.dsimgHasResponded = true;
           // If we get a successful response, use it for the main profile image
-          const url = $.cloudinary.url(response.data.public_id, {
-            width: 318,
-            height: 318,
-            crop: 'fill',
-          });
-          // Push UI update to the next tick
-          $timeout(() => {
-            vm.profileImageUrl = url;
-            vm.dsimgHasResponded = true;
-          }, 0);
+          if (response && response.data && response.data.public_id) {
+            // Get a suitably-formatted version of the profile image
+            const url = formatHeroImageUrl(response);
+            // Push UI update to the next tick
+            $timeout(() => {
+              // Put the profile image URL into scope
+              vm.profileImageUrl = url;
+            });
+          }
         })
         .catch((err) => {
-          // On failure (including 404) just make sure that the UI is clean
+          // On failure, make sure that the UI is clean
           console.error(err);
           $timeout(() => {
             vm.dsimgHasResponded = true;
-          }, 0);
+          });
         });
       });
     }
 
     function follow() {
+      // Make the API request
       dsactivity.followUser(vm.user.id)
       .then((response) => {
         // The viewing user is now following this profile's user
@@ -79,6 +94,8 @@
       });
     }
 
+    // Take an API response, pass it to the Cloudinary jQuery API, and
+    // return a hero-sized image URL
     function formatHeroImageUrl(response) {
       const url = $.cloudinary.url(response.data.public_id, {
         width: 318,
@@ -90,6 +107,7 @@
       return url;
     }
 
+    // Confirm that the user wants to delete their profile image
     function summonDeleteProfileImageModal() {
       console.log('summoning delete profile image modal');
       const instance = $uibModal.open({
@@ -101,6 +119,9 @@
         },
         size: 'sm',
       });
+
+      // When the modal is closed (not dismissed), check the reason, and
+      // if the user asked to delete the image, update the UI accordingly
       instance.result.then((reason) => {
         if (reason === 'deleted') {
           console.log('deleted');
@@ -111,6 +132,10 @@
       });
     }
 
+    // Summon a follow modal. Direction here can be:
+    // 'follows': (users whom this user follows)
+    // 'followers': (users who follow this user)
+    // 'suggestions' (a list of suggestions, to be shown on the user's own profile)
     function summonFollowModal(direction, userList) {
       const instance = $uibModal.open({
         templateUrl: 'profile/follow-modal.template.html',
@@ -141,13 +166,14 @@
         }
       });
 
+      // Change location to the selected user's profile
       function goToProfile(user) {
         $location.path(`/users/${user.id}`);
       }
     }
 
-    function summonImageUploadModal() {
-      // Summon a modal dialog to allow the user to upload a new image
+    // Summon a modal dialog to allow the user to upload a new image
+    function summonProfileImageUploadModal() {
       const instance = $uibModal.open({
         templateUrl: 'profile/upload-profile-image-modal.template.html',
         controller: 'ProfileImageUploadController',
@@ -164,6 +190,7 @@
         if (reason === 'uploaded') {
           dsimg.getUserProfileImage(vm.user.id)
           .then((response) => {
+            // format the profile image
             const url = formatHeroImageUrl(response);
             $timeout(() => {
               vm.profileImageUrl = url;
@@ -176,6 +203,7 @@
       });
     }
 
+    // Stop the viewing user from following this user
     function unfollow() {
       dsactivity.unfollowUser(vm.user.id)
       .then((response) => {
@@ -188,9 +216,10 @@
       });
     }
 
+    // Update the follow/follower statistics
     function updateUserFollowStats() {
       console.log('updating follow stats');
-      // Retrieve follower/follow lists
+      // Retrieve follower list
       dsactivity.getUserFollowers(vm.user.id)
       .then((response) => {
         $timeout(() => {
@@ -198,6 +227,7 @@
         });
       });
 
+      // Retrieve follow list
       dsactivity.getUserFollows(vm.user.id)
       .then((response) => {
         $timeout(() => {
