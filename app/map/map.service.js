@@ -132,14 +132,16 @@
         ls.set('map', self.map);
       }
 
-      // If called with a pair of strings, set the prop
+      // If called with a pair of strings, treat the first as a key and
+      // the second as a value
       if (typeof k === 'string') {
         self.map[k] = v;
         ls.set('map', self.map);
         return;
       }
 
-      return; // We were called with invalid params
+      // We were called with invalid params, so return undefined
+      return;
     }
 
     function truncateCoordinate(n) {
