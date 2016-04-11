@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="30"
-   height="41.25"
+   width="29"
+   height="42"
    id="svg4484"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="boatlaunch_new.svg">
+   sodipodi:docname="slipway.svg">
   <defs
      id="defs4486" />
   <sodipodi:namedview
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,12 +51,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1011.1122)">
+     transform="translate(0,-1010.3622)">
     <path
-       d="m 14.999998,1011.7372 c -7.7299939,0 -13.999994,6.27 -13.999994,14 0,10.5 13.999994,26 13.999994,26 0,0 13.999998,-15.5 13.999998,-26 0,-7.73 -6.269999,-14 -13.999998,-14 z"
+       d="m 14.499994,1011.8622 c -7.7299939,0 -13.999994,6.27 -13.999994,14 0,10.5 13.999994,26 13.999994,26 0,0 13.999998,-15.5 13.999998,-26 0,-7.73 -6.269999,-14 -13.999998,-14 z"
        id="path3053"
        inkscape:connector-curvature="0"
-       style="stroke:#ffffff;fill:#fbc02d;fill-opacity:1"
+       style="fill:#fbc02d;fill-opacity:1;stroke:#ffffff"
        sodipodi:nodetypes="sscss" />
     <g
        id="g5111"
