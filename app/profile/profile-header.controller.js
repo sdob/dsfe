@@ -123,16 +123,20 @@
         size: 'lg',
       });
 
+      // When the instance is closed or dismissed,
+      // update the user's follow stats
+      instance.closed.then(updateUserFollowStats);
+
       // On modal close, follow a link to selected user's profile
-      // (if a user was selected)
+      // (if a user was selected) --- this handles the fact that
+      // $locationChangeStart will close the modal instead
       instance.result
       .then((user) => {
         if (user !== undefined) {
           console.log(`heading for user ${user.id}`);
           return goToProfile(user);
         }
-      })
-      .then(updateUserFollowStats);
+      });
 
       function goToProfile(user) {
         $location.path(`/users/${user.id}`);
