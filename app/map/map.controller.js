@@ -16,7 +16,9 @@
     uiGmapGoogleMapApi
   ) {
     const vm = this;
+    // Scope-independent constants relating to markers
     const { defaultMarkerIcons, selectedMarkerIcons } = markerService;
+    // Scope-independent functions relating to markers
     const { shouldBeVisible } = markerService;
     const { DEFAULT_DIVESITE_Z_INDEX, DEFAULT_SITE_Z_INDEX, SELECTED_SITE_Z_INDEX, transformAmenityToMarker, transformSiteToMarker } = markerService;
 
@@ -212,6 +214,8 @@
       $location.search(`${item.type}=${item.id}`);
     }
 
+    // Close the right-click context menu, remove it from the DOM if present,
+    // and let the controller know that the context menu is closed
     function closeContextMenu() {
       contextMenuService.clear();
       if (contextMenuIsOpen) {
@@ -291,13 +295,12 @@
       }
     }
 
+    /*
+     * Make AJAX requests to DSAPI for site details. These can return in
+     * any order, and we don't want to wait for them all to return, so we'll
+     * concatenate results to the mapMarkers array as they arrive.
+     */
     function retrieveSites() {
-      /*
-       * Make AJAX requests to DSAPI for site details. These can return in
-       * any order, and we don't want to wait for them all to return, so we'll
-       * concatenate results to the mapMarkers array as they arrive.
-       */
-
       // Retrieve divesites and create markers
       const getDivesites = dsapi.getDivesites()
       .then((response) => {
@@ -314,7 +317,7 @@
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
-      // Retrieve slipways and createMarkers
+      // Retrieve slipways and create markers
       const getSlipways = dsapi.getSlipways()
       .then((response) => {
         const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
@@ -326,6 +329,8 @@
       // so we can tag it visually
       Promise.all([getDivesites, getCompressors, getSlipways])
       .then(() => {
+        // If the search path is asking us for a particular site, then
+        // summon its information card
         if ($location.$$search) {
           const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
           const id = $location.$$search[type];
@@ -340,23 +345,28 @@
     }
 
     function setSelectedMarker(marker) {
+      // If we're holding a reference to a previously-selected marker,
+      // find and deselect it
       if (selectedMarkerID) {
         const oldSelectedMarker = $scope.mapMarkers.filter((x) => x.id === selectedMarkerID)[0];
-        // oldSelectedMarker may have been deleted or removed from the markers
+        // The previously-selected marker may have been deleted or removed
+        // from the markers, so we need to check that it still exists
         if (oldSelectedMarker) {
-          // Set the marker's icon to 'default'
+          // Set the previously-selected marker's icon to 'default'
           oldSelectedMarker.icon = defaultMarkerIcons[oldSelectedMarker.type];
-          // Set z-index to its default
+          // Set the previously-selected marker's z-index to its default
           oldSelectedMarker.options.zIndex = oldSelectedMarker.type === 'divesite' ? DEFAULT_DIVESITE_Z_INDEX : DEFAULT_SITE_Z_INDEX;
         }
       }
 
-      // marker may be undefined if we're dismissing an information card
+      // 'marker' may be undefined if we're dismissing an information card
       if (marker) {
         // Set the marker's icon to 'selected'
         marker.icon = selectedMarkerIcons[marker.type];
-        // Set z-index
+        // Set z-index to maximum (so that it appears in front of any
+        // overlapping markers)
         marker.options.zIndex = SELECTED_SITE_Z_INDEX;
+        // Remember that this is now the selected marker
         selectedMarkerID = marker.id;
       }
     }
@@ -364,21 +374,25 @@
     /* Return a listener that will set the location path */
     function markerClick(marker, event, model, args) {
       // model.type should always be defined, but if it isn't, we'll assume
-      // that it's a divesite
+      // that it's a divesite (for backwards-compatibility)
       const type = model.type === undefined ? 'divesite' : model.type;
+      // Set the search path to point to this site. This controller will handle
+      // everything from there
       $location.search(`${type}=${model.id}`);
     }
 
+    /*
+     * Register listeners for events bubbling up (from child controllers)
+     * and down (from $rootScope)
+     */
     function registerEventListeners() {
       // Listen for filter menu changes
       $scope.$on('filter-preferences', listenForPreferenceChanges);
       // Listen for item selections in the search menu
       $scope.$on('search-selection', listenForSearchSelection);
-
       // Listen for an information card declaring that it wants to be removed.
       // In this case, we remove the element *and* clear the search path.
       $scope.$on('please-kill-me', handlePleaseKillMe);
-
       // Listen for $routeUpdate events
       $scope.$on('$routeUpdate', handleRouteUpdate);
     }
@@ -394,22 +408,24 @@
       });
     }
 
-    /* Summon an information card for a site */
+    /*
+    * Summon an information card for a site. This does the heavy lifting.
+    */
     function summonCard(id, type) {
-      // Remove any existing DOM elements
+      // Remove any existing information-card DOM elements
       $('information-card').remove();
 
-      // Get the directive that we should be adding, based on the marker's type
-      // const { directiveString } = informationCardService.apiCalls[type] || informationCardService.apiCalls.divesite;
+      // The directive we're bringing in is an informationCard, whatever the
+      // type of the site we're looking for information on
       const directiveString = '<information-card></information-card>';
 
       // Create a new scope for the card directive; doing this means
       // that we'll need to destroy it manually too
       const scope = $scope.$new();
 
-      // Give the information card the type and id
-      // scope.id = id;
-      // scope.type = type;
+      // Pre-warn the information card of the site's ID and type (so that
+      // it can update itself with some basic information before making
+      // the API request to get the details)
       scope.site = {
         id,
         type,
@@ -417,7 +433,8 @@
 
       // If we already have the site list in memory (which we should
       // in most circumstances), then pre-load the information card scope
-      // with details
+      // with details, allowing the controller to populate its template
+      // while we're waiting for an API response
       if ($scope.mapMarkers) {
         const marker = $scope.mapMarkers.filter((m) => m.id === scope.site.id)[0];
         if (marker) {
@@ -427,7 +444,8 @@
         }
       }
 
-      // Compile the directive and add it to the DOM
+      // Compile the directive and add it to the DOM. Everything from here on
+      // will be taken care of by InformationCardController
       $('map').append($compile(directiveString)(scope));
     }
 
