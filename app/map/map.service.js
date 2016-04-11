@@ -103,6 +103,10 @@
       return self.map;
     }
 
+    /*
+     * Given a site ID and type, ping the API and return just its
+     * lat/lng coordinates
+     */
     function getSiteCoordinates(id, type) {
       const { apiCall } = informationCardService.apiCalls[type];
       return apiCall(id)
