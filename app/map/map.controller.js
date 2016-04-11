@@ -90,12 +90,11 @@
       awaitGoogleApi();
       // Clean up contextMenuService
       closeContextMenu();
-      // Handle search path parameters
-      checkSearchPath();
       // Set up event listeners
       registerEventListeners();
       // Retrieve site information
-      retrieveSites();
+      retrieveSites()
+      .then(checkSearchPath);
     }
 
     // Wait for the maps API to be ready, then store a ref to it
@@ -349,6 +348,8 @@
           const type = Object.keys($location.$$search)[0]; // only pay attention to the first key
           const id = $location.$$search[type];
           const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
+
+          console.log('promise.all finished');
           // Set the marker icon and remove the 'loading' indicator
           $timeout(() => {
             vm.isLoading = false;
@@ -411,15 +412,26 @@
       $scope.$on('$routeUpdate', handleRouteUpdate);
     }
 
-    /* Given an ID and a type, retrieve the site info and set the map centre */
+    /*
+     * Given an ID and a type, retrieve the site info and set the map centre,
+     * checking our current knowledge of the sites first
+     */
     function setMapCentre(id, type) {
-      mapService.getSiteCoordinates(id, type)
-      .then((latLng) => {
-        vm.map.center = {
-          latitude: latLng.latitude,
-          longitude: latLng.longitude,
-        };
-      });
+      // Look for a map marker with this (id, type) pair before pinging the API
+      const match = $scope.mapMarkers.filter((m) => m.id === id && m.type === type)[0];
+      if (match) {
+        // If we find a match, then just use its coordinates to centre the map
+        vm.map.center = match.loc;
+      } else {
+        // If we don't find a match, then send an API request
+        mapService.getSiteCoordinates(id, type)
+        .then((latLng) => {
+          vm.map.center = {
+            latitude: latLng.latitude,
+            longitude: latLng.longitude,
+          };
+        });
+      }
     }
 
     /*
