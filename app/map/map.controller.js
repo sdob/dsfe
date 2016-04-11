@@ -319,7 +319,6 @@
       // Retrieve divesites and create markers
       const getDivesites = dsapi.getDivesites()
       .then((response) => {
-        vm.sites = response.data; // Allow us to use the sites in other controllers
         $scope.mapMarkers = $scope.mapMarkers.concat(response.data.map(transformSiteToMarker));
         updateMarkerVisibility(filterPreferences.preferences);
       });
