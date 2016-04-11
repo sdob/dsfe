@@ -342,7 +342,7 @@
 
       // When all of the map markers have been retrieved, try to find the selected marker
       // so we can tag it visually
-      Promise.all([getDivesites, getCompressors, getSlipways])
+      return Promise.all([getDivesites, getCompressors, getSlipways])
       .then(() => {
         // If the search path is asking us for a particular site, then
         // summon its information card
