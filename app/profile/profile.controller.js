@@ -27,7 +27,7 @@
         // Broadcast an event to child controllers letting them know that
         // the information has arrived
         $scope.$broadcast('user-loaded', vm.user);
-      })
+      });
 
       // Retrieve images this user has uploaded
       dsimg.getUserImages(vm.user.id)
