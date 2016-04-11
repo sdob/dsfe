@@ -3,19 +3,20 @@
   function ProfileHeaderController($auth, $location, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
     const cloudinaryIdKey = 'public_id';
     const vm = this;
+    vm.dsimgHasResponded = false;
+    vm.follow = follow;
+    vm.hasLoadedFollowStatus = false;
+    vm.isAuthenticated = $auth.isAuthenticated;
+    vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
+    vm.summonFollowModal = summonFollowModal;
+    vm.summonProfileImageUploadModal = summonImageUploadModal;
+    vm.unfollow = unfollow;
+
+    // Run activate block
     activate();
 
     function activate() {
       console.log('ProfileHeaderController.activate()');
-
-      vm.dsimgHasResponded = false;
-      vm.follow = follow;
-      vm.hasLoadedFollowStatus = false;
-      vm.isAuthenticated = $auth.isAuthenticated;
-      vm.summonDeleteProfileImageModal = summonDeleteProfileImageModal;
-      vm.summonFollowModal = summonFollowModal;
-      vm.summonProfileImageUploadModal = summonImageUploadModal;
-      vm.unfollow = unfollow;
 
       if (vm.isAuthenticated()) {
         vm.ownID = localStorageService.get('user');
