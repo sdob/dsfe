@@ -6,7 +6,7 @@
     activate();
 
     function activate() {
-      vm.direction = direction; // 'followers' or 'follows'?
+      vm.direction = direction; // 'followers' or 'follows' or 'suggestions'?
       vm.dismiss = dismiss;
       vm.getSuggestions = getSuggestions;
       vm.follow = follow;
