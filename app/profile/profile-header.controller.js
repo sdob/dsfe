@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileHeaderController($auth, $location, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
+  function ProfileHeaderController($auth, $location, $rootScope, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
     const cloudinaryIdKey = 'public_id';
     const vm = this;
     // This flag lets the UI know whether we've received the profile image
@@ -126,6 +126,7 @@
       instance.result.then((reason) => {
         if (reason === 'deleted') {
           console.log('deleted');
+          $rootScope.$broadcast('profile-image-changed');
           $timeout(() => {
             vm.profileImageUrl = undefined;
           });
@@ -193,9 +194,10 @@
           .then((response) => {
             // format the profile image
             const url = formatHeroImageUrl(response);
+            $rootScope.$broadcast('profile-image-changed');
             $timeout(() => {
               vm.profileImageUrl = url;
-            }, 0);
+            });
           })
           .catch((err) => {
             console.error(`this shouldn't happen - we've uploaded an image`);
@@ -241,6 +243,7 @@
   ProfileHeaderController.$inject = [
     '$auth',
     '$location',
+    '$rootScope',
     '$scope',
     '$timeout',
     '$uibModal',
