@@ -4,6 +4,7 @@
     $auth,
     $document,
     $location,
+    $scope,
     $timeout,
     $uibModal,
     dsimg,
@@ -27,6 +28,16 @@
           vm.userProfileThumbnailImage = url;
         });
       }
+
+      $scope.$on('profile-image-changed', () => {
+        if (localStorageService.get('user')) {
+          const userID = localStorageService.get('user');
+          retrieveAndFormatProfileThumbnailImage(userID)
+          .then((url) => {
+            vm.userProfileThumbnailImage = url;
+          });
+        }
+      });
     }
 
     function formatDsimgResponse(response) {
@@ -84,6 +95,7 @@
     '$auth',
     '$document',
     '$location',
+    '$scope',
     '$timeout',
     '$uibModal',
     'dsimg',
