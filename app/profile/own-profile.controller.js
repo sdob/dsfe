@@ -28,6 +28,20 @@
       // Retrieve the user's own (expanded) profile data
       retrieveAndFormatOwnProfile();
 
+      // Get images this user has uploaded
+      dsimg.getUserImages(vm.user.id)
+      .then((response) => {
+        console.log('images added');
+        console.log(response.data);
+        // Push scope update into next tick
+        $timeout(() => {
+          // Format the images added
+          vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
+          console.log(vm.user.imagesAdded);
+        });
+      })
+      .catch(handleErrorResponse);
+
       // Listen for events telling us that the dive log has changed, so
       // that we can update the user's statistics in the header
       $scope.$on('dive-log-updated', (e) => {
@@ -58,14 +72,6 @@
         vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
         // Broadcast an event to force UI updates
         $scope.$broadcast('user-loaded', vm.user);
-      })
-      .catch(handleErrorResponse);
-
-      // Get images this user has uploaded
-      dsimg.getUserImages(vm.user.id)
-      .then((response) => {
-        // Format the images added
-        vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
       })
       .catch(handleErrorResponse);
     }

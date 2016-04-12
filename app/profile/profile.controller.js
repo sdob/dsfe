@@ -32,7 +32,9 @@
       // Retrieve images this user has uploaded
       dsimg.getUserImages(vm.user.id)
       .then((response) => {
-        vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
+        $timeout(() => {
+          vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
+        });
       });
 
       // Listen for events emitted by the dive log controller
