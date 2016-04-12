@@ -9,7 +9,7 @@
         </a>
     </div>
     <div class="ds-modal__content">
-        <h3>
+        <h3 class="follow-modal__header">
             <span ng-if="vm.direction === 'follows'">
                 People
                 <span ng-show="vm.user.id == vm.viewingUserID">
@@ -35,8 +35,12 @@
         </h3>
         <div class="follow-modal__no-suggestions"
             ng-show="vm.direction === 'suggestions' && !vm.isLoading && vm.users.length === 0">
-            <i class="fa fa-fw fa-frown-o"></i>
-            We can't find anyone for you to follow.
+            <p>
+                <i class="fa fa-fw fa-frown-o"></i>
+            </p>
+            <p>
+                We can't find anyone for you to follow right now.
+            </p>
         </div>
         <ul ng-show="vm.users.length > 0" class="list-unstyled">
             <li style="display: flex; justify-content: space-between; margin-bottom: 16px;" ng-repeat="user in vm.users">
