@@ -7,6 +7,7 @@
     function activate() {
       // Set bindable values
       vm.cancel = cancel;
+      vm.isSaving = false;
       vm.saveProfile = saveProfile;
 
       const userId = localStorageService.get('user');
@@ -34,9 +35,11 @@
     }
 
     function saveProfile() {
+      vm.isSaving = true;
       console.log(vm.user);
       dsapi.updateProfile(profileService.formatRequestData(vm.user))
       .then((response) => {
+        vm.isSaving = false;
         console.log(response.data);
         $location.path('/me');
       })

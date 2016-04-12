@@ -33,7 +33,13 @@
                     Cancel
                 </button>
                 <button ng-click="vm.saveProfile()" class="btn btn-primary big-button">
-                    Save
+                    <span ng-show="vm.isSaving">
+                        <i class="fa fa-fw fa-spinner fa-spin"></i>
+                    </span>
+                    </span>
+                    <span ng-show="!vm.isSaving">
+                        Save
+                    </span>
                 </button>
             </div>
         </section>
