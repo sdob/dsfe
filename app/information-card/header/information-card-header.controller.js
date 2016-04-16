@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService) {
+  function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService, userThumbnailCache) {
     const vm = this;
     activate();
 
@@ -21,18 +21,11 @@
       $scope.$on('site-loaded', (e, site) => {
         const owner = site.owner;
 
-        // Retrieve the owner's profile image URL
-        dsimg.getUserProfileImage(owner.id)
-        .then((response) => {
-          console.log('retrieved owner profile image');
-          if (response && response.data && response.data.public_id) {
-            vm.ownerProfileImageUrl = $.cloudinary.url(response.data.public_id, {
-              height: 18,
-              width: 18,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            console.log(vm.ownerProfileImageUrl);
+        // Retrieve the user thumbnail from cache
+        userThumbnailCache.get(owner.id)
+        .then((value) => {
+          if (value) {
+            vm.ownerProfileImageUrl = value;
           }
         });
 
@@ -119,6 +112,7 @@
     'followService',
     'informationCardService',
     'localStorageService',
+    'userThumbnailCache',
   ];
   angular.module('divesites.informationCard').controller('InformationCardHeaderController', InformationCardHeaderController);
 })();
