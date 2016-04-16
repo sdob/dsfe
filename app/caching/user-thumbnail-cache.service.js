@@ -1,6 +1,22 @@
 (function() {
   'use strict';
 
+  /*
+   * This is a very basic storehouse for user profile images. It'll prevent
+   * the site from making a call to DSAPI every time the user selects a marker
+   * (since we want to show user thumbnails in the info card header), but
+   * at the moment there are two obvious issues:
+   *
+   * 1. The cache is unlimited in size. This is unlikely to become an enormous problem
+   * since we're just storing string->string k-v pairs, but it might be sensible to
+   * limit the cache size just in case.
+   *
+   * 2. There's no built-in way to invalidate the cache; we may need to have a cache
+   * controller that listens for updates. Right now, the only profile image that creates
+   * a listenable event is the user's own. In theory you could have divesit.es open for
+   * months and fail to see user profile image changes.
+   *
+   */
   function userThumbnailCache(dsimg, localStorageService) {
     const cache = {
     };
