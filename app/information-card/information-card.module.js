@@ -2,6 +2,7 @@
   'use strict';
   angular.module('divesites.informationCard', [
     'LocalStorageModule',
+    'divesites.caching',
     'divesites.constants',
     'divesites.logDive',
     'divesites.services',
