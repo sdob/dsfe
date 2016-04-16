@@ -10,9 +10,14 @@
         </h3>
         <h3 class="information-card__site-owner">
             Added by
-                <a href="/#/users/{{site.owner.id}}/">
-                <img class="site-owner__profile-image"
-                ng-src="{{ vm.ownerProfileImageUrl ? vm.ownerProfileImageUrl : '/img/no_profile_image.svg' }}" />
+            <a href="/#/users/{{site.owner.id}}/">
+                <span ng-show="!vm.ownerProfileResolved">
+                    <i class="fa fa-spin fa-spinner"></i>
+                </span>
+                <span ng-show="vm.ownerProfileResolved">
+                    <img class="site-owner__profile-image"
+                    ng-src="{{ vm.ownerProfileImageUrl ? vm.ownerProfileImageUrl : '/img/no_profile_image.svg' }}" />
+                </span>
                 <span class="site-owner__name">
                     {{ site.owner.name }}
                 </span>
