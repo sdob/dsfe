@@ -2,6 +2,8 @@
   'use strict';
   function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService, userThumbnailCache) {
     const vm = this;
+    vm.ownerProfileResolved = false;
+
     activate();
 
     function activate() {
@@ -27,6 +29,8 @@
           if (value) {
             vm.ownerProfileImageUrl = value;
           }
+          // Allow the UI to update
+          vm.ownerProfileResolved = true;
         });
 
         // If the viewing user is authenticated, consult the follow API
