@@ -17,6 +17,7 @@
     'ui.bootstrap',
 
     /* Feature areas */
+    'divesites.caching',
     'divesites.constants',
     'divesites.editSite',
     'divesites.informationCard',
