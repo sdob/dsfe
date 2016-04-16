@@ -420,8 +420,13 @@
       // Look for a map marker with this (id, type) pair before pinging the API
       const match = $scope.mapMarkers.filter((m) => m.id === id && m.type === type)[0];
       if (match) {
-        // If we find a match, then just use its coordinates to centre the map
-        vm.map.center = match.loc;
+        // If we find a match, then just use its coordinates to centre the map.
+        // NOTE: Either doing a direct assignment or an Object.assign introduced
+        // a weird bug where the site marker would move with the map.
+        vm.map.center = {
+          latitude: match.loc.latitude,
+          longitude: match.loc.longitude,
+        };
       } else {
         // If we don't find a match, then send an API request
         mapService.getSiteCoordinates(id, type)
