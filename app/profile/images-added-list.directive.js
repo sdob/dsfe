@@ -3,6 +3,12 @@
 
   function imagesAddedList() {
     return {
+      controller: 'ImagesAddedListController',
+      controllerAs: 'vm',
+      scope: {
+        editable: '=',
+        user: '=',
+      },
       templateUrl: 'profile/images-added-list.template.html',
     };
   }

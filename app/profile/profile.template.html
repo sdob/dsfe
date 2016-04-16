@@ -62,11 +62,7 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="js-profile-images-tab">
-                    <images-added-list ng-if="vm.user.imagesAdded.length"></images-added-list>
-                    <div ng-if="!vm.user.imagesAdded.length" class="profile__no-images-added">
-                        <i class="fa fa-fw fa-frown-o"></i>
-                        Nothing yet!
-                    </div>
+                    <images-added-list editable="vm.editable" user="vm.user"></images-added-list>
                 </div>
 
             </section>

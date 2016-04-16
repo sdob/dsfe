@@ -29,14 +29,6 @@
         $scope.$broadcast('user-loaded', vm.user);
       });
 
-      // Retrieve images this user has uploaded
-      dsimg.getUserImages(vm.user.id)
-      .then((response) => {
-        $timeout(() => {
-          vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
-        });
-      });
-
       // Listen for events emitted by the dive log controller
       $scope.$on('dive-log-updated', (e) => {
         dsapi.getUserDives(userId)

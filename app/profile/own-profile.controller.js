@@ -12,9 +12,6 @@
     // header and other components so that they know to display editing
     // action buttons
     vm.editable = true;
-    // Summon a deletion confirmation modal when the user tries to delete
-    // an image from their list
-    vm.summonConfirmDeleteImageModal = summonConfirmDeleteImageModal;
     vm.user = vm.user || {
       id: localStorageService.get('user'),
     };
@@ -27,20 +24,6 @@
 
       // Retrieve the user's own (expanded) profile data
       retrieveAndFormatOwnProfile();
-
-      // Get images this user has uploaded
-      dsimg.getUserImages(vm.user.id)
-      .then((response) => {
-        console.log('images added');
-        console.log(response.data);
-        // Push scope update into next tick
-        $timeout(() => {
-          // Format the images added
-          vm.user.imagesAdded = profileService.formatUserProfileImagesAdded(response);
-          console.log(vm.user.imagesAdded);
-        });
-      })
-      .catch(handleErrorResponse);
 
       // Listen for events telling us that the dive log has changed, so
       // that we can update the user's statistics in the header
@@ -72,40 +55,6 @@
         vm.user.placesAdded = profileService.formatUserProfilePlacesAdded(vm.user);
         // Broadcast an event to force UI updates
         $scope.$broadcast('user-loaded', vm.user);
-      })
-      .catch(handleErrorResponse);
-    }
-
-    function summonConfirmDeleteImageModal(image, $index) {
-      console.log('summoning delete image modal');
-      console.log($index);
-      const instance = $uibModal.open({
-        controller: 'ConfirmDeleteImageModalController',
-        controllerAs: 'vm',
-        templateUrl: 'profile/confirm-delete-image-modal.template.html',
-      });
-      instance.result.then((reason) => {
-        // Easier for us to handle deletion here
-        if (reason === 'confirmed') {
-          // We can give the user immediate feedback by removing
-          // the element from the DOM while we contact DSIMG in the
-          // background.
-          vm.user.imagesAdded.splice(vm.user.imagesAdded.indexOf(image), 1);
-
-          // Format the image data that the API expects
-          const id = image.id;
-          const site = {
-            id: image.object_id,
-            type: image.content_type_model,
-          };
-
-          // Send the deletion request to the API
-          return dsimg.deleteSiteImage(site, id);
-        }
-      })
-      .then((response) => {
-        // We don't really need to do anything with the response in production
-        console.log(response.data);
       })
       .catch(handleErrorResponse);
     }

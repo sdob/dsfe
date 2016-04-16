@@ -1,21 +1,34 @@
-<div ng-repeat="image in vm.user.imagesAdded | orderBy:'-'">
-    <div class="profile-image-list__container">
-        <img ng-src="{{ image.url }}" class="profile-image-list__image" />
-        <div class="profile-image-list__actions">
-            <a href
-                class="overlay-action-item link--undecorated"
-                ng-click="vm.summonConfirmDeleteImageModal(image, $index)"
-                ng-if="editable"
-                >
-                <span class="fa-stack fa-2x">
-                    <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
-                    <i class="fa fa-fw fa-trash fa-stack-1x"></i>
-                </span>
-            </a>
+<div ng-show="vm.isLoading">
+    <div class="row">
+        <div class="col-xs-12 profile-feed__loading-indicator">
+            <i class="fa fa-fw fa-2x fa-spin fa-spinner"></i>
         </div>
-        <div class="profile-image-list__bumf">
-            <p class="profile-image-list__bumf-divesite">{{ image.divesiteName }}</p>
-            <p class="profile-image-list__bumf-date">{{ image.createdAt | date }} </p>
+    </div>
+</div>
+<div ng-show="!vm.isLoading">
+    <div ng-show="vm.images.length" ng-repeat="image in vm.images | orderBy:'-'">
+        <div class="profile-image-list__container">
+            <img ng-src="{{ image.url }}" class="profile-image-list__image" />
+            <div class="profile-image-list__actions">
+                <a href
+                    class="overlay-action-item link--undecorated"
+                    ng-click="vm.summonConfirmDeleteImageModal(image, $index)"
+                    ng-if="editable"
+                    >
+                    <span class="fa-stack fa-2x">
+                        <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
+                        <i class="fa fa-fw fa-trash fa-stack-1x"></i>
+                    </span>
+                </a>
+            </div>
+            <div class="profile-image-list__bumf">
+                <p class="profile-image-list__bumf-divesite">{{ image.divesiteName }}</p>
+                <p class="profile-image-list__bumf-date">{{ image.createdAt | date }} </p>
+            </div>
         </div>
+    </div>
+    <div ng-show="!vm.images.length" class="profile__no-images-added">
+        <i class="fa fa-fw fa-frown-o"></i>
+        Nothing yet!
     </div>
 </div>
