@@ -1,4 +1,15 @@
 /* Special layout stuff */
+
+.ds-discrete-bordered-item {
+  // Border styles for dive and comment lists
+  border: solid 1px rgba(0, 0, 0, 0.32);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  padding: 12px;
+  position: relative;
+}
+
 .ds-flex-row {
   display: flex;
   justify-content: space-between;

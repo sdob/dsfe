@@ -144,22 +144,6 @@
   }
 }
 
-.profile-feed__item {
-  border: solid 1px rgba(0, 0, 0, 0.32);
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-  padding: 12px;
-  position: relative;
-}
-
-.profile-feed__item-type {
-  color: rgba(0, 0, 0, 0.32);
-  position: absolute;
-  top: 8px;
-  right: calc(16px + 8px);
-}
-
 .profile-feed__loading-indicator {
   margin-bottom: 32px;
   text-align: center;

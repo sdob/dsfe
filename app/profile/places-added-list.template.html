@@ -39,7 +39,7 @@
     </div>
     <div ng-show="vm.visibility[place.type]" ng-repeat="place in vm.user.placesAdded | orderBy:'-creation_date'" class="row">
         <div class="col-xs-12">
-            <div class="profile-feed__item">
+            <div class="ds-discrete-bordered-item">
                 <div class="profile-feed__comment-header">
                     <div class="profile-feed__comment-image places-added__icon" ng-switch="place.type">
                         <img ng-switch-when="divesite" ng-src="/img/divesite.svg" />
