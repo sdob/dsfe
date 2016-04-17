@@ -9,7 +9,7 @@
                             <img style="width: 100%; height: auto; max-width; 60px;"
                             ng-src="{{ item.actor.profileImageUrl || '/img/no_profile_image.svg' }}" />
                         </div>
-                        <div class="profile-feed__comment-summary">
+                        <div>
                             <span class="profile-feed__actor" ng-switch="item.actor.id === vm.ownID">
                                 <span ng-switch-when="true">You</span>
                                 <span ng-switch-when="false">
