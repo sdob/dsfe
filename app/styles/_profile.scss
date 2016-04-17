@@ -7,40 +7,6 @@
   }
 }
 
-.profile__dive {
-  display: flex;
-  margin-bottom: 16px;
-  .dive__details {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    padding-right: 0;
-  }
-  .dive__start-time {
-    font-size: 24px;
-    font-weight: 300;
-  }
-  .dive__bumf {
-    padding-left: 16px;
-  }
-}
-
-.profile__activity {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.profile__activity-icon {
-  font-size: 24px;
-  padding-left: 8px;
-}
-
-.profile__activity-details {
-  padding: 8px;
-}
-
 .profile-dive__depth-and-time {
   display: flex;
 }
