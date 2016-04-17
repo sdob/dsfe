@@ -1,7 +1,7 @@
 <section class="profile-dive-log">
     <div class="row logged-dive" ng-repeat="dive in user.dives | orderBy:'-'">
         <div class="col-xs-12 ds-discrete-bordered-item">
-            <div class="profile-feed__comment-actions"
+            <div class="ds-action-items"
                 ng-if="vm.viewingUserID === user.id"
                 >
                 <a href class="overlay-action-item--blue"
