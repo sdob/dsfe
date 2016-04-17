@@ -10,16 +10,6 @@
   position: relative;
 }
 
-.ds-flex-row {
-  display: flex;
-  justify-content: space-between;
-}
-.ds-flex-row--wrap {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 // Full-width dropdown selects
 .ds-btn-group--wide {
   width: 100%;
