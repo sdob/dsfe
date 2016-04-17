@@ -1,23 +1,6 @@
-.dive-log__item {
-  display: flex;
-  margin-bottom: 16px;
-  .dive__details {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    padding-right: 0;
-  }
-  .dive__start-time {
-    font-size: 20px;
-    font-weight: 300;
-  }
-  .dive__divesite-name {
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 1.42857143;
-  }
-}
+/*
+ * Styles for the dive log that appears on the profile page.
+ */
 
 .logged-dive {
   position: relative;
