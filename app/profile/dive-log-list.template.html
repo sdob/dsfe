@@ -1,105 +1,103 @@
 <section class="profile-dive-log">
-    <div class="row comment" ng-repeat="dive in user.dives | orderBy:'-'">
-        <div class="col-xs-12">
-            <div class="profile-feed__item">
-                <div class="profile-feed__comment-actions"
-                    ng-if="vm.viewingUserID === user.id"
+    <div class="row logged-dive" ng-repeat="dive in user.dives | orderBy:'-'">
+        <div class="col-xs-12 profile-feed__item">
+            <div class="profile-feed__comment-actions"
+                ng-if="vm.viewingUserID === user.id"
+                >
+                <a href class="overlay-action-item--blue"
+                    ng-click="vm.summonLogDiveModal(dive)"
                     >
-                    <a href class="overlay-action-item--blue"
-                        ng-click="vm.summonLogDiveModal(dive)"
-                        >
-                        <span class="fa fa-stack">
-                            <i class="fa fa-stack-2x fa-circle background"></i>
-                            <i class="fa fa-stack-1x fa-edit"></i>
-                        </span>
-                    </a>
-                    <a href class="overlay-action-item--blue"
-                        ng-click="vm.summonConfirmDiveDeletionModal(dive)"
-                        >
-                        <span class="fa fa-stack">
-                            <i class="fa fa-stack-2x fa-circle background"></i>
-                            <i class="fa fa-stack-1x fa-trash"></i>
-                        </span>
-                    </a>
-                </div>
-                <div class="profile-feed__comment-header">
-                    <div>
-                        <div class="profile-dive__divesite-name">
-                            {{ dive.divesite.name }}
-                        </div>
-                        <div class="dive__details">
-                            <div class="dive__start-time">
-                                {{ dive.date | date }}
-                                <span ng-if="dive.time">
-                                    {{ dive.time | date:'HH:mm' }}
-                                </span>
-                            </div>
+                    <span class="fa fa-stack">
+                        <i class="fa fa-stack-2x fa-circle background"></i>
+                        <i class="fa fa-stack-1x fa-edit"></i>
+                    </span>
+                </a>
+                <a href class="overlay-action-item--blue"
+                    ng-click="vm.summonConfirmDiveDeletionModal(dive)"
+                    >
+                    <span class="fa fa-stack">
+                        <i class="fa fa-stack-2x fa-circle background"></i>
+                        <i class="fa fa-stack-1x fa-trash"></i>
+                    </span>
+                </a>
+            </div>
+            <div class="profile-feed__comment-header">
+                <div>
+                    <div class="profile-dive__divesite-name">
+                        {{ dive.divesite.name }}
+                    </div>
+                    <div class="dive__details">
+                        <div class="dive__start-time">
+                            {{ dive.date | date }}
+                            <span ng-if="dive.time">
+                                {{ dive.time | date:'HH:mm' }}
+                            </span>
                         </div>
                     </div>
-                </div><!-- Header -->
+                </div>
+            </div><!-- Header -->
 
-                <div class="profile-dive__dive-data">
-                    <div class="ds-flex-row--wrap profile-dive__stat-row"><!-- Depth, duration, cylinder -->
-                        <div class="profile-dive__depth-and-time"><!-- Depth and duration -->
-                            <div class="profile-dive__max-depth">
-                                <i class="fa fa-fw fa-arrow-down profile-dive__icon"></i>
-                                <span> {{ dive.depth }} m </span>
-                            </div>
-                            <div class="profile-dive__duration">
-                                <i class="fa fa-fw fa-clock-o profile-dive__icon"></i>
-                                <span> {{ dive.duration | duration }} min.  </span>
-                            </div>
-                        </div><!-- Depth and duration -->
-                        <div ng-if="dive.pressure_in || dive.pressure_out"><!-- Tank stuff -->
-                            <span ng-if="dive.cylinder_capacity">
-                                <i class="fa fa-fw fa-battery-empty fa-rotate-270 profile-dive__icon"></i>
-                                {{ dive.cylinder_capacity | number }} l.
-                                <span>
-                                    {{ dive.gas_mix | gasMix }}
-                                </span>
+            <div class="profile-dive__dive-data">
+                <div class="ds-flex-row--wrap profile-dive__stat-row"><!-- Depth, duration, cylinder -->
+                    <div class="profile-dive__depth-and-time"><!-- Depth and duration -->
+                        <div class="profile-dive__max-depth">
+                            <i class="fa fa-fw fa-arrow-down profile-dive__icon"></i>
+                            <span> {{ dive.depth }} m </span>
+                        </div>
+                        <div class="profile-dive__duration">
+                            <i class="fa fa-fw fa-clock-o profile-dive__icon"></i>
+                            <span> {{ dive.duration | duration }} min.  </span>
+                        </div>
+                    </div><!-- Depth and duration -->
+                    <div ng-if="dive.pressure_in || dive.pressure_out"><!-- Tank stuff -->
+                        <span ng-if="dive.cylinder_capacity">
+                            <i class="fa fa-fw fa-battery-empty fa-rotate-270 profile-dive__icon"></i>
+                            {{ dive.cylinder_capacity | number }} l.
+                            <span>
+                                {{ dive.gas_mix | gasMix }}
                             </span>
-                            <span ng-if="dive.pressure_in">
-                                <i class="fa fa-fw fa-battery-full fa-rotate-270"></i>
-                                {{ dive.pressure_in }}
-                            </span>
-                            <span ng-if="dive.pressure_out">
-                                <i class="fa fa-fw fa-battery-quarter fa-rotate-270"></i>
-                                {{ dive.pressure_out }}
-                            </span>
-                        </div><!-- Tank stuff -->
-                    </div><!-- Depth, duration, cylinder -->
+                        </span>
+                        <span ng-if="dive.pressure_in">
+                            <i class="fa fa-fw fa-battery-full fa-rotate-270"></i>
+                            {{ dive.pressure_in }}
+                        </span>
+                        <span ng-if="dive.pressure_out">
+                            <i class="fa fa-fw fa-battery-quarter fa-rotate-270"></i>
+                            {{ dive.pressure_out }}
+                        </span>
+                    </div><!-- Tank stuff -->
+                </div><!-- Depth, duration, cylinder -->
 
-                    <div class="ds-flex-row--wrap profile-dive__stat-row"><!-- Temperatures and weather -->
-                        <div ng-if="dive.air_temperature || dive.water_temperature"
-                            class="profile-dive__temperature-container"><!-- Temperature -->
-                            <div class="temperature__temperatures">
-                                <i class="wi wi-fw wi-thermometer profile-dive__icon"></i>
-                                <span ng-if="dive.air_temperature">
-                                    {{ dive.air_temperature | number }} ° C (air)
-                                </span>
-                                <span ng-if="dive.water_temperature">
-                                    {{ dive.water_temperature | number }} ° C (water)
-                                </span>
-                            </div>
-                        </div><!-- Temperature -->
-
-                        <div ng-if="dive.weather || dive.wind"><!-- weather conditions -->
-                            <span ng-if="dive.weather">
-                                <i class="wi wi-fw wi-day-rain profile-dive__icon"></i>
-                                {{ dive.weather | weatherDescription }}
+                <div class="ds-flex-row--wrap profile-dive__stat-row"><!-- Temperatures and weather -->
+                    <div ng-if="dive.air_temperature || dive.water_temperature"
+                        class="profile-dive__temperature-container"><!-- Temperature -->
+                        <div class="temperature__temperatures">
+                            <i class="wi wi-fw wi-thermometer profile-dive__icon"></i>
+                            <span ng-if="dive.air_temperature">
+                                {{ dive.air_temperature | number }} ° C (air)
                             </span>
-                            <span ng-if="dive.wind">
-                                <i class="wi wi-fw wi-strong-wind profile-dive__icon"></i>
-                                {{ dive.wind | windLevel }}
+                            <span ng-if="dive.water_temperature">
+                                {{ dive.water_temperature | number }} ° C (water)
                             </span>
                         </div>
-                    </div><!-- Temperatures and weather -->
-                </div>
+                    </div><!-- Temperature -->
 
-                <div ng-if="dive.comment" class="comment__text profile-feed__comment-text"><!-- Comment -->
-                    {{ dive.comment }}
-                </div><!-- Comment -->
+                    <div ng-if="dive.weather || dive.wind"><!-- weather conditions -->
+                        <span ng-if="dive.weather">
+                            <i class="wi wi-fw wi-day-rain profile-dive__icon"></i>
+                            {{ dive.weather | weatherDescription }}
+                        </span>
+                        <span ng-if="dive.wind">
+                            <i class="wi wi-fw wi-strong-wind profile-dive__icon"></i>
+                            {{ dive.wind | windLevel }}
+                        </span>
+                    </div>
+                </div><!-- Temperatures and weather -->
             </div>
+
+            <div ng-if="dive.comment" class="comment__text profile-feed__comment-text"><!-- Comment -->
+                {{ dive.comment }}
+            </div><!-- Comment -->
         </div>
     </div>
 </section>
