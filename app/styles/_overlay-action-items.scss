@@ -2,7 +2,7 @@
   color: #fff;
   .background {
     color: rgba(0, 0, 0, 0.32);
-    transition: background 100ms;
+    transition: background 200ms;
   }
   &:hover {
     color: #fff;
@@ -10,18 +10,21 @@
       color: rgba(0,0, 0, 0.7);
     }
   }
+  transition: color 200ms;
 }
 
 .overlay-action-item--blue {
   color: #fff;
   .background {
     color: $blue-700;
-    transition: color 100ms;
+    transition: color 500ms;
   }
   &:hover {
     color: #fff;
     .background {
       color: darken($blue-700, 25%);
+      transition: color 200ms;
     }
   }
+  transition: color 200ms;
 }
