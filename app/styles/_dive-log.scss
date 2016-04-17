@@ -5,3 +5,37 @@
 .logged-dive {
   position: relative;
 }
+
+.logged-dive__date-time {
+  // Rules for logged dive date-time section go here
+}
+
+.logged-dive__depth-duration {
+  display: flex;
+}
+
+.logged-dive__details {
+  border-top: solid 1px rgba(0, 0, 0, 0.17);
+  margin-top: 8px;
+}
+
+.logged-dive__header {
+  // Rules for logged dive header section go here
+}
+
+.logged-dive__detail-icon {
+  font-size: 120%;
+}
+
+.logged-dive__detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.logged-dive__site-name {
+  font-size: 24px;
+  line-height: 1.42857143;
+  margin: 0;
+}
