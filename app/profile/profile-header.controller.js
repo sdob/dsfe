@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   function ProfileHeaderController($auth, $location, $rootScope, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
-    const cloudinaryIdKey = 'public_id';
     const vm = this;
+
     // This flag lets the UI know whether we've received the profile image
     vm.dsimgHasResponded = false;
     // Let the viewing user follow this user (if they're not the same user)
@@ -34,7 +34,7 @@
         vm.ownID = localStorageService.get('user');
       }
 
-      // Wait for profile controller to receive the user data before updating
+      // Wait for ProfileController to receive the user data before updating
       $scope.$on('user-loaded', (e, user) => {
         console.log('profile header heard user-loaded');
         vm.user = user;
@@ -44,40 +44,23 @@
 
         // Check whether the viewer is logged in and allow them to follow/unfollow
         if (vm.isAuthenticated()) {
-          let isFollowing = false;
-          // Check whether this user is being followed by the viewer
-          followService.userIsFollowing(vm.user)
-          .then((result) => {
-            // Then set a flag
-            vm.userIsFollowing = result;
-            // Display the follow/unfollow button
-            vm.hasLoadedFollowStatus = true;
-          });
+          checkFollowStatus();
         }
 
         // Retrieve this user's full profile image URL
-        dsimg.getUserProfileImage(vm.user.id)
-        .then((response) => {
-          // Update the UI that we're no longer waiting
-          vm.dsimgHasResponded = true;
-          // If we get a successful response, use it for the main profile image
-          if (response && response.data && response.data.public_id) {
-            // Get a suitably-formatted version of the profile image
-            const url = formatHeroImageUrl(response);
-            // Push UI update to the next tick
-            $timeout(() => {
-              // Put the profile image URL into scope
-              vm.profileImageUrl = url;
-            });
-          }
-        })
-        .catch((err) => {
-          // On failure, make sure that the UI is clean
-          console.error(err);
-          $timeout(() => {
-            vm.dsimgHasResponded = true;
-          });
-        });
+        retrieveAndBindProfileImage();
+      });
+    }
+
+    function checkFollowStatus() {
+      let isFollowing = false;
+      // Check whether this user is being followed by the viewer
+      followService.userIsFollowing(vm.user)
+      .then((result) => {
+        // Then set a flag
+        vm.userIsFollowing = result;
+        // Display the follow/unfollow button
+        vm.hasLoadedFollowStatus = true;
       });
     }
 
@@ -105,6 +88,32 @@
       console.log('formatted hero image:');
       console.log(url);
       return url;
+    }
+
+    function retrieveAndBindProfileImage() {
+      // Retrieve this user's full profile image URL
+      dsimg.getUserProfileImage(vm.user.id)
+      .then((response) => {
+        // Update the UI that we're no longer waiting
+        vm.dsimgHasResponded = true;
+        // If we get a successful response, use it for the main profile image
+        if (response && response.data && response.data.public_id) {
+          // Get a suitably-formatted version of the profile image
+          const url = formatHeroImageUrl(response);
+          // Push UI update to the next tick
+          $timeout(() => {
+            // Put the profile image URL into scope
+            vm.profileImageUrl = url;
+          });
+        }
+      })
+      .catch((err) => {
+        // On failure, make sure that the UI is clean
+        console.error(err);
+        $timeout(() => {
+          vm.dsimgHasResponded = true;
+        });
+      });
     }
 
     // Confirm that the user wants to delete their profile image
