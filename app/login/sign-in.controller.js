@@ -16,7 +16,7 @@
     }
 
     function goToProfile() {
-      $location.path('/me');
+      $location.path(`/users/${localStorageService.get('user')}`);
     }
 
     function handleLoginError(err) {
