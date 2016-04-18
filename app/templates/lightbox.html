@@ -26,7 +26,9 @@
         <!-- caption -->
         <div class="lightbox-image-caption">
             <p class="lightbox-image-caption__username">
-                {{ Lightbox.image.owner.name }}
+                <a href ng-click="Lightbox.closeModal({action: 'follow-user', id: Lightbox.image.owner.id})">
+                    {{ Lightbox.image.owner.name }}
+                </a>
             </p>
             <p class="lightbox-image-caption__created-at">{{ Lightbox.image.creation_date | date }}</p>
             <p class="lightbox-image-caption__text">{{ Lightbox.image.caption }}</p>
