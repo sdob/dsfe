@@ -38,6 +38,12 @@
   bottom: 16px;
   position: absolute;
   right: 16px;
+  z-index: 2; // In front of absolutely-positioned caption
+}
+
+.profile-image-list__bumf-caption {
+  font-size: 16px;
+  margin-right: 64px; // Dodge 'delete' action
 }
 
 .profile-image-list__bumf-date,
