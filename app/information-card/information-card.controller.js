@@ -171,6 +171,7 @@
               crop: 'fill',
             });
           });
+          console.log(`I'm going to update vm.images and $scope.images`);
           vm.images = images;
           // We also have to bind the images to $scope, because
           // the Lightbox gallery isn't implemented (AFAIK) to allow
@@ -257,7 +258,7 @@
       instance.result.then((val) => {
         // If the modal closed because we uploaded an image, then reload
         // the image list
-        if (val.reason === 'image-uploaded') {
+        if (val.reason === 'uploaded') {
           getSiteImages();
         }
       });
