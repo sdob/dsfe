@@ -30,11 +30,25 @@
     'divesites.userSettings',
     'divesites.widgets',
   ])
-  .run(($rootScope, $uibModalStack) => {
+  .run(($location, $rootScope, $uibModalStack, localStorageService) => {
     const cloudName = 'cloud_name';
     $.cloudinary.config()[cloudName] = 'divesites';
     $rootScope.$on('$routeChangeStart', (event, next, current) => {
-      console.log('$routeChangeStart');
+      // Pause event resolution
+      event.preventDefault();
+
+      // If we're heading to a profile page, then check whether it's
+      // a logged-in user's own profile page, and redirect accordingly
+      if (next.params.userId !== undefined) {
+        console.log('Looking for a profile page');
+        if (localStorageService.get('user') === next.params.userId) {
+          console.log('Looking for own profile page; redirecting to /me');
+          return $location.path('/me');
+        }
+      } else {
+        // If not, then proceed with event resolution
+        event.defaultPrevented = false;
+      }
     });
 
     // Intercept $locationChangeStart events and close an existing modal instead.
