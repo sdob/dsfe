@@ -4,7 +4,8 @@
             {{ user.placesAdded.length | number }}
         </div>
         <div class="profile-header__dive-stat__desc">
-            Places added
+            <span class="safari-fix">Places</span>
+            <span class="safari-fix">added</span>
         </div>
     </li>
     <li class="profile-header__dive-stat">
@@ -12,23 +13,26 @@
             {{ user.dives.length | number }}
         </div>
         <div class="profile-header__dive-stat__desc">
-            Dives logged
+            <span class="safari-fix">Dives</span>
+            <span class="safari-fix">logged</span>
         </div>
     </li>
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
             {{ user.hours_underwater | number }}
         </div>
-        <div class="profile-header__dive-stat__desc">
-            Hours underwater
+        <div class="profile-header__dive-stat__desc"></span>
+        <span class="safari-fix">Hours
+            <span class="safari-fix">underwater</span>
         </div>
     </li>
     <li class="profile-header__dive-stat">
         <div class="profile-header__dive-stat__number">
             {{ user.divesites_visited | number }}
         </div>
-        <div class="dive-stat__desc">
-            Divesites visited
+        <div class="profile-header__dive-stat__desc">
+            <span class="safari-fix">Divesites</span>
+            <span class="safari-fix">visited</span>
         </div>
     </li>
 </ul>

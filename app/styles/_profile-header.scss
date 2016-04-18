@@ -68,6 +68,14 @@
     font-weight: 500;
     font-size: 200%;
   }
+  &__desc {
+    span.safari-fix {
+       display: block;
+      @media (min-width: $screen-sm-min) {
+        display: inline;
+      }
+    }
+  }
 }
 
 .profile-header__image {
