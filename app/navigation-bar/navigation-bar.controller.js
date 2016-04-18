@@ -23,6 +23,7 @@
       // Try and download a thumbnail image if we have a user ID
       if (localStorageService.get('user')) {
         const userID = localStorageService.get('user');
+        vm.userID = userID;
         retrieveAndFormatProfileThumbnailImage(userID)
         .then((url) => {
           vm.userProfileThumbnailImage = url;
