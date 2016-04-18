@@ -5,7 +5,10 @@
       controller: 'ProfileHeaderController',
       controllerAs: 'vm',
       link,
-      scope: true,
+      scope: {
+        editable: '=',
+        user: '=',
+      },
       templateUrl: 'profile/profile-header.template.html',
     };
 
