@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($routeParams, $rootScope, $scope, $timeout, dsactivity, dsapi, dsimg, informationCardService, profileService, userSettingsService) {
+  function ProfileController($auth, $routeParams, $rootScope, $scope, $timeout, dsactivity, dsapi, dsimg, informationCardService, localStorageService, profileService, userSettingsService) {
     const vm = this;
 
     // Get the user's ID and put it into $scope
@@ -17,8 +17,26 @@
     function activate() {
       console.log('ProfileController.activate()');
 
-      // Get this user's profile information from the API server
-      dsapi.getUser(userId)
+      // Check whether the viewing user and the profile owner
+      // are the same person. If they are, then load the full,
+      // visible-to-owner-only profile.
+      let apiCall;
+      if ($auth.isAuthenticated() && userId === localStorageService.get('user')) {
+        console.log('this is me');
+        $timeout(() => {
+          vm.editable = true;
+        });
+        apiCall = dsapi.getOwnProfile;
+      } else {
+        apiCall = dsapi.getUser;
+      }
+
+      // Get this user's profile information from the API server;
+      // either the third-party-visible profile or the full owner-only
+      // profile. dsapi.getOwnProfile() doesn't take any parameters, so
+      // it'll silently ignore them
+      apiCall(userId)
+      //dsapi.getUser(userId)
       .then((response) => {
         // Format the incoming response
         vm.user = profileService.formatResponseData(response.data);
@@ -40,6 +58,7 @@
   }
 
   ProfileController.$inject = [
+    '$auth',
     '$routeParams',
     '$rootScope',
     '$scope',
@@ -48,6 +67,7 @@
     'dsapi',
     'dsimg',
     'informationCardService',
+    'localStorageService',
     'profileService',
     'userSettingsService',
   ];
