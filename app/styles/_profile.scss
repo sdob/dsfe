@@ -12,7 +12,7 @@
 }
 
 .profile-dive__dive-data {
-  border-top: solid 1px rgba(0, 0, 0, 0.17);
+  border-top: $border-default;
   margin-top: 8px;
 }
 
@@ -149,6 +149,10 @@
   text-align: center;
 }
 
+/*
+ * This is the ul element that wraps the tab menu that shows
+ * the different profile sections
+ */
 .profile__sidebar {
   display: flex;
   flex-direction: row;
@@ -159,13 +163,23 @@
   }
 }
 
+/*
+ * This class controls the styling for the li element that wraps each
+ * of the tab menu links
+ */
 .profile__sidebar-item {
   background: $blue-700;
   display: flex;
-  margin: 0px 8px 16px;
+  margin: 0 8px 16px;
   transition: background 300ms;
   width: 100%;
 
+  /* Style rules for sidebar items at screen-xs widths */
+
+  /*
+   * Style rules for sidebar items at screen-sm-min widths
+   * that overrule xs rules
+   */
   @media (min-width: $screen-sm-min) {
     margin-left: 0px;
     margin-right: 0px;
@@ -178,32 +192,13 @@
   &:last-child {
     margin-right: 0px;
   }
-
-  a {
-    color: #fff;
-    font-size: 150%;
-    font-weight: 500;
-    padding: 8px 0px;
-    text-align: center;
-    text-decoration: none;
-    transition: color 200ms, background 200ms;
-    width: 100%;
-
-    &:active,
-    &:hover,
-    &:focus {
-      color: #fff;
-      background: darken($blue-700, 30%);
-      text-decoration: none;
-    }
-    @media (min-width: $screen-sm-min) {
-      font-size: 100%;
-      padding: 0px 16px;
-      text-align: left;
-    }
-  }
 }
 
+/*
+ * Bootstrap assigns the 'active' class to tab menu items when they're
+ * displaying the tab they're linked to, so we'll use this extra class
+ * to apply our own styles
+ */
 .profile__sidebar-item.active {
   background: #fff;
   color: $blue-700;
@@ -218,6 +213,39 @@
   }
 }
 
+.profile__sidebar-link {
+  color: #fff;
+  font-size: 150%;
+  font-weight: 500;
+  padding: 8px 0px;
+  text-align: center;
+  text-decoration: none;
+  transition: color 200ms, background 200ms;
+  width: 100%;
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: #fff;
+    background: darken($blue-700, 30%);
+    text-decoration: none;
+  }
+
+  /*
+   * Links should look quite different when they're
+   * sidebarred
+   */
+  @media (min-width: $screen-sm-min) {
+    font-size: 100%;
+    padding: 0px 16px;
+    text-align: left;
+  }
+}
+
+/*
+ * Sidebar item text is hidden at screen-xs sizes and displayed
+ * when the display switches to sidebar layout
+ */
 .sidebar-item__text {
   display: none;
   @media (min-width: $screen-sm-min) {

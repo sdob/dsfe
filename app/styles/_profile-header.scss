@@ -51,8 +51,8 @@
 
 .profile-header__dive-stats {
   align-items: baseline;
-  border-top: solid 1px rgba(0, 0, 0, 0.17);
-  border-bottom: solid 1px rgba(0, 0, 0, 0.17);
+  border-top: $border-default;
+  border-bottom: $border-default;
   display: flex;
   justify-content: space-between;
   padding: 0;
