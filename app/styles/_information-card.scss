@@ -106,10 +106,16 @@
   &__divesite-image {
     cursor: pointer;
     margin: 8px 0px;
+    position: relative;
+    // Doesn't look like autoprefixer can handle this
+    transition: filter 200ms, -webkit-filter 200ms;
+
+    &:hover {
+      filter: brightness(0.7);
+    }
     &:not(:last-child) {
       margin-right: 8px;
     }
-    position: relative;
   }
 }
 
