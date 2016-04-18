@@ -50,10 +50,7 @@
     .when('/log-dive/:divesiteId', {
       template: '<log-dive></log-dive>',
     })
-    .when('/me', {
-      template: '<own-profile></own-profile>',
-    })
-    .when('/me/edit', {
+    .when('/edit-profile', {
       template: '<edit-profile></edit-profile>',
       controller: 'EditProfileController',
       controllerAs: 'vm',
