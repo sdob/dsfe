@@ -1,3 +1,18 @@
+/*
+ * Style rules for the editable site map that appears when adding or
+ * editing a site (divesite, compressor, slipway, etc.)
+ *
+ * Because we're actually using the Google map object's centre as the
+ * site's location, we want the marker SVG itself to be statically positioned
+ * with the pin pointing to the map's centre. Based on the site type,
+ * we give the marker a class that determines the SVG that we use.
+ *
+ */
+
+// These are magic numbers based on the size of the SVGs
+$svg-marker-height: 41.25px;
+$svg-marker-width: 29px;
+
 .editable-site-map__centre-marker {
   position: absolute;
   &.divesite {
@@ -12,25 +27,32 @@
   top: 50%;
   left: 50%;
   z-index: 1;
-  // These are magic numbers based on the size of the SVGs
-  margin-left: calc(-29px / 2);
-  margin-top: -41.25px;
-  height: 41.25px;
-  width: 29px;
+  margin-left: calc(-$svg-marker-width / 2);
+  margin-top: -$svg-marker-height;
+  height: $svg-marker-height;
+  width: $svg-marker-width;
 }
+
+/* Style the editable map container */
 .editable-site-map-container {
   .angular-google-map-container {
     width: 100%;
     height: 400px;
   }
 }
+
+/* The container for the coordinate inputs */
 .editable-site-map__coordinates {
   align-items: baseline;
   display: flex;
 }
+
+/* This is the input that allows users to add coordinates by hand */
 .editable-site-map__coordinate-input {
   width: 40%;
 }
+
+/* The axes are 'N'/'E' */
 .editable-site-map__coordinate-axis {
   margin-left: 0.5em;
   font-size: 150%;
