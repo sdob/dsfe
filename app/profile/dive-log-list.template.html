@@ -68,37 +68,38 @@
                     </div><!-- Depth, duration, cylinder -->
 
                     <div class="logged-dive__detail-row"><!-- Temperatures and weather -->
-                        <div ng-if="!(dive.air_temperature || dive.water_temperature)">
-                            <div />
+                        <div>
+                            <div ng-if="dive.air_temperature || dive.water_temperature"
+                                class="logged-dive__temperatures"><!-- Temperature -->
+                                <div>
+                                    <i class="wi wi-fw wi-thermometer logged-dive__detail-icon"></i>
+                                    <span ng-if="dive.air_temperature">
+                                        {{ dive.air_temperature | number }} ° C (air)
+                                    </span>
+                                    <span ng-if="dive.water_temperature">
+                                        {{ dive.water_temperature | number }} ° C (water)
+                                    </span>
+                                </div>
+                            </div><!-- Temperature -->
                         </div>
-                        <div ng-if="dive.air_temperature || dive.water_temperature"
-                            class="logged-dive__temperatures"><!-- Temperature -->
-                            <div>
-                                <i class="wi wi-fw wi-thermometer logged-dive__detail-icon"></i>
-                                <span ng-if="dive.air_temperature">
-                                    {{ dive.air_temperature | number }} ° C (air)
+
+                        <div>
+                            <div ng-if="dive.weather || dive.wind"><!-- weather conditions -->
+                                <span ng-if="dive.weather">
+                                    <i class="wi wi-fw logged-dive__detail-icon"
+                                        ng-class="vm.getWeatherWiClass(dive.weather)"
+                                        ></i>
+                                    {{ dive.weather | weatherDescription }}
                                 </span>
-                                <span ng-if="dive.water_temperature">
-                                    {{ dive.water_temperature | number }} ° C (water)
+                                <span ng-if="dive.wind">
+                                    <i class="wi wi-fw logged-dive__detail-icon"
+                                        ng-class="vm.winds[dive.wind] === undefined ? 'wi-strong-wind' : 'wi-wind-beaufort-' + dive.wind"
+                                        ></i>
+                                    {{ dive.wind | windLevel }}
                                 </span>
                             </div>
-                        </div><!-- Temperature -->
-
-                        <div ng-if="dive.weather || dive.wind"><!-- weather conditions -->
-                            <span ng-if="dive.weather">
-                                <i class="wi wi-fw logged-dive__detail-icon"
-                                    ng-class="vm.getWeatherWiClass(dive.weather)"
-                                    ></i>
-                                {{ dive.weather | weatherDescription }}
-                            </span>
-                            <span ng-if="dive.wind">
-                                <i class="wi wi-fw logged-dive__detail-icon"
-                                    ng-class="vm.winds[dive.wind] === undefined ? 'wi-strong-wind' : 'wi-wind-beaufort-' + dive.wind"
-                                    ></i>
-                                {{ dive.wind | windLevel }}
-                            </span>
-                        </div>
-                    </div><!-- Temperatures and weather -->
+                        </div><!-- Temperatures and weather -->
+                    </div>
                 </div>
 
                 <div ng-if="dive.comment" class="comment__text"><!-- Comment -->
