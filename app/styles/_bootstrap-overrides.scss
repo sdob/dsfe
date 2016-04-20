@@ -8,6 +8,13 @@ label {
   border-radius: 0;
 }
 
+.form-control, .btn {
+  border-radius: 0 !important; //overrides form-groups, etc.
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
 .link--undecorated {
   text-decoration: none !important;
   &:hover {
