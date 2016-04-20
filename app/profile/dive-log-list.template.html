@@ -24,7 +24,9 @@
                 </div>
                 <div class="logged-dive__header">
                     <div class="logged-dive__site-name">
-                        {{ dive.divesite.name }}
+                        <a href="/#/?divesite={{ dive.divesite.id }}">
+                            {{ dive.divesite.name }}
+                        </a>
                     </div>
                     <div class="logged-dive__date-time">
                         <span>
