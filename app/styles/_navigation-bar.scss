@@ -1,37 +1,28 @@
 .ds-brand {
   display: flex;
 }
+
 .ds-brand__icon {
   width: 24px;
   height: auto;
 }
+
 .ds-brand__text {
   font-size: 120%;
   font-weight: 500;
   margin-left: 4px;
 }
+
 .navigation-bar__main {
   z-index: 7; // in front of filter menu and add button
   border-radius: 0;
 }
+
 .navigation-bar__home-link {
     text-decoration: none;
     color: inherit;
 }
+
 .navbar-toggle {
   border-radius: 0;
-}
-.navigation-bar__toggle-fullscreen {
-  border: solid 1px #ddd;
-  height: auto;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  padding-top: 3px !important; // override Bootstrap
-  padding-bottom: 3px !important; //override Bootstrap
-  padding-left: 6px !important;
-  padding-right: 6px !important;
-  margin-left: 1em !important;
-  &:hover {
-    background-color: #ddd !important; // Override Bootstrap
-  }
 }

@@ -1,3 +1,11 @@
+/*
+ * Styles for the 'places' tab in user profiles
+ */
+
+/*
+ * The large icons at the top of the places list that allow us
+ * to show/hide site types
+ */
 .places-added__filter-link {
   img {
     transition: filter 500ms;
@@ -9,6 +17,7 @@
     }
   }
 }
+
 .places-added__header-image {
   display: inline-block;
   width: 100%;

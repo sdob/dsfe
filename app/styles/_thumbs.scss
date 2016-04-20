@@ -1,13 +1,18 @@
-  .thumb-preview-container {
-    height: 200px;
-  }
-  .thumb-preview {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 32px;
-    max-height: 200px;
-    max-width: 200px;
-    height: auto;
-    width: auto;
-  }
+/*
+ * Style rules for the thumbnails that the user sees when previewing
+ * an image upload
+ */
+
+.thumb-preview-container {
+  height: 200px;
+}
+.thumb-preview {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32px;
+  max-height: 200px;
+  max-width: 200px;
+  height: auto;
+  width: auto;
+}

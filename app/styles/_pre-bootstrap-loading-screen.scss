@@ -1,3 +1,9 @@
+/*
+ * While the user is waiting for Angular to bootstrap, we'll show
+ * them a comforting loading message. The div is given the following directive
+ * ng-if="false"
+ * which will be evaluated exactly once.
+ */
 .pre-bootstrap-loading-screen {
   position: absolute;
   top: 0;

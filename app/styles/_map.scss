@@ -1,3 +1,6 @@
+/*
+ * The main map occupies the entire browser window
+ */
 .main-map {
   position: absolute;
   top: 0;
@@ -5,22 +8,12 @@
   left: 0;
   right: 0;
 }
-.main-map__add-site-button {
-  position:absolute;
-  //right: 0;
-  z-index: 1;
-  @media (min-width: 62em) {
-    //bottom: 64px;
-    //right: 64px;
-  }
-  .fa-stack-2x {
-    color: $pink-500;
-  }
-  .fa-stack-1x {
-    color: #fff;
-  }
-}
 
+/*
+ * This is a menu that allows signed-in users to add sites to the map.
+ * It appears in two places: as a sub-menu of the hamburger menu,
+ * and on right-clicking the map when the user is signed in
+ */
 .map-context-menu {
   right: initial;
 
@@ -39,6 +32,18 @@
   }
 }
 
+/*
+ * When the context menu is opened by right-clicking, it needs to be
+ * absolutely positioned
+ */
+.map-context-menu.rc-context-menu {
+  position: absolute;
+}
+
+/*
+ * Show a loading message while we're waiting for the API to return
+ * our sites
+ */
 .map-is-loading {
   font-size: 200%;
   position: absolute;
@@ -51,7 +56,4 @@
   justify-content: center;
   align-items: center;
   z-index: 10000;
-}
-.rc-context-menu {
-  position: absolute;
 }

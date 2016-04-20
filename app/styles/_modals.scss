@@ -15,8 +15,10 @@
   @extend .modal-center;
 }
 
+/*
+ * ds-modal-classed modals share common characteristics
+ */
 .ds-modal {
-  // default settings
   padding: 16px;
 }
 

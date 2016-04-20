@@ -1,3 +1,11 @@
+/*
+ * These are circular Fontawesome spans that can sit over other content
+ * (especially images).
+ */
+
+/*
+ * The default is nearly transparent and becomes more opaque on hover
+ */
 .overlay-action-item {
   color: #fff;
   .background {
@@ -13,6 +21,9 @@
   transition: color 200ms;
 }
 
+/*
+ * The 'branded' ones are opaque and get darker on hover
+ */
 .overlay-action-item--blue {
   color: #fff;
   .background {
