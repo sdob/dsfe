@@ -1,72 +1,87 @@
 .login-modal {
-  &__social-button {
-    width: 100%;
-    margin-bottom: 16px;
+}
+
+.login-modal__social-button {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.login-modal__sign-in-separator {
+  border-top: $border-default;
+  border-bottom: $border-default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  .text {
+    background: #fff;
+    padding-left: 8px;
+    padding-right: 8px;
   }
-  &__sign-in-separator {
-    border-top: $border-default;
-    border-bottom: $border-default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 0;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    .text {
-      background: #fff;
-      padding-left: 8px;
-      padding-right: 8px;
-    }
+}
+
+.login-modal__title {
+  margin-top: 0;
+}
+
+.login-modal__error {
+  color: $state-danger-text;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.login-modal__form {
+  flex: 1;
+  width: 100%;
+}
+
+/*
+ * On small screens, we want the child elements to flow vertically;
+ * on larger screens, show them side-by-side
+ */
+.login-modal__form-pair-container {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: $screen-sm-min) {
+    flex-direction: row;
   }
-  &__title {
-    margin-top: 0;
+}
+
+.login-modal__form-separator {
+  display: flex;
+  align-items: center;
+  // align-content: center;
+  justify-content: center;
+  // Default settings for xs screens
+  height: 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-top: $border-default;
+  border-bottom: $border-default;
+  width: 100%;
+
+  @media (min-width: $screen-sm-min) {
+    height: auto;
+    width: 0;
+    margin-left: 2em;
+    margin-right: 2em;
+    border-left: $border-default;
   }
-  &__error {
-    color: $state-danger-text;
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-  &__form {
-    flex: 1;
-    width: 100%;
-  }
-  &__form-pair-container {
-    display: flex;
-    flex-direction: column;
-    @media (min-width: $screen-sm-min) {
-      flex-direction: row;
-    }
-  }
-  &__form-separator {
-    display: flex;
-    align-items: center;
-    // align-content: center;
-    justify-content: center;
-    // Default settings for xs screens
-    height: 0;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    border-top: $border-default;
-    border-bottom: $border-default;
-    width: 100%;
-    &-text {
-      padding-left: 8px;
-      padding-right: 8px;
-    }
-    @media (min-width: $screen-sm-min) {
-      height: auto;
-      width: 0;
-      margin-left: 2em;
-      margin-right: 2em;
-      border-left: $border-default;
-    }
-    &-text {
-      background: #fff;
-    }
-  }
-  &__sign-in-row {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-  }
+}
+
+.login-modal__sign-in-row {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.login-modal__form-separator-text {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.login-modal__form-separator-text {
+  background: #fff;
 }
