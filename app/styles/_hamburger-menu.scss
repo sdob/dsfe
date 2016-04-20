@@ -18,7 +18,7 @@
   right: 2em;
   top: 6em;
   bottom: 2em;
-  z-index: 2;
+  z-index: 4; // In front in information card on small devices
 }
 
 .hamburger-menu__menu-expander {
