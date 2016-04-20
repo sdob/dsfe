@@ -1,12 +1,6 @@
+// TODO: Unify these with the other discrete bordered item rules
 .comment {
   position: relative;
-}
-
-.comment__actions {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 10;
 }
 
 .comment__details {
