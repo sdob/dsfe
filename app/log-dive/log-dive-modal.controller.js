@@ -1,27 +1,30 @@
 (function() {
   'use strict';
   function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, diveID, dsapi, logDiveService, modalService, site, uiPreferencesService) {
-    const vm = this;
     const { weathers, winds } = conditionsLayoutService;
+
+    const vm = this;
+
+    // Bind immediately-available variables
+    vm.datepicker = {
+      opened: false,
+    };
+    vm.dismiss = dismiss;
+    vm.openDatepicker = openDatepicker;
+    vm.options = {
+      showMeridian: uiPreferencesService.get().clock === '12hr',
+    };
+    vm.selectWeather = selectWeather;
+    vm.selectWind = selectWind;
+    vm.setNitrox = setNitrox;
+    vm.site = site;
+    vm.submit = submit;
+    vm.weathers = weathers;
+    vm.winds = winds;
 
     activate();
 
     function activate() {
-      vm.dismiss = dismiss;
-      vm.datepicker = {
-        opened: false,
-      };
-      vm.openDatepicker = openDatepicker;
-      vm.options = {
-        showMeridian: uiPreferencesService.get().clock === '12hr',
-      };
-      vm.selectWeather = selectWeather;
-      vm.selectWind = selectWind;
-      vm.setNitrox = setNitrox;
-      vm.site = site;
-      vm.submit = submit;
-      vm.weathers = weathers;
-      vm.winds = winds;
 
       // Set defaults for this dive
       const dt = logDiveService.defaultDateAndTime();
@@ -226,6 +229,7 @@
 
     function submit() {
       $scope.logDiveForm.$setSubmitted();
+
       // Bail out early if the form is invalid
       if (!$scope.logDiveForm.$valid) {
         vm.isSaving = false;
