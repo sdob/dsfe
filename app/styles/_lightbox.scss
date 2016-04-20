@@ -4,6 +4,13 @@
   background: rgba(0, 0, 0, 0.32);
   color: #fff;
   font-weight: inherit;
+  
+  // Ensure that the caption doesn't take over the entire
+  // image; if there's a really long caption, allow the user
+  // to scroll through it.
+  max-height: 50%;
+  overflow-y: auto;
+
   // Move to the bottom
   top: initial;
   bottom: 0;
