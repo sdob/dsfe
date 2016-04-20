@@ -1,3 +1,7 @@
+/*
+ * Style rules for the collapsible parts of the information card that
+ * reveal/hide more details about depth, duration, nearby slipways
+ */
 .collapse-header {
   align-items: center;
   color: #333 !important; // Override Bootstrap
@@ -46,6 +50,7 @@
     }
   }
 }
+
 .collapse-body {
   margin-top: 8px;
 }
