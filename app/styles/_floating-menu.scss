@@ -1,3 +1,5 @@
+// TODO: clean all of this up
+
 .add-something-menu {
   $top: 14em;
   max-height: calc(100% - #{$top} - 1em);
@@ -84,71 +86,4 @@
       display: initial;
     }
   }
-}
-
-.floating-menu__icon--when-open {
-  display: none;
-}
-
-.floating-menu__icon--when-closed {
-  display: initial;
-}
-
-.floating-menu__header {
-  background: $blue-700;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-
-  &--xs {
-    @include shadow-2dp;
-    border-radius: calc(1.28571429em / 2);
-    height: 1.28571429em;
-    width: 1.28571429em;
-    display: flex;
-    align-items: center;
-    font-size: 30px;
-    right: initial;
-    transition: border-top-left-radius 100ms, border-top-right-radius 100ms, width 100ms 100ms;
-    .header-text {
-      display: none;
-    }
-    @media (min-width: $screen-md-min) {
-      display: none;
-    }
-  }
-  &--md-min {
-    display: none;
-    @media (min-width: $screen-md-min) {
-      display: flex;
-    }
-  }
-
-  &:hover, &:active, &:focus {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  .floating-menu__header-chevron {
-    margin-left: auto;
-    margin-right: 16px;
-    font-size: 16px;
-    transition: transform 100ms;
-    transform: rotate(180deg);
-  }
-  &.collapsed .floating-menu__header-chevron {
-    transform: rotate(0deg);
-  }
-}
-
-.floating-menu__header-text {
-  margin: 8px 16px;
-}
-
-.search-result__icon {
-  width: 20px;
-}
-
-.search-result__text {
-  margin-left: 8px;
 }
