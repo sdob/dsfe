@@ -1,8 +1,12 @@
 (function() {
   'use strict';
 
-  function DiveLogListController($auth, $scope, $timeout, $uibModal, dsapi, localStorageService, logDiveService, profileService) {
+  function DiveLogListController($auth, $scope, $timeout, $uibModal, conditionsLayoutService, dsapi, localStorageService, logDiveService, profileService) {
+    const { getWeatherWiClass, winds } = conditionsLayoutService;
+
     const vm = this;
+    vm.getWeatherWiClass = getWeatherWiClass;
+    vm.winds = winds;
     activate();
 
     function activate() {
@@ -45,6 +49,7 @@
     '$scope',
     '$timeout',
     '$uibModal',
+    'conditionsLayoutService',
     'dsapi',
     'localStorageService',
     'logDiveService',
