@@ -3,35 +3,29 @@
 label {
   font-weight: 200;
 }
+
 .input-group-addon {
   border-radius: 0;
 }
+
 .link--undecorated {
   text-decoration: none !important;
   &:hover {
     text-decoration: none !important;
   }
 }
+
 .collapsing {
   /* Faster collapse */
   transition: height .2s ease;
 }
-.well--unpadded {
-  @extend .well;
-  padding: 0;
-  /* Remove margin and border radius on 'well' dom objects */
-  border-radius: 0;
-  margin-bottom: 0;
-  border: none;
-  background: $well-bg;
-  border: $well-border;
-}
+
+/* Stop Bootstrap modals from sliding */
 .modal.fade .modal-dialog {
-  /* Stop Bootstrap modals from sliding */
   transform: translate(0, 0);
 }
 
-/* Override nav tab styling */
+/* Override Bootstrap's nav tab styling */
 
 .nav-tabs {
   border: 0;
@@ -60,9 +54,11 @@ label {
   border-radius: 0;
 }
 
-/* Override Bootstrap's default modal behaviour. We use
+/*
+ * Override Bootstrap's default modal behaviour. We use
  * a lot of modals for data entry, so it makes sense to
- * have them large. */
+ * have them large.
+ */
 
 .modal-dialog {
   @media (min-width: $screen-sm-min) {
@@ -76,7 +72,9 @@ label {
     }
   }
 }
-/* By default, .wi-fw is set to too large a value (1.4em) */
+/* Fix weather-icon CSS
+ * By default, .wi-fw is set to too large a value (1.4em)
+ * */
 .wi-fw {
   width: 1.28571429em;
 }
