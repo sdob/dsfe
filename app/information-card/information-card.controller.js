@@ -253,7 +253,9 @@
         resolve: {
           site: () => vm.site,
         },
+        size: 'sm',
         templateUrl: 'information-card/upload-image-modal.template.html',
+        windowClass: 'modal-center',
       });
       instance.result.then((val) => {
         // If the modal closed because we uploaded an image, then reload
