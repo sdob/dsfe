@@ -22,14 +22,13 @@
 }
 
 .map-context-menu {
+  right: initial;
+
   .list-group {
     margin: 0;
   }
   .list-group-item {
     border-radius: 0;
-    &:hover {
-      background: $blue-700--0_17;
-    }
   }
   img.media-object {
     width: 36px;
