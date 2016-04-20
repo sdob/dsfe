@@ -4,11 +4,6 @@
   font-size: 20px;
   font-weight: 500;
   color: #000;
-  &--is-logging-in {
-    & .login-modal__form {
-      filter: blur(2px);
-    }
-  }
   &__social-button {
     width: 100%;
     margin-bottom: 16px;
