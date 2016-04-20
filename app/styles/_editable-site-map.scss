@@ -9,10 +9,6 @@
  *
  */
 
-// These are magic numbers based on the size of the SVGs
-$svg-marker-height: 41.25px;
-$svg-marker-width: 29px;
-
 .editable-site-map__centre-marker {
   position: absolute;
   &.divesite {
@@ -27,10 +23,11 @@ $svg-marker-width: 29px;
   top: 50%;
   left: 50%;
   z-index: 1;
-  margin-left: calc(-$svg-marker-width / 2);
-  margin-top: -$svg-marker-height;
-  height: $svg-marker-height;
-  width: $svg-marker-width;
+  // For positioning, use magic numbers based on SVG sizes
+  margin-left: calc(-$map-marker-width / 2);
+  margin-top: -$map-marker-height;
+  height: $map-marker-height;
+  width: $map-marker-width;
 }
 
 /* Style the editable map container */

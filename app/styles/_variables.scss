@@ -1,5 +1,8 @@
 // $error-color: #a94442;
 
+/*
+ * Some defaults courtesy of Material
+ */
 $blue-100: #e3f2fd;
 $blue-500: #2196f3;
 $blue-700: #1976d2;
@@ -40,4 +43,4 @@ $default-modal-padding: 1.5em;
 
 // These magic numbers are based on the size of the default map icon
 $map-marker-width: 29px;
-$map-marker-height: 41px;
+$map-marker-height: 41.25px;
