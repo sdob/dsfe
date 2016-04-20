@@ -56,13 +56,18 @@
       // Register an event listener for when the modal closes, and
       // confirm
       $scope.$on('modal.closing', (e) => {
-        // If we've checked with the user that they definitely want to
-        // close the modal, then proceed as usual
-        if (vm.modalCloseConfirmed) {
+        console.log($scope.logDiveForm);
+
+        // (a) the user has confirmed that they want to close, or
+        // (b) the form hasn't been touched, then just close as usual
+        if (vm.modalCloseConfirmed || !$scope.logDiveForm.$dirty) {
           return;
         }
+
         // Otherwise, cancel closing and pop up a confirmation modal
         e.preventDefault();
+
+        // Open a modal instance
         const instance = $uibModal.open({
           controller: 'CancelLoggingModalController',
           controllerAs: 'vm',
@@ -70,6 +75,7 @@
           templateUrl: 'log-dive/log-dive-modal/cancel-logging-modal.template.html',
           windowClass: 'modal-center',
         });
+
         // When the confirmation modal closes, check the dismissal reason;
         // if the user definitely wants to cancel, then make it so
         instance.result.then((reason) => {
