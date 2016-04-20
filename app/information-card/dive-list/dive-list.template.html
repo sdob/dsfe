@@ -1,6 +1,6 @@
 <div class="information-card__body-section">
     <div class="ds-discrete-bordered-item" ng-repeat="dive in dives | orderBy:'-'">
-        <div ng-if="userID === dive.diver.id" class="information-card__dive-actions">
+        <div ng-if="userID === dive.diver.id" class="ds-action-items">
             <a href
                 class="overlay-action-item--blue"
                 ng-click="vm.summonLogDiveModal(dive, site)">
