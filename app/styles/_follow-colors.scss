@@ -1,3 +1,11 @@
+/*
+ * Styles for the circular can-follow/is-following/unknown link
+ * in the information card header
+ */
+
+/*
+ * The viewing user is not following this user
+ */
 .can-follow {
   color: #fff;
   .background {
@@ -5,6 +13,10 @@
     transition: color 200ms;
   }
 }
+
+/*
+ * We don't know yet whether the viewing user is following this user
+ */
 .follow-unresolved {
   color: #fff;
   .background {
@@ -12,6 +24,10 @@
     transition: color 200ms;
   }
 }
+
+/*
+ * The viewing user is following this user
+ */
 .is-following {
   color: #fff;
   .background {

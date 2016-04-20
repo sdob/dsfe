@@ -1,6 +1,14 @@
+/*
+ * Selectors with the ds- prefix indicate that these are
+ * additional style rules specific to our site. They
+ * take precedence over the default element-level rules
+ * applied by Bootstrap.
+ */
+
 .ds-form {
   padding-bottom: 32px;
 }
+
 .ds-form__submit-row {
   margin-top: 16px;
   text-align: right;
@@ -9,6 +17,7 @@
     margin-right: 16px;
   }
 }
+
 .ds-form-group-lg {
   font-size: 20px;
   input[type="text"] {
@@ -23,6 +32,7 @@
     font-size: 14px;
   }
 }
+
 .ds-form-control {
   font-size: 20px;
   height: auto;
@@ -30,9 +40,11 @@
     font-size: inherit;
   }
 }
+
 .has-feedback .ds-form-control {
   padding-right: $ds-feedback-width;
 }
+
 .ds-feedback {
   font-size: 20px;
   line-height: 1.42857143;
@@ -50,8 +62,10 @@
   font-size: 20px;
 }
 
+/*
+ * Overrides for complex radio groups involving inputs
+ */
 .ds-complex-radio {
-  // Overrides for complex radio groups involving inputs
   & > label {
     display: flex;
     & > input[type="radio"] {
