@@ -1,8 +1,12 @@
 /* Special layout stuff */
 
+/*
+ * Comments in lists, dives in logs, and so on should have a consistent
+ * appearance with respect to border, margin, and padding
+ */
 .ds-discrete-bordered-item {
   // Border styles for dive and comment lists
-  border: solid 1px rgba(0, 0, 0, 0.32);
+  border: $border-strong;
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
@@ -10,6 +14,10 @@
   position: relative;
 }
 
+/*
+ * The positioning of action items (edit, delete) is consistent across the
+ * site's design
+ */
 .ds-action-items {
   position: absolute;
   right: 12px;
