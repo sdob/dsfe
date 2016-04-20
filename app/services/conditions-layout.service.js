@@ -27,9 +27,20 @@
     ];
 
     return {
+      getWeatherWiClass,
       weathers,
       winds,
     };
+
+    function getWeatherWiClass(type) {
+      const matchingWeather = weathers.filter(x => x.type === type)[0];
+      if (matchingWeather === undefined) {
+        // Default if we can't find a match
+        return 'wi-day-rain';
+      }
+
+      return matchingWeather.wiClass;
+    }
   }
 
   angular.module('divesites').factory('conditionsLayoutService', conditionsLayoutService);
