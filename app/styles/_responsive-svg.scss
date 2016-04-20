@@ -1,3 +1,6 @@
+/*
+ * This should allow SVGs to resize nicely
+ */
 .svg-container {
   display: inline-block;
   position: relative;
@@ -5,10 +8,4 @@
   //padding-bottom: 100%;
   vertical-align: top;
   overflow: hidden;
-}
-.svg-content-responsive {
-  //display: inline-block;
-  //position: absolute;
-  //top: 10px;
-  //left: 0;
 }
