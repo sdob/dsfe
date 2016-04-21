@@ -86,7 +86,7 @@
           case 'profile':
             // If the user is logged in, head to their profile page
             if (localStorageService.get('user')) {
-              return $location.url(`/users/${localStorageService.get('user')}`);
+              return $location.url(`/users/${localStorageService.get('user')}?tab=places`);
             }
             // This shouldn't happen, but degrade gracefully
             return $location.url(defaultPath);
