@@ -15,12 +15,18 @@
 }
 
 .profile-image-list__bumf {
-  bottom: 16px;
+  bottom: 0;
   color: #fff;
   font-size: 20px;
-  left: 16px;
+  left: 0;
+  padding-bottom: 16px;
+  padding-left: 16px;
   position: absolute;
   z-index: 1;
+
+  a {
+    color: $blue-300;
+  }
 }
 
 .profile-image-list__bumf-caption {

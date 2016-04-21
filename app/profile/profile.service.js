@@ -69,10 +69,14 @@
           console.error(i);
           return;
         }
-
+        
         return apiCall(id)
         .then((response) => {
-          i.divesiteName = response.data.name;
+          i.site = {
+            id: response.data.id,
+            name: response.data.name, 
+            type: i.content_type_model,
+          };
         });
       });
 
