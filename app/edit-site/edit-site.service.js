@@ -1,7 +1,7 @@
 // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 (function() {
   'use strict';
-  function editSiteService($uibModal, $window, contextMenuService, dsapi) {
+  function editSiteService($location, $uibModal, $window, contextMenuService, dsapi, localStorageService) {
 
     const apiCalls = {
       compressor: (id) => {
@@ -22,6 +22,7 @@
       formatRequest,
       formatResponse,
       getContextMenuCoordinates,
+      handleSuccessfulSave,
       selectSubmissionApiCall,
       summonCancelEditingModal,
     };
@@ -76,6 +77,25 @@
       return undefined;
     }
 
+    function handleSuccessfulSave(type, id) {
+      // On successful save, check the location params
+      console.log($location.$$search);
+      const defaultPath =  `/?${type}=${id}`;
+      if ($location.$$search.next) {
+        switch ($location.$$search.next) {
+          case 'profile':
+            // If the user is logged in, head to their profile page
+            if (localStorageService.get('user')) {
+              return $location.url(`/users/${localStorageService.get('user')}`);
+            }
+            // This shouldn't happen, but degrade gracefully
+            return $location.url(defaultPath);
+          default:
+            return $location.url(defaultPath);
+        }
+      }
+    }
+
     function selectSubmissionApiCall(id) {
       // If passed an ID, then we're updating an existing site;
       // otherwise, we're adding a new one
@@ -108,10 +128,12 @@
   }
 
   editSiteService.$inject = [
+    '$location',
     '$uibModal',
     '$window',
     'contextMenuService',
     'dsapi',
+    'localStorageService',
   ];
   angular.module('divesites.editSite').factory('editSiteService', editSiteService);
 })();
