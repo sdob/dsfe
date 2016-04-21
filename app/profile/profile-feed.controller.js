@@ -21,7 +21,7 @@
     // we don't have to make an API request every time we load a new feed item
     vm.userProfileImageURLs = {};
     // Are we viewing the tab?
-    vm.viewing = true;
+    vm.viewing = false;
 
     // Run activate block
     activate();
