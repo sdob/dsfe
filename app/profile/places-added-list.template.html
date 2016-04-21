@@ -40,6 +40,14 @@
     <div ng-show="vm.visibility[place.type]" ng-repeat="place in vm.user.placesAdded | orderBy:'-creation_date'" class="row">
         <div class="col-xs-12">
             <div class="ds-discrete-bordered-item">
+                <div ng-if="editable" class="ds-action-items">
+                    <a href="/#/edit-{{ place.type }}/{{ place.id }}" class="overlay-action-item--blue">
+                        <span class="fa fa-stack">
+                            <i class="fa fa-stack-2x fa-circle background"></i>
+                            <i class="fa fa-stack-1x fa-edit"></i>
+                        </span>
+                    </a>
+                </div>
                 <div class="profile-feed__comment-header">
                     <div class="profile-feed__comment-image places-added__icon" ng-switch="place.type">
                         <img ng-switch-when="divesite" ng-src="/img/divesite.svg" />
