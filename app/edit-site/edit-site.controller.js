@@ -16,7 +16,7 @@
     mapService,
     seabedTypesService
   ) {
-    const { formatRequest, formatResponse } = editSiteService;
+    const { formatRequest, formatResponse, handleSuccessfulSave } = editSiteService;
     const { seabedTypes } = seabedTypesService;
     const vm = this;
     activate();
@@ -26,7 +26,6 @@
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
-      vm.handleSuccessfulSave = handleSuccessfulSave;
       vm.seabedTypes = seabedTypes;
       vm.selectSeabedType = selectSeabedType;
       vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
@@ -87,24 +86,6 @@
       vm.atLeastOneEntryIsSelected = (vm.site.boatEntry || vm.site.shoreEntry);
     }
 
-    function handleSuccessfulSave() {
-      // On successful save, check the location params
-      console.log($location.$$search);
-      if ($location.$$search.next) {
-        switch ($location.$$search.next) {
-          case 'profile':
-            // If the user is logged in, head to their profile page
-            if (localStorageService.get('user')) {
-              return $location.url(`/users/${localStorageService.get('user')}`);
-            }
-            // This shouldn't happen, but degrade gracefully
-            return $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
-          default:
-            return $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
-        }
-      }
-    }
-
     function selectSeabedType(seabed) {
       vm.site.seabed = seabed;
       console.log(vm.site.seabed);
@@ -143,7 +124,7 @@
       .then((response) => {
         // Save was successful
         vm.isSaving = false;
-        vm.handleSuccessfulSave();
+        handleSuccessfulSave('divesite', vm.site.id);
       })
       .catch((err) => {
         // Problem with saving

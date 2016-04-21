@@ -79,9 +79,14 @@
 
     function handleSuccessfulSave(type, id) {
       // On successful save, check the location params
-      console.log($location.$$search);
+      console.log('handling successful save');
       const defaultPath =  `/?${type}=${id}`;
+      console.log(`type: ${type}`);
+      console.log(`id: ${id}`);
+      console.log(`defaultPath: ${defaultPath}`);
+      console.log(!!$location.$$search.next);
       if ($location.$$search.next) {
+        console.log('location.search looks kosher');
         switch ($location.$$search.next) {
           case 'profile':
             // If the user is logged in, head to their profile page
@@ -93,6 +98,8 @@
           default:
             return $location.url(defaultPath);
         }
+      } else {
+        return $location.url(defaultPath);
       }
     }
 
