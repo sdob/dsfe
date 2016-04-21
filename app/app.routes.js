@@ -42,6 +42,7 @@
       controllerAs: 'vm',
     })
     .when('/users/:userId', {
+      reloadOnSearch: false,
       template: '<profile></profile>',
     })
     .when('/divesites/:divesiteId', {
