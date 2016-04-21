@@ -6,6 +6,7 @@
       controller: 'PlacesAddedListController',
       controllerAs: 'vm',
       scope: {
+        editable: '=',
         user: '=',
       },
       templateUrl: 'profile/places-added-list.template.html',
