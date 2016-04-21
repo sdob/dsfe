@@ -12,6 +12,7 @@
     dsapi,
     dsimg,
     editSiteService,
+    localStorageService,
     mapService,
     seabedTypesService
   ) {
@@ -87,9 +88,21 @@
     }
 
     function handleSuccessfulSave() {
-      // On successful save, bring the user back to the map with a search string
-      // pointing to this site
-      $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
+      // On successful save, check the location params
+      console.log($location.$$search);
+      if ($location.$$search.next) {
+        switch ($location.$$search.next) {
+          case 'profile':
+            // If the user is logged in, head to their profile page
+            if (localStorageService.get('user')) {
+              return $location.url(`/users/${localStorageService.get('user')}`);
+            }
+            // This shouldn't happen, but degrade gracefully
+            return $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
+          default:
+            return $location.url(`/?${vm.siteTypeString}=${vm.site.id}`);
+        }
+      }
     }
 
     function selectSeabedType(seabed) {
@@ -166,6 +179,7 @@
     'dsapi',
     'dsimg',
     'editSiteService',
+    'localStorageService',
     'mapService',
     'seabedTypesService',
   ];

@@ -34,7 +34,7 @@
       },
     };
 
-    const { formatRequest, formatResponse } = editSiteService;
+    const { formatRequest, formatResponse, handleSuccessfulSave } = editSiteService;
     const vm = this;
     activate();
 
@@ -118,10 +118,7 @@
         .then((response) => {
           console.log(response);
           vm.isSaving = false;
-
-          // Return to the compressor information card
-          $location.path('/');
-          $location.search(`compressor=${response.data.id}`);
+          return handleSuccessfulSave('compressor', response.data.id);
         })
         .catch((err) => {
           console.error(err);
@@ -134,16 +131,12 @@
         dsapi.postCompressor(requestData)
         .then((response) => {
           console.log(response);
+          // Add a bit of latency so that it's obvious that the request
+          // was handled
           $timeout(() => {
-
-            // Add a bit of latency so that it's obvious that the request
-            // was handled
             vm.isSaving = false;
-
-            // Return to the compressor information card
-            $location.path('/');
-            $location.search(`compressor=${response.data.id}`);
-          }, 500);
+            return handleSuccessfulSave('compressor', response.data.id);
+          }, 200);
         })
         .catch((error) => {
           vm.isSaving = false;

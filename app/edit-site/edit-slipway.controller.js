@@ -34,7 +34,7 @@
       },
     };
 
-    const { apiCalls, formatRequest, formatResponse } = editSiteService;
+    const { apiCalls, formatRequest, formatResponse, handleSuccessfulSave } = editSiteService;
     const vm = this;
     activate();
 
@@ -111,9 +111,11 @@
           console.log(response);
           vm.isSaving = false;
 
+          return handleSuccessfulSave('slipway', response.data.id);
+
           // Return to the slipway information card
-          $location.path('/');
-          $location.search(`slipway=${response.data.id}`);
+          // $location.path('/');
+          // $location.search(`slipway=${response.data.id}`);
         })
         .catch((err) => {
           console.error(err);
@@ -129,9 +131,11 @@
             // was handled
             vm.isSaving = false;
 
+            return handleSuccessfulSave('slipway', response.data.id);
+
             // Return to the slipway information card
-            $location.path('/');
-            $location.search(`slipway=${response.data.id}`);
+            // $location.path('/');
+            // $location.search(`slipway=${response.data.id}`);
           }, 200);
         })
         .catch((error) => {
