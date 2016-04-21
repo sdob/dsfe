@@ -69,12 +69,12 @@
           console.error(i);
           return;
         }
-        
+
         return apiCall(id)
         .then((response) => {
           i.site = {
             id: response.data.id,
-            name: response.data.name, 
+            name: response.data.name,
             type: i.content_type_model,
           };
         });
