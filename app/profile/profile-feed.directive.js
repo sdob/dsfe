@@ -14,7 +14,6 @@
     };
 
     function link(scope, elem, attrs, ctrl) {
-      console.log(scope);
     }
   }
 
