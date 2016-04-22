@@ -52,34 +52,48 @@
             </p>
             <div class="about-us__statistics-container">
                 <div class="col-xs-4 statistics">
-                    <div class="statistics__number">{{ vm.statistics.users }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.users"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">user{{ vm.statistics.users === 1 ? '' : 's' }}</div>
                 </div>
                 <div class="col-xs-4 statistics">
-                    <div class="statistics__number">{{ vm.statistics.dives }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.dives"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">dive{{ vm.statistics.dives === 1 ? '' : 's' }}</div>
                 </div>
                 <div class="col-xs-4 statistics">
-                    <div class="statistics__number">{{ vm.statistics.total_hours_underwater }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.total_hours_underwater"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">hour{{ vm.statistics.total_hours_underwater === 1 ? '' : 's' }} underwater</div>
                 </div>
             </div>
             <p>Not too shabby. Here are some more statistics. divesit.es users have contributed</p>
             <div class="about-us__statistics-container">
                 <div class="col-xs-3 statistics">
-                    <div class="statistics__number">{{ vm.statistics.divesites }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.divesites"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">divesite{{ vm.statistics.divesites === 1 ? '' : 's' }}</div>
                 </div>
                 <div class="col-xs-3 statistics">
-                    <div class="statistics__number">{{ vm.statistics.slipways }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.slipways"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">slipway{{ vm.statistics.slipways === 1 ? '' : 's' }}</div>
                 </div>
                 <div class="col-xs-3 statistics">
-                    <div class="statistics__number">{{ vm.statistics.compressors }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.compressors"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">compressor{{ vm.statistics.compressors === 1 ? '' : 's' }}</div>
                 </div>
                 <div class="col-xs-3 statistics">
-                    <div class="statistics__number">{{ vm.statistics.images }}</div>
+                    <div class="statistics__number">
+                        <loadable-statistic value="vm.statistics.images"></loadable-statistic>
+                    </div>
                     <div class="statistics__text">image{{ vm.statistics.images === 1 ? '' : 's' }}</div>
                 </div>
             </div>
