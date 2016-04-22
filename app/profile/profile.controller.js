@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function ProfileController($auth, $routeParams, $rootScope, $scope, $timeout, dsactivity, dsapi, dsimg, informationCardService, localStorageService, profileService, userSettingsService) {
+  function ProfileController($auth, $location, $routeParams, $rootScope, $scope, $timeout, dsactivity, dsapi, dsimg, informationCardService, localStorageService, profileService, userSettingsService) {
     const vm = this;
 
     // Get the user's ID and put it into $scope
@@ -51,11 +51,22 @@
           vm.user.dives = response.data;
         });
       });
+
+      // This event should only fire once during the controllers'
+      // lifetimes, and we'll respond with a message that the
+      // feed controller should/shouldn't load the feed
+      $scope.$on('feed-controller-initialized', (e) => {
+        console.log(`heard 'feed-controller-initialized'`);
+        if ($location.$$search.tab === 'feed') {
+          $scope.$broadcast('show-feed');
+        }
+      });
     }
   }
 
   ProfileController.$inject = [
     '$auth',
+    '$location',
     '$routeParams',
     '$rootScope',
     '$scope',
