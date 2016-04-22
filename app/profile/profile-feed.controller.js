@@ -27,6 +27,7 @@
     activate();
 
     function activate() {
+      console.log('ProfileFeedController.activate()');
       // If the user is authenticated, fetch their ID
       if (vm.isAuthenticated()) {
         vm.ownID = localStorageService.get('user');
@@ -60,6 +61,12 @@
           vm.viewing = true;
         });
       });
+
+      /*
+       * Finally, emit an event to our parent controller so that
+       * we can decide whether to load the feed
+       */
+      $scope.$emit('feed-controller-initialized');
     }
 
     // Request the next page of the user's feed
