@@ -10,7 +10,6 @@
     activate();
 
     function activate() {
-      console.log('DiveLogListController.activate()');
       vm.isAuthenticated = $auth.isAuthenticated;
       vm.summonConfirmDiveDeletionModal = summonConfirmDiveDeletionModal;
       vm.summonLogDiveModal = summonLogDiveModal;
@@ -25,7 +24,6 @@
      */
     function emitEventIfSuccessful(expectedReason, event) {
       return (reason) => {
-        console.log(reason);
         if (reason === expectedReason) {
           $scope.$emit(event);
         }
@@ -33,7 +31,6 @@
     }
 
     function summonConfirmDiveDeletionModal(dive) {
-      console.log('deleting');
       profileService.confirmDiveDeletion(dive)
       .then(emitEventIfSuccessful('deleted', 'dive-log-updated'));
     }

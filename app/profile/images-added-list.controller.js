@@ -10,9 +10,6 @@
     activate();
 
     function activate() {
-      console.log('ImagesAddedListController.activate()');
-      console.log($scope);
-      console.log($scope.user);
       vm.user = $scope.user;
 
       // Retrieve user images
@@ -31,7 +28,6 @@
     }
 
     function summonConfirmDeleteImageModal(image, $index) {
-      console.log('summoning delete image modal');
       console.log($index);
       const instance = $uibModal.open({
         controller: 'ConfirmDeleteImageModalController',

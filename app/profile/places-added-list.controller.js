@@ -13,15 +13,11 @@
         divesite: true,
         slipway: true,
       };
-      console.log('palscope');
-      console.log($scope);
     }
 
     function toggleVisibility(type) {
       $timeout(() => {
-        console.log(`toggling visibility for ${type}`);
         vm.visibility[type] = !vm.visibility[type];
-        console.log(vm.visibility);
       });
     }
   }

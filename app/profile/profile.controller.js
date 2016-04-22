@@ -15,14 +15,11 @@
     activate();
 
     function activate() {
-      console.log('ProfileController.activate()');
-
       // Check whether the viewing user and the profile owner
       // are the same person. If they are, then load the full,
       // visible-to-owner-only profile.
       let apiCall;
       if ($auth.isAuthenticated() && userId === localStorageService.get('user')) {
-        console.log('this is me');
         $timeout(() => {
           vm.editable = true;
         });

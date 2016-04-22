@@ -27,7 +27,6 @@
 
     // Activate block: make API requests
     function activate() {
-      console.log('ProfileHeaderController.activate()');
 
       // Retrieve the viewing user's ID
       if (vm.isAuthenticated()) {
@@ -36,7 +35,6 @@
 
       // Wait for ProfileController to receive the user data before updating
       $scope.$on('user-loaded', (e, user) => {
-        console.log('profile header heard user-loaded');
         vm.user = user;
 
         // Retrieve follow/follower stats and bind to scope
@@ -85,8 +83,6 @@
         height: 318,
         crop: 'fill',
       });
-      console.log('formatted hero image:');
-      console.log(url);
       return url;
     }
 
@@ -118,7 +114,6 @@
 
     // Confirm that the user wants to delete their profile image
     function summonDeleteProfileImageModal() {
-      console.log('summoning delete profile image modal');
       const instance = $uibModal.open({
         controller: 'DeleteProfileImageModalController',
         controllerAs: 'vm',
@@ -134,7 +129,6 @@
       // if the user asked to delete the image, update the UI accordingly
       instance.result.then((reason) => {
         if (reason === 'deleted') {
-          console.log('deleted');
           $rootScope.$broadcast('profile-image-changed');
           $timeout(() => {
             vm.profileImageUrl = undefined;
@@ -172,7 +166,6 @@
       instance.result
       .then((user) => {
         if (user !== undefined) {
-          console.log(`heading for user ${user.id}`);
           return goToProfile(user);
         }
       });
@@ -230,7 +223,6 @@
 
     // Update the follow/follower statistics
     function updateUserFollowStats() {
-      console.log('updating follow stats');
       // Retrieve follower list
       dsactivity.getUserFollowers(vm.user.id)
       .then((response) => {
