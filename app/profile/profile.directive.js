@@ -53,8 +53,9 @@
         // If our requested tab isn't one of the valid tabs, then just
         // show the default (and replace the state so that we lose the
         // bogus tab selection from history
-        console.log('no valid tab selected');
+        console.log(`no valid tab selected, going with '${defaultTab}`);
         $location.search('tab', defaultTab).replace();
+        $(feedSelector).tab('show');
       }
     }
   }
