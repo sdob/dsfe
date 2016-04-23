@@ -26,6 +26,7 @@
     'divesites.navigationBar',
     'divesites.aboutUs',
     'divesites.profile',
+    'divesites.reportProblem',
     'divesites.services',
     'divesites.userSettings',
     'divesites.widgets',

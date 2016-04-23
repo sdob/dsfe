@@ -5,6 +5,7 @@
     'divesites.caching',
     'divesites.constants',
     'divesites.logDive',
+    'divesites.reportProblem',
     'divesites.services',
     'divesites.userSettings',
     'satellizer',

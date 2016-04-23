@@ -1,0 +1,39 @@
+<div class="ds-modal" ng-class="{'ds-modal--is-working': vm.isSubmitting}">
+    <modal-mask message="Uploading..." ng-show="vm.isSubmitting"></modal-mask>
+    <div class="ds-modal__content">
+        <div class="ds-modal__dismiss">
+            <a href class="overlay-action-item" ng-click="vm.dismiss()">
+                <span class="fa fa-stack">
+                    <i class="fa fa-stack-2x fa-circle background"></i>
+                    <i class="fa fa-stack-1x fa-close"></i>
+                </span>
+            </a>
+        </div>
+        <div class="row">
+            <h1 class="col-xs-12">
+                Report a problem with <span class="report-problem-modal__object-name">'{{ vm.object.name }}'</span>
+            </h1>
+        </div>
+        <div class="row">
+            <p class="col-xs-12">
+                Thanks for taking the time to make divesit.es better. Please provide more detail about
+                the problem below.
+            </p>
+        </div>
+        <div class="row">
+            <form name="reportProblemForm">
+                <div class="col-xs-12">
+                    <textarea class="form-control" ng-model="vm.message"></textarea>
+                </div>
+                <div class="col-xs-12 ds-form__submit-row">
+                    <button class="btn btn-default big-button" ng-click="vm.dismiss()">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary big-button" ng-click="vm.submit()">
+                        Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
