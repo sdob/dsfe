@@ -1,0 +1,49 @@
+.profile-image-list__actions {
+  bottom: 16px;
+  position: absolute;
+  right: 16px;
+  z-index: 2; // In front of absolutely-positioned caption
+}
+
+.profile-image-list__bumf {
+  background: rgba(0, 0, 0, 0.32);
+  bottom: 0;
+  color: #fff;
+  font-size: 20px;
+  left: 0;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-top: 8px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+
+  a {
+    color: $blue-300;
+  }
+}
+
+.profile-image-list__bumf-caption {
+  font-size: 16px;
+  margin-right: 64px; // Dodge 'delete' action
+}
+
+.profile-image-list__bumf-date,
+.profile-image-list__bumf-divesite {
+  margin-bottom: 0;
+}
+
+.profile-image-list__bumf-divesite {
+  font-weight: 500;
+}
+
+.profile-image-list__container {
+  margin-bottom: 16px;
+  @include floor-fade();
+  position: relative;
+}
+
+.profile-image-list__image {
+  width: 100%;
+  height: auto;
+}
