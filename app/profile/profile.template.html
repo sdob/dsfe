@@ -79,7 +79,7 @@
 
                 <div role="tabpanel" class="tab-pane" id="js-profile-dives-tab">
                     <dive-log-list user="vm.user" ng-if="vm.user.dives.length"></dive-log-list>
-                    <div ng-if="!vm.user.dives.length" class="profile__no-dives">
+                    <div ng-if="!vm.user.dives.length" class="profile__tab--empty">
                         <i class="fa fa-fw fa-frown-o"></i>
                         Nothing yet!
                     </div>
@@ -87,7 +87,7 @@
 
                 <div role="tabpanel" class="tab-pane" id="js-profile-places-tab">
                     <places-added-list ng-if="vm.user.placesAdded.length" editable="vm.editable" user="vm.user"></places-added-list>
-                    <div ng-if="!vm.user.placesAdded.length" class="profile__no-places-added">
+                    <div ng-if="!vm.user.placesAdded.length" class="profile__tab--empty">
                         <i class="fa fa-fw fa-frown-o"></i>
                         Nothing yet!
                     </div>
