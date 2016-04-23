@@ -19,6 +19,7 @@
       vm.site = $scope.site || {};
       vm.site.locData = formatGeocodingData(vm.site);
       vm.site.images = [];
+      vm.summonReportProblemModal = summonReportProblemModal;
       vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
       vm.summonUploadImageModal = summonUploadImageModal;
       vm.userProfileImageUrls = {};
@@ -220,6 +221,18 @@
         if (reason === 'logged') {
           updateDiveListAndStatistics();
         }
+      });
+    }
+
+    function summonReportProblemModal() {
+      console.log('summoning report-problem modal');
+      const instance = $uibModal.open({
+        controller: 'ReportProblemModalController',
+        controllerAs: 'vm',
+        resolve: {
+          object: () => vm.site,
+        },
+        templateUrl: 'report-problem/report-problem-modal.template.html',
       });
     }
 
