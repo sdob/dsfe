@@ -5,7 +5,6 @@
     let ownProfile; // cache the user's profile information here
     return {
       clear,
-      confirmDiveDeletion,
       editDive,
       formatRequestData,
       formatResponseData,
@@ -16,10 +15,6 @@
 
     function clear() {
       ownProfile = undefined;
-    }
-
-    function confirmDiveDeletion(dive) {
-      return logDiveService.summonConfirmDiveDeletionModal(dive).result;
     }
 
     function editDive(dive) {
