@@ -1,6 +1,7 @@
 (function() {
   'use strict';
-  function ProfileHeaderController($auth, $location, $rootScope, $scope, $timeout, $uibModal, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
+  function ProfileHeaderController($auth, $location, $rootScope, $scope, $timeout, $uibModal, confirmModalService, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
+    const { summonConfirmModal } = confirmModalService;
     const vm = this;
 
     // This flag lets the UI know whether we've received the profile image
@@ -114,24 +115,27 @@
 
     // Confirm that the user wants to delete their profile image
     function summonDeleteProfileImageModal() {
-      const instance = $uibModal.open({
-        controller: 'DeleteProfileImageModalController',
-        controllerAs: 'vm',
-        resolve: {
-          user: () => vm.user,
-        },
-        size: 'sm',
+      const instance = summonConfirmModal({
         templateUrl: 'profile/delete-profile-image-modal.template.html',
-        windowClass: 'modal-center',
       });
 
       // When the modal is closed (not dismissed), check the reason, and
       // if the user asked to delete the image, update the UI accordingly
       instance.result.then((reason) => {
-        if (reason === 'deleted') {
+        if (reason === 'confirmed') {
           $rootScope.$broadcast('profile-image-changed');
+          // Optimistically remove image from front-end straight awway
           $timeout(() => {
             vm.profileImageUrl = undefined;
+          });
+          // Make the API request to delete the image
+          dsimg.deleteUserProfileImage(vm.user.id)
+          .then((response) => {
+            // We don't really need to do anything with this in production
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error(error);
           });
         }
       });
@@ -248,6 +252,7 @@
     '$scope',
     '$timeout',
     '$uibModal',
+    'confirmModalService',
     'dsactivity',
     'dsapi',
     'dsimg',
