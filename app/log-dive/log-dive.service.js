@@ -1,8 +1,11 @@
 (function() {
   'use strict';
-  function logDiveService($uibModal) {
+  function logDiveService($uibModal, confirmModalService, dsapi) {
+    const { summonConfirmModal } = confirmModalService;
+
     return {
       combineDateAndTime,
+      deleteDive,
       defaultDateAndTime,
       summonConfirmDiveDeletionModal,
       summonLogDiveModal,
@@ -16,6 +19,26 @@
       const minute = moment(time).minute();
       const combined = moment([year, month, day, hour, minute]);
       return combined;
+    }
+
+    function deleteDive(dive) {
+      const instance = summonConfirmModal({
+        templateUrl: 'log-dive/confirm-dive-deletion-modal.template.html',
+      });
+
+      return instance.result.then((reason) => {
+        console.log('reason');
+        console.log(reason);
+        if (reason === 'confirmed') {
+          // Actually delete the dive
+          return dsapi.deleteDive(dive.id)
+          .then((response) => {
+            return 'deleted';
+          });
+        } else {
+          return 'cancelled';
+        }
+      });
     }
 
     function defaultDateAndTime() {
@@ -54,6 +77,8 @@
 
   logDiveService.$inject = [
     '$uibModal',
+    'confirmModalService',
+    'dsapi',
   ];
   angular.module('divesites.logDive').factory('logDiveService', logDiveService);
 })();
