@@ -30,9 +30,23 @@
       };
     }
 
-    function summonConfirmDiveDeletionModal(dive) {
-      profileService.confirmDiveDeletion(dive)
-      .then(emitEventIfSuccessful('deleted', 'dive-log-updated'));
+    function summonConfirmDiveDeletionModal($index, dive) {
+      console.log($index, dive);
+      logDiveService.deleteDive(dive)
+      .then((result) => {
+        // logDiveService takes care of the actual deletion; we just need
+        // to know whether to update the dive log list
+        // console.log(`reason: ${reason}`);
+        console.log('result');
+        console.log(result);
+        if (result === 'deleted') {
+          // We know that the dive has been deleted, so remove it from vm.dives
+          // in the next cycle
+          $timeout(() => {
+            $scope.user.dives.splice($scope.user.dives.indexOf(dive), 1);
+          });
+        }
+      });
     }
 
     function summonLogDiveModal(dive) {
