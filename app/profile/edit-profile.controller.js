@@ -1,6 +1,7 @@
 (function() {
   'use strict';
-  function EditProfileController($location, $scope, $uibModal, dsapi, dsimg, localStorageService, profileService) {
+  function EditProfileController($location, $scope, $uibModal, confirmModalService, dsapi, dsimg, localStorageService, profileService) {
+    const { summonConfirmModal } = confirmModalService;
     const vm = this;
     activate();
 
@@ -21,13 +22,11 @@
       // Check whether the form has been changed and summon a confirmation
       // modal
       if ($scope.editForm.$dirty) {
-        const instance = $uibModal.open({
+        const instance = summonConfirmModal({
           templateUrl: 'profile/cancel-edit-profile-modal.template.html',
-          controller: 'CancelEditProfileModalController',
-          controllerAs: 'vm',
         });
         instance.result.then((reason) => {
-          if (reason === 'perform-cancel') {
+          if (reason === 'confirmed') {
             $location.path(`/users/${vm.user.id}`);
           }
         });
@@ -55,6 +54,7 @@
     '$location',
     '$scope',
     '$uibModal',
+    'confirmModalService',
     'dsapi',
     'dsimg',
     'localStorageService',
