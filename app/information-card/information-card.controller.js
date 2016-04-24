@@ -232,6 +232,7 @@
         resolve: {
           object: () => vm.site,
         },
+        size: 'sm',
         templateUrl: 'report-problem/report-problem-modal.template.html',
       });
     }
