@@ -24,10 +24,9 @@
     }
 
     function summonConfirmDiveDeletionModal(dive) {
-      const instance = logDiveService.summonConfirmDiveDeletionModal(dive);
-      instance.result.then((reason) => {
-        if (reason === 'deleted') {
-          // Tell our parent controller that we've deleted a dive
+      logDiveService.deleteDive(dive)
+      .then((result) => {
+        if (result === 'deleted') {
           $scope.$emit('dive-list-updated');
         }
       });
