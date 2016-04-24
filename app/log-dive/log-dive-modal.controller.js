@@ -1,7 +1,8 @@
 (function() {
   'use strict';
-  function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, confirmCancelService, diveID, dsapi, logDiveService, modalService, site, uiPreferencesService) {
+  function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, confirmModalService, diveID, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const { weathers, winds } = conditionsLayoutService;
+    const { summonConfirmModal } = confirmModalService;
 
     const vm = this;
 
@@ -68,14 +69,14 @@
         e.preventDefault();
 
         // Open a confirmation modal
-        const instance = confirmCancelService.summonConfirmCancelModal({
+        const instance = summonConfirmModal({
           templateUrl: 'log-dive/log-dive-modal/cancel-logging-modal.template.html',
         });
 
         // When the confirmation modal closes, check the dismissal reason;
         // if the user definitely wants to cancel, then make it so
         instance.result.then((reason) => {
-          if (reason === 'perform-cancel') {
+          if (reason === 'confirmed') {
             // Flag as OK to close, and re-fire the event
             vm.modalCloseConfirmed = true;
             $uibModalInstance.dismiss();
@@ -276,7 +277,7 @@
     '$uibModal',
     '$uibModalInstance',
     'conditionsLayoutService',
-    'confirmCancelService',
+    'confirmModalService',
     'diveID',
     'dsapi',
     'logDiveService',
