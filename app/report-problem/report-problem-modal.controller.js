@@ -1,8 +1,10 @@
 (function() {
   'use strict';
 
-  function ReportProblemModalController($scope, $timeout, $uibModal, $uibModalInstance, object) {
+  function ReportProblemModalController($scope, $timeout, $uibModal, $uibModalInstance, confirmModalService, object) {
+    const { summonConfirmModal } = confirmModalService;
     const vm = this;
+
     vm.dismiss = dismiss;
     vm.modalCloseConfirmed = false;
     vm.object = object;
@@ -25,16 +27,12 @@
 
         e.preventDefault();
 
-        const instance = $uibModal.open({
-          controller: 'CancelReportingProblemModalController',
-          controllerAs: 'vm',
-          size: 'sm',
+        const instance = summonConfirmModal({
           templateUrl: 'report-problem/cancel-reporting-problem-modal.template.html',
-          windowClass: 'modal-center',
         });
 
         instance.result.then((reason) => {
-          if (reason === 'performCancel') {
+          if (reason === 'confirmed') {
             vm.modalCloseConfirmed = true;
             $uibModalInstance.dismiss();
           }
@@ -61,6 +59,7 @@
     '$timeout',
     '$uibModal',
     '$uibModalInstance',
+    'confirmModalService',
     'object',
   ];
   angular.module('divesites.reportProblem').controller('ReportProblemModalController', ReportProblemModalController);
