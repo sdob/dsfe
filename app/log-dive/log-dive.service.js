@@ -7,7 +7,6 @@
       combineDateAndTime,
       deleteDive,
       defaultDateAndTime,
-      summonConfirmDiveDeletionModal,
       summonLogDiveModal,
     };
 
@@ -46,19 +45,6 @@
         date: new Date(),
         time: new Date(),
       };
-    }
-
-    function summonConfirmDiveDeletionModal(dive) {
-      return $uibModal.open({
-        controller: 'ConfirmDiveDeletionModalController',
-        controllerAs: 'vm',
-        resolve: {
-          dive: () => dive,
-        },
-        size: 'sm',
-        templateUrl: 'log-dive/confirm-dive-deletion-modal.template.html',
-        windowClass: 'modal-center',
-      });
     }
 
     function summonLogDiveModal(dive, site) {
