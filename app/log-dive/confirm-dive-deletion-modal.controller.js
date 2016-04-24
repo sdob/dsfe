@@ -8,7 +8,7 @@
       console.log($scope);
       console.log(dive);
       vm.cancel = cancel;
-      vm.delete = performDelete;
+      vm.confirm = performDelete;
       vm.dive = dive;
     }
 
