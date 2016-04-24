@@ -1,7 +1,8 @@
 (function() {
   'use strict';
 
-  function ImagesAddedListController($scope, $timeout, $uibModal, dsimg, profileService) {
+  function ImagesAddedListController($scope, $timeout, $uibModal, confirmModalService, dsimg, profileService) {
+    const { summonConfirmModal } = confirmModalService;
     const vm = this;
 
     vm.isLoading = true;
@@ -29,12 +30,10 @@
 
     function summonConfirmDeleteImageModal(image, $index) {
       console.log($index);
-      const instance = $uibModal.open({
-        controller: 'ConfirmDeleteImageModalController',
-        controllerAs: 'vm',
+      const instance = summonConfirmModal({
         templateUrl: 'profile/confirm-delete-image-modal.template.html',
-        windowClass: 'modal-center',
       });
+
       instance.result.then((reason) => {
         // Easier for us to handle deletion here, rather than in the modal controller
         if (reason === 'confirmed') {
@@ -51,12 +50,11 @@
           };
 
           // Send the deletion request to the API
-          return dsimg.deleteSiteImage(site, id);
+          return dsimg.deleteSiteImage(site, id)
+          .then((response) => {
+            console.log(response.data);
+          });
         }
-      })
-      .then((response) => {
-        // We don't really need to do anything with the response in production
-        console.log(response.data);
       })
       .catch(handleErrorResponse);
     }
@@ -66,6 +64,7 @@
     '$scope',
     '$timeout',
     '$uibModal',
+    'confirmModalService',
     'dsimg',
     'profileService',
   ];
