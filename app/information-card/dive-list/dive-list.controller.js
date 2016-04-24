@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function DiveListController($http, $scope, $uibModal, localStorageService, logDiveService) {
+  function DiveListController($http, $scope, localStorageService, logDiveService) {
     const vm = this;
     activate();
 
@@ -38,7 +38,6 @@
   DiveListController.$inject = [
     '$http',
     '$scope',
-    '$uibModal',
     'localStorageService',
     'logDiveService',
   ];
