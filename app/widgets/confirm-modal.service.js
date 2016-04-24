@@ -1,14 +1,14 @@
 (function() {
   'use strict';
 
-  function confirmCancelService($uibModal) {
+  function confirmModalService($uibModal) {
     return {
-      summonConfirmCancelModal,
+      summonConfirmModal,
     };
 
-    function summonConfirmCancelModal(opts) {
+    function summonConfirmModal(opts) {
       const defaults = {
-        controller: 'ConfirmCancelModalController',
+        controller: 'ConfirmModalController',
         controllerAs: 'vm',
         size: 'sm',
         windowClass: 'modal-center',
@@ -18,8 +18,8 @@
     }
   }
 
-  confirmCancelService.$inject = [
+  confirmModalService.$inject = [
     '$uibModal',
   ];
-  angular.module('divesites.widgets').factory('confirmCancelService', confirmCancelService);
+  angular.module('divesites.widgets').factory('confirmModalService', confirmModalService);
 })();
