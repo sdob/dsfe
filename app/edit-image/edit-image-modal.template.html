@@ -14,7 +14,7 @@
             <img class="edit-image-modal__image" ng-src="{{ vm.image.url }}"/>
         </div>
         <form name="captionForm">
-            <textarea class="form-control" ng-model="vm.caption"></textarea>
+            <textarea name="caption" class="form-control" ng-model="vm.caption"></textarea>
             <div class="ds-form__submit-row">
                 <button class="btn btn-default big-button" ng-click="vm.cancel()">
                     Cancel

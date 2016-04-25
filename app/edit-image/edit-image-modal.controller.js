@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function EditImageModalController($scope, $uibModalInstance, confirmModalService, image) {
+  function EditImageModalController($scope, $uibModalInstance, confirmModalService, dsimg, image) {
     const { reasons, summonConfirmModal } = confirmModalService;
 
     const vm = this;
@@ -43,6 +43,17 @@
 
     function submit() {
       console.log($scope.captionForm);
+      const site = {
+        id: vm.image.object_id,
+        type: vm.image.content_type_model,
+      };
+      dsimg.updateSiteImage(site, vm.image, { caption: vm.caption })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   }
 
@@ -50,6 +61,7 @@
     '$scope',
     '$uibModalInstance',
     'confirmModalService',
+    'dsimg',
     'image',
   ];
   angular.module('divesites.editImage').controller('EditImageModalController', EditImageModalController);
