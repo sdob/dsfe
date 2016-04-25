@@ -224,6 +224,7 @@
 
 .information-card__dismiss-button {
   cursor: pointer;
+  padding: 8px; // Increase hit area (possible usability improvement/issue)
 }
 
 .information-card__header-actions {
