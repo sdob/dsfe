@@ -1,4 +1,5 @@
 (function() {
+  'use strict';
 
   function ConfirmModalController($uibModalInstance) {
     const vm = this;
