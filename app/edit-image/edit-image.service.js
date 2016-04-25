@@ -6,10 +6,14 @@
       summonEditImageModal,
     };
 
-    function summonEditImageModal() {
+    function summonEditImageModal(image) {
       $uibModal.open({
         controller: 'EditImageModalController',
         controllerAs: 'vm',
+        resolve: {
+          image: () => image,
+        },
+        size: 'lg',
         templateUrl: 'edit-image/edit-image-modal.template.html',
       });
     }
