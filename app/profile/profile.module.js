@@ -5,5 +5,6 @@
     'divesites.activity',
     'divesites.informationCard',
     'divesites.userSettings',
+    'divesites.widgets',
   ]);
 })();
