@@ -2,7 +2,7 @@
   'use strict';
   function LogDiveModalController($scope, $timeout, $uibModal, $uibModalInstance, conditionsLayoutService, confirmModalService, diveID, dsapi, logDiveService, modalService, site, uiPreferencesService) {
     const { weathers, winds } = conditionsLayoutService;
-    const { summonConfirmModal } = confirmModalService;
+    const { reasons, summonConfirmModal } = confirmModalService;
 
     const vm = this;
 
@@ -76,7 +76,7 @@
         // When the confirmation modal closes, check the dismissal reason;
         // if the user definitely wants to cancel, then make it so
         instance.result.then((reason) => {
-          if (reason === 'confirmed') {
+          if (reason === reasons.CONFIRMED) {
             // Flag as OK to close, and re-fire the event
             vm.modalCloseConfirmed = true;
             $uibModalInstance.dismiss();
