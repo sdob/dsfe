@@ -22,6 +22,7 @@
   position: absolute;
   right: 8px;
   top: 8px;
+  z-index: 1; // In front of its parent
 }
 
 // Full-width dropdown selects
