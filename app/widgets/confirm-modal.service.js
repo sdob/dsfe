@@ -2,7 +2,12 @@
   'use strict';
 
   function confirmModalService($uibModal) {
+    const reasons = {
+      CANCELLED: 'cancelled',
+      CONFIRMED: 'confirmed',
+    };
     return {
+      reasons,
       summonConfirmModal,
     };
 
