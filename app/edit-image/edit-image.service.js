@@ -7,7 +7,7 @@
     };
 
     function summonEditImageModal(image) {
-      $uibModal.open({
+      return $uibModal.open({
         controller: 'EditImageModalController',
         controllerAs: 'vm',
         resolve: {
