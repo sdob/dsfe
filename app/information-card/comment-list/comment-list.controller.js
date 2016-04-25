@@ -52,23 +52,6 @@
     }
 
     function summonConfirmCommentDeletionModal(comment, $index) {
-      /*
-      const instance = $uibModal.open({
-        controller: 'ConfirmCommentDeletionModalController',
-        controllerAs: 'vm',
-        resolve: {
-          comment: () => {
-            return comment;
-          },
-          type: () => {
-            return vm.siteType;
-          },
-        },
-        size: 'sm',
-        templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
-        windowClass: 'modal-center',
-      });
-      */
       const instance = summonConfirmModal({
         templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
       });
@@ -108,7 +91,6 @@
             $scope.comments.splice($index, 1);
             vm.apiCalls.delete(vm.site, comment.id);
           }
-          // $scope.$emit('comment-list-updated');
         }
       });
     }
