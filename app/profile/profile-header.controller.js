@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   function ProfileHeaderController($auth, $location, $rootScope, $scope, $timeout, $uibModal, confirmModalService, dsactivity, dsapi, dsimg, followService, localStorageService, profileService) {
-    const { summonConfirmModal } = confirmModalService;
+    const { reasons, summonConfirmModal } = confirmModalService;
     const vm = this;
 
     // This flag lets the UI know whether we've received the profile image
@@ -122,7 +122,7 @@
       // When the modal is closed (not dismissed), check the reason, and
       // if the user asked to delete the image, update the UI accordingly
       instance.result.then((reason) => {
-        if (reason === 'confirmed') {
+        if (reason === reasons.CONFIRMED) {
           $rootScope.$broadcast('profile-image-changed');
           // Optimistically remove image from front-end straight awway
           $timeout(() => {

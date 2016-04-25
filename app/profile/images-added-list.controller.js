@@ -2,7 +2,7 @@
   'use strict';
 
   function ImagesAddedListController($scope, $timeout, $uibModal, confirmModalService, dsimg, profileService) {
-    const { summonConfirmModal } = confirmModalService;
+    const { reasons, summonConfirmModal } = confirmModalService;
     const vm = this;
 
     vm.isLoading = true;
@@ -36,7 +36,7 @@
 
       instance.result.then((reason) => {
         // Easier for us to handle deletion here, rather than in the modal controller
-        if (reason === 'confirmed') {
+        if (reason === reasons.CONFIRMED) {
           // We can give the user immediate feedback by removing
           // the element from the DOM while we contact DSIMG in the
           // background.

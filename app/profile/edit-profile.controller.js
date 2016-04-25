@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   function EditProfileController($location, $scope, $uibModal, confirmModalService, dsapi, dsimg, localStorageService, profileService) {
-    const { summonConfirmModal } = confirmModalService;
+    const { reasons, summonConfirmModal } = confirmModalService;
     const vm = this;
     activate();
 
@@ -26,7 +26,7 @@
           templateUrl: 'profile/cancel-edit-profile-modal.template.html',
         });
         instance.result.then((reason) => {
-          if (reason === 'confirmed') {
+          if (reason === reasons.CONFIRMED) {
             $location.path(`/users/${vm.user.id}`);
           }
         });
