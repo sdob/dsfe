@@ -3,7 +3,7 @@
 
   function ImagesAddedListController($scope, $timeout, $uibModal, confirmModalService, dsimg, editImageService, profileService) {
     const { reasons, summonConfirmModal } = confirmModalService;
-    const { summonEditImageModal } = editImageService;
+    // const { summonEditImageModal } = editImageService;
     const vm = this;
 
     vm.isLoading = true;
@@ -28,6 +28,17 @@
 
     function handleErrorResponse(err) {
       console.error(err);
+    }
+
+    function summonEditImageModal(image) {
+      const instance = editImageService.summonEditImageModal(image);
+      instance.result.then((reason) => {
+        // We're expecting {reason: 'blah', data: {...}}
+        if (reason.result === 'edited') {
+          // Update the caption in the UI
+          image.caption = reason.data.caption;
+        }
+      });
     }
 
     function summonConfirmDeleteImageModal(image, $index) {
