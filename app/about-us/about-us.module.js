@@ -2,5 +2,6 @@
   'use strict';
   angular.module('divesites.aboutUs', [
     'divesites.apis',
+    'divesites.widgets',
   ]);
 })();
