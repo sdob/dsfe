@@ -1,12 +1,14 @@
 (function() {
   'use strict';
 
-  function ImagesAddedListController($scope, $timeout, $uibModal, confirmModalService, dsimg, profileService) {
+  function ImagesAddedListController($scope, $timeout, $uibModal, confirmModalService, dsimg, editImageService, profileService) {
     const { reasons, summonConfirmModal } = confirmModalService;
+    const { summonEditImageModal } = editImageService;
     const vm = this;
 
     vm.isLoading = true;
     vm.summonConfirmDeleteImageModal = summonConfirmDeleteImageModal;
+    vm.summonEditImageModal = summonEditImageModal;
 
     activate();
 
@@ -66,6 +68,7 @@
     '$uibModal',
     'confirmModalService',
     'dsimg',
+    'editImageService',
     'profileService',
   ];
   angular.module('divesites.profile').controller('ImagesAddedListController', ImagesAddedListController);
