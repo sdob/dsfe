@@ -49,7 +49,12 @@
       };
       dsimg.updateSiteImage(site, vm.image, { caption: vm.caption })
       .then((response) => {
-        console.log(response.data);
+        // Successful update! Flag as ready to close
+        vm.modalCloseConfirmed = true;
+        $uibModalInstance.close({
+          result: 'edited',
+          data: response.data,
+        });
       })
       .catch((error) => {
         console.error(error);
