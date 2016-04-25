@@ -1,7 +1,8 @@
 (function() {
   'use strict';
 
-  function CommentListController($auth, $scope, $timeout, $uibModal, commentService, dscomments, localStorageService) {
+  function CommentListController($auth, $scope, $timeout, $uibModal, commentService, confirmModalService, dscomments, localStorageService) {
+    const { reasons, summonConfirmModal } = confirmModalService;
     const vm = this;
     activate();
 
@@ -51,6 +52,7 @@
     }
 
     function summonConfirmCommentDeletionModal(comment, $index) {
+      /*
       const instance = $uibModal.open({
         controller: 'ConfirmCommentDeletionModalController',
         controllerAs: 'vm',
@@ -66,8 +68,12 @@
         templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
         windowClass: 'modal-center',
       });
+      */
+      const instance = summonConfirmModal({
+        templateUrl: 'information-card/comment-list/confirm-comment-deletion-modal.template.html',
+      });
       instance.result.then((reason) => {
-        if (reason === 'confirmed') {
+        if (reason === reasons.CONFIRMED) {
           // We can remove the comment from the DOM immediately
           $scope.comments.splice($index, 1);
           // Delete the comment in the background
@@ -114,6 +120,7 @@
     '$timeout',
     '$uibModal',
     'commentService',
+    'confirmModalService',
     'dscomments',
     'localStorageService',
   ];
