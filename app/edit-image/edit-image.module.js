@@ -1,5 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('divesites.editImage', []);
+  angular.module('divesites.editImage', [
+    'divesites.widgets',
+  ]);
 })();
