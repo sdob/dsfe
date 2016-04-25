@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   function logDiveService($uibModal, confirmModalService, dsapi) {
-    const { summonConfirmModal } = confirmModalService;
+    const { reasons, summonConfirmModal } = confirmModalService;
 
     return {
       combineDateAndTime,
@@ -28,14 +28,16 @@
       return instance.result.then((reason) => {
         console.log('reason');
         console.log(reason);
-        if (reason === 'confirmed') {
-          // Actually delete the dive
+        // Check the reason that the modal instance closed
+        if (reason === reasons.CONFIRMED) {
+          // If the modal was confirmed, then delete the dive
           return dsapi.deleteDive(dive.id)
           .then((response) => {
             return 'deleted';
           });
         } else {
-          return 'cancelled';
+          // Otherwise, return the cancelled reason
+          return reasons.CANCELLED;
         }
       });
     }
