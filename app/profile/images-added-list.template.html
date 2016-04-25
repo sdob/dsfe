@@ -6,21 +6,31 @@
     </div>
 </div>
 <div ng-show="!vm.isLoading">
-    <div ng-show="vm.images.length" ng-repeat="image in vm.images | orderBy:'-'">
+    <div style="position: relative;" ng-show="vm.images.length" ng-repeat="image in vm.images | orderBy:'-'">
+        <div class="ds-action-items" style="z-index: 1">
+            <a href
+                class="overlay-action-item--blue link--undecorated"
+                ng-click="vm.summonEditImageModal(image, $index)"
+                ng-if="editable"
+                >
+                <span class="fa-stack">
+                    <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
+                    <i class="fa fa-fw fa-edit fa-stack-1x"></i>
+                </span>
+            </a>
+            <a href
+                class="overlay-action-item--blue link--undecorated"
+                ng-click="vm.summonConfirmDeleteImageModal(image, $index)"
+                ng-if="editable"
+                >
+                <span class="fa-stack">
+                    <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
+                    <i class="fa fa-fw fa-trash fa-stack-1x"></i>
+                </span>
+            </a>
+        </div>
         <div class="profile-image-list__container">
             <img ng-src="{{ image.url }}" class="profile-image-list__image" />
-            <div class="profile-image-list__actions">
-                <a href
-                    class="overlay-action-item link--undecorated"
-                    ng-click="vm.summonConfirmDeleteImageModal(image, $index)"
-                    ng-if="editable"
-                    >
-                    <span class="fa-stack fa-2x">
-                        <i class="fa fa-fw fa-circle fa-stack-2x background"></i>
-                        <i class="fa fa-fw fa-trash fa-stack-1x"></i>
-                    </span>
-                </a>
-            </div>
             <div class="profile-image-list__bumf">
                 <p class="profile-image-list__bumf-divesite">
                     <a href="/#/?{{ image.site.type }}={{ image.site.id }}">
