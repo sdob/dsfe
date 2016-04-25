@@ -14,17 +14,18 @@
         <div class="ds-modal__header">
             <h3 class="ds-modal__title">Add an image for <strong>{{ vm.site.name }}</strong></h3>
         </div>
-        <button type="button"
-            ngf-select
-            ng-model="vm.imageFile">
-            Select Image
-        </button>
-        <div class="information-card__upload-thumbnail-container">
+        <div class="information-card__upload-thumbnail-container" ng-class="{'has-image': vm.imageFile}">
             <img
             ngf-thumbnail="vm.imageFile"
             style="height: 200px; max-width: 100%"
             />
         </div>
+        <button type="button"
+            class="btn btn-primary information-card__upload-thumbnail__select"
+            ngf-select
+            ng-model="vm.imageFile">
+            Select Image
+        </button>
         <div class="form-group">
             <label>Caption (optional)</label>
             <textarea class="form-control" ng-model="vm.caption">

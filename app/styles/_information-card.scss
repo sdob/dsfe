@@ -59,6 +59,13 @@
     //height: calc($img-height + $padding * 2);
     min-height: 232px;
     background: rgba(0, 0, 0, 0.17);
+    &.has-image {
+      background: transparent;
+    }
+  }
+  &__upload-thumbnail__select {
+    display: block;
+    margin: 0 auto;
   }
 
 
