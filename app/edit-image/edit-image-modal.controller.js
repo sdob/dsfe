@@ -42,13 +42,14 @@
     }
 
     function submit() {
-      console.log($scope.captionForm);
+      vm.isSubmitting = true;
       const site = {
         id: vm.image.object_id,
         type: vm.image.content_type_model,
       };
       dsimg.updateSiteImage(site, vm.image, { caption: vm.caption })
       .then((response) => {
+        vm.isSubmitting = false;
         // Successful update! Flag as ready to close
         vm.modalCloseConfirmed = true;
         $uibModalInstance.close({
