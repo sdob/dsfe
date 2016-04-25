@@ -13,6 +13,7 @@
       getUserImages,
       getUserProfileImage,
       setSiteHeaderImage,
+      updateSiteImage,
     };
 
     function clearSiteHeaderImage(site) {
@@ -45,6 +46,10 @@
 
     function setSiteHeaderImage(site, id) {
       return $http.post(`${API_URL}/${site.type}s/${site.id}/header_image/`, { id });
+    }
+
+    function updateSiteImage(site, image, data) {
+      return $http.patch(`${API_URL}/${site.type}s/${site.id}/images/${image.id}/`, data);
     }
   }
 
