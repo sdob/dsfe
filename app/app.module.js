@@ -19,6 +19,7 @@
     /* Feature areas */
     'divesites.caching',
     'divesites.constants',
+    'divesites.editImage',
     'divesites.editSite',
     'divesites.informationCard',
     'divesites.login',
