@@ -45,12 +45,6 @@
       reloadOnSearch: false,
       template: '<profile></profile>',
     })
-    .when('/divesites/:divesiteId', {
-      templateUrl: 'views/divesite.html',
-    })
-    .when('/log-dive/:divesiteId', {
-      template: '<log-dive></log-dive>',
-    })
     .when('/edit-profile', {
       template: '<edit-profile></edit-profile>',
       controller: 'EditProfileController',
