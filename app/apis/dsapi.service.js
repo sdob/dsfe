@@ -6,124 +6,154 @@
    * a Promise.
    */
   function dsapiService($auth, $http, API_URL) {
+
     return {
 
-      getCompressor: (id) => {
-        return $http.get(`${API_URL}/compressors/${id}/`);
-      },
+      /* DELETE methods */
+      deleteDive,
 
-      getCompressors: () => {
-        return $http.get(`${API_URL}/compressors/`);
-      },
-
-      getDive: (id) => {
-        return $http.get(`${API_URL}/dives/${id}/`);
-      },
-
-      getDivesite: (id) => {
-        return $http.get(`${API_URL}/divesites/${id}/`);
-      },
-
-      getDivesites: () => {
-        return $http.get(`${API_URL}/divesites/`);
-      },
-
-      getDivesiteComments: (id) => {
-        return $http.get(`${API_URL}/divesites/${id}/comments/`);
-      },
-
-      getDivesiteDives: (id) => {
-        return $http.get(`${API_URL}/divesites/${id}/dives/`);
-      },
-
-      getNearbySlipways: (id) => {
-        return $http.get(`${API_URL}/divesites/${id}/nearby_slipways/`);
-      },
-
-      getOwnProfile: () => {
-        const token = $auth.getToken();
-        return $http.get(`${API_URL}/users/me/`, {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
-      },
-
-      getStatistics: () => {
-        return $http.get(`${API_URL}/statistics/`);
-      },
-
-      getSlipway: (id) => {
-        return $http.get(`${API_URL}/slipways/${id}/`);
-      },
-
-      getSlipways: () => {
-        return $http.get(`${API_URL}/slipways/`);
-      },
-
-      getUser: (id) => {
-        return $http.get(`${API_URL}/users/${id}/`);
-      },
-
-      getUserDives: (id) => {
-        return $http.get(`${API_URL}/users/${id}/dives/`);
-      },
-
-      getUserDivesites: (id) => {
-        return $http.get(`${API_URL}/users/${id}/divesites/`);
-      },
-
-      getUserMinimal: (id) => {
-        return $http.get(`${API_URL}/users/${id}/minimal/`);
-      },
+      /* GET methods */
+      getCompressor,
+      getCompressors,
+      getDive,
+      getDivesite,
+      getDivesites,
+      getDivesiteComments,
+      getDivesiteDives,
+      getNearbySlipways,
+      getOwnProfile,
+      getStatistics,
+      getSlipway,
+      getSlipways,
+      getUser,
+      getUserDives,
+      getUserDivesites,
+      getUserMinimal,
 
       /* POST methods */
-
-      postCompressor: (data) => {
-        return $http.post(`${API_URL}/compressors/`, data);
-      },
-
-      postDive: (data) => {
-        return $http.post(`${API_URL}/dives/`, data);
-      },
-
-      postDivesite: (data) => {
-        return $http.post(`${API_URL}/divesites/`, data);
-      },
-
-      postSlipway: (data) => {
-        return $http.post(`${API_URL}/slipways/`, data);
-      },
+      postCompressor,
+      postDive,
+      postDivesite,
+      postSlipway,
 
       /* UPDATE methods */
-      updateCompressor: (id, data) => {
-        return $http.patch(`${API_URL}/compressors/${id}/`, data);
-      },
-
-      updateDive: (id, data) => {
-        return $http.patch(`${API_URL}/dives/${id}/`, data);
-      },
-
-      updateDivesite: (id, data) => {
-        return $http.patch(`${API_URL}/divesites/${id}/`, data);
-      },
-
-      updateSlipway: (id, data) => {
-        return $http.patch(`${API_URL}/slipways/${id}/`, data);
-      },
-
-      updateProfile: (data) => {
-        const id = data.id;
-        return $http.patch(`${API_URL}/users/${id}/`, data);
-      },
-
-      /* DELETE methods */
-
-      deleteDive: (id) => {
-        return $http.delete(`${API_URL}/dives/${id}/`);
-      },
+      updateCompressor,
+      updateDive,
+      updateDivesite,
+      updateSlipway,
+      updateProfile,
 
     };
+
+    function getCompressor(id) {
+      return $http.get(`${API_URL}/compressors/${id}/`);
+    }
+
+    function getCompressors() {
+      return $http.get(`${API_URL}/compressors/`);
+    }
+
+    function getDive(id) {
+      return $http.get(`${API_URL}/dives/${id}/`);
+    }
+
+    function getDivesite(id) {
+      return $http.get(`${API_URL}/divesites/${id}/`);
+    }
+
+    function getDivesites() {
+      return $http.get(`${API_URL}/divesites/`);
+    }
+
+    function getDivesiteComments(id) {
+      return $http.get(`${API_URL}/divesites/${id}/comments/`);
+    }
+
+    function getDivesiteDives(id) {
+      return $http.get(`${API_URL}/divesites/${id}/dives/`);
+    }
+
+    function getNearbySlipways(id) {
+      return $http.get(`${API_URL}/divesites/${id}/nearby_slipways/`);
+    }
+
+    function getOwnProfile() {
+      const token = $auth.getToken();
+      return $http.get(`${API_URL}/users/me/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+    }
+
+    function getStatistics() {
+      return $http.get(`${API_URL}/statistics/`);
+    }
+
+    function getSlipway(id) {
+      return $http.get(`${API_URL}/slipways/${id}/`);
+    }
+
+    function getSlipways() {
+      return $http.get(`${API_URL}/slipways/`);
+    }
+
+    function getUser(id) {
+      return $http.get(`${API_URL}/users/${id}/`);
+    }
+
+    function getUserDives(id) {
+      return $http.get(`${API_URL}/users/${id}/dives/`);
+    }
+
+    function getUserDivesites(id) {
+      return $http.get(`${API_URL}/users/${id}/divesites/`);
+    }
+
+    function getUserMinimal(id) {
+      return $http.get(`${API_URL}/users/${id}/minimal/`);
+    }
+
+    function postCompressor(data) {
+      return $http.post(`${API_URL}/compressors/`, data);
+    }
+
+    function postDive(data) {
+      return $http.post(`${API_URL}/dives/`, data);
+    }
+
+    function postDivesite(data) {
+      return $http.post(`${API_URL}/divesites/`, data);
+    }
+
+    function postSlipway(data) {
+      return $http.post(`${API_URL}/slipways/`, data);
+    }
+
+    function updateCompressor(id, data) {
+      return $http.patch(`${API_URL}/compressors/${id}/`, data);
+    }
+
+    function updateDive(id, data) {
+      return $http.patch(`${API_URL}/dives/${id}/`, data);
+    }
+
+    function updateDivesite(id, data) {
+      return $http.patch(`${API_URL}/divesites/${id}/`, data);
+    }
+
+    function updateSlipway(data) {
+      return $http.patch(`${API_URL}/slipways/${id}/`, data);
+    }
+
+    function updateProfile(data) {
+      const id = data.id;
+      return $http.patch(`${API_URL}/users/${id}/`, data);
+    }
+
+    function deleteDive(id) {
+      return $http.delete(`${API_URL}/dives/${id}/`);
+    }
   }
 
   dsapiService.$inject = [
