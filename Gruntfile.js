@@ -75,6 +75,7 @@ module.exports = (grunt) => {
             'GOOGLE_CLIENT_ID': process.env.GOOGLE_CLIENT_ID || 'Google Client ID',
             'API_URL': process.env.API_URL || 'http://localhost:8000',
             'IMG_API_URL': process.env.IMG_API_URL || 'http://localhost:9001',
+            'GOOGLE_MAPS_API_KEY': process.env.GOOGLE_MAPS_API_KEY || 'Google Maps API key',
           },
         },
       },
