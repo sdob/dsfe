@@ -1,7 +1,10 @@
 (function() {
   'use strict';
 
-  function dsimgService($http, API_URL) {
+  function dsimgService($http, API_URL, cachingService) {
+
+    // Retrieve or create a cache for API calls by this factory
+    const imageCache = cachingService.getOrCreateCache('image');
 
     return {
       API_URL,
@@ -56,6 +59,7 @@
   dsimgService.$inject = [
     '$http',
     'API_URL',
+    'cachingService',
   ];
   angular.module('divesites.apis').factory('dsimg', dsimgService);
 })();
