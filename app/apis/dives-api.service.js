@@ -1,7 +1,11 @@
 (function() {
   'use strict';
 
-  function divesApi() {
+  function divesApi($http, API_URL, CacheFactory) {
+
+    // Retrieve or create a cache for storing dives
+    const diveCache = getOrCreateDiveCache();
+
     return {
       deleteDive,
       getDive,
@@ -22,6 +26,18 @@
       return $http.get(`${API_URL}/divesites/${id}/dives/`);
     }
 
+    function getOrCreateDiveCache() {
+      // Look for an existing cache
+      const existingCache = CacheFactory.get('diveCache');
+      // If it exists, return it
+      if (existingCache) {
+        return existingCache;
+      }
+
+      // If not, create and return the new cache
+      return CacheFactory('diveCache');
+    }
+
     function postDive(data) {
       return $http.post(`${API_URL}/dives/`, data);
     }
@@ -34,6 +50,7 @@
   divesApi.$inject = [
     '$http',
     'API_URL',
+    'CacheFactory',
   ];
   angular.module('divesites.apis').factory('divesApi', divesApi);
 })();
