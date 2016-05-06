@@ -6,7 +6,15 @@
    * a Promise. Since refactoring, this service collects and exposes the
    * methods from smaller, feature-specific services.
    */
-  function dsapiService($auth, $http, API_URL, CacheFactory, placesApi) {
+  function dsapiService($auth, $http, API_URL, CacheFactory, divesApi, placesApi) {
+
+    const {
+      deleteDive,
+      getDive,
+      getDivesiteDives,
+      postDive,
+      updateDive,
+    } = divesApi;
 
     const {
       getCompressor,
@@ -61,16 +69,8 @@
 
     };
 
-    function getDive(id) {
-      return $http.get(`${API_URL}/dives/${id}/`);
-    }
-
     function getDivesiteComments(id) {
       return $http.get(`${API_URL}/divesites/${id}/comments/`);
-    }
-
-    function getDivesiteDives(id) {
-      return $http.get(`${API_URL}/divesites/${id}/dives/`);
     }
 
     function getNearbySlipways(id) {
@@ -106,21 +106,9 @@
       return $http.get(`${API_URL}/users/${id}/minimal/`);
     }
 
-    function postDive(data) {
-      return $http.post(`${API_URL}/dives/`, data);
-    }
-
-    function updateDive(id, data) {
-      return $http.patch(`${API_URL}/dives/${id}/`, data);
-    }
-
     function updateProfile(data) {
       const id = data.id;
       return $http.patch(`${API_URL}/users/${id}/`, data);
-    }
-
-    function deleteDive(id) {
-      return $http.delete(`${API_URL}/dives/${id}/`);
     }
   }
 
@@ -129,6 +117,7 @@
     '$http',
     'API_URL',
     'CacheFactory',
+    'divesApi',
     'placesApi',
   ];
   angular.module('divesites.apis').factory('dsapi', dsapiService);
