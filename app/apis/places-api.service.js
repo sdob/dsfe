@@ -1,13 +1,14 @@
 (function() {
   'use strict';
 
-  function placesApi($http, API_URL, CacheFactory) {
+  function placesApi($http, API_URL, CacheFactory, cachingService) {
 
     const COMPRESSOR_LIST_VIEW = `${API_URL}/compressors/`;
     const DIVESITE_LIST_VIEW = `${API_URL}/divesites/`;
     const SLIPWAY_LIST_VIEW = `${API_URL}/slipways/`;
 
-    const siteCache = getOrCreateSiteCache();
+    const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
+    const siteListCache = cachingService.getOrCreateCache('siteListCache');
 
     return {
       getCompressor,
@@ -25,13 +26,14 @@
     };
 
     function getCompressor(id) {
-      return $http.get(`${API_URL}/compressors/${id}/`);
+      const url = `${COMPRESSOR_LIST_VIEW}/${id}/`;
+      return $http.get(url);
     }
 
     // Retrieve compressor list, from cache or by API request
     function getCompressors() {
       return $http.get(COMPRESSOR_LIST_VIEW, {
-        cache: siteCache,
+        cache: siteListCache,
       });
     }
 
@@ -42,32 +44,20 @@
     // Retrieve divesite list, from cache or by API request
     function getDivesites() {
       return $http.get(DIVESITE_LIST_VIEW, {
-        cache: siteCache,
-      });
-    }
-
-    function getOrCreateSiteCache() {
-      if (CacheFactory.get('siteCache')) {
-        return CacheFactory.get('siteCache');
-      }
-
-      return CacheFactory('siteCache', {
-        maxAge: 15 * 60 * 1000,
-        cacheFlushInterval: 60 * 60 * 1000,
-        deleteOnExpire: 'aggressive',
+        cache: siteListCache,
       });
     }
 
     // Retrieve slipway list, from cache or by API request
     function getSlipway(id) {
       return $http.get(`${API_URL}/slipways/${id}/`, {
-        cache: siteCache,
+        cache: siteListCache,
       });
     }
 
     function getSlipways() {
       return $http.get(SLIPWAY_LIST_VIEW, {
-        cache: siteCache,
+        cache: siteListCache,
       });
     }
 
@@ -78,7 +68,7 @@
       return $http.post(url, data)
       .then((data) => {
         // Invalidate cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -90,7 +80,7 @@
       return $http.post(url, data)
       .then((data) => {
         // Invalidate cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -102,7 +92,7 @@
       return $http.post(url, data)
       .then((data) => {
         // Invalidate cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -114,7 +104,7 @@
       return $http.patch(`${API_URL}/compressors/${id}/`, data)
       .then((data) => {
         // Invalidate compressor list cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -126,7 +116,7 @@
       return $http.patch(`${API_URL}/divesites/${id}/`, data)
       .then((data) => {
         // Invalidate divesite list cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -138,7 +128,7 @@
       return $http.patch(`${API_URL}/slipways/${id}/`, data)
       .then((data) => {
         // Invalidate slipway list cache
-        siteCache.remove(url);
+        siteListCache.remove(url);
         return data;
       });
     }
@@ -148,6 +138,7 @@
     '$http',
     'API_URL',
     'CacheFactory',
+    'cachingService',
   ];
   angular.module('divesites.apis').factory('placesApi', placesApi);
 })();
