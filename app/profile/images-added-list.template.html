@@ -7,7 +7,7 @@
 </div>
 <div ng-show="!vm.isLoading">
     <div style="position: relative;" ng-show="vm.images.length" ng-repeat="image in vm.images | orderBy:'-'">
-        <div class="ds-action-items" style="z-index: 1">
+        <div class="ds-action-items" style="z-index: 2">
             <a href
                 class="overlay-action-item--blue link--undecorated"
                 ng-click="vm.summonEditImageModal(image, $index)"
