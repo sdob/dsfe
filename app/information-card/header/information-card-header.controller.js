@@ -23,11 +23,14 @@
       $scope.$on('site-loaded', (e, site) => {
         const owner = site.owner;
 
-        // Retrieve the user thumbnail from cache
-        userThumbnailCache.get(owner.id)
-        .then((value) => {
-          if (value) {
-            vm.ownerProfileImageUrl = value;
+        // Retrieve the user profile image URL, formatted to request a 60x60
+        // thumbnail version of the image
+        dsimg.getUserProfileImage(owner.id, dsimg.formatAsThumbnail)
+        .then((response) => {
+          console.log('formatted response:');
+          console.log(response);
+          if (response.data) {
+            vm.ownerProfileImageUrl = response.data;
           }
           // Allow the UI to update
           vm.ownerProfileResolved = true;
