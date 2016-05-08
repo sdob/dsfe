@@ -20,7 +20,7 @@
  */
 .ds-action-items {
   position: absolute;
-  right: 8px;
+  right: 20px; // Dodge scrollbars
   top: 8px;
   z-index: 1; // In front of its parent
 }
