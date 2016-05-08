@@ -1,10 +1,13 @@
 (function() {
   'use strict';
 
-  function divesApi($http, API_URL, CacheFactory) {
+  function divesApi($http, API_URL, CacheFactory, cachingService) {
 
     // Retrieve or create a cache for storing dives
-    const diveCache = getOrCreateDiveCache();
+    const diveCache = cachingService.getOrCreateCache('diveCache');
+    // Retrieve or create divesite detail cache (since we need to invalidate
+    // when a dive is added or updated)
+    const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
 
     return {
       deleteDive,
@@ -14,8 +17,10 @@
       updateDive,
     };
 
-    function deleteDive(id) {
-      return $http.delete(`${API_URL}/dives/${id}/`);
+    function deleteDive(dive) {
+      const siteID = dive.divesite.id;
+      return $http.delete(`${API_URL}/dives/${dive.id}/`)
+      .then(response => invalidateCacheAndReturnResponse(response, siteID));
     }
 
     function getDive(id) {
@@ -26,24 +31,22 @@
       return $http.get(`${API_URL}/divesites/${id}/dives/`);
     }
 
-    function getOrCreateDiveCache() {
-      // Look for an existing cache
-      const existingCache = CacheFactory.get('diveCache');
-      // If it exists, return it
-      if (existingCache) {
-        return existingCache;
-      }
-
-      // If not, create and return the new cache
-      return CacheFactory('diveCache');
+    function invalidateCacheAndReturnResponse(response, siteID) {
+      console.log(`invalidating cache for divesite ${siteID}`);
+      siteDetailCache.remove(`${API_URL}/divesites/${siteID}/`);
+      return response;
     }
 
     function postDive(data) {
-      return $http.post(`${API_URL}/dives/`, data);
+      const siteID = data.divesite;
+      return $http.post(`${API_URL}/dives/`, data)
+      .then(response => invalidateCacheAndReturnResponse(response, siteID));
     }
 
     function updateDive(id, data) {
-      return $http.patch(`${API_URL}/dives/${id}/`, data);
+      const siteID = data.divesite;
+      return $http.patch(`${API_URL}/dives/${id}/`, data)
+      .then(response => invalidateCacheAndReturnResponse(response, siteID));
     }
   }
 
@@ -51,6 +54,7 @@
     '$http',
     'API_URL',
     'CacheFactory',
+    'cachingService',
   ];
   angular.module('divesites.apis').factory('divesApi', divesApi);
 })();

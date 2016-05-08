@@ -31,7 +31,7 @@
         // Check the reason that the modal instance closed
         if (reason === reasons.CONFIRMED) {
           // If the modal was confirmed, then delete the dive
-          return dsapi.deleteDive(dive.id)
+          return dsapi.deleteDive(dive)
           .then((response) => {
             return 'deleted';
           });
