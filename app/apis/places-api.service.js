@@ -26,7 +26,7 @@
     };
 
     function getCompressor(id) {
-      const url = `${COMPRESSOR_LIST_VIEW}/${id}/`;
+      const url = `${COMPRESSOR_LIST_VIEW}${id}/`;
       return $http.get(url);
     }
 
@@ -37,8 +37,17 @@
       });
     }
 
+    // Retrieve divesite detail, from cache or by API request
     function getDivesite(id) {
-      return $http.get(`${API_URL}/divesites/${id}/`);
+      const start = new Date().getTime();
+      const url = `${DIVESITE_LIST_VIEW}${id}/`;
+      return $http.get(url, {
+        cache: siteDetailCache,
+      })
+      .then((response) => {
+        console.log(`retrieved divesite in ${new Date().getTime() - start} ms`);
+        return response;
+      });
     }
 
     // Retrieve divesite list, from cache or by API request
@@ -112,11 +121,13 @@
     // Update an existing divesite, then invalidate the cache so
     // that the updated list will be reloaded
     function updateDivesite(id, data) {
-      const url = DIVESITE_LIST_VIEW;
-      return $http.patch(`${API_URL}/divesites/${id}/`, data)
+      const url = `${API_URL}/divesites/${id}/`;
+      return $http.patch(url, data)
       .then((data) => {
         // Invalidate divesite list cache
-        siteListCache.remove(url);
+        siteListCache.remove(DIVESITE_LIST_VIEW);
+        // Invalidate divesite detail cache
+        siteDetailCache.remove(url);
         return data;
       });
     }
