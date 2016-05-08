@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService, userThumbnailCache) {
+  function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService) {
     const vm = this;
     vm.ownerProfileResolved = false;
 
@@ -119,7 +119,6 @@
     'followService',
     'informationCardService',
     'localStorageService',
-    'userThumbnailCache',
   ];
   angular.module('divesites.informationCard').controller('InformationCardHeaderController', InformationCardHeaderController);
 })();
