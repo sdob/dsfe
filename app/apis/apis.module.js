@@ -7,6 +7,7 @@
    */
   angular.module('divesites.apis', [
     'satellizer',
+    'divesites.caching',
     'divesites.constants',
   ]);
 })();
