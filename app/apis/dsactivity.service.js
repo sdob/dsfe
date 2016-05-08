@@ -7,6 +7,7 @@
 
     const OWN_FOLLOWERS_LIST = `${API_URL}/users/my_followers/`;
     const OWN_FOLLOWS_LIST = `${API_URL}/users/my_follows/`;
+    const OWN_SUGGESTIONS_LIST = `${API_URL}/users/my_suggestions/`;
 
     return {
       followUser,
@@ -30,6 +31,7 @@
         followCache.remove(followListURL(userID));
         followCache.remove(followerListURL(otherUserID));
         followCache.remove(OWN_FOLLOWS_LIST);
+        followCache.remove(OWN_SUGGESTIONS_LIST);
         return response;
       });
     }
@@ -49,7 +51,9 @@
     }
 
     function getOwnFollowSuggestions() {
-      return $http.get(`${API_URL}/users/my_suggestions/`);
+      return $http.get(OWN_SUGGESTIONS_LIST, {
+        cache: followCache,
+      });
     }
 
     function getOwnFollowers() {
@@ -90,6 +94,7 @@
         followCache.remove(followListURL(userID));
         followCache.remove(followerListURL(otherUserID));
         followCache.remove(OWN_FOLLOWS_LIST);
+        followCache.remove(OWN_SUGGESTIONS_LIST);
         return response;
       });
     }
