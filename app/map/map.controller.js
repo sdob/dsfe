@@ -349,7 +349,6 @@
           const id = $location.$$search[type];
           const selectedMarker = $scope.mapMarkers.filter((m) => m.id === id)[0];
 
-          console.log('promise.all finished');
           // Set the marker icon and remove the 'loading' indicator
           $timeout(() => {
             vm.isLoading = false;

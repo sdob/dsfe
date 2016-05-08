@@ -3,14 +3,11 @@
 
   function InformationCardController($auth, $scope, $timeout, $uibModal, dsapi, dscomments, dsimg, followService, informationCardService, logDiveService) {
     const { apiCalls, formatGeocodingData, getNearbySlipways, userIsOwner } = informationCardService;
-    console.log(logDiveService);
     const vm = this;
 
     activate();
 
     function activate() {
-      console.log('InformationCardController.activate()');
-
       // Bind values to 'vm' that don't require a call to dsapi
       vm.isAuthenticated = $auth.isAuthenticated;
       // Ensure that 'images' is never undefined
@@ -37,7 +34,6 @@
       const { apiCall } = apiCalls[vm.site.type];
       apiCall(vm.site.id)
       .then((response) => {
-        console.log(response.data);
         // Handle the response from DSAPI: bind values, fetch profile images, etc.
 
         // Update our bound values with data from the API
@@ -137,7 +133,6 @@
       ids.forEach(id => {
         dsimg.getUserProfileImage(id)
         .then((response) => {
-          console.log(response.data);
           if (response.data && response.data.image && response.data.public_id) {
             const profileImageUrl = $.cloudinary.url(response.data.public_id, {
               height: 60,
@@ -172,7 +167,6 @@
               crop: 'fill',
             });
           });
-          console.log(`I'm going to update vm.images and $scope.images`);
           vm.images = images;
           // We also have to bind the images to $scope, because
           // the Lightbox gallery isn't implemented (AFAIK) to allow
@@ -191,12 +185,10 @@
     function listenForChildEvents() {
       /* Listen for changes to the comments */
       $scope.$on('comment-added', (event) => {
-        console.log('heard comment-added');
         updateCommentListAndProfileCache();
       });
 
       $scope.$on('comment-list-updated', (event) => {
-        console.log('heard comment-list-updated');
         updateCommentListAndProfileCache();
       });
 
@@ -225,7 +217,6 @@
     }
 
     function summonReportProblemModal() {
-      console.log('summoning report-problem modal');
       const instance = $uibModal.open({
         controller: 'ReportProblemModalController',
         controllerAs: 'vm',
@@ -248,7 +239,6 @@
         templateUrl: 'information-card/set-site-header-image-modal.template.html',
       });
       instance.result.then((reason) => {
-        console.log(`set site header image modal closed with reason: ${reason}`);
         // We have changed the header image, either by selecting an
         // existing image, by uploading a new one, or by clearing it
         // (in other words, we haven't cancelled our of the modal)

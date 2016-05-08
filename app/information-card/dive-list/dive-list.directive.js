@@ -14,8 +14,6 @@
     };
     function link(scope, elem, attrs, ctrl) {
       scope.userID = localStorageService.get('user');
-      console.log('divelist');
-      console.log(scope);
     }
   }
 

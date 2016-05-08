@@ -18,12 +18,7 @@
       vm.summonConfirmCommentDeletionModal = summonConfirmCommentDeletionModal;
       vm.userID = localStorageService.get('user');
 
-      console.log($scope);
-
-      //vm.apiCalls = commentService.apiCalls[vm.siteType];
       vm.apiCalls = commentService.apiCalls;
-      console.log(vm.siteType);
-      console.log(vm.apiCalls);
     }
 
     function submit() {
@@ -36,7 +31,6 @@
 
       vm.apiCalls.create(vm.site, request)
       .then((response) => {
-        console.log('successful submit');
         $scope.$emit('comment-added');
         // Clear the model
         vm.comment = {};
