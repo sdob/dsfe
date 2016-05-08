@@ -6,7 +6,7 @@
    * a Promise. Since refactoring, this service collects and exposes the
    * methods from smaller, feature-specific services.
    */
-  function dsapiService($auth, $http, API_URL, CacheFactory, divesApi, placesApi) {
+  function dsapiService($auth, $http, API_URL, divesApi, placesApi) {
 
     const {
       deleteDive,
@@ -116,7 +116,6 @@
     '$auth',
     '$http',
     'API_URL',
-    'CacheFactory',
     'divesApi',
     'placesApi',
   ];
