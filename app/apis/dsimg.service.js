@@ -11,6 +11,7 @@
       clearSiteHeaderImage,
       deleteSiteImage,
       deleteUserProfileImage,
+      formatAsThumbnail,
       getSiteHeaderImage,
       getSiteImages,
       getUserImages,
@@ -43,8 +44,16 @@
       return $http.get(`${API_URL}/users/${id}/images/`);
     }
 
-    function getUserProfileImage(id) {
-      return $http.get(`${API_URL}/users/${id}/profile_image/`);
+    function getUserProfileImage(id, transformResponse) {
+      let transforms = $http.defaults.transformResponse;
+      if (transformResponse) {
+        transforms = transforms.concat(transformResponse);
+      }
+
+      return $http.get(`${API_URL}/users/${id}/profile_image/`, {
+        cache: imageCache,
+        transformResponse: transforms,
+      });
     }
 
     function setSiteHeaderImage(site, id) {
@@ -53,6 +62,24 @@
 
     function updateSiteImage(site, image, data) {
       return $http.patch(`${API_URL}/${site.type}s/${site.id}/images/${image.id}/`, data);
+    }
+
+    function formatAsThumbnail(data) {
+      console.log('response data: ');
+      console.log(data);
+      // Acquire the URL for a 60x60 Cloudinary image
+      if (data) {
+        const thumbnailURL = $.cloudinary.url(data.public_id, {
+          height: 60,
+          width: 60,
+          crop: 'fill',
+          gravity: 'face',
+        });
+        console.log(`returning ${thumbnailURL}`);
+        return thumbnailURL;
+      }
+
+      return undefined;
     }
   }
 
