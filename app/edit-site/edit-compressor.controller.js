@@ -71,11 +71,11 @@
 
         // Retrieve compressor data
         dsapi.getCompressor($routeParams.id)
-        .then((response) => {
+        .then((data) => {
 
           // TODO: check whether the data returned are OK
           // Format site data for angular-google-maps
-          vm.site = formatResponse(response.data);
+          vm.site = formatResponse(data);
           vm.map.center = vm.site.coords;
           vm.marker = {
             id: vm.site.id,
@@ -115,10 +115,10 @@
 
         // We're editing an existing compressor
         dsapi.updateCompressor(vm.site.id, requestData)
-        .then((response) => {
-          console.log(response);
+        .then((data) => {
+          console.log(data);
           vm.isSaving = false;
-          return handleSuccessfulSave('compressor', response.data.id);
+          return handleSuccessfulSave('compressor', data.id);
         })
         .catch((err) => {
           console.error(err);

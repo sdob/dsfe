@@ -68,9 +68,9 @@
 
         // Retrieve slipway data
         dsapi.getSlipway($routeParams.id)
-        .then((response) => {
+        .then((data) => {
           // Format site data for angular-google-maps
-          vm.site = formatResponse(response.data);
+          vm.site = formatResponse(data);
           console.log('loaded in stuff');
           console.log(vm.site);
           vm.map.center = vm.site.coords;
@@ -107,11 +107,10 @@
       if ($routeParams.id) {
         // We're editing an existing slipway
         dsapi.updateSlipway(vm.site.id, requestData)
-        .then((response) => {
-          console.log(response);
+        .then((data) => {
           vm.isSaving = false;
 
-          return handleSuccessfulSave('slipway', response.data.id);
+          return handleSuccessfulSave('slipway', data.id);
 
           // Return to the slipway information card
           // $location.path('/');
