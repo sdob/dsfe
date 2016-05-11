@@ -8,6 +8,12 @@
     const DIVESITE_LIST_VIEW = `${API_URL}/divesites/`;
     const SLIPWAY_LIST_VIEW = `${API_URL}/slipways/`;
 
+    const SITE_DETAIL_VIEWS = {
+      compressor: (id) => `${COMPRESSOR_LIST_VIEW}${id}/`,
+      divesite: (id) => `${DIVESITE_LIST_VIEW}${id}/`,
+      slipway: (id) => `${SLIPWAY_LIST_VIEW}${id}/`,
+    };
+
     // Caches
     const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
     const siteListCache = cachingService.getOrCreateCache('siteListCache');
@@ -28,10 +34,7 @@
     };
 
     function getCompressor(id) {
-      const url = `${COMPRESSOR_LIST_VIEW}${id}/`;
-      return $http.get(url, {
-        cache: siteDetailCache,
-      });
+      return retrieveOrRequest(id, 'compressor');
     }
 
     // Retrieve compressor list, from cache or by API request
@@ -41,24 +44,28 @@
       });
     }
 
-    // Retrieve divesite detail, from cache or by API request
-    function getDivesite(id) {
+    // Look for a site with UUID 'id' in the site detail cache. If it
+    // exists, return it immediately; otherwise, make an API request
+    // and cache the returned data
+    function retrieveOrRequest(id, type) {
       const deferred = $q.defer();
-      const start = new Date().getTime();
-      const url = `${DIVESITE_LIST_VIEW}${id}/`;
       if (siteDetailCache.get(id)) {
-        console.log(siteDetailCache.get(id));
         deferred.resolve(siteDetailCache.get(id));
       } else {
+        const url = SITE_DETAIL_VIEWS[type](id);
         $http.get(url)
-        .then((data) => {
-          console.log(`retrieved divesite in ${new Date().getTime() - start} ms`);
-          siteDetailCache.put(id, data);
-          deferred.resolve(data);
+        .then((response) => {
+          siteDetailCache.put(id, response.data);
+          deferred.resolve(response.data);
         });
       }
 
       return deferred.promise;
+    }
+
+    // Retrieve divesite detail, from cache or by API request
+    function getDivesite(id) {
+      return retrieveOrRequest(id, 'divesite');
     }
 
     // Retrieve divesite list, from cache or by API request
@@ -70,9 +77,7 @@
 
     // Retrieve slipway list, from cache or by API request
     function getSlipway(id) {
-      return $http.get(`${API_URL}/slipways/${id}/`, {
-        cache: siteListCache,
-      });
+      return retrieveOrRequest(id, 'slipway');
     }
 
     function getSlipways() {
