@@ -106,40 +106,27 @@
       });
     }
 
-    // Create a new compressor, then invalidate the cache so
-    // that the updated list will be reloaded
+    // Create a new site of type 'type', then clear the cache for
+    // that type
+    function postAndClearCache(type, data) {
+      const url = SITE_LIST_VIEWS[type];
+      return $http.post(url, data)
+      .then((response) => {
+        siteListCache.remove(url);
+        return response.data;
+      });
+    }
+
     function postCompressor(data) {
-      const url = COMPRESSOR_LIST_VIEW;
-      return $http.post(url, data)
-      .then((data) => {
-        // Invalidate cache
-        siteListCache.remove(url);
-        return data;
-      });
+      return postAndClearCache('compressor', data);
     }
 
-    // Create a new divesite, then invalidate the cache so
-    // that the updated list will be reloaded
     function postDivesite(data) {
-      const url = DIVESITE_LIST_VIEW;
-      return $http.post(url, data)
-      .then((data) => {
-        // Invalidate cache
-        siteListCache.remove(url);
-        return data;
-      });
+      return postAndClearCache('divesite', data);
     }
 
-    // Create a new slipway, then invalidate the cache so
-    // that the updated list will be reloaded
     function postSlipway(data) {
-      const url = SLIPWAY_LIST_VIEW;
-      return $http.post(url, data)
-      .then((data) => {
-        // Invalidate cache
-        siteListCache.remove(url);
-        return data;
-      });
+      return postAndClearCache('slipway', data);
     }
 
     // Update an existing compressor, then invalidate the cache so
