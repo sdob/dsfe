@@ -68,6 +68,8 @@
         // Check whether the user owns this site
         vm.userIsOwner = userIsOwner(vm.site);
 
+        // Broadcast an event telling child components that the site info
+        // has loaded
         $timeout(() => {
           $scope.$broadcast('site-loaded', vm.site);
         });

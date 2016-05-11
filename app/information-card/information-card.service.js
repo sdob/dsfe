@@ -17,7 +17,7 @@
           return dsapi.getSlipway(id);
         },
 
-        directiveString: '<slipway-information-card>',
+        directiveString: '<slipway-information-card></slipway-information-card>',
       },
 
       divesite: {
