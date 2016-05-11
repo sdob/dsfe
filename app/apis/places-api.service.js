@@ -8,6 +8,12 @@
     const DIVESITE_LIST_VIEW = `${API_URL}/divesites/`;
     const SLIPWAY_LIST_VIEW = `${API_URL}/slipways/`;
 
+    const SITE_LIST_VIEWS = {
+      compressor: COMPRESSOR_LIST_VIEW,
+      divesite: DIVESITE_LIST_VIEW,
+      slipway: SLIPWAY_LIST_VIEW,
+    };
+
     const SITE_DETAIL_VIEWS = {
       compressor: (id) => `${COMPRESSOR_LIST_VIEW}${id}/`,
       divesite: (id) => `${DIVESITE_LIST_VIEW}${id}/`,
@@ -86,6 +92,20 @@
       });
     }
 
+    function patchAndClearCache(id, type, data) {
+      const url = SITE_DETAIL_VIEWS[type](id);
+      return $http.patch(url, data)
+      .then((response) => {
+        const data = response.data;
+        // Invalidate the list of sites of this type
+        siteListCache.remove(SITE_LIST_VIEWS[type]);
+        // Replace the site-detail cache entry for this site
+        siteDetailCache.remove(id);
+        // siteDetailCache.put(id, data);
+        return data;
+      });
+    }
+
     // Create a new compressor, then invalidate the cache so
     // that the updated list will be reloaded
     function postCompressor(data) {
@@ -125,39 +145,19 @@
     // Update an existing compressor, then invalidate the cache so
     // that the updated list will be reloaded
     function updateCompressor(id, data) {
-      const url = COMPRESSOR_LIST_VIEW;
-      return $http.patch(`${API_URL}/compressors/${id}/`, data)
-      .then((data) => {
-        // Invalidate compressor list cache
-        siteListCache.remove(url);
-        return data;
-      });
+      return patchAndClearCache(id, 'compressor', data);
     }
 
     // Update an existing divesite, then invalidate the cache so
     // that the updated list will be reloaded
     function updateDivesite(id, data) {
-      const url = `${API_URL}/divesites/${id}/`;
-      return $http.patch(url, data)
-      .then((data) => {
-        // Invalidate divesite list cache
-        siteListCache.remove(DIVESITE_LIST_VIEW);
-        // Invalidate divesite detail cache
-        siteDetailCache.remove(url);
-        return data;
-      });
+      return patchAndClearCache(id, 'divesite', data);
     }
 
     // Update an existing slipway, then invalidate the cache so
     // that the updated list will be reloaded
     function updateSlipway(id, data) {
-      const url = SLIPWAY_LIST_VIEW;
-      return $http.patch(`${API_URL}/slipways/${id}/`, data)
-      .then((data) => {
-        // Invalidate slipway list cache
-        siteListCache.remove(url);
-        return data;
-      });
+      return patchAndClearCache(id, 'slipway', data);
     }
   }
 
