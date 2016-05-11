@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function EditSiteController(
+  function EditDivesiteController(
     $location,
     $routeParams,
     $scope,
@@ -22,7 +22,7 @@
     activate();
 
     function activate() {
-      console.log('EditSiteController.activate()');
+      console.log('EditDivesiteController.activate()');
 
       // Wire up functions
       vm.checkAtLeastOneEntryIsSelected = checkAtLeastOneEntryIsSelected;
@@ -70,9 +70,9 @@
 
         // Retrieve this site's data from dsapi
         dsapi.getDivesite($routeParams.id)
-        .then((response) => {
+        .then((data) => {
           // Format the site data
-          vm.site = formatResponse(response.data);
+          vm.site = formatResponse(data);
           // Validate the entry checkboxes
           vm.checkAtLeastOneEntryIsSelected();
           // Set up map
@@ -92,7 +92,7 @@
     }
 
     function submit() {
-      console.log('EditSiteController.submit()');
+      console.log('EditDivesiteController.submit()');
 
       // Set the site form's $submitted property to true
       // (this will check validation for untouched forms)
@@ -118,8 +118,8 @@
       console.log(data);
 
       apiCall(data)
-      .then((response) => {
-        vm.site.id = response.data.id; // This is the edited/created site's ID
+      .then((data) => {
+        vm.site.id = data.id; // This is the edited/created site's ID
       })
       .then((response) => {
         // Save was successful
@@ -148,7 +148,7 @@
     }
   }
 
-  EditSiteController.$inject = [
+  EditDivesiteController.$inject = [
     '$location',
     '$routeParams',
     '$scope',
@@ -164,5 +164,5 @@
     'mapService',
     'seabedTypesService',
   ];
-  angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
+  angular.module('divesites.editSite').controller('EditDivesiteController', EditDivesiteController);
 })();

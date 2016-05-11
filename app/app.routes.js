@@ -16,9 +16,9 @@
       controller: 'EditCompressorController',
       controllerAs: 'vm',
     })
-    .when('/add-site', {
-      template: '<edit-site></edit-site>',
-      controller: 'EditSiteController',
+    .when('/add-divesite', {
+      template: '<edit-divesite></edit-divesite>',
+      controller: 'EditDivesiteController',
       controllerAs: 'vm',
     })
     .when('/add-slipway', {
@@ -32,8 +32,8 @@
       controllerAs: 'vm',
     })
     .when('/edit-divesite/:id', {
-      template: '<edit-site></edit-site>',
-      controller: 'EditSiteController',
+      template: '<edit-divesite></edit-divesite>',
+      controller: 'EditDiveSiteController',
       controllerAs: 'vm',
     })
     .when('/edit-slipway/:id', {

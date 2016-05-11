@@ -1,11 +1,12 @@
 (function() {
   'use strict';
 
-  function editSite() {
+  function editDivesite() {
     return {
-      templateUrl: 'edit-site/edit-site.template.html',
+      templateUrl: 'edit-site/edit-divesite.template.html',
       restrict: 'E',
       link: (scope, elem, attrs, ctrl) => {
+        console.log('editDivesite.link()');
         $('#add-site__boat-entry').on('click', () => {
           scope.vm.checkAtLeastOneEntryIsSelected();
         });
@@ -16,7 +17,7 @@
     };
   }
 
-  editSite.$inject = [];
+  editDivesite.$inject = [];
 
-  angular.module('divesites.editSite').directive('editSite', editSite);
+  angular.module('divesites.editSite').directive('editDivesite', editDivesite);
 })();
