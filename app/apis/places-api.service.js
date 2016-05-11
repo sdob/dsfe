@@ -3,10 +3,12 @@
 
   function placesApi($http, API_URL, CacheFactory, cachingService) {
 
+    // URL constants
     const COMPRESSOR_LIST_VIEW = `${API_URL}/compressors/`;
     const DIVESITE_LIST_VIEW = `${API_URL}/divesites/`;
     const SLIPWAY_LIST_VIEW = `${API_URL}/slipways/`;
 
+    // Caches
     const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
     const siteListCache = cachingService.getOrCreateCache('siteListCache');
 
@@ -27,7 +29,9 @@
 
     function getCompressor(id) {
       const url = `${COMPRESSOR_LIST_VIEW}${id}/`;
-      return $http.get(url);
+      return $http.get(url, {
+        cache: siteDetailCache,
+      });
     }
 
     // Retrieve compressor list, from cache or by API request
