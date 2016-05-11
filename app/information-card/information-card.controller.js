@@ -33,12 +33,15 @@
       // Choose the right call to DSAPI, based on the site type
       const { apiCall } = apiCalls[vm.site.type];
       apiCall(vm.site.id)
-      .then((response) => {
+      .then((data) => {
         // Handle the response from DSAPI: bind values, fetch profile images, etc.
 
         // Update our bound values with data from the API
-        vm.site = Object.assign(vm.site, response.data);
+        vm.site = Object.assign(vm.site, data);
         vm.site.locData = formatGeocodingData(vm.site);
+
+        console.log('InformationCardController#site:');
+        console.log(vm.site);
 
         // Retrieve site images
         getSiteImages();
@@ -53,8 +56,6 @@
           .then((slipways) => {
             vm.site.nearbySlipways = slipways;
           });
-
-          // getUserProfileImages(vm.site.dives.map(d => d.diver.id));
 
           // Force stats charts to be rebuilt
           $timeout(() => {
