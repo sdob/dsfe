@@ -12,8 +12,11 @@
       template: '<about-us></about-us>',
     })
     .when('/add-compressor', {
-      controller: 'EditCompressorController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'compressor',
+      },
       template: '<edit-compressor></edit-compressor>',
     })
     .when('/add-divesite', {
@@ -25,23 +28,35 @@
       template: '<edit-divesite></edit-divesite>',
     })
     .when('/add-slipway', {
-      controller: 'EditSlipwayController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'slipway',
+      },
       template: '<edit-slipway></edit-slipway>',
     })
     .when('/edit-compressor/:id', {
-      controller: 'EditCompressorController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'compressor',
+      },
       template: '<edit-compressor></edit-compressor>',
     })
     .when('/edit-divesite/:id', {
-      controller: 'EditDivesiteController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'divesite',
+      },
       template: '<edit-divesite></edit-divesite>',
     })
     .when('/edit-slipway/:id', {
-      controller: 'EditSlipwayController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'slipway',
+      },
       template: '<edit-slipway></edit-slipway>',
     })
     .when('/users/:userId', {
