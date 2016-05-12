@@ -3,18 +3,18 @@
   angular.module('divesites').config(($routeProvider) => {
     $routeProvider
     .when('/', {
-      template: '<map></map>',
       reloadOnSearch: false,
+      template: '<map></map>',
     })
     .when('/about-us', {
-      template: '<about-us></about-us>',
       controller: 'AboutUsController',
       controllerAs: 'vm',
+      template: '<about-us></about-us>',
     })
     .when('/add-compressor', {
-      template: '<edit-compressor></edit-compressor>',
       controller: 'EditCompressorController',
       controllerAs: 'vm',
+      template: '<edit-compressor></edit-compressor>',
     })
     .when('/add-divesite', {
       controller: 'EditSiteController',
@@ -25,33 +25,33 @@
       template: '<edit-divesite></edit-divesite>',
     })
     .when('/add-slipway', {
-      template: '<edit-slipway></edit-slipway>',
       controller: 'EditSlipwayController',
       controllerAs: 'vm',
+      template: '<edit-slipway></edit-slipway>',
     })
     .when('/edit-compressor/:id', {
-      template: '<edit-compressor></edit-compressor>',
       controller: 'EditCompressorController',
       controllerAs: 'vm',
+      template: '<edit-compressor></edit-compressor>',
     })
     .when('/edit-divesite/:id', {
-      template: '<edit-divesite></edit-divesite>',
       controller: 'EditDivesiteController',
       controllerAs: 'vm',
+      template: '<edit-divesite></edit-divesite>',
     })
     .when('/edit-slipway/:id', {
-      template: '<edit-slipway></edit-slipway>',
       controller: 'EditSlipwayController',
       controllerAs: 'vm',
+      template: '<edit-slipway></edit-slipway>',
     })
     .when('/users/:userId', {
       reloadOnSearch: false,
       template: '<profile></profile>',
     })
     .when('/edit-profile', {
-      template: '<edit-profile></edit-profile>',
       controller: 'EditProfileController',
       controllerAs: 'vm',
+      template: '<edit-profile></edit-profile>',
     });
   });
 })();
