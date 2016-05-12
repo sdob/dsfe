@@ -2,7 +2,7 @@
   'use strict';
 
   // Generic site-editing controller
-  function EditSiteController($routeParams, $scope, $timeout, contextMenuService, editSiteService, mapService, seabedTypeService, type) {
+  function EditSiteController($routeParams, $scope, $timeout, contextMenuService, editSiteService, mapService, seabedTypesService, type) {
 
     const vm = this;
     // Map event listeners
@@ -29,6 +29,7 @@
 
     function activate() {
       console.log('EditSiteController.activate()');
+      console.log(type);
 
       // Retrieve center/zoom settings from main map
       vm.map = mapService.get();
@@ -61,15 +62,20 @@
     // Look for context-menu coordinates and return them if found; otherwise,
     // return the original coordinates
     function assignContextMenuCoordinates(map) {
+      // These are the centre/zoom coordinates we received from the main
+      // map controller
       const defaultCoordinates = {
         latitude: map.center.latitude,
         longitude: map.center.longitude,
       };
+      // Look for and clear coordinates stored by the context menu service
       const contextMenuCoordinates = editSiteService.getContextMenuCoordinates();
+      // If they exist, then return them
       if (contextMenuCoordinates !== undefined) {
         return contextMenuCoordinates;
       }
 
+      // Otherwise, just return the defaults
       return defaultCoordinates;
     }
 
@@ -85,9 +91,31 @@
 
     // Submit the site data to the API to create/update it
     function submit() {
-      // Set the form's $submitted property to true, triggering
-      // validation
+      console.log('submitting');
+      // Set the form's $submitted property to true, triggering validation
       $scope.siteForm.$submitted = true;
+      // If the form is invalid, bail out
+      if (!$scope.siteForm.$valid) {
+        return;
+      }
+      // Disable the save button while we contact the API server
+      vm.isSaving = true;
+      // Reformat site data
+      const data = editSiteService.formatRequest(vm.site);
+      // If we already have an ID, then we're editing an existing site;
+      // otherwise we're creating a new one; select the appropriate API call.
+      let apiCall;
+      if ($routeParams.id) {
+        apiCall = (data) => editSiteService.siteUpdateCalls[type]($routeParams.id, data);
+      } else {
+        apiCall = (data) => editSiteService.siteCreateCalls[type](data);
+      }
+
+      // Make the call, then handle successful save
+      apiCall(data)
+      .then((response) => {
+        return editSiteService.handleSuccessfulSave(type, response.id);
+      });
     }
 
     // Update the map in the next tick
@@ -106,6 +134,7 @@
     'contextMenuService',
     'editSiteService',
     'mapService',
+    'seabedTypesService',
     'type',
   ];
   angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
