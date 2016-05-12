@@ -45,7 +45,7 @@
         editSiteService.siteRetrievalCalls[type]($routeParams.id)
         .then((data) => {
           // When we get data back from the API, then update the map and site model
-          vm.site = formatResponse(data);
+          vm.site = editSiteService.formatResponse(data);
           vm.map.center = vm.site.coords;
 
           // Do type-specific stuff
