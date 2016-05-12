@@ -17,9 +17,12 @@
       controllerAs: 'vm',
     })
     .when('/add-divesite', {
-      template: '<edit-divesite></edit-divesite>',
-      controller: 'EditDivesiteController',
+      controller: 'EditSiteController',
       controllerAs: 'vm',
+      resolve: {
+        type: () => 'divesite',
+      },
+      template: '<edit-divesite></edit-divesite>',
     })
     .when('/add-slipway', {
       template: '<edit-slipway></edit-slipway>',
