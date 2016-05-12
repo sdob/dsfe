@@ -33,7 +33,7 @@
     })
     .when('/edit-divesite/:id', {
       template: '<edit-divesite></edit-divesite>',
-      controller: 'EditDiveSiteController',
+      controller: 'EditDivesiteController',
       controllerAs: 'vm',
     })
     .when('/edit-slipway/:id', {
