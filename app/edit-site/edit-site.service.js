@@ -3,6 +3,12 @@
   'use strict';
   function editSiteService($location, $uibModal, $window, contextMenuService, dsapi, localStorageService) {
 
+    const siteRetrievalCalls = {
+      compressor: dsapi.getCompressor,
+      divesite: dsapi.getDivesite,
+      slipway: dsapi.getSlipway,
+    };
+
     const apiCalls = {
       compressor: (id) => {
         return id ? dsapi.updateCompressor : dsapi.postCompressor;
@@ -24,6 +30,7 @@
       getContextMenuCoordinates,
       handleSuccessfulSave,
       selectSubmissionApiCall,
+      siteRetrievalCalls,
       summonCancelEditingModal,
     };
 
