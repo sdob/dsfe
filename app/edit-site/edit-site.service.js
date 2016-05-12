@@ -23,6 +23,18 @@
       },
     };
 
+    const siteCreateCalls = {
+      compressor: dsapi.postCompressor,
+      divesite: dsapi.postDivesite,
+      slipway: dsapi.postSlipway,
+    };
+
+    const siteUpdateCalls = {
+      compressor: dsapi.updateCompressor,
+      divesite: dsapi.updateDivesite,
+      slipway: dsapi.updateSlipway,
+    };
+
     return {
       apiCalls,
       formatRequest,
@@ -30,7 +42,9 @@
       getContextMenuCoordinates,
       handleSuccessfulSave,
       selectSubmissionApiCall,
+      siteCreateCalls,
       siteRetrievalCalls,
+      siteUpdateCalls,
       summonCancelEditingModal,
     };
 
