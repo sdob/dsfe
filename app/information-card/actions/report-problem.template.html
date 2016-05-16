@@ -1,4 +1,11 @@
-<a href class="action-menu__link link--undecorated text-danger" ng-click="vm.summonReportProblemModal()">
-    <span class="action-menu__icon fa fa-exclamation-circle"></span>
-    <span class="action-menu__text">Report a problem</span>
+<a class="action-menu__link link--undecorated text-danger" href="/#/edit-{{vm.site.type}}/{{vm.site.id}}">
+    <div class="action-menu__icon">
+        <div class="overlay-action-item--danger">
+            <span class="fa fa-stack">
+                <i class="fa fa-stack-2x fa-circle background"></i>
+                <i class="fa fa-stack-1x fa-pencil"></i>
+            </span>
+        </div>
+    </div>
+    <span class="action-menu__text">Report</span>
 </a>

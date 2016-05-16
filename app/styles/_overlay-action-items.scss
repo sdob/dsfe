@@ -39,3 +39,19 @@
   }
   transition: color 200ms;
 }
+
+.overlay-action-item--danger {
+  color: #fff;
+  .background {
+    color: #a94442;
+    transition: color 200ms;
+  }
+  &:hover {
+    color: #fff;
+    .background {
+      color: darken(#a94442, 25%);
+      transition: color 200ms;
+    }
+  }
+  transition: color 200ms;
+}

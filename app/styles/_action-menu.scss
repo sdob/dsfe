@@ -6,9 +6,6 @@
   &__action-item {
     flex: 1;
     text-align: center;
-    &:hover {
-      background-color: darken(#fff, 15%);
-    }
   }
   &__link {
     display: block;
