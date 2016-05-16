@@ -1,0 +1,14 @@
+<section> <!-- description -->
+    <div class="ds-form-group-lg">
+        <h2><label class="ds-form-group__label">{{ vm.templateStrings.description.label[vm.siteTypeString] }}</label></h2>
+        <textarea
+            class="form-control ds-textarea"
+            style="font-weight: 500"
+            ng-model="vm.site.description"
+            rows=4
+            ></textarea>
+        <span class="help-block">
+            {{ vm.templateStrings.description.helpBlock[vm.siteTypeString] }}
+        </span>
+    </div>
+</section> <!-- description -->

@@ -1,41 +1,43 @@
-<div class="editable-site-map-container">
-    <span class="help-block">
-        Drag the map under the marker.
-    </span>
-    <ui-gmap-google-map
-        center='vm.map.center'
-        zoom='vm.map.zoom'
-        events='vm.mapEvents'
-        >
-    </ui-gmap-google-map>
-</div>
-<div class="form-group"
-    >
-    <span class="help-block">
-        You can also edit the coordinates directly
-        and the map will update automatically.
-    </span>
-    <div 
-        class="editable-site-map__coordinates"
-        >
-        <input
-        type="text"
-        class="editable-site-map__coordinate-input form-control ds-form-control"
-        ng-model="vm.site.coords.latitude"
-        ng-model-options="{debounce: {'default': 200}}"
-        ng-change="vm.updateMap()"
-        >
-
-        <span class="editable-site-map__coordinate-axis" >
-            ° N
+<section class="edit-site__map-section">
+    <div class="editable-site-map-container">
+        <span class="help-block">
+            Drag the map under the marker.
         </span>
-
-        <input type="text"
-        class="editable-site-map__coordinate-input form-control ds-form-control"
-        ng-model="vm.site.coords.longitude"
-        ng-model-options="{debounce: {'default': 200}}"
-        ng-change="vm.updateMap()"
-        >
-        <span class="editable-site-map__coordinate-axis"> ° E</span>
+        <ui-gmap-google-map
+            center='vm.map.center'
+            zoom='vm.map.zoom'
+            events='vm.mapEvents'
+            >
+        </ui-gmap-google-map>
     </div>
-</div>
+    <div class="form-group"
+        >
+        <span class="help-block">
+            You can also edit the coordinates directly
+            and the map will update automatically.
+        </span>
+        <div 
+            class="editable-site-map__coordinates"
+            >
+            <input
+            type="text"
+            class="editable-site-map__coordinate-input form-control ds-form-control"
+            ng-model="vm.site.coords.latitude"
+            ng-model-options="{debounce: {'default': 200}}"
+            ng-change="vm.updateMap()"
+            >
+
+            <span class="editable-site-map__coordinate-axis" >
+                ° N
+            </span>
+
+            <input type="text"
+            class="editable-site-map__coordinate-input form-control ds-form-control"
+            ng-model="vm.site.coords.longitude"
+            ng-model-options="{debounce: {'default': 200}}"
+            ng-change="vm.updateMap()"
+            >
+            <span class="editable-site-map__coordinate-axis"> ° E</span>
+        </div>
+    </div>
+</section>

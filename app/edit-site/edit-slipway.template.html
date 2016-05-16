@@ -3,44 +3,9 @@
         <h1 class="edit-site__title">
             {{ vm.title }}
         </h1>
-        <section class="edit-site__map-section">
-            <editable-site-map></editable-site-map>
-        </section>
-        <section> <!-- name -->
-            <div class="form-group ds-form-group-lg"
-                ng-class="{'has-error': siteForm.siteName.$error.required && (siteForm.siteName.$touched || siteForm.$submitted)}"
-                >
-                <label class="control-label" for="bs-edit-slipway__name">
-                    {{ vm.templateStrings.name.label }}
-                </label>
-                <input type="text" class="form-control ds-form-control"
-                ng-model="vm.site.name"
-                name="siteName"
-                ng-required="true"
-                id="bs-edit-slipway__name" placeholder="Name"
-                style="font-weight: 500"
-                />
-                <span class="help-block">
-                    {{ vm.templateStrings.name.helpText }}
-                </span>
-            </div>
-        </section> <!-- name -->
-
-        <section> <!-- description -->
-            <div class="ds-form-group-lg">
-            <label>{{ vm.templateStrings.description.label }}</label>
-            <textarea
-                class="form-control ds-textarea"
-                style="font-weight: 500"
-                ng-model="vm.site.description"
-                rows=4
-                ></textarea>
-            <span class="help-block">
-                {{ vm.templateStrings.description.helpText }}
-            </span>
-        </div>
-        </section> <!-- description -->
-
+        <ng-include src="'edit-site/site-name.template.html'"></ng-include>
+        <editable-site-map></editable-site-map>
+        <ng-include src="'edit-site/site-description.template.html'"></ng-include>
         <ng-include src="'edit-site/submit-row.template.html'"></ng-include>
     </form>
 </div>

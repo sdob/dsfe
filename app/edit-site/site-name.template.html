@@ -3,7 +3,7 @@
         ng-class="{'has-error': siteForm.siteName.$error.required && (siteForm.$submitted || siteForm.siteName.$touched)}"
         >
         <label for="bs-edit-site__name">
-            Site name
+            {{ vm.templateStrings.name.label[vm.siteTypeString] }}
         </label>
         <input type="text" class="form-control ds-form-control"
         ng-model="vm.site.name"
@@ -12,7 +12,7 @@
         id="bs-edit-site__name" placeholder="Name"
         >
         <span class="help-block">
-            Give this divesite  a name.
+            {{ vm.templateStrings.name.helpBlock[vm.siteTypeString] }}
         </span>
     </div>
 </section>

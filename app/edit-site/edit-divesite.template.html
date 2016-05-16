@@ -4,13 +4,9 @@
         <h1 class="edit-site__title">{{ vm.title }}</h1>
 
         <ng-include src="'edit-site/site-name.template.html'"></ng-include>
-
-        <section class="edit-site__map-section">
-            <editable-site-map></editable-site-map>
-        </section>
-
+        <editable-site-map></editable-site-map>
         <divesite-details></divesite-details>
-
-            <ng-include src="'edit-site/submit-row.template.html'"></ng-include>
-        </form>
-    </div>
+        <ng-include src="'edit-site/site-description.template.html'"></ng-include>
+        <ng-include src="'edit-site/submit-row.template.html'"></ng-include>
+    </form>
+</div>

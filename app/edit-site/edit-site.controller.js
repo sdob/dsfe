@@ -2,7 +2,7 @@
   'use strict';
 
   // Generic site-editing controller
-  function EditSiteController($routeParams, $scope, $timeout, contextMenuService, editSiteService, mapService, seabedTypesService, type) {
+  function EditSiteController($routeParams, $scope, $timeout, contextMenuService, editSiteService, mapService, seabedTypesService, templateStringsService, type) {
 
     const vm = this;
     // Map event listeners
@@ -16,7 +16,10 @@
     vm.siteTypeString = type; // Passes to editable-site-map
     vm.submit = submit;
     vm.summonCancelEditingModal = editSiteService.summonCancelEditingModal;
+    vm.templateStrings = templateStringsService;
     vm.updateMap = updateMap;
+
+    console.log(vm.templateStrings);
 
     // Bind type-specific values
     if (type === 'divesite') {
@@ -135,6 +138,7 @@
     'editSiteService',
     'mapService',
     'seabedTypesService',
+    'templateStringsService',
     'type',
   ];
   angular.module('divesites.editSite').controller('EditSiteController', EditSiteController);
