@@ -66,10 +66,10 @@
         }
 
         return apiCall(id)
-        .then((response) => {
+        .then((data) => {
           i.site = {
-            id: response.data.id,
-            name: response.data.name,
+            id: data.id,
+            name: data.name,
             type: i.content_type_model,
           };
         });
