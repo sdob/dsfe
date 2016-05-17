@@ -45,7 +45,7 @@
 
     return templateStrings;
   }
-  
+
   templateStringsService.$inject = [
   ];
   angular.module('divesites.editSite').factory('templateStringsService', templateStringsService);
