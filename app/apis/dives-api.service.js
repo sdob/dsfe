@@ -1,13 +1,14 @@
 (function() {
   'use strict';
 
-  function divesApi($http, API_URL, CacheFactory, cachingService) {
+  function divesApi($http, API_URL, CacheFactory, cachingService, siteCacheService) {
 
     // Retrieve or create a cache for storing dives
     const diveCache = cachingService.getOrCreateCache('diveCache');
     // Retrieve or create divesite detail cache (since we need to invalidate
     // when a dive is added or updated)
-    const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
+
+    const { siteDetailCache } = siteCacheService;
 
     return {
       deleteDive,
@@ -33,7 +34,7 @@
 
     function invalidateCacheAndReturnResponse(response, siteID) {
       console.log(`invalidating cache for divesite ${siteID}`);
-      siteDetailCache.remove(`${API_URL}/divesites/${siteID}/`);
+      siteDetailCache.remove(siteID);
       return response;
     }
 
@@ -55,6 +56,7 @@
     'API_URL',
     'CacheFactory',
     'cachingService',
+    'siteCacheService',
   ];
   angular.module('divesites.apis').factory('divesApi', divesApi);
 })();

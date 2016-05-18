@@ -297,10 +297,10 @@
 
     function updateDiveListAndStatistics() {
       dsapi.getDivesite(vm.site.id)
-      .then((response) => {
-        vm.site.dives = response.data.dives;
-        vm.site.depth = response.data.depth;
-        vm.site.duration = response.data.duration;
+      .then((data) => {
+        vm.site.dives = data.dives;
+        vm.site.depth = data.depth;
+        vm.site.duration = data.duration;
         getDiverProfileImages();
         $scope.$broadcast('refresh-statistics', vm.site);
       });
