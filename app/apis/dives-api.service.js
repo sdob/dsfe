@@ -32,9 +32,13 @@
       return $http.get(`${API_URL}/divesites/${id}/dives/`);
     }
 
-    function invalidateCacheAndReturnResponse(response, siteID) {
-      console.log(`invalidating cache for divesite ${siteID}`);
-      siteDetailCache.remove(siteID);
+    /*
+     * Remove the cached information for the site with siteID,
+     * then return the response
+     */
+    function invalidateCacheAndReturnResponse(response, id) {
+      console.log(`invalidating cache for divesite ${id}`);
+      siteDetailCache.remove(id);
       return response;
     }
 
