@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  function placesApi($http, $q, API_URL, CacheFactory, cachingService) {
+  function placesApi($http, $q, API_URL,  siteCacheService) {
+
+    const { siteDetailCache, siteListCache } = siteCacheService;
 
     // URL constants
     const COMPRESSOR_LIST_VIEW = `${API_URL}/compressors/`;
@@ -20,10 +22,6 @@
       slipway: (id) => `${SLIPWAY_LIST_VIEW}${id}/`,
     };
 
-    // Caches
-    const siteDetailCache = cachingService.getOrCreateCache('siteDetailCache');
-    const siteListCache = cachingService.getOrCreateCache('siteListCache');
-
     return {
       getCompressor,
       getCompressors,
@@ -39,34 +37,22 @@
       updateSlipway,
     };
 
+    function addToListCache(response, type) {
+      response.data.forEach((site) => {
+        const cachedData = siteListCache.get(site.id) || { type };
+        siteListCache.put(site.id, Object.assign(cachedData, site));
+      });
+      return response;
+    }
+
     function getCompressor(id) {
       return retrieveOrRequest(id, 'compressor');
     }
 
-    // Retrieve compressor list, from cache or by API request
+    // Retrieve compressor list
     function getCompressors() {
-      return $http.get(COMPRESSOR_LIST_VIEW, {
-        cache: siteListCache,
-      });
-    }
-
-    // Look for a site with UUID 'id' in the site detail cache. If it
-    // exists, return it immediately; otherwise, make an API request
-    // and cache the returned data
-    function retrieveOrRequest(id, type) {
-      const deferred = $q.defer();
-      if (siteDetailCache.get(id)) {
-        deferred.resolve(siteDetailCache.get(id));
-      } else {
-        const url = SITE_DETAIL_VIEWS[type](id);
-        $http.get(url)
-        .then((response) => {
-          siteDetailCache.put(id, response.data);
-          deferred.resolve(response.data);
-        });
-      }
-
-      return deferred.promise;
+      return $http.get(COMPRESSOR_LIST_VIEW)
+      .then(response => addToListCache(response, 'compressor'));
     }
 
     // Retrieve divesite detail, from cache or by API request
@@ -74,22 +60,21 @@
       return retrieveOrRequest(id, 'divesite');
     }
 
-    // Retrieve divesite list, from cache or by API request
+    // Retrieve divesite list
     function getDivesites() {
-      return $http.get(DIVESITE_LIST_VIEW, {
-        cache: siteListCache,
-      });
+      return $http.get(DIVESITE_LIST_VIEW)
+      .then(response => addToListCache(response, 'divesite'));
     }
 
-    // Retrieve slipway list, from cache or by API request
+    // Retrieve slipway detail, from cache or by API request
     function getSlipway(id) {
       return retrieveOrRequest(id, 'slipway');
     }
 
+    // Retrieve slipway list
     function getSlipways() {
-      return $http.get(SLIPWAY_LIST_VIEW, {
-        cache: siteListCache,
-      });
+      return $http.get(SLIPWAY_LIST_VIEW)
+      .then(response => addToListCache(response, 'slipway'));
     }
 
     function patchAndClearCache(id, type, data) {
@@ -129,6 +114,25 @@
       return postAndClearCache('slipway', data);
     }
 
+    // Look for a site with UUID 'id' in the site detail cache. If it
+    // exists, return it immediately; otherwise, make an API request
+    // and cache the returned data
+    function retrieveOrRequest(id, type) {
+      const deferred = $q.defer();
+      if (siteDetailCache.get(id)) {
+        deferred.resolve(siteDetailCache.get(id));
+      } else {
+        const url = SITE_DETAIL_VIEWS[type](id);
+        $http.get(url)
+        .then((response) => {
+          siteDetailCache.put(id, response.data);
+          deferred.resolve(response.data);
+        });
+      }
+
+      return deferred.promise;
+    }
+
     // Update an existing compressor, then invalidate the cache so
     // that the updated list will be reloaded
     function updateCompressor(id, data) {
@@ -146,14 +150,17 @@
     function updateSlipway(id, data) {
       return patchAndClearCache(id, 'slipway', data);
     }
+
+    function unpackResponseData(response) {
+      return response.data;
+    }
   }
 
   placesApi.$inject = [
     '$http',
     '$q',
     'API_URL',
-    'CacheFactory',
-    'cachingService',
+    'siteCacheService',
   ];
   angular.module('divesites.apis').factory('placesApi', placesApi);
 })();
