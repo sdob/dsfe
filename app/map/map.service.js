@@ -110,10 +110,10 @@
     function getSiteCoordinates(id, type) {
       const { apiCall } = informationCardService.apiCalls[type];
       return apiCall(id)
-      .then((response) => {
+      .then((data) => {
         return {
-          latitude: response.data.latitude,
-          longitude: response.data.longitude,
+          latitude: data.latitude,
+          longitude: data.longitude,
         };
       });
     }

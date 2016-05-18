@@ -13,8 +13,10 @@
     informationCardService,
     markerService,
     mapService,
+    siteCacheService,
     uiGmapGoogleMapApi
   ) {
+    const { siteListCache } = siteCacheService;
     const vm = this;
     // Scope-independent constants relating to markers
     const { defaultMarkerIcons, selectedMarkerIcons } = markerService;
@@ -315,10 +317,19 @@
      * concatenate results to the mapMarkers array as they arrive.
      */
     function retrieveSites() {
+
+      // Start by retrieving whatever's cached and set that to the map markers
+      const sites = siteListCache.values();
+      $scope.mapMarkers = sites.map(transformSiteToMarker);
+      updateMarkerVisibility(filterPreferences.preferences);
+
+      // Create a mutable array for new markers as they come in
+      let updatedMarkers = [];
+
       // Retrieve divesites and create markers
       const getDivesites = dsapi.getDivesites()
       .then((response) => {
-        $scope.mapMarkers = $scope.mapMarkers.concat(response.data.map(transformSiteToMarker));
+        updatedMarkers = updatedMarkers.concat(response.data.map(transformSiteToMarker));
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -326,7 +337,7 @@
       const getCompressors = dsapi.getCompressors()
       .then((response) => {
         const compressorMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.compressor, 'compressor'));
-        $scope.mapMarkers = $scope.mapMarkers.concat(compressorMarkers);
+        updatedMarkers = updatedMarkers.concat(compressorMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -334,7 +345,7 @@
       const getSlipways = dsapi.getSlipways()
       .then((response) => {
         const slipwayMarkers = response.data.map(m => transformAmenityToMarker(m, defaultMarkerIcons.slipway, 'slipway'));
-        $scope.mapMarkers = $scope.mapMarkers.concat(slipwayMarkers);
+        updatedMarkers = updatedMarkers.concat(slipwayMarkers);
         updateMarkerVisibility(filterPreferences.preferences);
       });
 
@@ -342,6 +353,9 @@
       // so we can tag it visually
       return Promise.all([getDivesites, getCompressors, getSlipways])
       .then(() => {
+        // Update the map markers in scope and theire visibility
+        $scope.mapMarkers = updatedMarkers;
+        updateMarkerVisibility(filterPreferences.preferences);
         // If the search path is asking us for a particular site, then
         // summon its information card
         if ($location.$$search) {
@@ -353,7 +367,7 @@
           $timeout(() => {
             vm.isLoading = false;
             setSelectedMarker(selectedMarker);
-          }, 200);
+          });
         }
       });
     }
@@ -439,8 +453,8 @@
     }
 
     /*
-    * Summon an information card for a site. This does the heavy lifting.
-    */
+     * Summon an information card for a site. This does the heavy lifting.
+     */
     function summonCard(id, type) {
       // Remove any existing information-card DOM elements
       $('information-card').remove();
@@ -488,7 +502,6 @@
         m.options.visible = shouldBeVisible(m, preferences);
       });
     }
-
   }
 
   MapController.$inject = ['$auth',
@@ -503,6 +516,7 @@
     'informationCardService',
     'markerService',
     'mapService',
+    'siteCacheService',
     'uiGmapGoogleMapApi',
   ];
   angular.module('divesites.map').controller('MapController', MapController);
