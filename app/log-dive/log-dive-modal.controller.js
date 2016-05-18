@@ -46,7 +46,8 @@
           vm.dive = dive;
           console.log(vm.dive);
         });
-        // Invalid diveIDs will return a 404
+        // TODO: Invalid diveIDs will return a 404, and we
+        // should handle this
       }
 
       // This flag lets us track whether the user has confirmed that they
@@ -251,6 +252,7 @@
         // It's OK to close the modal, since we've successfully submitted the
         // information
         vm.modalCloseConfirmed = true;
+        // Close with a 'logged' message
         $uibModalInstance.close('logged');
       })
       .catch((err) => {
