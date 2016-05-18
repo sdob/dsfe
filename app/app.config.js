@@ -1,5 +1,5 @@
 (function() {
-  angular.module('divesites').config(($authProvider, API_URL, FACEBOOK_CLIENT_ID, GOOGLE_CLIENT_ID, GOOGLE_MAPS_API_KEY, LightboxProvider, uiGmapGoogleMapApiProvider) => {
+  angular.module('divesites').config(($authProvider, API_URL, FACEBOOK_CLIENT_ID, GOOGLE_CLIENT_ID, GOOGLE_MAPS_API_KEY, LightboxProvider, cloudinaryProvider, uiGmapGoogleMapApiProvider) => {
     // Send login attempts to our API server
     $authProvider.loginUrl = `${API_URL}/auth/login/`;
     $authProvider.signupUrl = `${API_URL}/auth/register`;
@@ -29,5 +29,9 @@
     uiGmapGoogleMapApiProvider.configure({
       key: GOOGLE_MAPS_API_KEY,
     });
+
+    /* Configure cloudinary_angular */
+    cloudinaryProvider
+    .set('cloud_name', 'divesites');
   });
 })();

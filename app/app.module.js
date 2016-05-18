@@ -8,6 +8,7 @@
     'ngAnimate',
     'LocalStorageModule',
     'bootstrapLightbox',
+    'cloudinary',
     'infinite-scroll',
     'markdown',
     'ngFileUpload',

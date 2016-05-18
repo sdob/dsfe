@@ -47,6 +47,8 @@ module.exports = function(config) {
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       'bower_components/bootstrap-select/dist/js/bootstrap-select.js',
       'bower_components/angular-cache/dist/angular-cache.js',
+      'bower_components/cloudinary-core/cloudinary-core.js',
+      'bower_components/cloudinary_ng/js/angular.cloudinary.js',
       // endbower
       // Load main app module and constants first
       'app/app.module.js',

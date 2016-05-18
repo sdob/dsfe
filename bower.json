@@ -41,7 +41,8 @@
     "ngInfiniteScroll": "~1.2.2",
     "weather-icons": "~2.0.10",
     "bootstrap-select": "~1.10.0",
-    "angular-cache": "~4.6.0"
+    "angular-cache": "~4.6.0",
+    "cloudinary_ng": "~1.0.0"
   },
   "overrides": {
     "bootstrap": {
