@@ -19,7 +19,6 @@
       vm.summonReportProblemModal = summonReportProblemModal;
       vm.summonSetSiteHeaderImageModal = summonSetSiteHeaderImageModal;
       vm.summonUploadImageModal = summonUploadImageModal;
-      vm.userProfileImageUrls = {};
 
       // Depending on the site type, we may offer different functionality
       if (vm.site.type === 'divesite') {
@@ -28,7 +27,7 @@
       }
 
       // Retrieve comments for this site
-      updateCommentListAndProfileCache();
+      updateCommentList();
 
       // Choose the right call to DSAPI, based on the site type
       const { apiCall } = apiCalls[vm.site.type];
@@ -78,81 +77,6 @@
       });
     }
 
-    function updateCommentListAndProfileCache() {
-      return updateCommentList()
-      .then(updateUserProfileImageUrlCache);
-    }
-
-    function getUserProfileImageURLs(ids) {
-      // Return a list of promises that resolve to {id, url} pairs
-      const promises = ids.map(zipIdWithUrl);
-      return Promise.all(promises);
-
-      function formatProfileImageResponse(response) {
-        if (response && response.data && response.data.public_id) {
-          const profileImageUrl = $.cloudinary.url(response.data.public_id, {
-            height: 60,
-            width: 60,
-            crop: 'fill',
-            gravity: 'face',
-          });
-          return profileImageUrl;
-        }
-
-        return undefined;
-      }
-
-      function zipIdWithUrl(id) {
-        return dsimg.getUserProfileImage(id)
-        .then(formatProfileImageResponse)
-        .then((url) => ({ id, url }));
-      }
-    }
-
-    function getCommenterProfileImages() {
-      const ids = new Set(vm.site.comments.map(c => c.owner.id));
-      ids.forEach((id) => {
-        dsimg.getUserProfileImage(id)
-        .then((response) => {
-          if (response && response.data && response.data.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.public_id, {
-              height: 60,
-              width: 60,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            $timeout(() => {
-              vm.site.comments.filter(c => c.owner.id === id).forEach(c => {
-                c.owner.profileImageUrl = profileImageUrl;
-              });
-            });
-          }
-        });
-      });
-    }
-
-    function getDiverProfileImages() {
-      const ids = new Set(vm.site.dives.map(d => d.diver.id));
-      ids.forEach(id => {
-        dsimg.getUserProfileImage(id)
-        .then((response) => {
-          if (response.data && response.data.image && response.data.public_id) {
-            const profileImageUrl = $.cloudinary.url(response.data.public_id, {
-              height: 60,
-              width: 60,
-              crop: 'fill',
-              gravity: 'face',
-            });
-            $timeout(() => {
-              vm.site.dives.filter(d => d.diver.id === id).forEach(d => {
-                d.diver.profileImageUrl = profileImageUrl;
-              });
-            });
-          }
-        });
-      });
-    }
-
     function getSiteImages() {
       // Retrieve uploaded images for this site
       dsimg.getSiteImages(vm.site)
@@ -188,11 +112,11 @@
     function listenForChildEvents() {
       /* Listen for changes to the comments */
       $scope.$on('comment-added', (event) => {
-        updateCommentListAndProfileCache();
+        updateCommentList();
       });
 
       $scope.$on('comment-list-updated', (event) => {
-        updateCommentListAndProfileCache();
+        updateCommentList();
       });
 
       /* Listen for changes to the list of logged dives */
@@ -303,32 +227,6 @@
         vm.site.duration = data.duration;
         getDiverProfileImages();
         $scope.$broadcast('refresh-statistics', vm.site);
-      });
-    }
-
-    function updateUserProfileImageUrlCache() {
-      // To update the profile cache, we retrieve the list of
-      retrieveComments(vm.site)
-      .then((comments) => {
-        vm.site.comments = comments;
-      })
-      .then(() => {
-        const users = Array.from(new Set([].concat(
-          vm.site.comments ? vm.site.comments.map(c => c.owner.id) : []
-        )
-        .concat(
-          vm.site.dives ? vm.site.dives.map(d => d.diver.id) : []
-        )));
-        return users;
-      })
-      .then(getUserProfileImageURLs)
-      .then((vals) => {
-        $timeout(() => {
-          vals.forEach(({ id, url }) => {
-            // Populate the cache of user profile images
-            vm.userProfileImageUrls[id] = url;
-          });
-        });
       });
     }
   }
