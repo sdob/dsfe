@@ -21,10 +21,12 @@
         <div class="information-card__dive-header">
             <div class="information-card__dive-image">
                 <!-- width and height seem to need hard-coding -->
-                <img
-                height="60" width="60"
-                ng-src="{{ userProfileImageUrls[dive.diver.id] || '/img/no_profile_image.svg'}}"
-                />
+                <cl-image ng-if="dive.diver.profile_image"  public-id="{{dive.diver.profile_image.public_id}}">
+                    <cl-transformation height="60" width="60" crop="fill" gravity="north" />
+                </cl-image>
+                <img ng-if="!dive.diver.profile_image"
+                ng-src="/img/no_profile_image.svg"
+                height="60" width="60" />
             </div>
             <div class="information-card__dive-details">
                 <div>
