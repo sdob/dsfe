@@ -2,7 +2,6 @@
   'use strict';
   function InformationCardHeaderController($auth, $scope, $timeout, dsapi, dsimg, followService, informationCardService, localStorageService) {
     const vm = this;
-    vm.ownerProfileResolved = false;
 
     activate();
 
@@ -22,19 +21,6 @@
       // the owner
       $scope.$on('site-loaded', (e, site) => {
         const owner = site.owner;
-
-        // Retrieve the user profile image URL, formatted to request a 60x60
-        // thumbnail version of the image
-        dsimg.getUserProfileImage(owner.id, dsimg.formatAsThumbnail)
-        .then((response) => {
-          console.log('formatted response:');
-          console.log(response);
-          if (response.data) {
-            vm.ownerProfileImageUrl = response.data;
-          }
-          // Allow the UI to update
-          vm.ownerProfileResolved = true;
-        });
 
         // If the viewing user is authenticated, consult the follow API
         // to see if they're following the site owner
