@@ -6,8 +6,11 @@
 
                     <div class="profile-feed__comment-header">
                         <div class="profile-feed__comment-image">
-                            <img style="width: 100%; height: auto; max-width; 60px;"
-                            ng-src="{{ item.actor.profileImageUrl || '/img/no_profile_image.svg' }}" />
+                            <cl-image ng-if="item.actor.profile_image" public-id="{{item.actor.profile_image.public_id}}">
+                                <cl-transformation height="60" width="60" crop="fill" gravity="face" />
+                            </cl-image>
+                            <img ng-if="!item.actor.profile_image" style="width: 100%; height: auto; max-width; 60px;"
+                            ng-src="/img/no_profile_image.svg" />
                         </div>
                         <div>
                             <span class="profile-feed__actor" ng-switch="item.actor.id === vm.ownID">
