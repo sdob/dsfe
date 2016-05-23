@@ -51,6 +51,13 @@
       });
     }
 
+    function broadcastProfileImageChanged(public_id) {
+      $rootScope.$broadcast('profile-image-changed', {
+        public_id,
+        user: vm.user.id,
+      });
+    }
+
     function checkFollowStatus() {
       let isFollowing = false;
       // Check whether this user is being followed by the viewer
@@ -121,7 +128,13 @@
       // if the user asked to delete the image, update the UI accordingly
       instance.result.then((reason) => {
         if (reason === reasons.CONFIRMED) {
-          $rootScope.$broadcast('profile-image-changed');
+          broadcastProfileImageChanged(undefined);
+          /*
+          $rootScope.$broadcast('profile-image-changed', {
+            public_id: undefined,
+            user: vm.user.id,
+          });
+          */
           // Optimistically remove image from front-end straight awway
           $timeout(() => {
             vm.profileImageUrl = undefined;
@@ -195,11 +208,9 @@
       instance.result.then((reason) => {
         if (reason.reason === 'uploaded') {
           // We have the new public_id from the modal, so send that
-          $rootScope.$broadcast('profile-image-changed', reason.public_id);
-          $timeout(() => {
-            // Update the profile image in the header
-            vm.profileImageUrl = formatAsHeroImage(reason.public_id);
-          });
+          broadcastProfileImageChanged(reason.public_id);
+          // Update the profile image in the header
+          vm.profileImageUrl = formatAsHeroImage(reason.public_id);
         }
       });
     }

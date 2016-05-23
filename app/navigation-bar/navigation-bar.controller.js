@@ -35,7 +35,8 @@
 
       // When the user changes their profile image, update the thumbnail
       // in the nav bar
-      $scope.$on('profile-image-changed', (evt, public_id) => {
+      $scope.$on('profile-image-changed', (evt, obj) => {
+        const { public_id } = obj;
         $timeout(() => {
           const url = formatAsThumbnail(public_id);
           vm.userProfileThumbnailImage = formatAsThumbnail(public_id);
