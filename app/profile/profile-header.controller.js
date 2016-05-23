@@ -76,10 +76,8 @@
       });
     }
 
-    // Take an API response, pass it to the Cloudinary jQuery API, and
-    // return a hero-sized image URL
-    function formatHeroImageUrl(response) {
-      const url = $.cloudinary.url(response.data.public_id, {
+    function formatAsHeroImage(public_id) {
+      const url = $.cloudinary.url(public_id, {
         width: 318,
         height: 318,
         crop: 'fill',
@@ -96,10 +94,10 @@
         // If we get a successful response, use it for the main profile image
         if (response && response.data && response.data.public_id) {
           // Get a suitably-formatted version of the profile image
-          const url = formatHeroImageUrl(response);
+          const url = formatAsHeroImage(response.data.public_id);
           // Push UI update to the next tick
           $timeout(() => {
-            // Put the profile image URL into scope
+            // Bind the profile image to a scope variable
             vm.profileImageUrl = url;
           });
         }
@@ -195,18 +193,12 @@
       // When the modal dialog closes, if the user uploaded an image,
       // update their profile image
       instance.result.then((reason) => {
-        if (reason === 'uploaded') {
-          dsimg.getUserProfileImage(vm.user.id)
-          .then((response) => {
-            // format the profile image
-            const url = formatHeroImageUrl(response);
-            $rootScope.$broadcast('profile-image-changed');
-            $timeout(() => {
-              vm.profileImageUrl = url;
-            });
-          })
-          .catch((err) => {
-            console.error(`this shouldn't happen - we've uploaded an image`);
+        if (reason.reason === 'uploaded') {
+          // We have the new public_id from the modal, so send that
+          $rootScope.$broadcast('profile-image-changed', reason.public_id);
+          $timeout(() => {
+            // Update the profile image in the header
+            vm.profileImageUrl = formatAsHeroImage(reason.public_id);
           });
         }
       });
