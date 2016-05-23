@@ -62,6 +62,19 @@
         });
       });
 
+      // Listen for changes to users' profile images and update them
+      // in the UI
+      $scope.$on('profile-image-changed', (evt, obj) => {
+        const { user, public_id } = obj;
+        let numMatches = 0;
+        vm.feed.results.forEach((item) => {
+          if (item.actor.id === user) {
+            numMatches += 1;
+            item.actor.profile_image.public_id = public_id;
+          }
+        });
+      });
+
       /*
        * Finally, emit an event to our parent controller so that
        * we can decide whether to load the feed
