@@ -1,6 +1,8 @@
 (function() {
   'use strict';
-  function ProfileImageUploadController($scope, $uibModalInstance, Upload, dsimg, user) {
+  function ProfileImageUploadController($scope, $uibModalInstance, Upload, cachingService, dsimg, user) {
+
+    const imageCache = cachingService.getOrCreateCache('imageCache');
     const vm = this;
 
     vm.cancelUpload = cancelUpload;
@@ -30,13 +32,21 @@
      * public_id for the new file
      */
     function submit(file) {
+      const url = `${dsimg.API_URL}/users/${user.id}/profile_image/`;
+
       // Disable the upload button
       vm.isSaving = true;
 
       // Upload the file
       file.upload = Upload.upload({
         data: { image: file },
-        url: `${dsimg.API_URL}/users/${user.id}/profile_image/`,
+        url,
+      })
+      .then((response) => {
+        // NOTE: Because we can't pass this upload call through dsimg,
+        // we have to manually invalidate the cache.
+        imageCache.remove(url);
+        return response;
       })
       .then((response) => {
         // Update the UI flag
@@ -54,6 +64,7 @@
     '$scope',
     '$uibModalInstance',
     'Upload',
+    'cachingService',
     'dsimg',
     'user',
   ];

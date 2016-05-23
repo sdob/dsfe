@@ -4,7 +4,7 @@
   function dsimgService($http, API_URL, cachingService) {
 
     // Retrieve or create a cache for API calls by this factory
-    const imageCache = cachingService.getOrCreateCache('image');
+    const imageCache = cachingService.getOrCreateCache('imageCache');
 
     return {
       API_URL,
